@@ -22,7 +22,7 @@
             align-items: center;
         }
 
-        .floating-home-button {
+         .home-button {
             position: fixed;
             top: 20px;
             left: 20px;
@@ -33,17 +33,16 @@
             border: none;
             cursor: pointer;
             font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
-            font-weight: 700;
-            font-size: 16px;
+            font-weight: 800;
+            font-size: 26px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             transition: all 0.3s ease;
             z-index: 1000;
             display: flex;
             align-items: center;
             gap: 8px;
-            border: none;
-            cursor: pointer;
         }
+
 
         .floating-home-button:hover {
             transform: translateY(-2px);
@@ -558,10 +557,11 @@
     </style>
 </head>
 <body>
-<button class="floating-home-button" id="floatingHomeBtn" onclick="window.location.href='../math-index.html'">
-<span>🏠</span>
-<span>Home</span>
-</button>
+<body>
+    <button class="home-button" onclick="window.location.href='../math-index.html'">
+        <span>🏠</span>
+        <span>Home</span>
+    </button>
 <div class="container">
 <h1 id="mainTitle">🎯 I learn number names</h1>
 <!-- INTRODUCTION SECTION -->
@@ -1138,3 +1138,4 @@
     </script>
 </body>
 </html>
+
