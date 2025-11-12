@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Find the Number (1-10)</title>
+<style>
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            color: #667eea;
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .home-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            background: #667eea;
+            color: white;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 95vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            font-size: clamp(1.5em, 5vw, 2.5em);
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .home-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: clamp(0.9em, 2.5vw, 1.1em);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .home-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #764ba2;
+            font-size: clamp(0.9em, 3vw, 1.2em);
+            margin-bottom: 20px;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-radius: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .score-item {
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .score-label {
+            font-size: clamp(0.8em, 2.5vw, 1em);
+            color: #2d3436;
+            margin-bottom: 5px;
+        }
+
+        .score-value {
+            font-size: clamp(1.3em, 4vw, 2em);
+            font-weight: bold;
+            color: #d63031;
+        }
+
+        .progress-info {
+            text-align: center;
+            font-size: clamp(0.9em, 2.5vw, 1.1em);
+            color: white;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #a29bfe;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .game-area {
+            margin-bottom: 20px;
+        }
+
+        .question {
+            text-align: center;
+            font-size: clamp(1.2em, 4vw, 2em);
+            color: #2d3436;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #dfe6e9;
+            border-radius: 15px;
+        }
+
+        .number-display {
+            font-size: clamp(4em, 15vw, 8em);
+            font-weight: bold;
+            color: #00b894;
+            text-align: center;
+            margin: 20px 0;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+            animation: pulse 1s ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-items: center;
+        }
+
+        .option-btn {
+            padding: clamp(15px, 3vw, 25px);
+            font-size: clamp(1.8em, 5vw, 2.5em);
+            font-weight: bold;
+            border: 4px solid #dfe6e9;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            min-width: 70px;
+            width: 100%;
+        }
+
+        .option-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .option-btn:active {
+            transform: translateY(0);
+        }
+
+        .option-btn.correct {
+            background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+            animation: celebrate 0.5s ease;
+        }
+
+        .option-btn.wrong {
+            background: linear-gradient(135deg, #d63031 0%, #ff7675 100%);
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes celebrate {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.2) rotate(-10deg); }
+            75% { transform: scale(1.2) rotate(10deg); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .feedback {
+            text-align: center;
+            font-size: clamp(1.5em, 5vw, 2.5em);
+            font-weight: bold;
+            min-height: 50px;
+            margin: 15px 0;
+        }
+
+        .feedback.correct {
+            color: #00b894;
+        }
+
+        .feedback.wrong {
+            color: #d63031;
+        }
+
+        .next-btn {
+            display: block;
+            margin: 15px auto;
+            padding: clamp(12px, 2.5vw, 20px) clamp(30px, 6vw, 50px);
+            font-size: clamp(1.1em, 3vw, 1.5em);
+            font-weight: bold;
+            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .retry-btn {
+            display: block;
+            margin: 15px auto;
+            padding: clamp(12px, 2.5vw, 20px) clamp(30px, 6vw, 50px);
+            font-size: clamp(1.1em, 3vw, 1.5em);
+            font-weight: bold;
+            background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .retry-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .button-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .stars {
+            text-align: center;
+            font-size: clamp(2em, 6vw, 3em);
+            margin: 15px 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Tablet optimization */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 25px;
+            }
+            
+            .options {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
+        /* Mobile optimization */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 15px;
+                border-radius: 15px;
+            }
+            
+            .options {
+                gap: 8px;
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .score-board {
+                padding: 10px;
+            }
+            
+            .button-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .next-btn, .retry-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .options {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+<button class="home-button" onclick="window.location.href='../math-index.html'">
+<span>🏠</span>
+<span>Home</span>
+</button>
+<div class="container">
+<h1>🎯 Find the Number! (1-10)</h1>
+<div class="subtitle">Can you find the right number?</div>
+<div class="score-board">
+<div class="score-item">
+<div class="score-label">Correct</div>
+<div class="score-value" id="correct-score">0</div>
+</div>
+<div class="score-item">
+<div class="score-label">Total</div>
+<div class="score-value" id="total-score">0</div>
+</div>
+</div>
+<div class="progress-info" id="progress-info">
+            Practice all numbers 1-10
+        </div>
+<div class="game-area">
+<div class="question">Pick every <span id="question-number" style="color: #00b894; font-weight: bold;">1</span></div>
+<div class="number-display" id="number-display">1</div>
+<div class="feedback" id="feedback"></div>
+<div class="stars" id="stars"></div>
+<div class="options" id="options"></div>
+<div class="button-container">
+<button class="retry-btn hidden" id="retry-btn">🔄 Try Again</button>
+<button class="next-btn hidden" id="next-btn">Next Number →</button>
+</div>
+</div>
+</div>
+<script>
+        const MIN_NUMBER = 1;
+        const MAX_NUMBER = 10;
+        const TOTAL_NUMBERS = MAX_NUMBER - MIN_NUMBER + 1;
+        const REQUIRED_CORRECT_PER_NUMBER = 2;
+        
+        let currentNumber = 1;
+        let correctCount = 0;
+        let totalCount = 0;
+        let answered = false;
+        let recentNumbers = [];
+        let numberCorrectCount = {}; // Track correct answers per number
+        let gameComplete = false;
+
+        // Initialize correct count for each number
+        for (let i = MIN_NUMBER; i <= MAX_NUMBER; i++) {
+            numberCorrectCount[i] = 0;
+        }
+
+        const numberDisplay = document.getElementById('number-display');
+        const optionsContainer = document.getElementById('options');
+        const feedback = document.getElementById('feedback');
+        const stars = document.getElementById('stars');
+        const nextBtn = document.getElementById('next-btn');
+        const retryBtn = document.getElementById('retry-btn');
+        const correctScore = document.getElementById('correct-score');
+        const totalScore = document.getElementById('total-score');
+        const progressInfo = document.getElementById('progress-info');
+        const questionNumber = document.getElementById('question-number');
+
+        const encouragements = [
+            "Amazing! 🌟",
+            "Superstar! ⭐",
+            "Excellent! 🎉",
+            "You're brilliant! 🌈",
+            "Perfect! 🎊",
+            "Wonderful! 💫",
+            "Great job! 🎯",
+            "Fantastic! 🏆"
+        ];
+
+        const tryAgain = [
+            "Try again! 💪",
+            "Not quite! Keep trying! 🔄",
+            "Oops! Look carefully! 👀",
+            "Almost! Try once more! 🎯"
+        ];
+
+        // Audio Context for generating sounds
+        let audioContext = null;
+
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        // Function to speak feedback messages
+        function speakFeedback(message) {
+            // Cancel any ongoing speech
+            window.speechSynthesis.cancel();
+            
+            // Clean message by removing emojis for better speech
+            const cleanMessage = message.replace(/[^\w\s!?.,']/g, '');
+            
+            const utterance = new SpeechSynthesisUtterance(cleanMessage);
+            utterance.rate = 0.9;
+            utterance.pitch = 1.1;
+            utterance.volume = 1;
+            
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function playSuccessSound() {
+            initAudio();
+            
+            const now = audioContext.currentTime;
+            
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(523.25, now);
+            oscillator.frequency.setValueAtTime(659.25, now + 0.1);
+            oscillator.frequency.setValueAtTime(783.99, now + 0.2);
+            
+            gainNode.gain.setValueAtTime(0.3, now);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+            
+            oscillator.start(now);
+            oscillator.stop(now + 0.4);
+            
+            const oscillator2 = audioContext.createOscillator();
+            const gainNode2 = audioContext.createGain();
+            
+            oscillator2.connect(gainNode2);
+            gainNode2.connect(audioContext.destination);
+            
+            oscillator2.type = 'triangle';
+            oscillator2.frequency.setValueAtTime(659.25, now);
+            oscillator2.frequency.setValueAtTime(783.99, now + 0.1);
+            oscillator2.frequency.setValueAtTime(1046.50, now + 0.2);
+            
+            gainNode2.gain.setValueAtTime(0.15, now);
+            gainNode2.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+            
+            oscillator2.start(now);
+            oscillator2.stop(now + 0.4);
+        }
+
+        function playOopsSound() {
+            initAudio();
+            
+            const now = audioContext.currentTime;
+            
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(392.00, now);
+            oscillator.frequency.setValueAtTime(349.23, now + 0.15);
+            
+            gainNode.gain.setValueAtTime(0.2, now);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+            
+            oscillator.start(now);
+            oscillator.stop(now + 0.3);
+        }
+
+        function updateProgressInfo() {
+            let completedNumbers = 0;
+            for (let i = MIN_NUMBER; i <= MAX_NUMBER; i++) {
+                if (numberCorrectCount[i] >= REQUIRED_CORRECT_PER_NUMBER) {
+                    completedNumbers++;
+                }
+            }
+            
+            const totalRequired = TOTAL_NUMBERS * REQUIRED_CORRECT_PER_NUMBER;
+            progressInfo.textContent = `Progress: ${correctCount}/${totalRequired} correct (Each number found 2 times = 20 total)`;
+            
+            if (completedNumbers === TOTAL_NUMBERS) {
+                progressInfo.textContent = `🎉 All 20 completed! You found each number twice! 🎉`;
+            }
+        }
+
+        function getNextNumber() {
+            let availableNumbers = [];
+            
+            for (let i = MIN_NUMBER; i <= MAX_NUMBER; i++) {
+                availableNumbers.push(i);
+            }
+            
+            // First priority: numbers that haven't reached 5 correct answers yet
+            const needsPractice = availableNumbers.filter(num => numberCorrectCount[num] < REQUIRED_CORRECT_PER_NUMBER);
+            
+            if (needsPractice.length > 0) {
+                let candidates = needsPractice;
+                
+                // Still avoid immediate repetition
+                if (recentNumbers.length >= 2 && 
+                    recentNumbers[recentNumbers.length - 1] === recentNumbers[recentNumbers.length - 2]) {
+                    candidates = needsPractice.filter(num => num !== recentNumbers[recentNumbers.length - 1]);
+                    if (candidates.length === 0) candidates = needsPractice;
+                }
+                
+                const selectedNumber = candidates[Math.floor(Math.random() * candidates.length)];
+                
+                recentNumbers.push(selectedNumber);
+                if (recentNumbers.length > 3) {
+                    recentNumbers.shift();
+                }
+                
+                return selectedNumber;
+            }
+            
+            // All numbers mastered - should trigger game completion
+            return MIN_NUMBER;
+        }
+
+        function getRandomNumbers(correct) {
+            // For "Pick every X" game, we need multiple instances of the correct number
+            // and other numbers as distractors
+            const numbers = [];
+            
+            // Add 2-3 instances of the correct number
+            const correctInstances = Math.floor(Math.random() * 2) + 2; // 2 or 3 instances
+            for (let i = 0; i < correctInstances; i++) {
+                numbers.push(correct);
+            }
+            
+            // Fill the rest with other numbers (distractors) to make 10 total
+            const distractors = [];
+            for (let i = MIN_NUMBER; i <= MAX_NUMBER; i++) {
+                if (i !== correct) {
+                    distractors.push(i);
+                }
+            }
+            
+            // Shuffle distractors and add enough to make 10 buttons total
+            distractors.sort(() => Math.random() - 0.5);
+            const neededDistractors = 10 - correctInstances;
+            for (let i = 0; i < neededDistractors; i++) {
+                numbers.push(distractors[i % distractors.length]);
+            }
+            
+            // Shuffle the array so correct numbers appear in random positions
+            return numbers.sort(() => Math.random() - 0.5);
+        }
+
+        let correctButtonsTotal = 0;
+        let correctButtonsClicked = 0;
+        let wrongButtonClicked = false;
+
+        function createOptions() {
+            optionsContainer.innerHTML = '';
+            correctButtonsTotal = 0;
+            correctButtonsClicked = 0;
+            wrongButtonClicked = false;
+            
+            const numbers = getRandomNumbers(currentNumber);
+            
+            // Count how many correct buttons there are
+            numbers.forEach(num => {
+                if (num === currentNumber) {
+                    correctButtonsTotal++;
+                }
+            });
+            
+            numbers.forEach(num => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.textContent = num;
+                button.dataset.clicked = 'false';
+                button.addEventListener('click', () => {
+                    initAudio();
+                    checkAnswer(num, button);
+                });
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selected, button) {
+            // Prevent clicking the same button twice
+            if (button.dataset.clicked === 'true') return;
+            
+            button.dataset.clicked = 'true';
+
+            if (selected === currentNumber) {
+                // Correct button clicked
+                correctButtonsClicked++;
+                button.classList.add('correct');
+                
+                playSuccessSound();
+                
+                // Check if all correct buttons have been clicked
+                if (correctButtonsClicked === correctButtonsTotal && !wrongButtonClicked) {
+                    // All correct, none wrong - full success!
+                    answered = true;
+                    totalCount++;
+                    correctCount++;
+                    numberCorrectCount[currentNumber]++;
+                    
+                    totalScore.textContent = totalCount;
+                    correctScore.textContent = correctCount;
+                    
+                    feedback.textContent = encouragements[Math.floor(Math.random() * encouragements.length)];
+                speakFeedback(feedback.textContent);
+                    feedback.className = 'feedback correct';
+                    stars.textContent = '⭐⭐⭐';
+                    numberDisplay.style.color = '#00b894';
+                    
+                    updateProgressInfo();
+                    
+                    // Disable all buttons
+                    const buttons = document.querySelectorAll('.option-btn');
+                    buttons.forEach(btn => btn.style.pointerEvents = 'none');
+                    
+                    // Check if all numbers have been mastered
+                    let allMastered = true;
+                    for (let i = MIN_NUMBER; i <= MAX_NUMBER; i++) {
+                        if (numberCorrectCount[i] < REQUIRED_CORRECT_PER_NUMBER) {
+                            allMastered = false;
+                            break;
+                        }
+                    }
+                    
+                    if (allMastered) {
+                        setTimeout(() => {
+                            showGameComplete();
+                        }, 2500);
+                    } else {
+                        setTimeout(() => {
+                            nextQuestion();
+                        }, 2500);
+                    }
+                } else {
+                    // This should not happen since there's only 1 correct button
+                    feedback.textContent = `Great! 💪`;
+                speakFeedback(feedback.textContent);
+                    feedback.className = 'feedback correct';
+                }
+                
+            } else {
+                // Wrong button clicked
+                wrongButtonClicked = true;
+                answered = true;
+                totalCount++;
+                totalScore.textContent = totalCount;
+                
+                button.classList.add('wrong');
+                feedback.textContent = tryAgain[Math.floor(Math.random() * tryAgain.length)];
+                speakFeedback(feedback.textContent);
+                feedback.className = 'feedback wrong';
+                
+                playOopsSound();
+                
+                // Highlight all correct answers
+                const buttons = document.querySelectorAll('.option-btn');
+                buttons.forEach(btn => {
+                    if (parseInt(btn.textContent) === currentNumber) {
+                        setTimeout(() => {
+                            btn.classList.add('correct');
+                        }, 500);
+                    }
+                    btn.style.pointerEvents = 'none'; // Disable all buttons
+                });
+                
+                numberDisplay.style.color = '#d63031';
+                
+                retryBtn.classList.remove('hidden');
+                nextBtn.classList.remove('hidden');
+            }
+        }
+
+        function nextQuestion() {
+            answered = false;
+            currentNumber = getNextNumber();
+            
+            numberDisplay.textContent = currentNumber;
+            questionNumber.textContent = currentNumber;
+            numberDisplay.style.color = '#00b894';
+            numberDisplay.style.animation = 'none';
+            setTimeout(() => {
+                numberDisplay.style.animation = 'pulse 1s ease-in-out';
+            }, 10);
+            
+            feedback.textContent = '';
+            feedback.className = 'feedback';
+            stars.textContent = '';
+            nextBtn.classList.add('hidden');
+            retryBtn.classList.add('hidden');
+            
+            createOptions();
+        }
+        
+        function retryQuestion() {
+            answered = false;
+            
+            questionNumber.textContent = currentNumber;
+            numberDisplay.style.color = '#00b894';
+            numberDisplay.style.animation = 'none';
+            setTimeout(() => {
+                numberDisplay.style.animation = 'pulse 1s ease-in-out';
+            }, 10);
+            
+            feedback.textContent = 'Let\'s try this number again! 💪';
+                speakFeedback(feedback.textContent);
+            feedback.className = 'feedback';
+            stars.textContent = '';
+            nextBtn.classList.add('hidden');
+            retryBtn.classList.add('hidden');
+            
+            createOptions();
+        }
+        
+        function showGameComplete() {
+            gameComplete = true;
+            
+            // Hide game elements
+            document.querySelector('.question').style.display = 'none';
+            numberDisplay.style.display = 'none';
+            optionsContainer.style.display = 'none';
+            nextBtn.style.display = 'none';
+            retryBtn.style.display = 'none';
+            
+            // Show completion message
+            feedback.textContent = '🎊 CONGRATULATIONS! 🎊';
+                speakFeedback(feedback.textContent);
+            feedback.className = 'feedback correct';
+            feedback.style.fontSize = 'clamp(2em, 7vw, 3.5em)';
+            
+            stars.textContent = '⭐🌟✨🎉✨🌟⭐';
+            
+            const completionMsg = document.createElement('div');
+            completionMsg.style.textAlign = 'center';
+            completionMsg.style.fontSize = 'clamp(1.2em, 4vw, 1.8em)';
+            completionMsg.style.color = '#2d3436';
+            completionMsg.style.margin = '20px 0';
+            completionMsg.innerHTML = `
+                <p style="margin: 15px 0;">🎉 You successfully identified all numbers 1-10 twice! 🎉</p>
+                <p style="margin: 15px 0;">You found all 10 numbers 2 times each = <strong>20 correct!</strong></p>
+                <p style="margin: 15px 0;">Total Questions: <strong>${totalCount}</strong></p>
+                <p style="margin: 15px 0;">Correct Answers: <strong>${correctCount}</strong></p>
+                <p style="margin: 15px 0;">Accuracy: <strong>${Math.round((correctCount/totalCount)*100)}%</strong></p>
+            `;
+            
+            document.querySelector('.game-area').appendChild(completionMsg);
+            
+            // Create restart button
+            const buttonContainer = document.querySelector('.button-container');
+            buttonContainer.innerHTML = '';
+            buttonContainer.classList.remove('hidden');
+            
+            const restartBtn = document.createElement('button');
+            restartBtn.className = 'retry-btn';
+            restartBtn.innerHTML = '🔄 Play Again';
+            restartBtn.style.display = 'block';
+            restartBtn.addEventListener('click', restartGame);
+            
+            buttonContainer.appendChild(restartBtn);
+        }
+        
+        function restartGame() {
+            // Reset all counters
+            correctCount = 0;
+            totalCount = 0;
+            gameComplete = false;
+            recentNumbers = [];
+            
+            for (let i = MIN_NUMBER; i <= MAX_NUMBER; i++) {
+                numberCorrectCount[i] = 0;
+            }
+            
+            correctScore.textContent = '0';
+            totalScore.textContent = '0';
+            
+            // Remove completion message
+            const completionMsg = document.querySelector('.game-area > div:last-child');
+            if (completionMsg && completionMsg.innerHTML.includes('successfully identified')) {
+                completionMsg.remove();
+            }
+            
+            // Show game elements
+            document.querySelector('.question').style.display = 'block';
+            numberDisplay.style.display = 'block';
+            optionsContainer.style.display = 'grid';
+            feedback.textContent = '';
+            feedback.style.fontSize = '';
+            stars.textContent = '';
+            
+            updateProgressInfo();
+            nextQuestion();
+        }
+        
+
+        nextBtn.addEventListener('click', nextQuestion);
+        retryBtn.addEventListener('click', retryQuestion);
+
+        // Initialize game
+        updateProgressInfo();
+        createOptions();
+    </script>
+</body>
+</html>
