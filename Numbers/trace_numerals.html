@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paint Inside the Number!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            padding: 10px;
+            overflow-x: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            contain: layout style;
+            padding: 5px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            padding: 10px 5px;
+        }
+
+        .header h1 {
+            font-size: clamp(1.3em, 4vw, 2.5em);
+            margin-bottom: 8px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .instructions {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+            font-size: clamp(0.85em, 2vw, 1.1em);
+            backdrop-filter: blur(10px);
+        }
+
+        .number-selector {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .number-btn {
+            width: clamp(40px, 8vw, 50px);
+            height: clamp(40px, 8vw, 50px);
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: white;
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            font-size: clamp(1em, 3vw, 1.4em);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .number-btn:hover {
+            transform: scale(1.15);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .number-btn.active {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-color: white;
+            transform: scale(1.2);
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            50% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
+        }
+
+        .game-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            min-height: 300px;
+            height: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .canvas-container {
+            position: relative;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            padding: 15px 10px 10px 10px;
+            border: 6px solid rgba(255, 255, 255, 0.8);
+            width: fit-content;
+            margin: 0 auto;
+            will-change: contents;
+            transform: translateZ(0);
+            max-width: 95vw;
+        }
+
+        #game-canvas {
+            display: block;
+            cursor: crosshair;
+            touch-action: none;
+            border-radius: 15px;
+            max-width: 100%;
+            max-height: 70vh;
+        }
+
+        .feedback {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: clamp(1em, 3.5vw, 1.8em);
+            font-weight: bold;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            white-space: nowrap;
+            animation: fadeIn 0.5s ease;
+            z-index: 100;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .feedback.error {
+            color: #ff6b6b;
+        }
+
+        .feedback.success {
+            color: #51cf66;
+            font-size: clamp(1.5em, 5vw, 2.5em);
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 8px;
+        }
+
+        .control-btn {
+            padding: 12px 25px;
+            font-size: clamp(0.9em, 2.2vw, 1.1em);
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .clear-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+        }
+
+        .check-btn {
+            background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
+        }
+
+        .control-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .control-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #fbbf24;
+            animation: confetti-fall 3s ease-out forwards;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .canvas-container {
+                padding: 10px 5px 5px 5px;
+                border-width: 4px;
+            }
+
+            .header h1 {
+                font-size: clamp(1.2em, 5vw, 1.8em);
+            }
+
+            .instructions {
+                padding: 8px;
+                font-size: clamp(0.8em, 2.5vw, 1em);
+            }
+
+            .control-btn {
+                padding: 10px 20px;
+                font-size: clamp(0.85em, 2.5vw, 1em);
+            }
+
+            .feedback {
+                top: -40px;
+                font-size: clamp(0.9em, 4vw, 1.5em);
+            }
+        }
+
+        @media (max-height: 700px) {
+            .header {
+                padding: 5px;
+            }
+
+            .header h1 {
+                margin-bottom: 5px;
+            }
+
+            .instructions {
+                padding: 6px;
+            }
+
+            .number-selector {
+                gap: 6px;
+                padding: 5px;
+                margin-bottom: 5px;
+            }
+
+            .game-area {
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 Paint Inside the Number! 🎨</h1>
+            <div class="instructions">
+                Paint carefully inside the number! Don't go outside the lines! 🖌️
+            </div>
+        </div>
+
+        <div class="number-selector" id="number-selector">
+            <!-- Numbers 0-10 will be generated here -->
+        </div>
+
+        <div class="game-area">
+            <div class="canvas-container">
+                <div class="feedback" id="feedback">Paint inside the number!</div>
+                <canvas id="game-canvas"></canvas>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn clear-btn" id="clear-btn">🔄 Clear</button>
+            <button class="control-btn check-btn" id="check-btn">✓ Check My Work</button>
+        </div>
+    </div>
+
+    <script>
+        let currentNumber = 1;
+        let isDrawing = false;
+        let hasGoneOutside = false;
+        let paintedPixels = new Set();
+        let totalNumberPixels = 0;
+        let lastX = 0;
+        let lastY = 0;
+        let numberMaskCanvas = null;
+        let numberMaskCtx = null;
+        let hasPlayedAudio = false;
+        let audioTimeout = null;
+
+        const canvas = document.getElementById('game-canvas');
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        const feedback = document.getElementById('feedback');
+        const clearBtn = document.getElementById('clear-btn');
+        const checkBtn = document.getElementById('check-btn');
+        const numberSelector = document.getElementById('number-selector');
+
+        // Generate number buttons (0-10)
+        for (let i = 0; i <= 10; i++) {
+            const btn = document.createElement('button');
+            btn.className = 'number-btn';
+            btn.textContent = i;
+            if (i === currentNumber) btn.classList.add('active');
+            btn.addEventListener('click', () => changeNumber(i));
+            numberSelector.appendChild(btn);
+        }
+
+        let progressUpdateTimeout = null;
+
+        function resizeCanvas() {
+            // Calculate size based on available screen space - increased height
+            const maxWidth = Math.min(600, window.innerWidth - 60);
+            const maxHeight = Math.min(600, window.innerHeight * 0.65); // Increased from 0.5 to 0.65
+            const size = Math.min(maxWidth, maxHeight);
+            
+            // Only resize if canvas hasn't been sized yet or window actually changed significantly
+            if (canvas.width === 0 || Math.abs(canvas.width - size) > 50) {
+                canvas.width = size;
+                canvas.height = size;
+                setupNumber();
+            }
+        }
+
+        resizeCanvas();
+        // Remove resize listener to prevent shake on number changes
+        // window.addEventListener('resize', resizeCanvas);
+
+        function setupNumber() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            paintedPixels.clear();
+            hasGoneOutside = false;
+
+            // Create mask canvas for fast collision detection
+            if (!numberMaskCanvas) {
+                numberMaskCanvas = document.createElement('canvas');
+                numberMaskCtx = numberMaskCanvas.getContext('2d');
+            }
+            numberMaskCanvas.width = canvas.width;
+            numberMaskCanvas.height = canvas.height;
+
+            drawNumberOnCanvas();
+            updateProgress();
+        }
+
+        function isPointInsideNumber(x, y) {
+            if (x < 0 || y < 0 || x >= canvas.width || y >= canvas.height) return false;
+            const pixel = numberMaskCtx.getImageData(x, y, 1, 1).data;
+            return pixel[3] > 128;
+        }
+
+        function playNumberAudio() {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(currentNumber.toString());
+                utterance.rate = 0.8; // Slower for kids
+                utterance.pitch = 1.2; // Slightly higher pitch for child-friendly voice
+                utterance.volume = 1.0;
+                window.speechSynthesis.cancel(); // Cancel any ongoing speech
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            
+            lastX = Math.floor(((e.clientX || (e.touches && e.touches[0].clientX)) - rect.left) * scaleX);
+            lastY = Math.floor(((e.clientY || (e.touches && e.touches[0].clientY)) - rect.top) * scaleY);
+            
+            // Play audio 0.5 seconds after starting to draw
+            if (!hasPlayedAudio) {
+                audioTimeout = setTimeout(() => {
+                    playNumberAudio();
+                    hasPlayedAudio = true;
+                }, 500);
+            }
+            
+            draw(e);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            e.preventDefault();
+
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            
+            const x = Math.floor(((e.clientX || (e.touches && e.touches[0].clientX)) - rect.left) * scaleX);
+            const y = Math.floor(((e.clientY || (e.touches && e.touches[0].clientY)) - rect.top) * scaleY);
+
+            // Interpolate between last position and current position for smooth drawing
+            const dx = x - lastX;
+            const dy = y - lastY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            const steps = Math.max(1, Math.ceil(distance / 5));
+
+            for (let i = 0; i <= steps; i++) {
+                const t = i / steps;
+                const ix = Math.floor(lastX + dx * t);
+                const iy = Math.floor(lastY + dy * t);
+                
+                paintAtPoint(ix, iy);
+            }
+
+            lastX = x;
+            lastY = y;
+        }
+
+        function paintAtPoint(x, y) {
+            const isInside = isPointInsideNumber(x, y);
+            const brushSize = 15;
+
+            if (!isInside) {
+                // Only count as "outside" if significantly outside (check surrounding area)
+                let outsideCount = 0;
+                const checkRadius = 10;
+                for (let dx = -checkRadius; dx <= checkRadius; dx += 5) {
+                    for (let dy = -checkRadius; dy <= checkRadius; dy += 5) {
+                        if (!isPointInsideNumber(x + dx, y + dy)) {
+                            outsideCount++;
+                        }
+                    }
+                }
+                
+                // Only flag as error if mostly outside (more than 70% of checked points)
+                if (outsideCount > 15) {
+                    hasGoneOutside = true;
+                    showFeedback('❌ Oops! Stay inside!', 'error');
+                    
+                    // Draw red mark where they went outside
+                    ctx.fillStyle = 'rgba(255, 107, 107, 0.6)';
+                    ctx.beginPath();
+                    ctx.arc(x, y, 12, 0, Math.PI * 2);
+                    ctx.fill();
+                    return; // Don't paint if significantly outside
+                }
+            }
+            
+            // Paint normally (even if slightly touching boundary)
+            // No automatic feedback during painting
+            
+            // Choose a random color
+            const colors = ['#51cf66', '#4dabf7', '#fbbf24', '#ff6b6b', '#cc5de8'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            // Draw with gradient for smooth edges
+            const gradient = ctx.createRadialGradient(x, y, 0, x, y, brushSize);
+            gradient.addColorStop(0, color);
+            gradient.addColorStop(0.7, color);
+            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(x, y, brushSize, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Track painted pixels (sample every 2 pixels for performance)
+            for (let dx = -brushSize; dx <= brushSize; dx += 2) {
+                for (let dy = -brushSize; dy <= brushSize; dy += 2) {
+                    if (dx * dx + dy * dy <= brushSize * brushSize) {
+                        const px = x + dx;
+                        const py = y + dy;
+                        if (px >= 0 && py >= 0 && px < canvas.width && py < canvas.height) {
+                            if (isPointInsideNumber(px, py)) {
+                                paintedPixels.add(`${Math.floor(px/2)},${Math.floor(py/2)}`);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+            updateProgress(); // Update progress when drawing stops
+        }
+
+        function updateProgress() {
+            // Throttle progress updates for better performance
+            if (progressUpdateTimeout) return;
+            
+            progressUpdateTimeout = setTimeout(() => {
+                const coverage = Math.min(100, Math.floor((paintedPixels.size / (totalNumberPixels / 4)) * 100));
+
+                // No automatic feedback - only when user clicks "Check My Work"
+                
+                progressUpdateTimeout = null;
+            }, 100);
+        }
+
+        function showFeedback(message, type = '') {
+            feedback.textContent = message;
+            feedback.className = 'feedback ' + type;
+        }
+
+        function createConfetti() {
+            const colors = ['#fbbf24', '#51cf66', '#4dabf7', '#ff6b6b', '#cc5de8'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * window.innerWidth + 'px';
+                    confetti.style.top = '-10px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                    confetti.style.height = confetti.style.width;
+                    confetti.style.position = 'fixed'; // Use fixed positioning
+                    confetti.style.pointerEvents = 'none'; // Don't interfere with clicks
+                    confetti.style.zIndex = '9999';
+                    document.body.appendChild(confetti);
+
+                    // Remove after animation with fade out
+                    setTimeout(() => {
+                        confetti.style.opacity = '0';
+                        confetti.style.transition = 'opacity 0.3s';
+                        setTimeout(() => confetti.remove(), 300);
+                    }, 2700);
+                }, i * 30);
+            }
+        }
+
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+        canvas.addEventListener('touchstart', startDrawing);
+        canvas.addEventListener('touchmove', draw);
+        canvas.addEventListener('touchend', stopDrawing);
+
+        clearBtn.addEventListener('click', () => {
+            setupNumber();
+            hasPlayedAudio = false;
+            if (audioTimeout) {
+                clearTimeout(audioTimeout);
+                audioTimeout = null;
+            }
+            showFeedback('Try again! 💪', '');
+        });
+
+        checkBtn.addEventListener('click', () => {
+            const coverage = Math.floor((paintedPixels.size / totalNumberPixels) * 100);
+            
+            if (hasGoneOutside) {
+                showFeedback('❌ You went outside! Try again!', 'error');
+            } else if (paintedPixels.size > 10) {
+                // If they've painted anything inside without going outside, they did well
+                showFeedback('🎉 Well done! Great job! 🎉', 'success');
+                createConfetti();
+            } else {
+                showFeedback('🎨 Start painting inside!', '');
+            }
+        });
+
+        function changeNumber(num) {
+            currentNumber = num;
+            
+            const buttons = document.querySelectorAll('.number-btn');
+            buttons.forEach((btn, index) => {
+                btn.classList.toggle('active', index === currentNumber);
+            });
+
+            // Reset audio flag for new number
+            hasPlayedAudio = false;
+            if (audioTimeout) {
+                clearTimeout(audioTimeout);
+                audioTimeout = null;
+            }
+
+            // Don't call setupNumber directly, just update the content
+            paintedPixels.clear();
+            hasGoneOutside = false;
+            
+            // Redraw without resizing
+            drawNumberOnCanvas();
+            showFeedback('Paint inside the number!', '');
+        }
+
+        function drawNumberOnCanvas() {
+            // Update mask canvas
+            const fontSize = canvas.width * 0.6; // Reduced from 0.7 to 0.6 to prevent trimming
+            numberMaskCtx.clearRect(0, 0, canvas.width, canvas.height);
+            numberMaskCtx.font = `900 ${fontSize}px 'Barlow Condensed', 'Arial Narrow', sans-serif`;
+            numberMaskCtx.textAlign = 'center';
+            numberMaskCtx.textBaseline = 'middle';
+            
+            // Draw filled number first
+            numberMaskCtx.fillStyle = 'black';
+            numberMaskCtx.fillText(currentNumber.toString(), canvas.width / 2, canvas.height / 2);
+            
+            // Clear and draw outline with thick stroke
+            numberMaskCtx.clearRect(0, 0, canvas.width, canvas.height);
+            numberMaskCtx.strokeStyle = 'black';
+            numberMaskCtx.lineWidth = 80;
+            numberMaskCtx.lineJoin = 'round';
+            numberMaskCtx.lineCap = 'round';
+            numberMaskCtx.strokeText(currentNumber.toString(), canvas.width / 2, canvas.height / 2);
+
+            // Count total pixels in the stroke area only
+            const imageData = numberMaskCtx.getImageData(0, 0, canvas.width, canvas.height);
+            totalNumberPixels = 0;
+            for (let i = 0; i < imageData.data.length; i += 4) {
+                if (imageData.data[i + 3] > 128) {
+                    totalNumberPixels++;
+                }
+            }
+
+            // Draw on main canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.font = `900 ${fontSize}px 'Barlow Condensed', 'Arial Narrow', sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            // Draw outline
+            ctx.strokeStyle = '#667eea';
+            ctx.lineWidth = 8;
+            ctx.strokeText(currentNumber.toString(), canvas.width / 2, canvas.height / 2);
+
+            // Draw light fill to show where to paint
+            ctx.fillStyle = 'rgba(200, 200, 200, 0.3)';
+            ctx.fillText(currentNumber.toString(), canvas.width / 2, canvas.height / 2);
+        }
+
+        setupNumber();
+    </script>
+</body>
+</html>
