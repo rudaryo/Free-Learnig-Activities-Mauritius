@@ -287,7 +287,11 @@
     </style>
 </head>
 <body>
-<a class="back-button" href="../math-index.html">🏠 Home</a>
+    <button class="home-button" onclick="window.location.href='math-index.html'">
+        <span>🏠</span>
+        <span>Home</span>
+    </button>
+
     <div class="game-container">
         <div class="header">
             <h1>🎯 Drag and Drop Addition 🎯</h1>
@@ -599,48 +603,4 @@
                         // More levels to go
                         setTimeout(() => {
                             document.getElementById('next-level-btn').style.display = 'block';
-                        }, 1000);
-                    } else {
-                        // Game complete
-                        setTimeout(() => {
-                            document.getElementById('completion-message').style.display = 'block';
-                        }, 1000);
-                    }
-                } else {
-                    // More challenges in this level - auto-load next challenge
-                    setTimeout(() => {
-                        initLevel();
-                    }, 1500);
-                }
-            }
-        }
-
-        // Setup drop zone
-        const rightCircle = document.getElementById('right-circle');
-        rightCircle.addEventListener('dragover', handleDragOver);
-        rightCircle.addEventListener('dragenter', handleDragEnter);
-        rightCircle.addEventListener('dragleave', handleDragLeave);
-        rightCircle.addEventListener('drop', handleDrop);
-
-        // Next level button
-        document.getElementById('next-level-btn').addEventListener('click', () => {
-            currentLevel++;
-            currentChallenge = 0;
-            usedChallenges = [];
-            initLevel();
-        });
-
-        // Restart button
-        document.getElementById('restart-btn').addEventListener('click', () => {
-            currentLevel = 0;
-            currentChallenge = 0;
-            usedChallenges = [];
-            document.getElementById('completion-message').style.display = 'none';
-            initLevel();
-        });
-
-        // Initialize first level
-        initLevel();
-    </script>
-</body>
-</html>
+          
