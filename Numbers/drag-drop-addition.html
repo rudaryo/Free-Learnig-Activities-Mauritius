@@ -22,7 +22,7 @@
         }
 
         .home-button {
-            position: absolute;
+            position: fixed;
             top: 25px;
             left: 25px;
             background: white;
@@ -30,8 +30,8 @@
             padding: 15px 35px;
             border-radius: 50px;
             border: none;
-            font-weight: 700px;
-            font-size: 26px;
+            font-weight: 800;
+            font-size: 25px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
             transition: all 0.3s ease;
             z-index: 1000;
@@ -287,7 +287,11 @@
     </style>
 </head>
 <body>
-   <button class="back-button" onclick="window.location.href='../math-index.html'">← Home</button>
+ <button class="home-button" onclick="window.location.href='../math-index.html'">
+<span>🏠</span>
+<span>Home</span>
+</button>
+     
     <div class="game-container">
         <div class="header">
             <h1>🎯 Drag and Drop Addition 🎯</h1>
