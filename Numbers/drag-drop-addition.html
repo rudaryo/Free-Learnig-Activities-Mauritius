@@ -211,6 +211,29 @@
             transform: scale(0.95);
         }
 
+        .restart-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3em;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 20px auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+            display: block;
+        }
+
+        .restart-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .restart-btn:active {
+            transform: scale(0.95);
+        }
+
         .celebration {
             display: none;
             text-align: center;
@@ -303,6 +326,8 @@
         <div class="celebration" id="celebration">🎉 Excellent! Well Done! 🎉</div>
         
         <button class="next-level-btn" id="next-level-btn">Next Level ➜</button>
+        
+        <button class="restart-btn" id="restart-btn">🔄 Restart Game</button>
 
         <div class="completion-message" id="completion-message">
             <h2>🏆 Congratulations! 🏆</h2>
@@ -575,6 +600,13 @@
         // Next level button
         document.getElementById('next-level-btn').addEventListener('click', () => {
             currentLevel++;
+            initLevel();
+        });
+
+        // Restart button
+        document.getElementById('restart-btn').addEventListener('click', () => {
+            currentLevel = 0;
+            document.getElementById('completion-message').style.display = 'none';
             initLevel();
         });
 
