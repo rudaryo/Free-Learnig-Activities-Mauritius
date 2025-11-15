@@ -418,6 +418,10 @@
             document.getElementById('current-level').textContent = currentLevel + 1;
             instruction.textContent = `Drag and drop the ${currentLevelConfig.name} into the bigger circle!`;
             
+            // Set the initial numbers for left and middle (these won't change)
+            document.getElementById('left-number').textContent = currentLevelConfig.leftCount;
+            document.getElementById('middle-number').textContent = currentLevelConfig.middleCount;
+            
             // Create emojis for left circle
             for (let i = 0; i < currentLevelConfig.leftCount; i++) {
                 const emoji = createEmoji(currentLevelConfig.leftEmoji, 'left', i);
@@ -520,8 +524,8 @@
         }
 
         function updateNumbers() {
-            document.getElementById('left-number').textContent = leftCircleEmojis.length;
-            document.getElementById('middle-number').textContent = middleCircleEmojis.length;
+            // Left and middle numbers stay constant (showing original counts)
+            // Only update the right number box to show current total
             document.getElementById('right-number').textContent = rightCircleEmojis.length;
         }
 
