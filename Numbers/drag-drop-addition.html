@@ -369,51 +369,53 @@
 
         // Game levels configuration with multiple possibilities
         const levelPossibilities = [
-            // Level 1: Sum between 2 and 5 (6 possibilities)
+            // Level 1: Sum between 2 and 5 (7 possibilities)
             [
                 { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 1, middleCount: 1, name: 'apples' }, // 2
                 { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 1, middleCount: 2, name: 'apples' }, // 3
+                { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 2, middleCount: 1, name: 'apples' }, // 3
                 { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 1, middleCount: 3, name: 'apples' }, // 4
-                { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 1, middleCount: 4, name: 'apples' }, // 5
                 { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 2, middleCount: 2, name: 'apples' }, // 4
+                { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 1, middleCount: 4, name: 'apples' }, // 5
                 { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 2, middleCount: 3, name: 'apples' }  // 5
             ],
-            // Level 2: Sum between 2 and 10 (8 possibilities)
+            // Level 2: Sum between 2 and 10 (7 possibilities)
             [
                 { leftEmoji: '🚗', middleEmoji: '🚗', leftCount: 1, middleCount: 1, name: 'cars' }, // 2
                 { leftEmoji: '🚗', middleEmoji: '🚗', leftCount: 2, middleCount: 2, name: 'cars' }, // 4
-                { leftEmoji: '🚗', middleEmoji: '🚗', leftCount: 3, middleCount: 2, name: 'cars' }, // 5
-                { leftEmoji: '🚗', middleEmoji: '🚗', leftCount: 4, middleCount: 2, name: 'cars' }, // 6
-                { leftEmoji: '🚗', middleEmoji: '🚗', leftCount: 3, middleCount: 4, name: 'cars' }, // 7
+                { leftEmoji: '🚗', middleEmoji: '🚗', leftCount: 3, middleCount: 3, name: 'cars' }, // 6
+                { leftEmoji: '🚗', middleEmoji: '🚗', leftCount: 4, middleCount: 3, name: 'cars' }, // 7
                 { leftEmoji: '🚗', middleEmoji: '🚗', leftCount: 5, middleCount: 3, name: 'cars' }, // 8
                 { leftEmoji: '🚗', middleEmoji: '🚗', leftCount: 4, middleCount: 5, name: 'cars' }, // 9
-                { leftEmoji: '🚗', middleEmoji: '🚗', leftCount: 6, middleCount: 4, name: 'cars' }  // 10
+                { leftEmoji: '🚗', middleEmoji: '🚗', leftCount: 5, middleCount: 5, name: 'cars' }  // 10
             ],
-            // Level 3: Sum from 1 to 5 (6 possibilities - includes zero)
+            // Level 3: Sum from 1 to 5 (7 possibilities - includes zero)
             [
                 { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 0, middleCount: 1, name: 'stars' }, // 1
-                { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 1, middleCount: 1, name: 'stars' }, // 2
+                { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 1, middleCount: 0, name: 'stars' }, // 1
                 { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 2, middleCount: 0, name: 'stars' }, // 2
+                { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 1, middleCount: 2, name: 'stars' }, // 3
                 { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 1, middleCount: 3, name: 'stars' }, // 4
-                { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 1, middleCount: 4, name: 'stars' }, // 5
+                { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 2, middleCount: 3, name: 'stars' }, // 5
                 { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 0, middleCount: 5, name: 'stars' }  // 5
             ],
-            // Level 4: Sum from 1 to 10 (8 possibilities - includes zero)
+            // Level 4: Sum from 1 to 10 (7 possibilities - includes zero)
             [
                 { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 1, middleCount: 0, name: 'bananas' }, // 1
                 { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 0, middleCount: 3, name: 'bananas' }, // 3
                 { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 2, middleCount: 3, name: 'bananas' }, // 5
-                { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 3, middleCount: 3, name: 'bananas' }, // 6
-                { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 0, middleCount: 7, name: 'bananas' }, // 7
+                { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 3, middleCount: 4, name: 'bananas' }, // 7
                 { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 5, middleCount: 3, name: 'bananas' }, // 8
                 { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 4, middleCount: 5, name: 'bananas' }, // 9
-                { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 5, middleCount: 5, name: 'bananas' }  // 10
+                { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 0, middleCount: 10, name: 'bananas' }  // 10
             ]
         ];
 
         let currentLevelConfig;
 
         let currentLevel = 0;
+        let currentChallenge = 0;
+        let usedChallenges = []; // Track which challenges have been used in current level
         let leftCircleEmojis = [];
         let middleCircleEmojis = [];
         let rightCircleEmojis = [];
@@ -421,7 +423,18 @@
         function initLevel() {
             // Select random configuration from current level's possibilities
             const possibilities = levelPossibilities[currentLevel];
-            const randomIndex = Math.floor(Math.random() * possibilities.length);
+            
+            // Get an unused challenge or reset if all have been used
+            if (usedChallenges.length >= possibilities.length) {
+                usedChallenges = [];
+            }
+            
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * possibilities.length);
+            } while (usedChallenges.includes(randomIndex));
+            
+            usedChallenges.push(randomIndex);
             currentLevelConfig = possibilities[randomIndex];
             
             const leftCircle = document.getElementById('left-circle');
@@ -442,7 +455,7 @@
             nextBtn.style.display = 'none';
             
             // Update level info
-            document.getElementById('current-level').textContent = currentLevel + 1;
+            document.getElementById('current-level').textContent = `${currentLevel + 1} (${currentChallenge + 1}/7)`;
             instruction.textContent = `Drag and drop the ${currentLevelConfig.name} into the bigger circle!`;
             
             // Set the initial numbers for left and middle (these won't change)
@@ -581,13 +594,27 @@
                 playSuccessSound();
                 document.getElementById('celebration').style.display = 'block';
                 
-                if (currentLevel < levelPossibilities.length - 1) {
-                    document.getElementById('next-level-btn').style.display = 'block';
+                currentChallenge++;
+                
+                // Check if all 7 challenges completed for this level
+                if (currentChallenge >= 7) {
+                    // Level complete
+                    if (currentLevel < levelPossibilities.length - 1) {
+                        // More levels to go
+                        setTimeout(() => {
+                            document.getElementById('next-level-btn').style.display = 'block';
+                        }, 1000);
+                    } else {
+                        // Game complete
+                        setTimeout(() => {
+                            document.getElementById('completion-message').style.display = 'block';
+                        }, 1000);
+                    }
                 } else {
-                    // Game complete
+                    // More challenges in this level - auto-load next challenge
                     setTimeout(() => {
-                        document.getElementById('completion-message').style.display = 'block';
-                    }, 1000);
+                        initLevel();
+                    }, 1500);
                 }
             }
         }
@@ -602,8 +629,22 @@
         // Next level button
         document.getElementById('next-level-btn').addEventListener('click', () => {
             currentLevel++;
+            currentChallenge = 0;
+            usedChallenges = [];
             initLevel();
         });
 
         // Restart button
-        document.
+        document.getElementById('restart-btn').addEventListener('click', () => {
+            currentLevel = 0;
+            currentChallenge = 0;
+            usedChallenges = [];
+            document.getElementById('completion-message').style.display = 'none';
+            initLevel();
+        });
+
+        // Initialize first level
+        initLevel();
+    </script>
+</body>
+</html>
