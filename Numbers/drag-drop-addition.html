@@ -287,7 +287,11 @@
     </style>
 </head>
 <body>
-  <button class="home-button" onclick="window.location.href='../math-index.html'">🏠 Home</button>
+    <button class="home-button" onclick="window.location.href='math-index.html'">
+        <span>🏠</span>
+        <span>Home</span>
+    </button>
+
     <div class="game-container">
         <div class="header">
             <h1>🎯 Drag and Drop Addition 🎯</h1>
@@ -365,13 +369,14 @@
 
         // Game levels configuration with multiple possibilities
         const levelPossibilities = [
-            // Level 1: Sum between 2 and 5 (5 possibilities)
+            // Level 1: Sum between 2 and 5 (6 possibilities)
             [
                 { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 1, middleCount: 1, name: 'apples' }, // 2
-                { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 2, middleCount: 1, name: 'apples' }, // 3
                 { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 1, middleCount: 2, name: 'apples' }, // 3
+                { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 1, middleCount: 3, name: 'apples' }, // 4
+                { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 1, middleCount: 4, name: 'apples' }, // 5
                 { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 2, middleCount: 2, name: 'apples' }, // 4
-                { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 3, middleCount: 2, name: 'apples' }  // 5
+                { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 2, middleCount: 3, name: 'apples' }  // 5
             ],
             // Level 2: Sum between 2 and 10 (8 possibilities)
             [
@@ -384,21 +389,22 @@
                 { leftEmoji: '🚗', middleEmoji: '🚗', leftCount: 4, middleCount: 5, name: 'cars' }, // 9
                 { leftEmoji: '🚗', middleEmoji: '🚗', leftCount: 6, middleCount: 4, name: 'cars' }  // 10
             ],
-            // Level 3: Sum from 1 to 5 (5 possibilities)
+            // Level 3: Sum from 1 to 5 (6 possibilities - includes zero)
             [
-                { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 1, middleCount: 0, name: 'stars' }, // 1
-                { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 0, middleCount: 2, name: 'stars' }, // 2
-                { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 2, middleCount: 1, name: 'stars' }, // 3
+                { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 0, middleCount: 1, name: 'stars' }, // 1
+                { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 1, middleCount: 1, name: 'stars' }, // 2
+                { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 2, middleCount: 0, name: 'stars' }, // 2
                 { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 1, middleCount: 3, name: 'stars' }, // 4
-                { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 3, middleCount: 2, name: 'stars' }  // 5
+                { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 1, middleCount: 4, name: 'stars' }, // 5
+                { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 0, middleCount: 5, name: 'stars' }  // 5
             ],
-            // Level 4: Sum from 1 to 10 (8 possibilities)
+            // Level 4: Sum from 1 to 10 (8 possibilities - includes zero)
             [
                 { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 1, middleCount: 0, name: 'bananas' }, // 1
-                { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 1, middleCount: 2, name: 'bananas' }, // 3
+                { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 0, middleCount: 3, name: 'bananas' }, // 3
                 { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 2, middleCount: 3, name: 'bananas' }, // 5
                 { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 3, middleCount: 3, name: 'bananas' }, // 6
-                { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 4, middleCount: 3, name: 'bananas' }, // 7
+                { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 0, middleCount: 7, name: 'bananas' }, // 7
                 { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 5, middleCount: 3, name: 'bananas' }, // 8
                 { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 4, middleCount: 5, name: 'bananas' }, // 9
                 { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 5, middleCount: 5, name: 'bananas' }  // 10
@@ -600,14 +606,4 @@
         });
 
         // Restart button
-        document.getElementById('restart-btn').addEventListener('click', () => {
-            currentLevel = 0;
-            document.getElementById('completion-message').style.display = 'none';
-            initLevel();
-        });
-
-        // Initialize first level
-        initLevel();
-    </script>
-</body>
-</html>
+        document.
