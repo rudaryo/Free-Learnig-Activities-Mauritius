@@ -154,6 +154,13 @@
             margin: 10px 0;
         }
 
+        .ordinal-abbrev {
+            font-size: 1.5em;
+            color: #2980b9;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
         .item-box.correct {
             background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
             border-color: #00b894;
@@ -530,8 +537,13 @@
                 emojiDiv.className = 'item-emoji';
                 emojiDiv.textContent = emoji;
                 
+                const abbrev = document.createElement('div');
+                abbrev.className = 'ordinal-abbrev';
+                abbrev.textContent = ordinalPositions[index];
+                
                 box.appendChild(label);
                 box.appendChild(emojiDiv);
+                box.appendChild(abbrev);
                 
                 box.addEventListener('click', () => checkAnswer(index, box));
                 
