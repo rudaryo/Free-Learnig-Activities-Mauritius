@@ -281,7 +281,7 @@
 
             <script>
                 const numbersFiles = [
-                    {file:"number-recognition-1-8-with-speaker.html", icon:"🔊", level:"Number Recognition 1-8 (with Speaker) | 3 Levels"},
+                    {file:"Recognising_numerals_1_to_8.html", icon:"🔊", level:"Visual Recognition | 3 Levels", title:"Recognising Numerals"},
                     {file:"Recognise_numerals_1_to_10.html", icon:"🎯", level:"Extended Recognition"},
                     {file:"listen_and_read_1_to_10.html", icon:"👂", level:"Numbers 1-10"},
                     {file:"number_listening_activities.html", icon:"🔊", level:"Levels: 1-3, 1-5, 1-8, 1-10"},
@@ -311,7 +311,7 @@
                     card.href = `Numbers/${item.file}`;
                     card.className = "activity-card";
 
-                    const title = item.file
+                    const title = item.title || item.file
                         .replace(/[-_]/g, ' ')
                         .replace('.html','')
                         .replace(/\b\w/g, l => l.toUpperCase());
