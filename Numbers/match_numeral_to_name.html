@@ -299,8 +299,34 @@
 
         @media (max-width: 768px) {
             .game-container {
-                flex-direction: column;
-                gap: 20px;
+                flex-direction: row !important; /* Keep side by side */
+                gap: 8px !important; /* Smaller gap */
+            }
+
+            .column {
+                flex: 1 !important;
+            }
+
+            .column-title {
+                font-size: 0.9rem !important;
+                margin-bottom: 8px !important;
+            }
+
+            /* Smaller numeral cards */
+            .numeral-card {
+                padding: 10px 5px !important;
+                margin: 5px 0 !important;
+                font-size: 1.8rem !important;
+                border-radius: 10px !important;
+            }
+
+            /* Smaller name cards */
+            .name-card {
+                padding: 8px 5px !important;
+                margin: 5px 0 !important;
+                font-size: 0.75rem !important;
+                min-height: 50px !important;
+                border-radius: 10px !important;
             }
 
             h1 {
@@ -471,6 +497,39 @@
                 margin-top: 35px !important;
                 margin-bottom: 60px !important;
                 padding: 10px !important;
+            }
+
+            /* Keep columns side by side on mobile */
+            .game-container {
+                flex-direction: row !important;
+                gap: 8px !important;
+            }
+
+            .column {
+                flex: 1 !important;
+            }
+
+            .column-title {
+                font-size: 0.85rem !important;
+                margin-bottom: 6px !important;
+            }
+
+            /* Compact numeral cards */
+            .numeral-card {
+                padding: 8px 4px !important;
+                margin: 4px 0 !important;
+                font-size: 1.5rem !important;
+                border-radius: 8px !important;
+            }
+
+            /* Compact name cards */
+            .name-card {
+                padding: 8px 4px !important;
+                margin: 4px 0 !important;
+                font-size: 0.7rem !important;
+                min-height: 45px !important;
+                border-radius: 8px !important;
+                line-height: 1.1 !important;
             }
 
             /* Compact spacing for all elements */
