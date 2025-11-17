@@ -3,8 +3,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>I Pick The Correct Number Name</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Pick the Number Name</title>
 <style>
         * {
             margin: 0;
@@ -246,7 +246,239 @@
                 font-size: 1.4em;
             }
         }
-    </style>
+            /* === RESPONSIVE MOBILE FIXES === */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        /* Responsive containers */
+        .game-container, .container {
+            max-width: 100% !important;
+            width: 95vw !important;
+            padding: clamp(15px, 3vw, 30px) !important;
+        }
+
+        /* Responsive typography */
+        h1 {
+            font-size: clamp(1.8rem, 6vw, 2.5rem) !important;
+        }
+
+        h2 {
+            font-size: clamp(1.4rem, 5vw, 2rem) !important;
+        }
+
+        .instruction, .instructions, .question {
+            font-size: clamp(1rem, 4vw, 1.3rem) !important;
+        }
+
+        /* Responsive buttons */
+        button, .btn, .back-button, .next-button {
+            font-size: clamp(1rem, 4vw, 1.3rem) !important;
+            padding: clamp(10px, 2.5vw, 15px) clamp(20px, 4vw, 30px) !important;
+            min-height: 44px !important;
+            touch-action: manipulation;
+        }
+
+        /* Responsive game elements */
+        .number-display, .number-box, .choice-button {
+            width: clamp(100px, 20vw, 200px) !important;
+            height: clamp(100px, 20vw, 200px) !important;
+            font-size: clamp(2.5rem, 8vw, 4rem) !important;
+        }
+
+        .choices, .options {
+            gap: clamp(10px, 2vw, 20px) !important;
+            flex-wrap: wrap !important;
+        }
+
+        .choice-button, .option-button {
+            font-size: clamp(1.2rem, 4vw, 1.5rem) !important;
+            padding: clamp(15px, 3vw, 20px) clamp(30px, 5vw, 50px) !important;
+            min-height: 60px !important;
+        }
+
+        /* Score display */
+        .score-display {
+            font-size: clamp(1rem, 3vw, 1.5rem) !important;
+            padding: clamp(10px, 2vw, 15px) clamp(15px, 3vw, 25px) !important;
+        }
+
+        /* Ten frames and grids */
+        .ten-frame, .frame {
+            width: 90vw !important;
+            max-width: 500px !important;
+        }
+
+        .cell, .frame-cell {
+            width: clamp(40px, 8vw, 70px) !important;
+            height: clamp(40px, 8vw, 70px) !important;
+        }
+
+        /* Draggable items */
+        .draggable-item, .drop-box {
+            width: clamp(50px, 12vw, 80px) !important;
+            height: clamp(50px, 12vw, 80px) !important;
+            font-size: clamp(1.5rem, 6vw, 2.5rem) !important;
+            touch-action: none;
+        }
+
+        /* Mobile specific */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px !important;
+            }
+
+            .back-button {
+                top: 5px !important;
+                left: 5px !important;
+                padding: 6px 12px !important;
+                font-size: 0.85rem !important;
+                border-radius: 15px !important;
+            }
+
+            .score-display {
+                top: 5px !important;
+                right: 5px !important;
+                padding: 6px 12px !important;
+                font-size: 0.9rem !important;
+                border-radius: 15px !important;
+            }
+
+            .game-container {
+                margin-top: 65px !important;
+                padding-top: 15px !important;
+            }
+
+            h1 {
+                margin-top: 5px !important;
+                margin-bottom: 15px !important;
+                font-size: 1.6rem !important;
+                padding: 0 10px !important;
+            }
+        }
+
+        /* Tablet adjustments */
+                /* === MOBILE LAYOUT V2 - OPTIMIZED === */
+        @media (max-width: 768px) {
+            body {
+                padding: 5px !important;
+            }
+
+            /* Small score at top-right */
+            .score-display {
+                position: fixed;
+                top: 5px !important;
+                right: 5px !important;
+                padding: 5px 10px !important;
+                font-size: 0.85rem !important;
+                border-radius: 12px !important;
+                z-index: 1000;
+            }
+
+            /* Home button at bottom center - small and fixed */
+            .back-button, .home-button {
+                position: fixed !important;
+                bottom: 10px !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                top: auto !important;
+                padding: 8px 20px !important;
+                font-size: 0.9rem !important;
+                border-radius: 20px !important;
+                z-index: 1000;
+                box-shadow: 0 -2px 10px rgba(0,0,0,0.2) !important;
+            }
+
+            /* Compact title */
+            h1, .title {
+                font-size: 1.4rem !important;
+                margin-top: 35px !important;
+                margin-bottom: 15px !important;
+                padding: 0 5px !important;
+                line-height: 1.2 !important;
+            }
+
+            /* Game container with breathing space */
+            .game-container, .container {
+                margin-top: 35px !important;
+                margin-bottom: 60px !important;
+                padding: 10px !important;
+            }
+
+            /* Compact spacing for all elements */
+            .instruction, .instructions, .question {
+                font-size: 1rem !important;
+                margin: 10px 0 !important;
+                padding: 8px !important;
+            }
+
+            /* Breathing space for choices/options */
+            .choices, .options, .answer-options {
+                gap: 12px !important;
+                padding: 10px 0 !important;
+                margin-bottom: 15px !important;
+            }
+
+            /* Properly sized buttons */
+            .choice-button, .option-button, .answer-button {
+                padding: 12px 20px !important;
+                font-size: 1.1rem !important;
+                margin: 5px !important;
+            }
+
+            /* Number displays with breathing room */
+            .number-display, .number-box {
+                width: clamp(120px, 25vw, 180px) !important;
+                height: clamp(120px, 25vw, 180px) !important;
+                font-size: clamp(2.5rem, 10vw, 3.5rem) !important;
+                margin: 15px auto !important;
+            }
+
+            /* Ten frames and grids */
+            .ten-frame, .frame, .grid {
+                width: 92vw !important;
+                max-width: 450px !important;
+                margin: 15px auto !important;
+            }
+
+            .cell, .frame-cell {
+                width: clamp(35px, 7.5vw, 60px) !important;
+                height: clamp(35px, 7.5vw, 60px) !important;
+                gap: clamp(4px, 1vw, 8px) !important;
+            }
+
+            /* Draggable items */
+            .draggable-item, .drop-box {
+                width: clamp(45px, 11vw, 70px) !important;
+                height: clamp(45px, 11vw, 70px) !important;
+                margin: 4px !important;
+            }
+
+            /* Canvas elements */
+            canvas {
+                max-width: 90vw !important;
+                margin: 10px auto !important;
+            }
+
+            /* Feedback messages */
+            .feedback, .message {
+                font-size: 1.1rem !important;
+                padding: 10px !important;
+                margin: 10px 0 !important;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .game-container {
+                width: 85vw !important;
+            }
+        }
+
+</style>
 </head>
 <body>
 <!-- ✅ Back Button -->
