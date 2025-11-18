@@ -243,7 +243,7 @@
                 <div class="chapter-description">Learn to count, recognize, and understand numbers</div>
             </div>
 
-            <div class="chapter-card coming-soon">
+            <div class="chapter-card" onclick="scrollToSection('shapes')">
                 <div class="chapter-icon">⭐</div>
                 <div class="chapter-title">Shapes</div>
                 <div class="chapter-description">Explore circles, squares, triangles and more</div>
@@ -303,9 +303,7 @@
                     {file:"make-it-ten.html", icon:"🔟", level:"Complete the Ten Frame | 4 Levels", badge:"NEW!"},
                     {file:"write-addition-sentence.html", icon:"✍️", level:"Write Addition Sentence | 4 Levels", badge:"NEW!"},
                     {file:"ordinal-numbers-game.html", icon:"🥇", level:"Learning Ordinals 1st-5th | 2 Levels", title:"Learning Ordinal Numbers", badge:"NEW!"},
-                    {file:"ordinal-numbers-race-game.html", icon:"🏁", level:"Ordinal Numbers 1st-5th | Race Game", title:"Ordinal Numbers Race", badge:"NEW!"},
-                    {file:"complete-ordinal-sequence.html", icon:"📝", level:"Complete Ordinal Sequences | 15 Questions", title:"Ordinal Numbers", badge:"NEW!"},
-                    
+                    {file:"ordinal-numbers-race-game.html", icon:"🏁", level:"Ordinal Numbers 1st-5th | Race Game", title:"Ordinal Numbers Race", badge:"NEW!"}
                 ];
 
                 const grid = document.getElementById("numbers-grid");
@@ -330,6 +328,39 @@
             </script>
         </div>
         <!-- ====== DYNAMIC NUMBERS SECTION END ====== -->
+
+        <!-- ====== DYNAMIC SHAPES SECTION START ====== -->
+        <div class="activities-section" id="shapes">
+            <h2 class="section-title">⭐ Shapes Activities</h2>
+            <div class="activities-grid" id="shapes-grid"></div>
+
+            <script>
+                const shapesFiles = [
+                    {file:"learning-shapes.html", icon:"🔷", level:"Identify Shapes | 2 Levels", title:"Learning Shapes", badge:"NEW!"}
+                ];
+
+                const shapesGrid = document.getElementById("shapes-grid");
+
+                shapesFiles.forEach(item => {
+                    const card = document.createElement("a");
+                    card.href = `Shapes/${item.file}`;
+                    card.className = "activity-card";
+
+                    const title = item.title || item.file
+                        .replace(/[-_]/g, ' ')
+                        .replace('.html','')
+                        .replace(/\b\w/g, l => l.toUpperCase());
+
+                    card.innerHTML = `
+                        <div class="activity-icon">${item.icon}</div>
+                        <div class="activity-title">${title}${item.badge ? `<span class="new-badge">${item.badge}</span>` : ''}</div>
+                        <div class="activity-level">${item.level}</div>
+                    `;
+                    shapesGrid.appendChild(card);
+                });
+            </script>
+        </div>
+        <!-- ====== DYNAMIC SHAPES SECTION END ====== -->
 
     </div>
 
