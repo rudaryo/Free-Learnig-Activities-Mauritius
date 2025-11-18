@@ -96,24 +96,31 @@
             background: white;
             color: #E74C3C;
             border: 4px dashed #E74C3C;
-            cursor: pointer;
             transition: all 0.3s;
             min-height: 90px;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
         }
 
-        .empty-box:hover {
+        .empty-box.drag-over {
             background: #FCF3CF;
             transform: scale(1.05);
+            border-color: #F39C12;
         }
 
         .empty-box.filled {
+            background: #3498DB;
+            border: 4px solid #2980B9;
+            color: white;
+        }
+
+        .empty-box.correct {
             background: #2ECC71;
             border: 4px solid #27AE60;
             color: white;
-            cursor: default;
+            animation: celebrate 0.5s;
         }
 
         .empty-box.wrong {
@@ -121,6 +128,12 @@
             border: 4px solid #C0392B;
             color: white;
             animation: shake 0.5s;
+        }
+
+        @keyframes celebrate {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1) rotate(-5deg); }
+            75% { transform: scale(1.1) rotate(5deg); }
         }
 
         @keyframes shake {
@@ -332,7 +345,7 @@
 <body>
     <div class="container">
         <h1>📝 Ordinal Numbers</h1>
-        <div class="instructions">Fill in the missing ordinal number!</div>
+        <div class="instructions">Click a number, then click the empty box to fill it!</div>
         
         <div class="score-board">
             <div>Score: <span class="score" id="score">0</span> / <span id="total">0</span></div>
@@ -361,32 +374,35 @@
         let score = 0;
         let currentQuestion = 0;
         let selectedAnswer = null;
-        let correctAnswer = null;
+        let correctAnswers = {};
+        let userAnswers = {};
+        let selectedButton = null;
 
         const ordinals = ['1st', '2nd', '3rd', '4th', '5th'];
         
         // All possible questions with missing positions
         const questions = [
             // Pattern (a): missing 3rd
-            {sequence: ['1st', '2nd', null, '4th', '5th'], missing: 2, answer: '3rd'},
+            {sequence: ['1st', '2nd', null, '4th', '5th'], answers: {2: '3rd'}},
             // Pattern (b): missing 5th
-            {sequence: ['1st', '2nd', '3rd', '4th', null], missing: 4, answer: '5th'},
+            {sequence: ['1st', '2nd', '3rd', '4th', null], answers: {4: '5th'}},
             // Pattern (c): missing 2nd
-            {sequence: ['1st', null, '3rd', '4th', '5th'], missing: 1, answer: '2nd'},
-            // Additional variations
-            {sequence: [null, '2nd', '3rd', '4th', '5th'], missing: 0, answer: '1st'},
-            {sequence: ['1st', '2nd', '3rd', null, '5th'], missing: 3, answer: '4th'},
-            // More variations
-            {sequence: ['1st', null, '3rd', null, '5th'], missing: 1, answer: '2nd'},
-            {sequence: ['1st', null, '3rd', null, '5th'], missing: 3, answer: '4th'},
-            {sequence: [null, '2nd', null, '4th', '5th'], missing: 0, answer: '1st'},
-            {sequence: [null, '2nd', null, '4th', '5th'], missing: 2, answer: '3rd'},
-            {sequence: ['1st', '2nd', null, '4th', null], missing: 2, answer: '3rd'},
-            {sequence: ['1st', '2nd', null, '4th', null], missing: 4, answer: '5th'},
-            {sequence: [null, null, '3rd', '4th', '5th'], missing: 0, answer: '1st'},
-            {sequence: [null, null, '3rd', '4th', '5th'], missing: 1, answer: '2nd'},
-            {sequence: ['1st', '2nd', '3rd', null, null], missing: 3, answer: '4th'},
-            {sequence: ['1st', '2nd', '3rd', null, null], missing: 4, answer: '5th'}
+            {sequence: ['1st', null, '3rd', '4th', '5th'], answers: {1: '2nd'}},
+            // Additional variations with single blank
+            {sequence: [null, '2nd', '3rd', '4th', '5th'], answers: {0: '1st'}},
+            {sequence: ['1st', '2nd', '3rd', null, '5th'], answers: {3: '4th'}},
+            // Variations with multiple blanks
+            {sequence: ['1st', null, '3rd', null, '5th'], answers: {1: '2nd', 3: '4th'}},
+            {sequence: [null, '2nd', null, '4th', '5th'], answers: {0: '1st', 2: '3rd'}},
+            {sequence: ['1st', '2nd', null, '4th', null], answers: {2: '3rd', 4: '5th'}},
+            {sequence: [null, null, '3rd', '4th', '5th'], answers: {0: '1st', 1: '2nd'}},
+            {sequence: ['1st', '2nd', '3rd', null, null], answers: {3: '4th', 4: '5th'}},
+            // More complex patterns
+            {sequence: [null, '2nd', '3rd', null, '5th'], answers: {0: '1st', 3: '4th'}},
+            {sequence: ['1st', null, null, '4th', '5th'], answers: {1: '2nd', 2: '3rd'}},
+            {sequence: ['1st', '2nd', null, null, '5th'], answers: {2: '3rd', 3: '4th'}},
+            {sequence: [null, '2nd', '3rd', '4th', null], answers: {0: '1st', 4: '5th'}},
+            {sequence: ['1st', null, '3rd', '4th', null], answers: {1: '2nd', 4: '5th'}}
         ];
 
         function speak(text) {
@@ -406,12 +422,14 @@
             }
 
             selectedAnswer = null;
+            selectedButton = null;
+            userAnswers = {};
             document.getElementById('feedback').textContent = '';
             document.getElementById('feedback').className = 'feedback';
             document.getElementById('checkBtn').disabled = true;
             
             const question = questions[currentQuestion];
-            correctAnswer = question.answer;
+            correctAnswers = question.answers;
 
             // Update question number
             document.getElementById('questionNumber').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
@@ -427,6 +445,8 @@
                 
                 if (item === null) {
                     box.id = `empty-${index}`;
+                    box.setAttribute('data-index', index);
+                    box.onclick = () => fillBox(index, box);
                 }
                 
                 sequenceContainer.appendChild(box);
@@ -447,81 +467,117 @@
                 optionsContainer.appendChild(btn);
             });
 
-            speak(`Question ${currentQuestion + 1}. Fill in the missing ordinal number.`);
+            const emptyCount = Object.keys(correctAnswers).length;
+            speak(`Question ${currentQuestion + 1}. Fill in the ${emptyCount === 1 ? 'missing ordinal number' : emptyCount + ' missing ordinal numbers'}. First click a number, then click where it goes.`);
         }
 
         function selectOption(ordinal, button) {
             // Deselect previous selection
-            document.querySelectorAll('.option-btn').forEach(btn => {
-                btn.classList.remove('selected');
-            });
+            if (selectedButton) {
+                selectedButton.classList.remove('selected');
+            }
 
             // Select current option
             button.classList.add('selected');
             selectedAnswer = ordinal;
+            selectedButton = button;
 
-            // Update empty box with selected answer
-            const emptyBoxes = document.querySelectorAll('.empty-box');
-            emptyBoxes.forEach(box => {
-                if (!box.classList.contains('filled') && !box.classList.contains('wrong')) {
-                    box.textContent = ordinal;
+            speak(ordinal);
+        }
+
+        function fillBox(index, box) {
+            if (!selectedAnswer) {
+                speak('Please select a number first');
+                return;
+            }
+
+            if (box.classList.contains('filled')) {
+                // Allow replacing
+                const oldAnswer = userAnswers[index];
+                if (oldAnswer) {
+                    // Re-enable the old answer button
+                    document.querySelectorAll('.option-btn').forEach(btn => {
+                        if (btn.textContent === oldAnswer) {
+                            btn.classList.remove('used');
+                        }
+                    });
                 }
-            });
+            }
 
-            // Enable check button
-            document.getElementById('checkBtn').disabled = false;
+            // Fill the box
+            box.textContent = selectedAnswer;
+            box.classList.add('filled');
+            userAnswers[index] = selectedAnswer;
+
+            // Mark the option as used
+            if (selectedButton) {
+                selectedButton.classList.add('used');
+                selectedButton.classList.remove('selected');
+            }
+
+            selectedAnswer = null;
+            selectedButton = null;
+
+            // Check if all blanks are filled
+            const totalBlanks = Object.keys(correctAnswers).length;
+            const filledBlanks = Object.keys(userAnswers).length;
+
+            if (filledBlanks === totalBlanks) {
+                document.getElementById('checkBtn').disabled = false;
+            }
         }
 
         function checkAnswer() {
-            if (!selectedAnswer) return;
+            let allCorrect = true;
+            let correctCount = 0;
 
-            const question = questions[currentQuestion];
-            const emptyBoxes = document.querySelectorAll('.empty-box');
+            // Check each answer
+            Object.keys(correctAnswers).forEach(index => {
+                const box = document.getElementById(`empty-${index}`);
+                const correctAnswer = correctAnswers[index];
+                const userAnswer = userAnswers[index];
+
+                if (userAnswer === correctAnswer) {
+                    box.classList.remove('filled');
+                    box.classList.add('correct');
+                    correctCount++;
+                } else {
+                    box.classList.remove('filled');
+                    box.classList.add('wrong');
+                    allCorrect = false;
+                    
+                    // Show correct answer after a delay
+                    setTimeout(() => {
+                        box.textContent = correctAnswer;
+                        box.classList.remove('wrong');
+                        box.classList.add('correct');
+                    }, 1500);
+                }
+            });
+
             const feedback = document.getElementById('feedback');
+            const totalBlanks = Object.keys(correctAnswers).length;
 
-            if (selectedAnswer === correctAnswer) {
+            if (allCorrect) {
                 score++;
                 document.getElementById('score').textContent = score;
-                document.getElementById('total').textContent = currentQuestion + 1;
-
-                emptyBoxes.forEach(box => {
-                    if (!box.classList.contains('filled')) {
-                        box.classList.add('filled');
-                    }
-                });
-
-                feedback.textContent = '✓ Correct! Well done!';
+                feedback.textContent = '✓ Perfect! All correct!';
                 feedback.className = 'feedback correct';
-                speak('Correct! Well done!');
+                speak('Perfect! All correct!');
                 showCelebration('🎉');
-
-                // Mark selected option as used
-                document.querySelectorAll('.option-btn').forEach(btn => {
-                    if (btn.textContent === selectedAnswer) {
-                        btn.classList.add('used');
-                    }
-                });
-
             } else {
-                document.getElementById('total').textContent = currentQuestion + 1;
-
-                emptyBoxes.forEach(box => {
-                    if (!box.classList.contains('filled')) {
-                        box.classList.add('wrong');
-                        setTimeout(() => {
-                            box.classList.remove('wrong');
-                            box.textContent = correctAnswer;
-                            box.classList.add('filled');
-                        }, 1000);
-                    }
-                });
-
-                feedback.textContent = `✗ The correct answer is ${correctAnswer}`;
+                feedback.textContent = `You got ${correctCount} out of ${totalBlanks} correct`;
                 feedback.className = 'feedback wrong';
-                speak(`The correct answer is ${correctAnswer}`);
+                speak(`You got ${correctCount} out of ${totalBlanks} correct`);
             }
 
+            document.getElementById('total').textContent = currentQuestion + 1;
             document.getElementById('checkBtn').disabled = true;
+
+            // Disable all option buttons
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.classList.add('used');
+            });
         }
 
         function nextQuestion() {
