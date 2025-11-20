@@ -225,28 +225,29 @@
             flex-wrap: wrap;
         }
 
-        .btn {
-            background: #3498DB;
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #ff6b6b;
             color: white;
             border: none;
-            padding: 15px 40px;
-            font-size: 1.3em;
-            border-radius: 50px;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 26px;
             cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            font-weight: 800;
             transition: all 0.3s;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            z-index: 1000;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
         }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-        }
-
-        .btn-home {
-            background: #9B59B6 !important;
-            color: white !important;
+        
+        .back-button:hover {
+            background: #ee5a52;
+            transform: scale(1.05);
         }
 
         .feedback {
