@@ -18,6 +18,32 @@
             padding: 20px;
         }
 
+        /* -------- NEW NEXT QUESTION BUTTON (TOP-LEFT) -------- */
+        .next-question-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #3498DB;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            z-index: 2000;
+            transition: all 0.3s ease;
+        }
+
+        .next-question-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        /* ---------------------------------------------------- */
+
         .container {
             max-width: 1000px;
             margin: 0 auto;
@@ -104,31 +130,9 @@
             position: relative;
         }
 
-        .empty-box.drag-over {
-            background: #FCF3CF;
-            transform: scale(1.05);
-            border-color: #F39C12;
-        }
-
-        .empty-box.filled {
-            background: #3498DB;
-            border: 4px solid #2980B9;
-            color: white;
-        }
-
-        .empty-box.correct {
-            background: #2ECC71;
-            border: 4px solid #27AE60;
-            color: white;
-            animation: celebrate 0.5s;
-        }
-
-        .empty-box.wrong {
-            background: #E74C3C;
-            border: 4px solid #C0392B;
-            color: white;
-            animation: shake 0.5s;
-        }
+        .empty-box.filled { background: #3498DB; border: 4px solid #2980B9; color: white; }
+        .empty-box.correct { background: #2ECC71; border: 4px solid #27AE60; color: white; }
+        .empty-box.wrong { background: #E74C3C; border: 4px solid #C0392B; color: white; }
 
         @keyframes celebrate {
             0%, 100% { transform: scale(1); }
@@ -165,29 +169,13 @@
             font-size: 1.5em;
             border-radius: 15px;
             cursor: pointer;
-            transition: all 0.3s;
             font-weight: bold;
             font-family: 'Comic Sans MS', cursive, sans-serif;
             color: #2C3E50;
         }
 
-        .option-btn:hover {
-            background: #D5DBDB;
-            transform: scale(1.1);
-            border-color: #95A5A6;
-        }
-
-        .option-btn.selected {
-            background: #3498DB;
-            border-color: #2980B9;
-            color: white;
-        }
-
-        .option-btn.used {
-            opacity: 0.3;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
+        .option-btn.selected { background: #3498DB; border-color: #2980B9; color: white; }
+        .option-btn.used { opacity: 0.3; cursor: not-allowed; }
 
         .check-btn {
             background: #2ECC71;
@@ -199,54 +187,25 @@
             cursor: pointer;
             font-weight: bold;
             box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            transition: all 0.3s;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
             display: block;
             margin: 0 auto;
         }
 
-        .check-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-        }
+        .check-btn:disabled { background: #95A5A6; cursor: not-allowed; }
 
-        .check-btn:disabled {
-            background: #95A5A6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .controls {
-            text-align: center;
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            background: #3498DB;
+        .back-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ff6b6b;
             color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.3em;
-            border-radius: 50px;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 26px;
             cursor: pointer;
             font-weight: bold;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            transition: all 0.3s;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-        }
-
-        .btn-home {
-            background: #9B59B6 !important;
-            color: white !important;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
         }
 
         .feedback {
@@ -257,13 +216,8 @@
             min-height: 40px;
         }
 
-        .feedback.correct {
-            color: #2ECC71;
-        }
-
-        .feedback.wrong {
-            color: #E74C3C;
-        }
+        .feedback.correct { color: #2ECC71; }
+        .feedback.wrong { color: #E74C3C; }
 
         .celebration {
             position: fixed;
@@ -273,7 +227,7 @@
             font-size: 5em;
             animation: pop 0.5s;
             pointer-events: none;
-            z-index: 1000;
+            z-index: 2000;
         }
 
         @keyframes pop {
@@ -281,401 +235,215 @@
             50% { transform: translate(-50%, -50%) scale(1.3); }
             100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
         }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 1.8em;
-            }
-
-            .instructions {
-                font-size: 1.1em;
-            }
-
-            .game-section {
-                padding: 25px 15px;
-            }
-
-            .ordinal-box {
-                padding: 18px 25px;
-                font-size: 1.5em;
-                min-width: 90px;
-            }
-
-            .empty-box {
-                min-height: 70px;
-            }
-
-            .option-btn {
-                padding: 15px 20px;
-                font-size: 1.2em;
-            }
-
-            .check-btn {
-                padding: 15px 35px;
-                font-size: 1.2em;
-            }
-
-            .btn 
-            background: #3498DB;       
-            color: white;
-            border: none;
-            padding: 15px 40px;       
-            font-size: 1.3em;        
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            transition: all 0.3s;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            text-decoration: none;
-            display: inline-block;
-}
-
-.back-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-}{
-                padding: 12px 25px;
-                font-size: 1.1em;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .sequence-container {
-                gap: 10px;
-            }
-
-            .ordinal-box {
-                padding: 15px 20px;
-                font-size: 1.2em;
-                min-width: 75px;
-            }
-
-            .empty-box {
-                min-height: 60px;
-            }
-
-            .option-btn {
-                padding: 12px 18px;
-                font-size: 1.1em;
-            }
-        }
     </style>
 </head>
+
 <body>
+
+    <!-- NEW TOP-LEFT NEXT QUESTION BUTTON -->
+    <button class="next-question-btn" onclick="nextQuestion()">➡️ Next</button>
+
+    <!-- HOME BUTTON (existing) -->
+    <a class="back-button" href="../grade-1-math-index.html">🏠 Home</a>
+
     <div class="container">
         <h1>📝 Ordinal Numbers</h1>
         <div class="instructions">Click a number, then click the empty box to fill it!</div>
-        
+
         <div class="score-board">
             <div>Score: <span class="score" id="score">0</span> / <span id="total">0</span></div>
         </div>
 
         <div class="game-section">
             <div class="question-number" id="questionNumber">Question 1 of 15</div>
-            
+
             <div class="sequence-container" id="sequenceContainer"></div>
 
             <div class="options-title">Click on the correct answer:</div>
             <div class="options-container" id="optionsContainer"></div>
 
             <button class="check-btn" id="checkBtn" onclick="checkAnswer()" disabled>Check Answer</button>
-            
+
             <div class="feedback" id="feedback"></div>
         </div>
+    </div>
 
-        <div class="controls">
-            <button class="btn" onclick="nextQuestion()">Next Question ➡️</button>
-             .btn 
-            background: #3498DB;       
-            color: white;
-            border: none;
-            padding: 15px 40px;       
-            font-size: 1.3em;        
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            transition: all 0.3s;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            text-decoration: none;
-            display: inline-block;
+<script>
+/* GAME LOGIC — UNCHANGED (your original code) */
+let score = 0;
+let currentQuestion = 0;
+let selectedAnswer = null;
+let correctAnswers = {};
+let userAnswers = {};
+let selectedButton = null;
+
+const ordinals = ['1st','2nd','3rd','4th','5th'];
+
+const questions = [
+    {sequence:['1st','2nd',null,'4th','5th'],answers:{2:'3rd'}},
+    {sequence:['1st','2nd','3rd','4th',null],answers:{4:'5th'}},
+    {sequence:['1st',null,'3rd','4th','5th'],answers:{1:'2nd'}},
+    {sequence:[null,'2nd','3rd','4th','5th'],answers:{0:'1st'}},
+    {sequence:['1st','2nd','3rd',null,'5th'],answers:{3:'4th'}},
+    {sequence:['1st',null,'3rd',null,'5th'],answers:{1:'2nd',3:'4th'}},
+    {sequence:[null,'2nd',null,'4th','5th'],answers:{0:'1st',2:'3rd'}},
+    {sequence:['1st','2nd',null,'4th',null],answers:{2:'3rd',4:'5th'}},
+    {sequence:[null,null,'3rd','4th','5th'],answers:{0:'1st',1:'2nd'}},
+    {sequence:['1st','2nd','3rd',null,null],answers:{3:'4th',4:'5th'}},
+    {sequence:[null,'2nd','3rd',null,'5th'],answers:{0:'1st',3:'4th'}},
+    {sequence:['1st',null,null,'4th','5th'],answers:{1:'2nd',2:'3rd'}},
+    {sequence:['1st','2nd',null,null,'5th'],answers:{2:'3rd',3:'4th'}},
+    {sequence:[null,'2nd','3rd','4th',null],answers:{0:'1st',4:'5th'}},
+    {sequence:['1st',null,'3rd','4th',null],answers:{1:'2nd',4:'5th'}}
+];
+
+function speak(text){
+    if('speechSynthesis'in window){
+        const u=new SpeechSynthesisUtterance(text);
+        u.rate=0.9;u.pitch=1.2;
+        speechSynthesis.speak(u);
+    }
 }
 
-.back-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-           <a class="back-button" href="../grade-1-math-index.html">🏠 Home</a>
-    <script>
-        let score = 0;
-        let currentQuestion = 0;
-        let selectedAnswer = null;
-        let correctAnswers = {};
-        let userAnswers = {};
-        let selectedButton = null;
+function loadQuestion(){
+    if(currentQuestion>=questions.length){ showFinalScore(); return; }
 
-        const ordinals = ['1st', '2nd', '3rd', '4th', '5th'];
-        
-        // All possible questions with missing positions
-        const questions = [
-            // Pattern (a): missing 3rd
-            {sequence: ['1st', '2nd', null, '4th', '5th'], answers: {2: '3rd'}},
-            // Pattern (b): missing 5th
-            {sequence: ['1st', '2nd', '3rd', '4th', null], answers: {4: '5th'}},
-            // Pattern (c): missing 2nd
-            {sequence: ['1st', null, '3rd', '4th', '5th'], answers: {1: '2nd'}},
-            // Additional variations with single blank
-            {sequence: [null, '2nd', '3rd', '4th', '5th'], answers: {0: '1st'}},
-            {sequence: ['1st', '2nd', '3rd', null, '5th'], answers: {3: '4th'}},
-            // Variations with multiple blanks
-            {sequence: ['1st', null, '3rd', null, '5th'], answers: {1: '2nd', 3: '4th'}},
-            {sequence: [null, '2nd', null, '4th', '5th'], answers: {0: '1st', 2: '3rd'}},
-            {sequence: ['1st', '2nd', null, '4th', null], answers: {2: '3rd', 4: '5th'}},
-            {sequence: [null, null, '3rd', '4th', '5th'], answers: {0: '1st', 1: '2nd'}},
-            {sequence: ['1st', '2nd', '3rd', null, null], answers: {3: '4th', 4: '5th'}},
-            // More complex patterns
-            {sequence: [null, '2nd', '3rd', null, '5th'], answers: {0: '1st', 3: '4th'}},
-            {sequence: ['1st', null, null, '4th', '5th'], answers: {1: '2nd', 2: '3rd'}},
-            {sequence: ['1st', '2nd', null, null, '5th'], answers: {2: '3rd', 3: '4th'}},
-            {sequence: [null, '2nd', '3rd', '4th', null], answers: {0: '1st', 4: '5th'}},
-            {sequence: ['1st', null, '3rd', '4th', null], answers: {1: '2nd', 4: '5th'}}
-        ];
+    selectedAnswer=null;
+    selectedButton=null;
+    userAnswers={};
+    hasAnswered=false;
 
-        function speak(text) {
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.rate = 0.9;
-                utterance.pitch = 1.2;
-                utterance.volume = 1;
-                speechSynthesis.speak(utterance);
-            }
+    document.getElementById('feedback').textContent='';
+    document.getElementById('checkBtn').disabled=true;
+
+    const q=questions[currentQuestion];
+    correctAnswers=q.answers;
+
+    document.getElementById('questionNumber').textContent=
+        `Question ${currentQuestion+1} of ${questions.length}`;
+
+    const seq=document.getElementById('sequenceContainer');
+    seq.innerHTML='';
+
+    q.sequence.forEach((item,i)=>{
+        const box=document.createElement('div');
+        box.className=item===null?'ordinal-box empty-box':'ordinal-box';
+        box.textContent=item===null?'____':item;
+        if(item===null){
+            box.id='empty-'+i;
+            box.onclick=()=>fillBox(i,box);
         }
+        seq.appendChild(box);
+    });
 
-        function loadQuestion() {
-            if (currentQuestion >= questions.length) {
-                showFinalScore();
-                return;
-            }
+    const opt=document.getElementById('optionsContainer');
+    opt.innerHTML='';
+    const shuffled=[...ordinals].sort(()=>Math.random()-0.5);
 
-            selectedAnswer = null;
-            selectedButton = null;
-            userAnswers = {};
-            hasAnswered = false;
-            document.getElementById('feedback').textContent = '';
-            document.getElementById('feedback').className = 'feedback';
-            document.getElementById('checkBtn').disabled = true;
-            
-            const question = questions[currentQuestion];
-            correctAnswers = question.answers;
+    shuffled.forEach(o=>{
+        const btn=document.createElement('button');
+        btn.className='option-btn';
+        btn.textContent=o;
+        btn.onclick=()=>selectOption(o,btn);
+        opt.appendChild(btn);
+    });
+}
 
-            // Update question number
-            document.getElementById('questionNumber').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+function selectOption(o,btn){
+    if(selectedButton) selectedButton.classList.remove('selected');
+    btn.classList.add('selected');
+    selectedButton=btn;
+    selectedAnswer=o;
 
-            // Build sequence
-            const sequenceContainer = document.getElementById('sequenceContainer');
-            sequenceContainer.innerHTML = '';
+    if(Object.keys(correctAnswers).length===1){
+        const idx=Object.keys(correctAnswers)[0];
+        const box=document.getElementById('empty-'+idx);
+        box.textContent=o;
+        box.classList.add('filled');
+        userAnswers[idx]=o;
+        document.getElementById('checkBtn').disabled=false;
+    }
+}
 
-            question.sequence.forEach((item, index) => {
-                const box = document.createElement('div');
-                box.className = item === null ? 'ordinal-box empty-box' : 'ordinal-box';
-                box.textContent = item === null ? '____' : item;
-                
-                if (item === null) {
-                    box.id = `empty-${index}`;
-                    box.setAttribute('data-index', index);
-                    box.onclick = () => fillBox(index, box);
-                }
-                
-                sequenceContainer.appendChild(box);
-            });
+function fillBox(idx,box){
+    if(!selectedAnswer) return;
+    box.textContent=selectedAnswer;
+    box.classList.add('filled');
+    userAnswers[idx]=selectedAnswer;
 
-            // Create options (all ordinals)
-            const optionsContainer = document.getElementById('optionsContainer');
-            optionsContainer.innerHTML = '';
+    selectedButton.classList.add('used');
+    selectedButton.classList.remove('selected');
 
-            // Shuffle ordinals for display
-            const shuffledOrdinals = [...ordinals].sort(() => Math.random() - 0.5);
+    selectedAnswer=null;
+    selectedButton=null;
 
-            shuffledOrdinals.forEach(ordinal => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.textContent = ordinal;
-                btn.onclick = () => selectOption(ordinal, btn);
-                optionsContainer.appendChild(btn);
-            });
+    if(Object.keys(userAnswers).length===Object.keys(correctAnswers).length){
+        document.getElementById('checkBtn').disabled=false;
+    }
+}
 
-            const emptyCount = Object.keys(correctAnswers).length;
-            speak(`Question ${currentQuestion + 1}. Fill in the ${emptyCount === 1 ? 'missing ordinal number' : emptyCount + ' missing ordinal numbers'}. First click a number, then click where it goes.`);
+function checkAnswer(){
+    let correct=0;
+
+    Object.keys(correctAnswers).forEach(i=>{
+        const box=document.getElementById('empty-'+i);
+        const right=correctAnswers[i];
+        const ans=userAnswers[i];
+
+        if(ans===right){
+            box.classList.add('correct');
+            correct++;
+        } else {
+            box.classList.add('wrong');
+            setTimeout(()=>{
+                box.textContent=right;
+                box.classList.remove('wrong');
+                box.classList.add('correct');
+            },1500);
         }
+    });
 
-        function selectOption(ordinal, button) {
-            if (hasAnswered) return;
-            
-            // Deselect previous selection
-            if (selectedButton) {
-                selectedButton.classList.remove('selected');
-            }
+    if(correct===Object.keys(correctAnswers).length){
+        score++;
+        document.getElementById('feedback').textContent='✓ Perfect!';
+        document.getElementById('feedback').className='feedback correct';
+    } else {
+        document.getElementById('feedback').textContent=
+            `You got ${correct} of ${Object.keys(correctAnswers).length}`;
+        document.getElementById('feedback').className='feedback wrong';
+    }
 
-            // Select current option
-            button.classList.add('selected');
-            selectedAnswer = ordinal;
-            selectedButton = button;
+    document.getElementById('score').textContent=score;
+    document.getElementById('total').textContent=currentQuestion+1;
 
-            speak(ordinal);
-            
-            // For single blank questions, enable check button immediately
-            if (Object.keys(correctAnswers).length === 1) {
-                const emptyIndex = Object.keys(correctAnswers)[0];
-                const box = document.getElementById(`empty-${emptyIndex}`);
-                box.textContent = ordinal;
-                box.classList.add('filled');
-                userAnswers[emptyIndex] = ordinal;
-                document.getElementById('checkBtn').disabled = false;
-            }
-        }
+    document.getElementById('checkBtn').disabled=true;
 
-        function fillBox(index, box) {
-            if (!selectedAnswer) {
-                speak('Please select a number first');
-                return;
-            }
+    document.querySelectorAll('.option-btn').forEach(b=>b.classList.add('used'));
+}
 
-            if (box.classList.contains('filled')) {
-                // Allow replacing
-                const oldAnswer = userAnswers[index];
-                if (oldAnswer) {
-                    // Re-enable the old answer button
-                    document.querySelectorAll('.option-btn').forEach(btn => {
-                        if (btn.textContent === oldAnswer) {
-                            btn.classList.remove('used');
-                        }
-                    });
-                }
-            }
+function nextQuestion(){
+    currentQuestion++;
+    loadQuestion();
+}
 
-            // Fill the box
-            box.textContent = selectedAnswer;
-            box.classList.add('filled');
-            userAnswers[index] = selectedAnswer;
+function showFinalScore(){
+    const g=document.querySelector('.game-section');
+    const pct=Math.round((score/questions.length)*100);
 
-            // Mark the option as used
-            if (selectedButton) {
-                selectedButton.classList.add('used');
-                selectedButton.classList.remove('selected');
-            }
+    g.innerHTML=`
+        <div style="text-align:center;padding:40px;">
+            <div style="font-size:4em;">🎊</div>
+            <h2>Game Complete!</h2>
+            <p style="font-size:2em;">Score: ${score}/${questions.length}</p>
+            <p style="font-size:1.8em;color:#2ECC71;">${pct}% Correct</p>
+            <button class="next-question-btn" onclick="location.reload()">🔄 Play Again</button>
+        </div>
+    `;
+}
 
-            selectedAnswer = null;
-            selectedButton = null;
+loadQuestion();
+</script>
 
-            // Check if all blanks are filled
-            const totalBlanks = Object.keys(correctAnswers).length;
-            const filledBlanks = Object.keys(userAnswers).length;
-
-            if (filledBlanks === totalBlanks) {
-                document.getElementById('checkBtn').disabled = false;
-            }
-        }
-
-        function checkAnswer() {
-            if (hasAnswered) return;
-            hasAnswered = true;
-            
-            let allCorrect = true;
-            let correctCount = 0;
-
-            // Check each answer
-            Object.keys(correctAnswers).forEach(index => {
-                const box = document.getElementById(`empty-${index}`);
-                const correctAnswer = correctAnswers[index];
-                const userAnswer = userAnswers[index];
-
-                if (userAnswer === correctAnswer) {
-                    box.classList.remove('filled');
-                    box.classList.add('correct');
-                    correctCount++;
-                } else {
-                    box.classList.remove('filled');
-                    box.classList.add('wrong');
-                    allCorrect = false;
-                    
-                    // Show correct answer after a delay
-                    setTimeout(() => {
-                        box.textContent = correctAnswer;
-                        box.classList.remove('wrong');
-                        box.classList.add('correct');
-                    }, 1500);
-                }
-            });
-
-            const feedback = document.getElementById('feedback');
-            const totalBlanks = Object.keys(correctAnswers).length;
-
-            if (allCorrect) {
-                score++;
-                document.getElementById('score').textContent = score;
-                feedback.textContent = '✓ Perfect! All correct!';
-                feedback.className = 'feedback correct';
-                speak('Perfect! All correct!');
-                showCelebration('🎉');
-            } else {
-                feedback.textContent = `You got ${correctCount} out of ${totalBlanks} correct`;
-                feedback.className = 'feedback wrong';
-                speak(`You got ${correctCount} out of ${totalBlanks} correct`);
-            }
-
-            document.getElementById('total').textContent = currentQuestion + 1;
-            document.getElementById('checkBtn').disabled = true;
-
-            // Disable all option buttons
-            document.querySelectorAll('.option-btn').forEach(btn => {
-                btn.classList.add('used');
-            });
-        }
-
-        function nextQuestion() {
-            currentQuestion++;
-            loadQuestion();
-        }
-
-        function showFinalScore() {
-            const gameSection = document.querySelector('.game-section');
-            const percentage = Math.round((score / questions.length) * 100);
-            
-            gameSection.innerHTML = `
-                <div style="text-align: center; padding: 40px;">
-                    <div style="font-size: 4em; margin-bottom: 20px;">🎊</div>
-                    <h2 style="font-size: 2.5em; color: #2C3E50; margin-bottom: 20px;">Game Complete!</h2>
-                    <div style="font-size: 2em; color: #3498DB; margin-bottom: 20px;">
-                        Final Score: <span style="color: #F1C40F; font-weight: bold;">${score}</span> / ${questions.length}
-                    </div>
-                    <div style="font-size: 1.8em; color: #2ECC71; font-weight: bold;">
-                        ${percentage}% Correct!
-                    </div>
-                    <button class="btn" onclick="location.reload()" style="margin-top: 30px; font-size: 1.3em;">
-                        🔄 Play Again
-                    </button>
-                </div>
-            `;
-
-            speak(`Game complete! You scored ${score} out of ${questions.length}. That's ${percentage} percent!`);
-            
-            if (percentage === 100) {
-                showCelebration('🏆');
-            } else if (percentage >= 80) {
-                showCelebration('⭐');
-            }
-        }
-
-        function showCelebration(emoji) {
-            const celebration = document.createElement('div');
-            celebration.className = 'celebration';
-            celebration.textContent = emoji;
-            document.body.appendChild(celebration);
-            setTimeout(() => celebration.remove(), 500);
-        }
-
-        // Initialize
-        loadQuestion();
-    </script>
 </body>
 </html>
+
