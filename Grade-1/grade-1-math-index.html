@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 1 - Mathematics Learning Center</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            background: white;
+            color: #667eea;
+            padding: 20px 45px;
+            border-radius: 60px;
+            border: none;
+            font-weight: 800;
+            font-size: 26px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            background: #667eea;
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            opacity: 0.9;
+        }
+
+        .chapters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .chapter-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .chapter-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .chapter-icon {
+            font-size: 4em;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .chapter-title {
+            font-size: 1.8em;
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .chapter-description {
+            color: #636e72;
+            text-align: center;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .activities-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .activity-card {
+            background: white;
+            border: 3px solid #2d3436;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: #2d3436;
+            display: block;
+        }
+
+        .activity-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-color: #000;
+        }
+
+        .activity-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .activity-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #2d3436;
+        }
+
+        .activity-level {
+            font-size: 0.9em;
+            color: #636e72;
+        }
+
+        .new-badge {
+            display: inline-block;
+            background: #2d3436;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: bold;
+            margin-left: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .coming-soon {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+        }
+
+        .coming-soon:hover {
+            transform: none;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .chapters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .activities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            body {
+                padding: 20px 10px;
+            }
+
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .activities-section {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-button" onclick="window.location.href='../grade-1-index.html'">
+        <span>🏠</span>
+        <span>back</span>
+    </button>
+
+    <div class="container">
+        <header>
+            <h1>📚 Grade 1 Mathematics Learning Center</h1>
+            <p class="subtitle">Fun Interactive Learning Activities</p>
+        </header>
+
+        <div class="chapters-grid">
+            <div class="chapter-card" onclick="scrollToSection('numbers')">
+                <div class="chapter-icon">🔢</div>
+                <div class="chapter-title">Numbers</div>
+                <div class="chapter-description">Learn to count, recognize, and understand numbers</div>
+            </div>
+
+            <div class="chapter-card" onclick="scrollToSection('shapes')">
+                <div class="chapter-icon">⭐</div>
+                <div class="chapter-title">Shapes</div>
+                <div class="chapter-description">Explore circles, squares, triangles and more</div>
+            </div>
+
+            <div class="chapter-card coming-soon">
+                <div class="chapter-icon">🎨</div>
+                <div class="chapter-title">Colours</div>
+                <div class="chapter-description">Learn about different colors</div>
+            </div>
+
+            <div class="chapter-card coming-soon">
+                <div class="chapter-icon">📏</div>
+                <div class="chapter-title">Length</div>
+                <div class="chapter-description">Measure and compare lengths</div>
+            </div>
+
+            <div class="chapter-card coming-soon">
+                <div class="chapter-icon">⏰</div>
+                <div class="chapter-title">Time</div>
+                <div class="chapter-description">Tell time and understand duration</div>
+            </div>
+
+            <div class="chapter-card coming-soon">
+                <div class="chapter-icon">⚖️</div>
+                <div class="chapter-title">Measure</div>
+                <div class="chapter-description">Learn about weight and capacity</div>
+            </div>
+        </div>
+
+        <!-- ====== DYNAMIC NUMBERS SECTION START ====== -->
+        <div class="activities-section" id="numbers">
+            <h2 class="section-title">🔢 Numbers Activities</h2>
+            <div class="activities-grid" id="numbers-grid"></div>
+
+            <script>
+                const numbersFiles = [
+                    {file:"Recognising_numerals_1_to_8.html", icon:"🔊", level:"Visual Recognition | 3 Levels", title:"Recognising Numerals"},
+                    {file:"Recognise_numerals_1_to_10.html", icon:"🎯", level:"Extended Recognition"},
+                    {file:"listen_and_read_1_to_10.html", icon:"👂", level:"Numbers 1-10"},
+                    {file:"number_listening_activities.html", icon:"🔊", level:"Levels: 1-3, 1-5, 1-8, 1-10"},
+                    {file:"learn_to_count_1_to_8.html", icon:"🔢", level:"Numbers 1-8"},
+                    {file:"learn_to_count.html", icon:"👆", level:"Levels: 1-3, 1-5, 1-8, 1-10"},
+                    {file:"counting-shapes-game.html", icon:"🔺", level:"Interactive Counting"},
+                    {file:"counting-up-to-10.html", icon:"🕐", level:"Count 1-10 | Mixed Objects", badge:"NEW!"},
+                    {file:"ten-frames-assessment.html", icon:"🟦", level:"Visual Number Sense"},
+                    {file:"learning_zero.html", icon:"🎯", level:"Levels: 0-3, 0-5, 0-8 (Shapes)", badge:"NEW!"},
+                    {file:"trace_numerals.html", icon:"✏️", level:"Practice Writing"},
+                    {file:"Pick-Number-Name.html", icon:"🔤", level:"20 Questions | Includes Zero"},
+                    {file:"match_numeral_to_name.html", icon:"🔗", level:"3 Rounds | Includes Zero", badge:"NEW!"},
+                    {file:"write_missing_letter.html", icon:"✏️", level:"Spell Number Names 0-10", badge:"NEW!"},
+                    {file:"number-learning-game.html", icon:"🎮", level:"Interactive Learning"},
+                    {file:"put-numbers-in-order.html", icon:"🔢", level:"Number Sequencing"},
+                    {file:"what-comes-next.html", icon:"❓", level:"Predict Next Number"},
+                    {file:"i-put-together.html", icon:"🎯", level:"4 Levels | 28 Challenges | 'and' 'make'", badge:"NEW!"},
+                    {file:"drag-drop-addition.html", icon:"➕", level:"4 Levels | Drag & Drop Addition", badge:"NEW!"},
+                    {file:"make-it-ten.html", icon:"🔟", level:"Complete the Ten Frame | 4 Levels", badge:"NEW!"},
+                    {file:"write-addition-sentence.html", icon:"✍️", level:"Write Addition Sentence | 4 Levels", badge:"NEW!"},
+                    {file:"ordinal-numbers-game.html", icon:"🥇", level:"Learning Ordinals 1st-5th | 2 Levels", title:"Learning Ordinal Numbers", badge:"NEW!"},
+                    {file:"ordinal-numbers-race-game.html", icon:"🏁", level:"Ordinal Numbers 1st-5th | Race Game", title:"Ordinal Numbers Race", badge:"NEW!"},
+                    {file:"complete-ordinal-sequence.html", icon:"📝", level:"Complete Ordinal Sequences | 15 Questions", title:"Ordinal Numbers", badge:"NEW!"}
+                ];
+
+                const grid = document.getElementById("numbers-grid");
+
+                numbersFiles.forEach(item => {
+                    const card = document.createElement("a");
+                    card.href = `Numbers/${item.file}`;
+                    card.className = "activity-card";
+
+                    const title = item.title || item.file
+                        .replace(/[-_]/g, ' ')
+                        .replace('.html','')
+                        .replace(/\b\w/g, l => l.toUpperCase());
+
+                    card.innerHTML = `
+                        <div class="activity-icon">${item.icon}</div>
+                        <div class="activity-title">${title}${item.badge ? `<span class="new-badge">${item.badge}</span>` : ''}</div>
+                        <div class="activity-level">${item.level}</div>
+                    `;
+                    grid.appendChild(card);
+                });
+            </script>
+        </div>
+        <!-- ====== DYNAMIC NUMBERS SECTION END ====== -->
+
+        <!-- ====== DYNAMIC SHAPES SECTION START ====== -->
+        <div class="activities-section" id="shapes">
+            <h2 class="section-title">⭐ Shapes Activities</h2>
+            <div class="activities-grid" id="shapes-grid"></div>
+
+            <script>
+                const shapesFiles = [
+                    {file:"learning-shapes.html", icon:"🔷", level:"Identify Shapes | 2 Levels", title:"Learning Shapes", badge:"NEW!"},
+                    {file:"learning-shape-names.html", icon:"✏️", level:"Spell Shape Names | Interactive", title:"Learning Shape Names", badge:"NEW!"}
+                ];
+
+                const shapesGrid = document.getElementById("shapes-grid");
+
+                shapesFiles.forEach(item => {
+                    const card = document.createElement("a");
+                    card.href = `Shapes/${item.file}`;
+                    card.className = "activity-card";
+
+                    const title = item.title || item.file
+                        .replace(/[-_]/g, ' ')
+                        .replace('.html','')
+                        .replace(/\b\w/g, l => l.toUpperCase());
+
+                    card.innerHTML = `
+                        <div class="activity-icon">${item.icon}</div>
+                        <div class="activity-title">${title}${item.badge ? `<span class="new-badge">${item.badge}</span>` : ''}</div>
+                        <div class="activity-level">${item.level}</div>
+                    `;
+                    shapesGrid.appendChild(card);
+                });
+            </script>
+        </div>
+        <!-- ====== DYNAMIC SHAPES SECTION END ====== -->
+
+    </div>
+
+    <script>
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    </script>
+</body>
+</html>
