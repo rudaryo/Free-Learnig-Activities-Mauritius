@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recognising Numerals 1 to 8</title>
+    <style>
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            color: #667eea;
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 800;
+            font-size: 26px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', cursive, sans-serif;
+        }
+
+        .home-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            background: #667eea;
+            color: white;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 95vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            font-size: clamp(1.5em, 5vw, 2.5em);
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #764ba2;
+            font-size: clamp(0.9em, 3vw, 1.2em);
+            margin-bottom: 20px;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-radius: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .score-item {
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .score-label {
+            font-size: clamp(0.8em, 2.5vw, 1em);
+            color: #2d3436;
+            margin-bottom: 5px;
+        }
+
+        .score-value {
+            font-size: clamp(1.3em, 4vw, 2em);
+            font-weight: bold;
+            color: #d63031;
+        }
+        
+        .level-info {
+            text-align: center;
+            font-size: clamp(1em, 3vw, 1.3em);
+            color: white;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: #a29bfe;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .game-area {
+            margin-bottom: 30px;
+        }
+
+        .question {
+            text-align: center;
+            font-size: clamp(1.2em, 4vw, 2em);
+            color: #2d3436;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #dfe6e9;
+            border-radius: 15px;
+        }
+
+        .speaker-button {
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .speaker-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .speaker-button:active {
+            transform: scale(0.95);
+        }
+
+        .number-display {
+            font-size: clamp(4em, 15vw, 8em);
+            font-weight: bold;
+            color: #00b894;
+            text-align: center;
+            margin: 20px 0;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+            animation: pulse 1s ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+            justify-items: center;
+        }
+        
+        .options.level-1 {
+            grid-template-columns: repeat(3, 1fr);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .options.level-2 {
+            grid-template-columns: repeat(5, 1fr);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .options.level-3 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .option-btn {
+            padding: clamp(15px, 3vw, 30px);
+            font-size: clamp(2em, 6vw, 3em);
+            font-weight: bold;
+            border: 4px solid #dfe6e9;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            min-width: 80px;
+        }
+
+        .option-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .option-btn:active {
+            transform: translateY(0);
+        }
+
+        .option-btn.correct {
+            background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+            animation: celebrate 0.5s ease;
+        }
+
+        .option-btn.wrong {
+            background: linear-gradient(135deg, #d63031 0%, #ff7675 100%);
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes celebrate {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.2) rotate(-10deg); }
+            75% { transform: scale(1.2) rotate(10deg); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .feedback {
+            text-align: center;
+            font-size: clamp(1.5em, 5vw, 2.5em);
+            font-weight: bold;
+            min-height: 50px;
+            margin: 15px 0;
+        }
+
+        .feedback.correct {
+            color: #00b894;
+        }
+
+        .feedback.wrong {
+            color: #d63031;
+        }
+
+        .next-btn {
+            display: block;
+            margin: 15px auto;
+            padding: clamp(12px, 2.5vw, 20px) clamp(30px, 6vw, 50px);
+            font-size: clamp(1.1em, 3vw, 1.5em);
+            font-weight: bold;
+            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .retry-btn {
+            display: block;
+            margin: 15px auto;
+            padding: clamp(12px, 2.5vw, 20px) clamp(30px, 6vw, 50px);
+            font-size: clamp(1.1em, 3vw, 1.5em);
+            font-weight: bold;
+            background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .retry-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .button-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .stars {
+            text-align: center;
+            font-size: clamp(2em, 6vw, 3em);
+            margin: 15px 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Tablet optimization */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 25px;
+            }
+            
+            .options.level-1 {
+                max-width: 450px;
+            }
+            
+            .options.level-2 {
+                max-width: 600px;
+            }
+        }
+
+        /* Mobile optimization */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 15px;
+                border-radius: 15px;
+            }
+            
+            .options {
+                gap: 10px;
+            }
+            
+            .options.level-1 {
+                grid-template-columns: repeat(3, 1fr);
+                max-width: 100%;
+            }
+            
+            .options.level-2 {
+                grid-template-columns: repeat(3, 1fr);
+                max-width: 100%;
+            }
+            
+            .options.level-3 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .score-board {
+                padding: 10px;
+            }
+            
+            .button-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .next-btn, .retry-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .options.level-1,
+            .options.level-2,
+            .options.level-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="home-button" onclick="window.location.href='../math-index.html'">
+        <span>🏠</span>
+        <span>Home</span>
+    </button>
+
+    <div class="container">
+        <h1>🎯 Recognising Numerals</h1>
+        <div class="subtitle">Can you find the right number?</div>
+
+        <div class="score-board">
+            <div class="score-item">
+                <div class="score-label">Level</div>
+                <div class="score-value" id="level-display">1</div>
+            </div>
+            <div class="score-item">
+                <div class="score-label">Correct</div>
+                <div class="score-value" id="correct-score">0</div>
+            </div>
+            <div class="score-item">
+                <div class="score-label">Total</div>
+                <div class="score-value" id="total-score">0</div>
+            </div>
+        </div>
+
+        <div class="level-info" id="level-info">
+            <strong>Level 1:</strong> Numbers 1-3
+        </div>
+
+        <div class="game-area">
+            <div class="question">
+                Which number is this? 
+                <button class="speaker-button" onclick="speakNumber()">🔊</button>
+            </div>
+
+            <div class="number-display" id="number-display">1</div>
+
+            <div class="feedback" id="feedback"></div>
+            <div class="stars" id="stars"></div>
+
+            <div class="options" id="options"></div>
+
+            <div class="button-container">
+                <button class="retry-btn hidden" id="retry-btn">🔄 Try Again</button>
+                <button class="next-btn hidden" id="next-btn">Next Number →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Levels configuration
+        const levels = [
+            { level: 1, min: 1, max: 3, questionsNeeded: 5, description: "Numbers 1-3" },
+            { level: 2, min: 1, max: 5, questionsNeeded: 8, description: "Numbers 1-5" },
+            { level: 3, min: 1, max: 8, questionsNeeded: 12, description: "Numbers 1-8" }
+        ];
+        
+        let currentLevel = 0;
+        let currentNumber = 1;
+        let correctCount = 0;
+        let totalCount = 0;
+        let levelCorrectCount = 0;
+        let levelTotalCount = 0;
+        let levelHasWrongAnswer = false;
+        let answered = false;
+        let recentNumbers = [];
+        let testedNumbers = new Set();
+
+        const numberDisplay = document.getElementById('number-display');
+        const optionsContainer = document.getElementById('options');
+        const feedback = document.getElementById('feedback');
+        const stars = document.getElementById('stars');
+        const nextBtn = document.getElementById('next-btn');
+        const retryBtn = document.getElementById('retry-btn');
+        const correctScore = document.getElementById('correct-score');
+        const totalScore = document.getElementById('total-score');
+        const levelDisplay = document.getElementById('level-display');
+        const levelInfo = document.getElementById('level-info');
+
+        const encouragements = [
+            "Amazing! 🌟",
+            "Superstar! ⭐",
+            "Excellent! 🎉",
+            "You're brilliant! 🌈",
+            "Perfect! 🎊",
+            "Wonderful! 💫",
+            "Great job! 🎯",
+            "Fantastic! 🏆"
+        ];
+
+        const tryAgain = [
+            "Try again! 💪",
+            "Not quite! Keep trying! 🔄",
+            "Oops! Look carefully! 👀",
+            "Almost! Try once more! 🎯"
+        ];
+
+        let audioContext = null;
+
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        // TEXT-TO-SPEECH FUNCTION FOR SPEAKER BUTTON
+        function speakNumber() {
+            window.speechSynthesis.cancel();
+            const text = `The number is ${currentNumber}`;
+            const speech = new SpeechSynthesisUtterance(text);
+            speech.rate = 0.8;
+            speech.pitch = 1;
+            speech.volume = 1;
+            speech.lang = 'en-US';
+            window.speechSynthesis.speak(speech);
+        }
+
+        function playSuccessSound() {
+            initAudio();
+            
+            const now = audioContext.currentTime;
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(523.25, now);
+            oscillator.frequency.setValueAtTime(659.25, now + 0.1);
+            oscillator.frequency.setValueAtTime(783.99, now + 0.2);
+            
+            gainNode.gain.setValueAtTime(0.3, now);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+            
+            oscillator.start(now);
+            oscillator.stop(now + 0.4);
+        }
+
+        function playOopsSound() {
+            initAudio();
+            
+            const now = audioContext.currentTime;
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(392.00, now);
+            oscillator.frequency.setValueAtTime(349.23, now + 0.15);
+            
+            gainNode.gain.setValueAtTime(0.2, now);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+            
+            oscillator.start(now);
+            oscillator.stop(now + 0.3);
+        }
+
+        function getCurrentLevelConfig() {
+            return levels[currentLevel];
+        }
+
+        function speakFeedback(message) {
+            window.speechSynthesis.cancel();
+            const cleanMessage = message.replace(/[^\w\s!?.,']/g, '');
+            const utterance = new SpeechSynthesisUtterance(cleanMessage);
+            utterance.rate = 0.9;
+            utterance.pitch = 1.1;
+            utterance.volume = 1;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function getNextNumber() {
+            const config = getCurrentLevelConfig();
+            let availableNumbers = [];
+            
+            for (let i = config.min; i <= config.max; i++) {
+                availableNumbers.push(i);
+            }
+            
+            const untestedNumbers = availableNumbers.filter(num => !testedNumbers.has(num));
+            
+            if (untestedNumbers.length > 0) {
+                let candidates = untestedNumbers;
+                
+                if (recentNumbers.length >= 2 && 
+                    recentNumbers[recentNumbers.length - 1] === recentNumbers[recentNumbers.length - 2]) {
+                    candidates = untestedNumbers.filter(num => num !== recentNumbers[recentNumbers.length - 1]);
+                    if (candidates.length === 0) candidates = untestedNumbers;
+                }
+                
+                const selectedNumber = candidates[Math.floor(Math.random() * candidates.length)];
+                testedNumbers.add(selectedNumber);
+                recentNumbers.push(selectedNumber);
+                if (recentNumbers.length > 3) {
+                    recentNumbers.shift();
+                }
+                
+                return selectedNumber;
+            }
+            
+            if (recentNumbers.length >= 2) {
+                if (recentNumbers[recentNumbers.length - 1] === recentNumbers[recentNumbers.length - 2]) {
+                    availableNumbers = availableNumbers.filter(num => num !== recentNumbers[recentNumbers.length - 1]);
+                }
+            }
+            
+            if (availableNumbers.length === 0) {
+                for (let i = config.min; i <= config.max; i++) {
+                    availableNumbers.push(i);
+                }
+            }
+            
+            const selectedNumber = availableNumbers[Math.floor(Math.random() * availableNumbers.length)];
+            recentNumbers.push(selectedNumber);
+            if (recentNumbers.length > 3) {
+                recentNumbers.shift();
+            }
+            
+            return selectedNumber;
+        }
+
+        function getRandomNumbers(correct) {
+            const config = getCurrentLevelConfig();
+            const numbers = [];
+            numbers.push(correct);
+            
+            for (let i = config.min; i <= config.max; i++) {
+                if (!numbers.includes(i)) {
+                    numbers.push(i);
+                }
+            }
+            
+            return numbers.sort(() => Math.random() - 0.5);
+        }
+
+        function updateLevelInfo() {
+            const config = getCurrentLevelConfig();
+            levelDisplay.textContent = config.level;
+            levelInfo.innerHTML = `<strong>Level ${config.level}:</strong> ${config.description}`;
+            optionsContainer.className = `options level-${config.level}`;
+        }
+
+        function createOptions() {
+            optionsContainer.innerHTML = '';
+            const numbers = getRandomNumbers(currentNumber);
+            
+            numbers.forEach(num => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.textContent = num;
+                button.addEventListener('click', () => {
+                    initAudio();
+                    checkAnswer(num, button);
+                });
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selected, button) {
+            if (answered) return;
+            
+            answered = true;
+            totalCount++;
+            levelTotalCount++;
+            totalScore.textContent = totalCount;
+
+            if (selected === currentNumber) {
+                correctCount++;
+                levelCorrectCount++;
+                correctScore.textContent = correctCount;
+                button.classList.add('correct');
+                feedback.textContent = encouragements[Math.floor(Math.random() * encouragements.length)];
+                speakFeedback(feedback.textContent);
+                feedback.className = 'feedback correct';
+                stars.textContent = '⭐⭐⭐';
+                numberDisplay.style.color = '#00b894';
+                playSuccessSound();
+                
+                setTimeout(() => {
+                    const levelComplete = checkLevelProgress();
+                    if (!levelComplete) {
+                        nextQuestion();
+                    }
+                }, 2500);
+                
+            } else {
+                button.classList.add('wrong');
+                feedback.textContent = tryAgain[Math.floor(Math.random() * tryAgain.length)];
+                speakFeedback(feedback.textContent);
+                feedback.className = 'feedback wrong';
+                levelHasWrongAnswer = true;
+                playOopsSound();
+                
+                const buttons = document.querySelectorAll('.option-btn');
+                buttons.forEach(btn => {
+                    if (parseInt(btn.textContent) === currentNumber) {
+                        setTimeout(() => {
+                            btn.classList.add('correct');
+                        }, 500);
+                    }
+                });
+                
+                numberDisplay.style.color = '#d63031';
+                retryBtn.classList.remove('hidden');
+                nextBtn.classList.remove('hidden');
+            }
+        }
+
+        function checkLevelProgress() {
+            const config = getCurrentLevelConfig();
+            
+            const allNumbersTested = () => {
+                for (let i = config.min; i <= config.max; i++) {
+                    if (!testedNumbers.has(i)) {
+                        return false;
+                    }
+                }
+                return true;
+            };
+            
+            const allTested = allNumbersTested();
+            
+            if (levelTotalCount >= config.questionsNeeded && allTested) {
+                if (currentLevel < levels.length - 1) {
+                    if (!levelHasWrongAnswer) {
+                        setTimeout(() => {
+                            advanceLevel();
+                        }, 500);
+                        return true;
+                    } else {
+                        setTimeout(() => {
+                            restartLevel();
+                        }, 500);
+                        return true;
+                    }
+                } else {
+                    if (!levelHasWrongAnswer) {
+                        setTimeout(() => {
+                            showCompletion();
+                        }, 500);
+                        return true;
+                    } else {
+                        setTimeout(() => {
+                            restartLevel();
+                        }, 500);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        
+        function showCompletion() {
+            feedback.textContent = '🎊 Congratulations! You completed all levels! 🎊';
+            speakFeedback(feedback.textContent);
+            feedback.className = 'feedback correct';
+            stars.textContent = '⭐🌟✨🎉✨🌟⭐';
+        }
+        
+        function restartLevel() {
+            feedback.textContent = '💪 Let\'s practice this level again to get them all right!';
+            feedback.className = 'feedback';
+            stars.textContent = '🔄';
+            
+            levelCorrectCount = 0;
+            levelTotalCount = 0;
+            levelHasWrongAnswer = false;
+            recentNumbers = [];
+            testedNumbers.clear();
+            
+            setTimeout(() => {
+                nextQuestion();
+            }, 2500);
+        }
+
+        function advanceLevel() {
+            currentLevel++;
+            levelCorrectCount = 0;
+            levelTotalCount = 0;
+            levelHasWrongAnswer = false;
+            recentNumbers = [];
+            testedNumbers.clear();
+            
+            feedback.textContent = `🎉 Level Up! Now trying ${levels[currentLevel].description}! 🎉`;
+            feedback.className = 'feedback correct';
+            stars.textContent = '🌟🌟🌟🌟🌟';
+            
+            updateLevelInfo();
+            
+            setTimeout(() => {
+                nextQuestion();
+            }, 3000);
+        }
+
+        function nextQuestion() {
+            answered = false;
+            currentNumber = getNextNumber();
+            
+            numberDisplay.textContent = currentNumber;
+            numberDisplay.style.color = '#00b894';
+            numberDisplay.style.animation = 'none';
+            setTimeout(() => {
+                numberDisplay.style.animation = 'pulse 1s ease-in-out';
+            }, 10);
+            
+            feedback.textContent = '';
+            feedback.className = 'feedback';
+            stars.textContent = '';
+            nextBtn.classList.add('hidden');
+            retryBtn.classList.add('hidden');
+            
+            createOptions();
+        }
+        
+        function retryQuestion() {
+            answered = false;
+            numberDisplay.style.color = '#00b894';
+            numberDisplay.style.animation = 'none';
+            setTimeout(() => {
+                numberDisplay.style.animation = 'pulse 1s ease-in-out';
+            }, 10);
+            
+            feedback.textContent = 'Let\'s try this number again! 💪';
+            feedback.className = 'feedback';
+            stars.textContent = '';
+            nextBtn.classList.add('hidden');
+            retryBtn.classList.add('hidden');
+            
+            createOptions();
+        }
+
+        nextBtn.addEventListener('click', nextQuestion);
+        retryBtn.addEventListener('click', retryQuestion);
+
+        updateLevelInfo();
+        createOptions();
+    </script>
+</body>
+</html>
