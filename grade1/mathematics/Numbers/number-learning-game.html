@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>I Learn Number Names</title>
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+         .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            color: #667eea;
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+            font-weight: 800;
+            font-size: 26px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+
+        .floating-home-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            background: #667eea;
+            color: white;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin-top: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+        }
+
+        /* Introduction Section */
+        .intro-section {
+            display: block;
+        }
+
+        .intro-section.hidden {
+            display: none;
+        }
+
+        .number-display {
+            background: linear-gradient(135deg, #a8e6cf 0%, #56ab2f 100%);
+            border-radius: 25px;
+            padding: 60px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .speaker-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-size: 24px;
+        }
+
+        .speaker-icon::after {
+            content: '👉';
+            position: absolute;
+            left: -45px;
+            font-size: 35px;
+            animation: pointBounce 1s ease-in-out infinite;
+        }
+
+        .speaker-icon.clicked::after {
+            display: none;
+        }
+
+        @keyframes pointBounce {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(8px);
+            }
+        }
+
+        .speaker-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .speaker-icon.playing {
+            animation: pulse 0.5s ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .numeral {
+            font-size: 12em;
+            font-weight: bold;
+            color: white;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+            line-height: 1;
+            font-family: 'Gill Sans MT Condensed', 'Gill Sans MT', sans-serif;
+        }
+
+        .word-display {
+            font-size: 5em;
+            font-weight: 700;
+            color: white;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+            letter-spacing: 0.08em;
+            margin-top: 30px;
+            text-transform: lowercase;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .continue-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 50px;
+            border-radius: 50px;
+            font-size: 1.8em;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            margin: 40px auto;
+            display: none;
+        }
+
+        .continue-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .continue-button.show {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Practice Section */
+        .practice-section {
+            display: none;
+        }
+
+        .practice-section.active {
+            display: block;
+        }
+
+        .practice-display {
+            background: linear-gradient(135deg, #a8e6cf 0%, #56ab2f 100%);
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .practice-numeral {
+            font-size: 10em;
+            font-weight: bold;
+            color: white;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+            line-height: 1;
+            font-family: 'Gill Sans MT Condensed', 'Gill Sans MT', sans-serif;
+        }
+
+        .letter-boxes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .letter-box {
+            width: 100px;
+            height: 100px;
+            border: 4px dashed #667eea;
+            border-radius: 15px;
+            background: #f5f7fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+            font-weight: 700;
+            color: #2d3436;
+            transition: all 0.3s ease;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+            text-transform: lowercase;
+        }
+
+        .letter-box.drag-over {
+            background: #e8f4f8;
+            border-color: #00b894;
+            transform: scale(1.05);
+        }
+
+        .letter-box.filled {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border: 4px solid #fdcb6e;
+        }
+
+        .letter-box.auto-filled {
+            background: linear-gradient(135deg, #a8e6cf 0%, #56ab2f 100%);
+            border: 4px solid #00b894;
+            animation: fillIn 0.5s ease-out;
+        }
+
+        @keyframes fillIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .letter-bank {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+            padding: 30px;
+            background: #f5f7fa;
+            border-radius: 20px;
+        }
+
+        .letter-bank-title {
+            width: 100%;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2d3436;
+            margin-bottom: 20px;
+        }
+
+        .letter-tile {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            font-weight: 700;
+            color: white;
+            cursor: grab;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            user-select: none;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+            text-transform: lowercase;
+        }
+
+        .letter-tile:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .letter-tile:active {
+            cursor: grabbing;
+        }
+
+        .letter-tile.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+
+        .feedback {
+            text-align: center;
+            font-size: 3em;
+            font-weight: bold;
+            margin-top: 30px;
+            padding: 30px;
+            border-radius: 20px;
+            display: none;
+            animation: slideDown 0.5s ease-out;
+            background: linear-gradient(135deg, #a8e6cf 0%, #56ab2f 100%);
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .feedback.retry {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+        }
+
+        .feedback.incorrect {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+        }
+
+        .feedback.helper {
+            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .progress-indicator {
+            text-align: center;
+            font-size: 1.5em;
+            color: #2d3436;
+            margin-top: 30px;
+            font-weight: bold;
+        }
+
+        /* Completion Screen */
+        .completion-section {
+            display: none;
+            text-align: center;
+        }
+
+        .completion-section.active {
+            display: block;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .completion-display {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            border-radius: 25px;
+            padding: 60px 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 40px;
+        }
+
+        .completion-icon {
+            font-size: 8em;
+            margin-bottom: 20px;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .completion-title {
+            font-size: 3.5em;
+            font-weight: bold;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .completion-message {
+            font-size: 1.8em;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .action-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 50px;
+            border-radius: 50px;
+            font-size: 1.8em;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .action-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-button.home {
+            background: linear-gradient(135deg, #a8e6cf 0%, #56ab2f 100%);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+                margin-top: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .number-display, .practice-display {
+                padding: 30px 20px;
+            }
+
+            .numeral, .practice-numeral {
+                font-size: 8em;
+            }
+
+            .word-display {
+                font-size: 3em;
+            }
+
+            .speaker-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            .speaker-icon::after {
+                font-size: 28px;
+                left: -38px;
+            }
+
+            .continue-button {
+                font-size: 1.4em;
+                padding: 15px 40px;
+            }
+
+            .letter-box {
+                width: 70px;
+                height: 70px;
+                font-size: 2.5em;
+            }
+
+            .letter-tile {
+                width: 60px;
+                height: 60px;
+                font-size: 2em;
+            }
+
+            .letter-bank {
+                padding: 20px;
+            }
+
+            .letter-bank-title {
+                font-size: 1.2em;
+            }
+
+            .feedback {
+                font-size: 2em;
+                padding: 20px;
+            }
+
+            .progress-indicator {
+                font-size: 1.2em;
+            }
+
+            .completion-icon {
+                font-size: 5em;
+            }
+
+            .completion-title {
+                font-size: 2.5em;
+            }
+
+            .completion-message {
+                font-size: 1.3em;
+            }
+
+            .action-button {
+                font-size: 1.4em;
+                padding: 15px 40px;
+            }
+
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .action-button {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+<body>
+    <button class="home-button" onclick="window.location.href='../math-index.html'">
+        <span>🏠</span>
+        <span>Home</span>
+    </button>
+<div class="container">
+<h1 id="mainTitle">🎯 I learn number names</h1>
+<!-- INTRODUCTION SECTION -->
+<div class="intro-section" id="introSection">
+<div class="number-display">
+<div class="speaker-icon" id="introSpeaker" title="Play sound">🔊</div>
+<div class="numeral" id="introNumeral">1</div>
+<div class="word-display" id="introWord">one</div>
+</div>
+<button class="continue-button" id="continueBtn">Let's Practice! 🎮</button>
+</div>
+<!-- PRACTICE SECTION -->
+<div class="practice-section" id="practiceSection">
+<div class="practice-display">
+<div class="speaker-icon" id="practiceSpeaker" title="Play sound">🔊</div>
+<div class="practice-numeral" id="practiceNumeral">1</div>
+</div>
+<div class="letter-boxes" id="letterBoxes">
+<!-- Boxes will be generated here -->
+</div>
+<div class="letter-bank" id="letterBank">
+<!-- Letters will be generated here -->
+</div>
+<div class="feedback" id="feedback"></div>
+</div>
+<!-- COMPLETION SECTION -->
+<div class="completion-section" id="completionSection">
+<div class="completion-display">
+<div class="completion-icon">🎉</div>
+<div class="completion-title">Congratulations!</div>
+<div class="completion-message">You've completed all the numbers!</div>
+<div class="completion-message">🌟 Great job learning 1-10! 🌟</div>
+</div>
+<div class="button-group">
+<button class="action-button" id="restartBtn">
+<span>🔄</span>
+<span>Play Again</span>
+</button>
+</div>
+</div>
+<div class="progress-indicator" id="progress">Number 1 of 10</div>
+</div>
+<script>
+        const numbers = [
+            { numeral: 1, word: 'one' },
+            { numeral: 2, word: 'two' },
+            { numeral: 3, word: 'three' },
+            { numeral: 4, word: 'four' },
+            { numeral: 5, word: 'five' },
+            { numeral: 6, word: 'six' },
+            { numeral: 7, word: 'seven' },
+            { numeral: 8, word: 'eight' },
+            { numeral: 9, word: 'nine' },
+            { numeral: 10, word: 'ten' }
+        ];
+
+        let currentIndex = 0;
+        let draggedElement = null;
+        let attemptCount = 0;
+        const maxAttempts = 2;
+        let errorCount = 0;
+        const maxErrors = 3;
+        let isProcessing = false;
+        let currentMode = 'intro'; // 'intro' or 'practice'
+
+        const positiveFeedback = [
+            "🌟 Well done!",
+            "🎉 Excellent!",
+            "✨ Amazing work!",
+            "🏆 Perfect!",
+            "💫 Fantastic!",
+            "🎊 Brilliant!",
+            "⭐ Great job!",
+            "🌈 Outstanding!"
+        ];
+
+        const incorrectFeedback = [
+            "🤔 Oops! Try again!",
+            "💭 Not quite! Give it another go!",
+            "🔄 Almost! Try once more!",
+            "💪 Keep trying! You can do it!"
+        ];
+
+        // INTRODUCTION MODE
+        function showIntroduction() {
+            currentMode = 'intro';
+            const current = numbers[currentIndex];
+            
+            document.getElementById('mainTitle').textContent = '🎯 I learn number names';
+            document.getElementById('introSection').classList.remove('hidden');
+            document.getElementById('practiceSection').classList.remove('active');
+            document.getElementById('completionSection').classList.remove('active');
+            document.getElementById('progress').style.display = 'block';
+            
+            document.getElementById('introNumeral').textContent = current.numeral;
+            document.getElementById('introWord').textContent = current.word;
+            document.getElementById('progress').textContent = `Number ${currentIndex + 1} of ${numbers.length}`;
+            
+            document.getElementById('continueBtn').classList.remove('show');
+            
+            // Reset speaker to show pointing hand for new number
+            document.getElementById('introSpeaker').classList.remove('clicked');
+            
+            // Auto-play after a short delay
+            setTimeout(() => {
+                playIntroAudio();
+            }, 500);
+        }
+
+        // COMPLETION MODE
+        function showCompletion() {
+            currentMode = 'completion';
+            
+            document.getElementById('mainTitle').textContent = '🏆 Well Done!';
+            document.getElementById('introSection').classList.add('hidden');
+            document.getElementById('practiceSection').classList.remove('active');
+            document.getElementById('completionSection').classList.add('active');
+            document.getElementById('progress').style.display = 'none';
+            
+            // Play congratulations audio
+            setTimeout(() => {
+                const utterance = new SpeechSynthesisUtterance("Congratulations! You've completed all the numbers! Great job!");
+                utterance.rate = 0.8;
+                utterance.pitch = 1.2;
+                utterance.volume = 1;
+                speechSynthesis.speak(utterance);
+            }, 500);
+        }
+
+        function playIntroAudio() {
+            const current = numbers[currentIndex];
+            const speakerIcon = document.getElementById('introSpeaker');
+            
+            speakerIcon.classList.add('playing');
+            speechSynthesis.cancel();
+            
+            // First say the number
+            const numberUtterance = new SpeechSynthesisUtterance(current.numeral.toString());
+            numberUtterance.rate = 0.7;
+            numberUtterance.pitch = 1.2;
+            numberUtterance.volume = 1;
+            
+            numberUtterance.onend = () => {
+                // Then say the word after a brief pause
+                setTimeout(() => {
+                    const wordUtterance = new SpeechSynthesisUtterance(current.word);
+                    wordUtterance.rate = 0.7;
+                    wordUtterance.pitch = 1.2;
+                    wordUtterance.volume = 1;
+                    
+                    wordUtterance.onend = () => {
+                        // Show continue button after audio finishes
+                        setTimeout(() => {
+                            document.getElementById('continueBtn').classList.add('show');
+                            speakerIcon.classList.remove('playing');
+                        }, 500);
+                    };
+                    
+                    speechSynthesis.speak(wordUtterance);
+                }, 800);
+            };
+            
+            speechSynthesis.speak(numberUtterance);
+        }
+
+        document.getElementById('introSpeaker').addEventListener('click', playIntroAudio);
+
+        document.getElementById('introSpeaker').addEventListener('click', function() {
+            this.classList.add('clicked');
+        });
+
+        document.getElementById('continueBtn').addEventListener('click', () => {
+            showPractice();
+        });
+
+        // PRACTICE MODE
+        function showPractice() {
+            currentMode = 'practice';
+            const current = numbers[currentIndex];
+            
+            document.getElementById('mainTitle').textContent = '🎯 Drag the letters to spell';
+            document.getElementById('introSection').classList.add('hidden');
+            document.getElementById('practiceSection').classList.add('active');
+            
+            document.getElementById('practiceNumeral').textContent = current.numeral;
+            
+            // Reset speaker to show pointing hand for practice
+            document.getElementById('practiceSpeaker').classList.remove('clicked');
+            
+            attemptCount = 0;
+            errorCount = 0;
+            createLetterBoxes(current.word);
+            createLetterBank(current.word);
+            hideFeedback();
+        }
+
+        function createLetterBoxes(word) {
+            const container = document.getElementById('letterBoxes');
+            container.innerHTML = '';
+            
+            for (let i = 0; i < word.length; i++) {
+                const box = document.createElement('div');
+                box.className = 'letter-box';
+                box.dataset.index = i;
+                box.dataset.correctLetter = word[i].toLowerCase();
+                
+                box.addEventListener('dragover', handleDragOver);
+                box.addEventListener('drop', handleDrop);
+                box.addEventListener('dragleave', handleDragLeave);
+                
+                container.appendChild(box);
+            }
+        }
+
+        function createLetterBank(word) {
+            const container = document.getElementById('letterBank');
+            container.innerHTML = '<div class="letter-bank-title">Drag the letters:</div>';
+            
+            const letters = word.split('');
+            
+            // Fisher-Yates shuffle
+            for (let i = letters.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [letters[i], letters[j]] = [letters[j], letters[i]];
+            }
+            
+            letters.forEach((letter, index) => {
+                const letterTile = document.createElement('div');
+                letterTile.className = 'letter-tile';
+                letterTile.textContent = letter.toLowerCase();
+                letterTile.draggable = true;
+                letterTile.dataset.letter = letter.toLowerCase();
+                letterTile.dataset.id = `tile-${index}`;
+                
+                letterTile.addEventListener('dragstart', handleDragStart);
+                letterTile.addEventListener('dragend', handleDragEnd);
+                letterTile.addEventListener('click', () => {
+                    playLetterSound(letter);
+                });
+                
+                container.appendChild(letterTile);
+            });
+        }
+
+        function handleDragStart(e) {
+            draggedElement = e.target;
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', e.target.innerHTML);
+        }
+
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            e.target.classList.add('drag-over');
+            return false;
+        }
+
+        function handleDragLeave(e) {
+            e.target.classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            e.preventDefault();
+            
+            const box = e.target;
+            box.classList.remove('drag-over');
+            
+            if (box.children.length === 0 && draggedElement && !isProcessing) {
+                const letter = draggedElement.dataset.letter;
+                box.textContent = letter;
+                box.classList.add('filled');
+                
+                playLetterSoundSync(letter);
+                
+                draggedElement.remove();
+                draggedElement = null;
+                
+                setTimeout(checkWord, 700);
+            }
+            
+            return false;
+        }
+
+        function checkWord() {
+            if (isProcessing) return;
+            
+            const boxes = document.querySelectorAll('.letter-box');
+            let complete = true;
+            let correct = true;
+            
+            boxes.forEach(box => {
+                if (box.textContent === '') {
+                    complete = false;
+                } else if (box.textContent !== box.dataset.correctLetter) {
+                    correct = false;
+                }
+            });
+            
+            if (complete && correct) {
+                setTimeout(() => {
+                    showSuccess();
+                }, 500);
+            } else if (complete && !correct) {
+                showIncorrectFeedback();
+            }
+        }
+
+        function showIncorrectFeedback() {
+            if (isProcessing) return;
+            isProcessing = true;
+            
+            errorCount++;
+            
+            if (errorCount >= maxErrors) {
+                showCorrectAnswer();
+            } else {
+                const feedback = document.getElementById('feedback');
+                const message = incorrectFeedback[Math.floor(Math.random() * incorrectFeedback.length)];
+                
+                feedback.textContent = message;
+                feedback.className = 'feedback show incorrect';
+                
+                speakFeedback(message, () => {
+                    setTimeout(() => {
+                        clearIncorrectLetters();
+                        isProcessing = false;
+                    }, 1500);
+                });
+            }
+        }
+
+        function clearIncorrectLetters() {
+            const boxes = document.querySelectorAll('.letter-box');
+            const lettersToReturn = [];
+            
+            boxes.forEach(box => {
+                if (box.textContent !== '' && box.textContent !== box.dataset.correctLetter) {
+                    lettersToReturn.push(box.textContent);
+                    box.textContent = '';
+                    box.classList.remove('filled');
+                }
+            });
+            
+            const letterBank = document.getElementById('letterBank');
+            lettersToReturn.forEach((letter, index) => {
+                const letterTile = document.createElement('div');
+                letterTile.className = 'letter-tile';
+                letterTile.textContent = letter;
+                letterTile.draggable = true;
+                letterTile.dataset.letter = letter;
+                letterTile.dataset.id = `returned-tile-${index}`;
+                
+                letterTile.addEventListener('dragstart', handleDragStart);
+                letterTile.addEventListener('dragend', handleDragEnd);
+                letterTile.addEventListener('click', () => {
+                    playLetterSound(letter);
+                });
+                
+                letterBank.appendChild(letterTile);
+            });
+            
+            hideFeedback();
+        }
+
+        function showCorrectAnswer() {
+            const current = numbers[currentIndex];
+            const feedback = document.getElementById('feedback');
+            
+            feedback.textContent = "👀 Watch carefully!";
+            feedback.className = 'feedback show helper';
+            
+            speakFeedback("Watch carefully!", () => {
+                setTimeout(() => {
+                    const boxes = document.querySelectorAll('.letter-box');
+                    boxes.forEach(box => {
+                        box.textContent = '';
+                        box.classList.remove('filled', 'auto-filled');
+                    });
+                    
+                    setTimeout(() => {
+                        fillLettersSequentially(boxes, current.word, () => {
+                            setTimeout(() => {
+                                playWordSound(current.word, () => {
+                                    setTimeout(() => {
+                                        feedback.textContent = "🔄 Now you try!";
+                                        feedback.className = 'feedback show retry';
+                                        speakFeedback("Now you try!", () => {
+                                            setTimeout(() => {
+                                                errorCount = 0;
+                                                resetCurrentNumber();
+                                                isProcessing = false;
+                                            }, 2000);
+                                        });
+                                    }, 1000);
+                                });
+                            }, 500);
+                        });
+                    }, 500);
+                }, 1500);
+            });
+        }
+
+        function fillLettersSequentially(boxes, word, callback) {
+            let index = 0;
+            
+            function fillNext() {
+                if (index < boxes.length) {
+                    const box = boxes[index];
+                    box.textContent = box.dataset.correctLetter;
+                    box.classList.add('auto-filled');
+                    
+                    playLetterSoundSync(box.dataset.correctLetter);
+                    
+                    index++;
+                    setTimeout(fillNext, 1200);
+                } else if (callback) {
+                    callback();
+                }
+            }
+            
+            fillNext();
+        }
+
+        function showSuccess() {
+            if (isProcessing) return;
+            isProcessing = true;
+            
+            const current = numbers[currentIndex];
+            const feedback = document.getElementById('feedback');
+            const message = positiveFeedback[Math.floor(Math.random() * positiveFeedback.length)];
+            
+            feedback.textContent = message;
+            feedback.className = 'feedback show';
+            
+            playWordSound(current.word, () => {
+                setTimeout(() => {
+                    speakFeedback(message, () => {
+                        attemptCount++;
+                        
+                        if (attemptCount < maxAttempts) {
+                            setTimeout(() => {
+                                feedback.textContent = "🔄 Let's try again!";
+                                feedback.className = 'feedback show retry';
+                                speakFeedback("Let's try again!", () => {
+                                    setTimeout(() => {
+                                        resetCurrentNumber();
+                                        isProcessing = false;
+                                    }, 1500);
+                                });
+                            }, 2000);
+                        } else {
+                            setTimeout(() => {
+                                currentIndex++;
+                                
+                                // Check if we've completed all numbers
+                                if (currentIndex >= numbers.length) {
+                                    isProcessing = false;
+                                    showCompletion();
+                                } else {
+                                    isProcessing = false;
+                                    showIntroduction();
+                                }
+                            }, 2500);
+                        }
+                    });
+                }, 1000);
+            });
+        }
+
+        function resetCurrentNumber() {
+            const current = numbers[currentIndex];
+            createLetterBoxes(current.word);
+            createLetterBank(current.word);
+            hideFeedback();
+        }
+
+        function hideFeedback() {
+            const feedback = document.getElementById('feedback');
+            feedback.className = 'feedback';
+        }
+
+        function playLetterSoundSync(letter) {
+            speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(letter);
+            utterance.rate = 0.5;
+            utterance.pitch = 1.3;
+            utterance.volume = 1;
+            speechSynthesis.speak(utterance);
+        }
+
+        function playLetterSound(letter) {
+            playLetterSoundSync(letter);
+        }
+
+        function playWordSound(word, callback) {
+            speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(word);
+            utterance.rate = 0.7;
+            utterance.pitch = 1.2;
+            utterance.volume = 1;
+            
+            if (callback) {
+                utterance.onend = callback;
+            }
+            
+            speechSynthesis.speak(utterance);
+        }
+
+        function speakFeedback(message, callback) {
+            const textOnly = message.replace(/[^\w\s!]/g, '');
+            speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(textOnly);
+            utterance.rate = 0.9;
+            utterance.pitch = 1.3;
+            utterance.volume = 1;
+            
+            if (callback) {
+                utterance.onend = callback;
+            }
+            
+            speechSynthesis.speak(utterance);
+        }
+
+        function playNumberSound() {
+            const current = numbers[currentIndex];
+            const speakerIcon = document.getElementById('practiceSpeaker');
+            speakerIcon.classList.add('playing');
+            
+            const utterance = new SpeechSynthesisUtterance(current.numeral.toString());
+            utterance.rate = 0.7;
+            utterance.pitch = 1.2;
+            utterance.volume = 1;
+            
+            utterance.onend = () => {
+                speakerIcon.classList.remove('playing');
+            };
+            
+            speechSynthesis.cancel();
+            speechSynthesis.speak(utterance);
+        }
+
+        document.getElementById('practiceSpeaker').addEventListener('click', playNumberSound);
+
+        document.getElementById('practiceSpeaker').addEventListener('click', function() {
+            this.classList.add('clicked');
+        });
+
+        // Restart button - start from beginning
+        document.getElementById('restartBtn').addEventListener('click', function() {
+            currentIndex = 0;
+            attemptCount = 0;
+            errorCount = 0;
+            isProcessing = false;
+            showIntroduction();
+        });
+
+        // Floating Home button - navigate back to index
+        document.getElementById('floatingHomeBtn').addEventListener('click', function() {
+            window.parent.location.href = '/';
+        });
+
+        // Initialize
+        showIntroduction();
+    </script>
+</body>
+</html>
