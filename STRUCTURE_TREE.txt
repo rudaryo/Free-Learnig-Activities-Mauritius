@@ -1,0 +1,22 @@
+.
+ Grade-1
+  Mathematics
+   Numbers
+   Shapes
+   assets
+    audio
+    css
+    images
+    {images,audio,css}
+ Grade-2
+ Grade-3
+ Grade-4
+ Grade-5
+  History-Geography
+   assets
+    audio
+    css
+    images
+    {images,audio,css}
+   history and geography
+ Grade-6

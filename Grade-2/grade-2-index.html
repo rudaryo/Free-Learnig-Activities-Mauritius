@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 2 - Learning Activities</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            background: white;
+            color: #667eea;
+            padding: 20px 45px;
+            border-radius: 60px;
+            border: none;
+            font-weight: 800;
+            font-size: 26px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            background: #667eea;
+            color: white;
+        }
+
+        .container {
+            max-width: 800px;
+            text-align: center;
+            background: white;
+            border-radius: 30px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .icon {
+            font-size: 6em;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: #636e72;
+            margin-bottom: 30px;
+        }
+
+        .message {
+            font-size: 1.2em;
+            color: #2d3436;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .coming-soon-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.3em;
+            font-weight: bold;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .container {
+                padding: 40px 30px;
+            }
+
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-button">
+        <span>🏠</span>
+        <span>Back</span>
+    </a>
+
+    <div class="container">
+        <div class="icon">🚧</div>
+        <h1>Grade 2</h1>
+        <p class="subtitle">Building Knowledge • Ages 6-7</p>
+        <p class="message">
+            Exciting interactive activities for Grade 2 are currently being developed! 
+            Our team is working hard to create engaging learning experiences in Mathematics, English, and French.
+        </p>
+        <div class="coming-soon-badge">Coming Soon!</div>
+    </div>
+</body>
+</html>
