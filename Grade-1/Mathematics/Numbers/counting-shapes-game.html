@@ -22,30 +22,29 @@
             padding: 20px;
         }
 
-        .home-link {
+        .back-button {
             position: fixed;
             top: 20px;
             left: 20px;
-            background: white;
-            color: #667eea;
-            padding: 12px 24px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 800;
-            font-size: 26px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .home-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-            background: #667eea;
+            background: #ff6b6b;
             color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 26px;
+            cursor: pointer;
+            font-weight: 800;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            z-index: 1000;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+        }
+        
+        .back-button:hover {
+            background: #ee5a52;
+            transform: scale(1.05);
         }
 
         .game-container {
