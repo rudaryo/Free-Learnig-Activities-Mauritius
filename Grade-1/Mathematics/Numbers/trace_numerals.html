@@ -31,6 +31,27 @@
             align-items: center;
             justify-content: center;
         }
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            color: #667eea;
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-decoration: none;
+            border: 3px solid #667eea;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 9999; /* ensures it appears above canvas */
+            transition: transform 0.2s ease;
+        }
+
+        .home-button:hover {
+            transform: scale(1.1);
+        }
 
         .container {
             max-width: 1000px;
@@ -307,6 +328,7 @@
 <div class="controls">
 <button class="control-btn clear-btn" id="clear-btn">🔄 Clear</button>
 <button class="control-btn check-btn" id="check-btn">✓ Check My Work</button>
+<button class="home-button" onclick="window.location.href='../grade-1-math-index.html'">🏠 Home</button>
 </div>
 </div>
 <script>
