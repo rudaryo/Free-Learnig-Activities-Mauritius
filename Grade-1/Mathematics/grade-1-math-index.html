@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grade 1 - Mathematics Learning Center</title>
+    <title>Mathematics Learning Center</title>
     <style>
         * {
             margin: 0;
@@ -225,14 +225,14 @@
     </style>
 </head>
 <body>
-    <button class="back-button" onclick="window.location.href='../grade-1-index.html'">
+    <button class="back-button" onclick="window.location.href='index.html'">
         <span>🏠</span>
         <span>back</span>
     </button>
 
     <div class="container">
         <header>
-            <h1>📚 Grade 1 Mathematics Learning Center</h1>
+            <h1>📚 Mathematics Learning Center</h1>
             <p class="subtitle">Fun Interactive Learning Activities</p>
         </header>
 
@@ -249,7 +249,7 @@
                 <div class="chapter-description">Explore circles, squares, triangles and more</div>
             </div>
 
-            <div class="chapter-card coming-soon">
+            <div class="chapter-card" onclick="scrollToSection('colours')">
                 <div class="chapter-icon">🎨</div>
                 <div class="chapter-title">Colours</div>
                 <div class="chapter-description">Learn about different colors</div>
@@ -338,8 +338,7 @@
             <script>
                 const shapesFiles = [
                     {file:"learning-shapes.html", icon:"🔷", level:"Identify Shapes | 2 Levels", title:"Learning Shapes", badge:"NEW!"},
-                    {file:"learning-shape-names.html", icon:"✏️", level:"Spell Shape Names | Interactive", title:"Learning Shape Names", badge:"NEW!"},
-                    {file:"shape-matching-pairs.html", icon:"🟩", level:"Match Shapes | Pairs Activity", title:"Shape Matching Pairs", badge:"NEW!"}
+                    {file:"learning-shape-names.html", icon:"📝", level:"Learn Shape Names | Progressive Learning", title:"Learning Shape Names", badge:"NEW!"}
                 ];
 
                 const shapesGrid = document.getElementById("shapes-grid");
@@ -365,6 +364,39 @@
         </div>
         <!-- ====== DYNAMIC SHAPES SECTION END ====== -->
 
+        <!-- ====== DYNAMIC COLOURS SECTION START ====== -->
+        <div class="activities-section" id="colours">
+            <h2 class="section-title">🎨 Colours Activities</h2>
+            <div class="activities-grid" id="colours-grid"></div>
+
+            <script>
+                const coloursFiles = [
+                    {file:"learning-colors.html", icon:"🎨", level:"Learn Red, Blue, Yellow, Green | Objects & Spelling", title:"Learning Colors", badge:"NEW!"}
+                ];
+
+                const coloursGrid = document.getElementById("colours-grid");
+
+                coloursFiles.forEach(item => {
+                    const card = document.createElement("a");
+                    card.href = `Colours/${item.file}`;
+                    card.className = "activity-card";
+
+                    const title = item.title || item.file
+                        .replace(/[-_]/g, ' ')
+                        .replace('.html','')
+                        .replace(/\b\w/g, l => l.toUpperCase());
+
+                    card.innerHTML = `
+                        <div class="activity-icon">${item.icon}</div>
+                        <div class="activity-title">${title}${item.badge ? `<span class="new-badge">${item.badge}</span>` : ''}</div>
+                        <div class="activity-level">${item.level}</div>
+                    `;
+                    coloursGrid.appendChild(card);
+                });
+            </script>
+        </div>
+        <!-- ====== DYNAMIC COLOURS SECTION END ====== -->
+
     </div>
 
     <script>
@@ -377,3 +409,4 @@
     </script>
 </body>
 </html>
+
