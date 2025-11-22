@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Colors</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 30px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .object-display {
+            margin: 40px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 280px;
+        }
+
+        .object {
+            font-size: 10em;
+            transition: all 0.3s;
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.2));
+        }
+
+        .color-text {
+            font-size: 3em;
+            font-weight: bold;
+            margin-top: 30px;
+            letter-spacing: 2px;
+        }
+
+        .instruction-text {
+            font-size: 2em;
+            color: #7F8C8D;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .word-builder {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .letter-box {
+            width: 55px;
+            height: 65px;
+            border: 4px solid #3498DB;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            font-weight: bold;
+            color: #2C3E50;
+            background: white;
+        }
+
+        .letter-box.empty {
+            background: #ECF0F1;
+            border-style: dashed;
+            border-color: #E74C3C;
+            color: #E74C3C;
+        }
+
+        .letter-box.filled {
+            background: #2ECC71;
+            border-color: #27AE60;
+            color: white;
+            animation: fillIn 0.3s;
+        }
+
+        @keyframes fillIn {
+            0% { transform: scale(0.8); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .letter-options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+
+        .letter-btn {
+            width: 55px;
+            height: 65px;
+            background: #3498DB;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .letter-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background: #2980B9;
+        }
+
+        .letter-btn:disabled {
+            background: #95A5A6;
+            cursor: not-allowed;
+            transform: none;
+            opacity: 0.5;
+        }
+
+        .next-btn {
+            background: #2ECC71;
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.8em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 15px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            background: #27AE60;
+        }
+
+        .next-btn:disabled {
+            background: #95A5A6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .speaker-icon {
+            display: inline-block;
+            font-size: 1.3em;
+            cursor: pointer;
+            margin-left: 20px;
+            background: #3498DB;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            line-height: 45px;
+            text-align: center;
+            transition: all 0.3s;
+            vertical-align: middle;
+        }
+
+        .speaker-icon:hover {
+            background: #2980B9;
+            transform: scale(1.1);
+        }
+
+        .controls {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0px;
+        }
+
+        .btn-home {
+            background: #9B59B6;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .btn-home:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        .hint-btn {
+            background: #F39C12;
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .hint-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            background: #E67E22;
+        }
+
+        .hint-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 30px;
+            padding: 60px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            z-index: 2000;
+            text-align: center;
+            animation: popupAppear 0.3s;
+        }
+
+        .hint-popup .object {
+            margin-bottom: 30px;
+            font-size: 8em;
+        }
+
+        .hint-popup .word {
+            font-size: 3em;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        @keyframes popupAppear {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1999;
+        }
+
+        .celebration {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 8em;
+            animation: celebrate 0.8s;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        @keyframes celebrate {
+            0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) scale(1.3) rotate(180deg); }
+            100% { transform: translate(-50%, -50%) scale(1) rotate(360deg); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 15px;
+            }
+
+            .object-display {
+                min-height: 200px;
+                margin: 20px 0;
+            }
+
+            .object {
+                font-size: 7em;
+            }
+
+            .color-text {
+                font-size: 2em;
+            }
+
+            .instruction-text {
+                font-size: 1.3em;
+            }
+
+            .hint-btn {
+                padding: 10px 28px;
+                font-size: 1.1em;
+            }
+
+            .hint-popup {
+                padding: 40px;
+            }
+
+            .hint-popup .object {
+                font-size: 6em;
+            }
+
+            .hint-popup .word {
+                font-size: 2.2em;
+            }
+
+            .letter-box {
+                width: 45px;
+                height: 55px;
+                font-size: 1.6em;
+            }
+
+            .letter-btn {
+                width: 45px;
+                height: 55px;
+                font-size: 1.6em;
+            }
+
+            .next-btn {
+                padding: 15px 35px;
+                font-size: 1.3em;
+            }
+
+            .btn-home {
+                padding: 12px 30px;
+                font-size: 1.1em;
+            }
+
+            .speaker-icon {
+                width: 38px;
+                height: 38px;
+                line-height: 38px;
+                font-size: 1.1em;
+            }
+
+            .word-builder {
+                gap: 8px;
+            }
+
+            .letter-options {
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 10px;
+            }
+
+            .object {
+                font-size: 5em;
+            }
+
+            .color-text {
+                font-size: 1.5em;
+            }
+
+            .instruction-text {
+                font-size: 1.1em;
+            }
+
+            .hint-btn {
+                padding: 8px 25px;
+                font-size: 1em;
+            }
+
+            .hint-popup {
+                padding: 30px;
+            }
+
+            .hint-popup .object {
+                font-size: 4em;
+            }
+
+            .hint-popup .word {
+                font-size: 1.8em;
+            }
+
+            .letter-box {
+                width: 38px;
+                height: 48px;
+                font-size: 1.3em;
+                border: 3px solid #3498DB;
+            }
+
+            .letter-btn {
+                width: 38px;
+                height: 48px;
+                font-size: 1.3em;
+            }
+
+            .next-btn {
+                padding: 12px 28px;
+                font-size: 1.1em;
+            }
+
+            .btn-home {
+                padding: 10px 25px;
+                font-size: 1em;
+            }
+
+            .word-builder {
+                gap: 5px;
+            }
+
+            .letter-options {
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="content">
+            <!-- Content will be dynamically generated -->
+        </div>
+        
+        <div class="controls">
+            <button class="next-btn" id="nextBtn" onclick="nextStep()">Next ➡️</button>
+        </div>
+        
+        <button class="btn-home" onclick="window.location.href='../grade-1-math-index.html'">🏠 Home</button>
+    </div>
+
+    <script>
+        const colors = [
+            {
+                name: 'red',
+                displayName: 'Red',
+                colorCode: '#E74C3C',
+                objects: [
+                    {emoji: '🔴', name: 'ball', text: 'a red ball'},
+                    {emoji: '🚗', name: 'car', text: 'a red car'},
+                    {emoji: '🍎', name: 'apple', text: 'a red apple'},
+                    {emoji: '🌹', name: 'rose', text: 'a red rose'}
+                ]
+            },
+            {
+                name: 'blue',
+                displayName: 'Blue',
+                colorCode: '#3498DB',
+                objects: [
+                    {emoji: '🔵', name: 'ball', text: 'a blue ball'},
+                    {emoji: '🚙', name: 'car', text: 'a blue car'},
+                    {emoji: '📘', name: 'book', text: 'a blue book'},
+                    {emoji: '🫐', name: 'berry', text: 'a blue berry'}
+                ]
+            },
+            {
+                name: 'yellow',
+                displayName: 'Yellow',
+                colorCode: '#F1C40F',
+                objects: [
+                    {emoji: '🟡', name: 'ball', text: 'a yellow ball'},
+                    {emoji: '🚕', name: 'car', text: 'a yellow car'},
+                    {emoji: '🍌', name: 'banana', text: 'a yellow banana'},
+                    {emoji: '⭐', name: 'star', text: 'a yellow star'}
+                ]
+            },
+            {
+                name: 'green',
+                displayName: 'Green',
+                colorCode: '#2ECC71',
+                objects: [
+                    {emoji: '🟢', name: 'ball', text: 'a green ball'},
+                    {emoji: '🍃', name: 'leaf', text: 'a green leaf'},
+                    {emoji: '🍏', name: 'apple', text: 'a green apple'},
+                    {emoji: '🌳', name: 'tree', text: 'a green tree'}
+                ]
+            }
+        ];
+
+        let currentColorIndex = 0;
+        let currentObjectIndex = 0;
+        let currentStep = 0;
+        let userWord = [];
+
+        const steps = [
+            'objects',         // Show all 4 objects with "a red ball", etc.
+            'missing1',        // 1 letter missing
+            'missing2',        // 2 letters missing
+            'spell'            // Spell complete word
+        ];
+
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.85;
+                utterance.pitch = 1.1;
+                utterance.volume = 1;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function speakCurrent() {
+            const color = colors[currentColorIndex];
+            const step = steps[currentStep];
+            
+            if (step === 'objects') {
+                const obj = color.objects[currentObjectIndex];
+                speak(obj.text);
+            } else {
+                speak(color.displayName);
+            }
+        }
+
+        function showObjects() {
+            const color = colors[currentColorIndex];
+            const obj = color.objects[currentObjectIndex];
+            const content = document.getElementById('content');
+            
+            content.innerHTML = `
+                <div class="object-display">
+                    <div class="object">${obj.emoji}</div>
+                </div>
+                <div class="color-text" style="color: ${color.colorCode}">
+                    ${obj.text}
+                    <span class="speaker-icon" onclick="speakCurrent()">🔊</span>
+                </div>
+            `;
+            
+            setTimeout(() => speak(obj.text), 1000);
+        }
+
+        function showMissingLetters(missingCount) {
+            const color = colors[currentColorIndex];
+            const word = color.name.toLowerCase();
+            const content = document.getElementById('content');
+            const obj = color.objects[0]; // Use first object as representative
+            
+            // Determine which letters to hide
+            let hiddenIndices = [];
+            const wordLength = word.length;
+            
+            if (missingCount === 1) {
+                hiddenIndices = [Math.floor(wordLength / 2)];
+            } else if (missingCount === 2) {
+                hiddenIndices = [0, wordLength - 1];
+            }
+
+            let wordBoxes = '';
+            for (let i = 0; i < word.length; i++) {
+                if (hiddenIndices.includes(i)) {
+                    wordBoxes += `<div class="letter-box empty" id="box-${i}">_</div>`;
+                } else {
+                    wordBoxes += `<div class="letter-box">${word[i]}</div>`;
+                }
+            }
+
+            // Get missing letters
+            const missingLetters = hiddenIndices.map(i => word[i]);
+            
+            // Add some random letters
+            const allLetters = 'abcdefghijklmnopqrstuvwxyz';
+            const randomLetters = [];
+            while (randomLetters.length < 3) {
+                const letter = allLetters[Math.floor(Math.random() * allLetters.length)];
+                if (!missingLetters.includes(letter) && !randomLetters.includes(letter) && !word.includes(letter)) {
+                    randomLetters.push(letter);
+                }
+            }
+
+            const letterOptions = [...missingLetters, ...randomLetters].sort(() => Math.random() - 0.5);
+
+            let optionsHTML = '';
+            letterOptions.forEach(letter => {
+                optionsHTML += `<button class="letter-btn" onclick="fillMissingLetter('${letter}', ${JSON.stringify(hiddenIndices)}, '${word}')">${letter}</button>`;
+            });
+
+            content.innerHTML = `
+                <div class="object-display">
+                    <div class="object">${obj.emoji}</div>
+                </div>
+                <div class="instruction-text">Fill in the missing letter${missingCount > 1 ? 's' : ''}</div>
+                <button class="hint-btn" onclick="showHint()">💡 Hint</button>
+                <div class="word-builder">
+                    ${wordBoxes}
+                </div>
+                <div class="letter-options">
+                    ${optionsHTML}
+                </div>
+            `;
+
+            userWord = [];
+            document.getElementById('nextBtn').disabled = true;
+        }
+
+        function fillMissingLetter(letter, hiddenIndices, correctWord) {
+            let filled = false;
+            for (let i = 0; i < hiddenIndices.length; i++) {
+                const boxId = 'box-' + hiddenIndices[i];
+                const box = document.getElementById(boxId);
+                if (box && box.textContent === '_') {
+                    box.textContent = letter;
+                    box.classList.remove('empty');
+                    box.classList.add('filled');
+                    userWord.push({index: hiddenIndices[i], letter: letter});
+                    filled = true;
+                    
+                    event.target.disabled = true;
+                    speak(letter);
+                    break;
+                }
+            }
+
+            if (userWord.length === hiddenIndices.length) {
+                setTimeout(() => checkMissingLetters(hiddenIndices, correctWord), 500);
+            }
+        }
+
+        function checkMissingLetters(hiddenIndices, correctWord) {
+            let allCorrect = true;
+            
+            userWord.forEach(item => {
+                if (correctWord[item.index] !== item.letter) {
+                    allCorrect = false;
+                }
+            });
+
+            if (allCorrect) {
+                speak('Correct! Well done!');
+                showCelebration('🎉');
+                document.getElementById('nextBtn').disabled = false;
+            } else {
+                speak('Try again!');
+                hiddenIndices.forEach(idx => {
+                    const box = document.getElementById('box-' + idx);
+                    box.textContent = '_';
+                    box.classList.remove('filled');
+                    box.classList.add('empty');
+                });
+                document.querySelectorAll('.letter-btn').forEach(btn => btn.disabled = false);
+                userWord = [];
+            }
+        }
+
+        function showSpelling() {
+            const color = colors[currentColorIndex];
+            const word = color.name.toLowerCase();
+            const content = document.getElementById('content');
+            const obj = color.objects[0];
+            
+            let wordBoxes = '';
+            for (let i = 0; i < word.length; i++) {
+                wordBoxes += `<div class="letter-box empty" id="box-${i}">_</div>`;
+            }
+
+            const wordLetters = word.split('');
+            const allLetters = 'abcdefghijklmnopqrstuvwxyz';
+            const extraLetters = [];
+            
+            while (extraLetters.length < 4) {
+                const letter = allLetters[Math.floor(Math.random() * allLetters.length)];
+                if (!wordLetters.includes(letter) && !extraLetters.includes(letter)) {
+                    extraLetters.push(letter);
+                }
+            }
+
+            const letterOptions = [...wordLetters, ...extraLetters].sort(() => Math.random() - 0.5);
+
+            let optionsHTML = '';
+            letterOptions.forEach(letter => {
+                optionsHTML += `<button class="letter-btn" onclick="addLetter('${letter}', '${word}')">${letter}</button>`;
+            });
+
+            content.innerHTML = `
+                <div class="object-display">
+                    <div class="object">${obj.emoji}</div>
+                </div>
+                <div class="instruction-text">Spell the word</div>
+                <button class="hint-btn" onclick="showHint()">💡 Hint</button>
+                <div class="word-builder" id="wordBuilder">
+                    ${wordBoxes}
+                </div>
+                <div class="letter-options" id="letterOptions">
+                    ${optionsHTML}
+                </div>
+            `;
+
+            userWord = [];
+            document.getElementById('nextBtn').disabled = true;
+        }
+
+        function addLetter(letter, correctWord) {
+            if (userWord.length < correctWord.length) {
+                const boxId = 'box-' + userWord.length;
+                const box = document.getElementById(boxId);
+                box.textContent = letter;
+                box.classList.remove('empty');
+                box.classList.add('filled');
+                userWord.push(letter);
+                
+                event.target.disabled = true;
+                speak(letter);
+
+                if (userWord.length === correctWord.length) {
+                    setTimeout(() => checkSpelling(correctWord), 500);
+                }
+            }
+        }
+
+        function checkSpelling(correctWord) {
+            const userSpelling = userWord.join('');
+            
+            if (userSpelling === correctWord) {
+                speak('Perfect! You spelled ' + colors[currentColorIndex].displayName + ' correctly!');
+                showCelebration('🌟');
+                document.getElementById('nextBtn').disabled = false;
+            } else {
+                speak('Try again!');
+                for (let i = 0; i < correctWord.length; i++) {
+                    const box = document.getElementById('box-' + i);
+                    box.textContent = '_';
+                    box.classList.remove('filled');
+                    box.classList.add('empty');
+                }
+                document.querySelectorAll('.letter-btn').forEach(btn => btn.disabled = false);
+                userWord = [];
+            }
+        }
+
+        function showHint() {
+            const color = colors[currentColorIndex];
+            const word = color.name;
+            const obj = color.objects[0];
+            
+            const overlay = document.createElement('div');
+            overlay.className = 'popup-overlay';
+            
+            const popup = document.createElement('div');
+            popup.className = 'hint-popup';
+            popup.innerHTML = `
+                <div class="object">${obj.emoji}</div>
+                <div class="word" style="color: ${color.colorCode}">${word}</div>
+            `;
+            
+            document.body.appendChild(overlay);
+            document.body.appendChild(popup);
+            
+            speak(color.displayName);
+            
+            setTimeout(() => {
+                overlay.remove();
+                popup.remove();
+            }, 1000);
+        }
+
+        function showCelebration(emoji) {
+            const celebration = document.createElement('div');
+            celebration.className = 'celebration';
+            celebration.textContent = emoji;
+            document.body.appendChild(celebration);
+            setTimeout(() => celebration.remove(), 800);
+        }
+
+        function nextStep() {
+            const color = colors[currentColorIndex];
+            const step = steps[currentStep];
+
+            if (step === 'objects') {
+                currentObjectIndex++;
+                if (currentObjectIndex >= color.objects.length) {
+                    currentObjectIndex = 0;
+                    currentStep++;
+                }
+            } else {
+                currentStep++;
+            }
+
+            if (currentStep >= steps.length) {
+                currentColorIndex++;
+                currentStep = 0;
+                currentObjectIndex = 0;
+            }
+
+            if (currentColorIndex >= colors.length) {
+                showCompletion();
+                return;
+            }
+
+            loadCurrentStep();
+        }
+
+        function loadCurrentStep() {
+            const step = steps[currentStep];
+            
+            if (step === 'objects') {
+                showObjects();
+            } else if (step === 'missing1') {
+                showMissingLetters(1);
+            } else if (step === 'missing2') {
+                showMissingLetters(2);
+            } else if (step === 'spell') {
+                showSpelling();
+            }
+
+            document.getElementById('nextBtn').disabled = false;
+            if (step === 'missing1' || step === 'missing2' || step === 'spell') {
+                document.getElementById('nextBtn').disabled = true;
+            }
+        }
+
+        function showCompletion() {
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <div style="font-size: 5em; margin-bottom: 20px;">🎊</div>
+                    <h2 style="font-size: 2.5em; color: #2C3E50; margin-bottom: 20px;">Congratulations!</h2>
+                    <div style="font-size: 1.8em; color: #7F8C8D;">
+                        You've learned all the colors!
+                    </div>
+                    <button class="next-btn" onclick="location.reload()" style="margin-top: 30px;">
+                        🔄 Start Again
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('nextBtn').style.display = 'none';
+            speak("Congratulations! You've learned all the colors!");
+        }
+
+        // Initialize
+        loadCurrentStep();
+    </script>
+</body>
+</html>
