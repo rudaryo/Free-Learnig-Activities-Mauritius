@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Shapes with Names</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2C3E50;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .score-item {
+            background: #ECF0F1;
+            padding: 12px 25px;
+            border-radius: 20px;
+        }
+
+        .instruction {
+            text-align: center;
+            font-size: 1.6em;
+            color: #7F8C8D;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .matching-area {
+            display: flex;
+            gap: 40px;
+            margin: 40px 0;
+            justify-content: center;
+        }
+
+        .column {
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .column-title {
+            text-align: center;
+            font-size: 1.5em;
+            color: #2C3E50;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .shapes-column,
+        .names-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .shape-item,
+        .name-item {
+            background: white;
+            border: 4px solid #BDC3C7;
+            border-radius: 20px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 140px;
+            position: relative;
+        }
+
+        .shape-item:hover,
+        .name-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .shape-item.selected,
+        .name-item.selected {
+            border-color: #3498DB;
+            background: #E3F2FD;
+            transform: scale(1.05);
+        }
+
+        .shape-item.matched,
+        .name-item.matched {
+            border-color: #27AE60;
+            background: #D5F4E6;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .shape-item.wrong,
+        .name-item.wrong {
+            border-color: #E74C3C;
+            background: #FADBD8;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .shape-display {
+            font-size: 1em;
+        }
+
+        .circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #E74C3C;
+        }
+
+        .square {
+            width: 80px;
+            height: 80px;
+            background: #3498DB;
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 87px solid #2ECC71;
+        }
+
+        .rectangle {
+            width: 120px;
+            height: 70px;
+            background: #F39C12;
+        }
+
+        .name-text {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #2C3E50;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2em;
+            color: #27AE60;
+            display: none;
+        }
+
+        .shape-item.matched .checkmark,
+        .name-item.matched .checkmark {
+            display: block;
+        }
+
+        .feedback {
+            text-align: center;
+            font-size: 1.8em;
+            margin: 20px 0;
+            font-weight: bold;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feedback.correct {
+            color: #27AE60;
+        }
+
+        .feedback.wrong {
+            color: #E74C3C;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0px;
+            margin-top: 30px;
+        }
+
+        .check-btn {
+            background: #F39C12;
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 1.6em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            font-family: Arial, Helvetica, sans-serif;
+            margin-bottom: 15px;
+        }
+
+        .check-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            background: #E67E22;
+        }
+
+        .check-btn:disabled {
+            background: #95A5A6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .try-again-btn {
+            background: #E67E22;
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 1.6em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            font-family: Arial, Helvetica, sans-serif;
+            margin-bottom: 15px;
+        }
+
+        .try-again-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            background: #D35400;
+        }
+
+        .next-btn {
+            background: #2ECC71;
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 1.6em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            font-family: Arial, Helvetica, sans-serif;
+            margin-bottom: 15px;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            background: #27AE60;
+        }
+
+        .btn-home {
+            background: #9B59B6;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .btn-home:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        .celebration {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 8em;
+            animation: celebrate 0.8s;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        @keyframes celebrate {
+            0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) scale(1.3) rotate(180deg); }
+            100% { transform: translate(-50%, -50%) scale(1) rotate(360deg); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px 15px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .instruction {
+                font-size: 1.2em;
+            }
+
+            .matching-area {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .column-title {
+                font-size: 1.3em;
+            }
+
+            .shape-item,
+            .name-item {
+                height: 120px;
+                padding: 20px;
+            }
+
+            .circle, .square {
+                width: 60px;
+                height: 60px;
+            }
+
+            .triangle {
+                border-left: 40px solid transparent;
+                border-right: 40px solid transparent;
+                border-bottom: 70px solid #2ECC71;
+            }
+
+            .rectangle {
+                width: 100px;
+                height: 55px;
+            }
+
+            .name-text {
+                font-size: 1.4em;
+            }
+
+            .score-board {
+                font-size: 1em;
+                gap: 15px;
+            }
+
+            .check-btn, .try-again-btn, .next-btn {
+                padding: 15px 40px;
+                font-size: 1.3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔷 Match Shapes with Names</h1>
+
+        <div class="score-board">
+            <div class="score-item">
+                Round: <span id="roundNum">1</span> / 5
+            </div>
+            <div class="score-item">
+                Attempts: <span id="attempts">0</span> / 3
+            </div>
+            <div class="score-item">
+                Score: <span id="score">0</span>
+            </div>
+        </div>
+
+        <div class="instruction">Click a shape, then click its name</div>
+
+        <div class="matching-area">
+            <div class="column">
+                <div class="column-title">Shapes</div>
+                <div class="shapes-column" id="shapesColumn"></div>
+            </div>
+
+            <div class="column">
+                <div class="column-title">Names</div>
+                <div class="names-column" id="namesColumn"></div>
+            </div>
+        </div>
+
+        <div class="feedback" id="feedback"></div>
+
+        <div class="controls">
+            <button class="check-btn" id="checkBtn" onclick="checkMatches()" disabled>Check Answer</button>
+            <button class="try-again-btn" id="tryAgainBtn" onclick="tryAgain()" style="display: none;">🔄 Try Again</button>
+            <button class="next-btn" id="nextBtn" onclick="nextRound()" style="display: none;">Next ➡️</button>
+        </div>
+
+        <button class="btn-home" onclick="window.location.href='../grade-1-math-index.html'">🏠 Home</button>
+    </div>
+
+    <script>
+        const shapes = [
+            { name: 'circle', displayName: 'circle', className: 'circle' },
+            { name: 'square', displayName: 'square', className: 'square' },
+            { name: 'triangle', displayName: 'triangle', className: 'triangle' },
+            { name: 'rectangle', displayName: 'rectangle', className: 'rectangle' }
+        ];
+
+        let currentRound = 0;
+        let score = 0;
+        let matches = {}; // {shapeIndex: nameIndex}
+        let selectedShape = null;
+        let selectedName = null;
+        let hasChecked = false;
+        let attempts = 0;
+        const MAX_ATTEMPTS = 3;
+
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.85;
+                utterance.pitch = 1.1;
+                utterance.volume = 1;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function loadRound() {
+            if (currentRound >= 5) {
+                showFinalScore();
+                return;
+            }
+
+            hasChecked = false;
+            matches = {};
+            selectedShape = null;
+            selectedName = null;
+            attempts = 0;
+
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('feedback').className = 'feedback';
+            document.getElementById('checkBtn').disabled = true;
+            document.getElementById('checkBtn').style.display = 'block';
+            document.getElementById('tryAgainBtn').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'none';
+
+            document.getElementById('roundNum').textContent = currentRound + 1;
+            document.getElementById('attempts').textContent = attempts;
+
+            // Shuffle shapes
+            const shuffledShapes = [...shapes].sort(() => Math.random() - 0.5);
+            const shuffledNames = [...shapes].sort(() => Math.random() - 0.5);
+
+            // Display shapes
+            const shapesColumn = document.getElementById('shapesColumn');
+            shapesColumn.innerHTML = '';
+
+            shuffledShapes.forEach((shape, index) => {
+                const item = document.createElement('div');
+                item.className = 'shape-item';
+                item.dataset.shapeName = shape.name;
+                item.dataset.index = index;
+                item.innerHTML = `
+                    <div class="checkmark">✓</div>
+                    <div class="shape-display">
+                        <div class="${shape.className}"></div>
+                    </div>
+                `;
+                item.onclick = () => selectShape(index, shape.name);
+                shapesColumn.appendChild(item);
+            });
+
+            // Display names
+            const namesColumn = document.getElementById('namesColumn');
+            namesColumn.innerHTML = '';
+
+            shuffledNames.forEach((shape, index) => {
+                const item = document.createElement('div');
+                item.className = 'name-item';
+                item.dataset.shapeName = shape.name;
+                item.dataset.index = index;
+                item.innerHTML = `
+                    <div class="checkmark">✓</div>
+                    <div class="name-text">${shape.displayName}</div>
+                `;
+                item.onclick = () => selectName(index, shape.name);
+                namesColumn.appendChild(item);
+            });
+
+            speak('Click a shape, then click its name');
+        }
+
+        function selectShape(index, shapeName) {
+            if (hasChecked) return;
+
+            const shapeItems = document.querySelectorAll('.shape-item');
+            
+            // Deselect previous
+            if (selectedShape !== null && selectedShape !== index) {
+                shapeItems[selectedShape].classList.remove('selected');
+            }
+
+            // Toggle selection
+            if (selectedShape === index) {
+                selectedShape = null;
+                shapeItems[index].classList.remove('selected');
+            } else {
+                selectedShape = index;
+                shapeItems[index].classList.add('selected');
+                speak(document.querySelector(`[data-shape-name="${shapeName}"].name-item`).textContent);
+            }
+
+            // Check if we can make a match
+            if (selectedShape !== null && selectedName !== null) {
+                makeMatch();
+            }
+        }
+
+        function selectName(index, shapeName) {
+            if (hasChecked) return;
+
+            const nameItems = document.querySelectorAll('.name-item');
+            
+            // Deselect previous
+            if (selectedName !== null && selectedName !== index) {
+                nameItems[selectedName].classList.remove('selected');
+            }
+
+            // Toggle selection
+            if (selectedName === index) {
+                selectedName = null;
+                nameItems[index].classList.remove('selected');
+            } else {
+                selectedName = index;
+                nameItems[index].classList.add('selected');
+                speak(nameItems[index].querySelector('.name-text').textContent);
+            }
+
+            // Check if we can make a match
+            if (selectedShape !== null && selectedName !== null) {
+                makeMatch();
+            }
+        }
+
+        function makeMatch() {
+            matches[selectedShape] = selectedName;
+
+            const shapeItems = document.querySelectorAll('.shape-item');
+            const nameItems = document.querySelectorAll('.name-item');
+
+            shapeItems[selectedShape].classList.remove('selected');
+            shapeItems[selectedShape].classList.add('matched');
+            nameItems[selectedName].classList.remove('selected');
+            nameItems[selectedName].classList.add('matched');
+
+            selectedShape = null;
+            selectedName = null;
+
+            // Check if all matched
+            if (Object.keys(matches).length === shapes.length) {
+                document.getElementById('checkBtn').disabled = false;
+            }
+        }
+
+        function checkMatches() {
+            if (hasChecked) return;
+            hasChecked = true;
+            attempts++;
+            document.getElementById('attempts').textContent = attempts;
+
+            const shapeItems = document.querySelectorAll('.shape-item');
+            const nameItems = document.querySelectorAll('.name-item');
+
+            let allCorrect = true;
+
+            Object.keys(matches).forEach(shapeIndex => {
+                const nameIndex = matches[shapeIndex];
+                const shapeName = shapeItems[shapeIndex].dataset.shapeName;
+                const matchedName = nameItems[nameIndex].dataset.shapeName;
+
+                if (shapeName !== matchedName) {
+                    allCorrect = false;
+                    shapeItems[shapeIndex].classList.add('wrong');
+                    nameItems[nameIndex].classList.add('wrong');
+                }
+            });
+
+            const feedback = document.getElementById('feedback');
+
+            if (allCorrect) {
+                score++;
+                document.getElementById('score').textContent = score;
+                feedback.textContent = '🎉 Perfect! All matches are correct!';
+                feedback.className = 'feedback correct';
+                speak('Perfect! All matches are correct!');
+                showCelebration('⭐');
+
+                document.getElementById('checkBtn').style.display = 'none';
+                document.getElementById('tryAgainBtn').style.display = 'none';
+                document.getElementById('nextBtn').style.display = 'block';
+            } else if (attempts >= MAX_ATTEMPTS) {
+                // No more attempts left, show Next button
+                feedback.textContent = '❌ No more attempts left. Moving to next round.';
+                feedback.className = 'feedback wrong';
+                speak('No more attempts left. Moving to next round.');
+
+                document.getElementById('checkBtn').style.display = 'none';
+                document.getElementById('tryAgainBtn').style.display = 'none';
+                document.getElementById('nextBtn').style.display = 'block';
+            } else {
+                // Still have attempts left
+                const attemptsLeft = MAX_ATTEMPTS - attempts;
+                feedback.textContent = `❌ Some matches are wrong. ${attemptsLeft} attempt${attemptsLeft > 1 ? 's' : ''} left!`;
+                feedback.className = 'feedback wrong';
+                speak(`Some matches are wrong. ${attemptsLeft} attempt${attemptsLeft > 1 ? 's' : ''} left!`);
+
+                document.getElementById('checkBtn').style.display = 'none';
+                document.getElementById('tryAgainBtn').style.display = 'block';
+                document.getElementById('nextBtn').style.display = 'none';
+            }
+        }
+
+        function tryAgain() {
+            hasChecked = false;
+            matches = {};
+            selectedShape = null;
+            selectedName = null;
+
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('feedback').className = 'feedback';
+            document.getElementById('checkBtn').disabled = true;
+            document.getElementById('checkBtn').style.display = 'block';
+            document.getElementById('tryAgainBtn').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'none';
+
+            // Remove wrong and matched classes
+            const shapeItems = document.querySelectorAll('.shape-item');
+            const nameItems = document.querySelectorAll('.name-item');
+            
+            shapeItems.forEach(item => {
+                item.classList.remove('wrong', 'matched', 'selected');
+            });
+            
+            nameItems.forEach(item => {
+                item.classList.remove('wrong', 'matched', 'selected');
+            });
+
+            speak('Try again. Click a shape, then click its name');
+        }
+
+        function nextRound() {
+            currentRound++;
+            loadRound();
+        }
+
+        function showCelebration(emoji) {
+            const celebration = document.createElement('div');
+            celebration.className = 'celebration';
+            celebration.textContent = emoji;
+            document.body.appendChild(celebration);
+            setTimeout(() => celebration.remove(), 800);
+        }
+
+        function showFinalScore() {
+            const container = document.querySelector('.container');
+            const percentage = Math.round((score / 5) * 100);
+            
+            let message = '';
+            let emoji = '';
+            
+            if (percentage === 100) {
+                message = 'Outstanding!';
+                emoji = '🏆';
+            } else if (percentage >= 80) {
+                message = 'Excellent work!';
+                emoji = '🌟';
+            } else if (percentage >= 60) {
+                message = 'Good job!';
+                emoji = '👍';
+            } else {
+                message = 'Keep practicing!';
+                emoji = '💪';
+            }
+
+            container.innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <div style="font-size: 5em; margin-bottom: 20px;">${emoji}</div>
+                    <h2 style="font-size: 2.5em; color: #2C3E50; margin-bottom: 20px;">${message}</h2>
+                    <div style="font-size: 2em; color: #667eea; margin-bottom: 20px;">
+                        You completed all rounds!
+                    </div>
+                    <div style="font-size: 2em; color: #3498DB; margin-bottom: 20px;">
+                        Final Score: <span style="color: #F39C12; font-weight: bold;">${score}</span> / 5
+                    </div>
+                    <button class="next-btn" onclick="location.reload()" style="margin-top: 30px;">
+                        🔄 Play Again
+                    </button>
+                    <br><br>
+                    <button class="btn-home" onclick="window.location.href='../grade-1-math-index.html'">🏠 Home</button>
+                </div>
+            `;
+            speak(`${message} You scored ${score} out of 5`);
+        }
+
+        // Initialize
+        loadRound();
+    </script>
+</body>
+</html>
