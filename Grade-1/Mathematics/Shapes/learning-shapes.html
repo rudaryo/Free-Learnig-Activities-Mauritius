@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TCBV2GCV');</script>
+    <!-- End Google Tag Manager -->
+    
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Shapes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 0px rgba(0,0,0,0.2);
+        }
+
+        .level-selector {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .level-btn {
+            background: white;
+            color: #667eea;
+            border: 4px solid white;
+            padding: 15px 40px;
+            font-size: 1.3em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 0 10px;
+            font-weight: bold;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        .level-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        .level-btn.active {
+            background: #F39C12;
+            color: white;
+            border-color: #F39C12;
+        }
+
+        .score-board {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .score {
+            font-size: 2em;
+            color: #F39C12;
+            font-weight: bold;
+        }
+
+        .game-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+
+        .question-container {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .question-text {
+            font-size: 2em;
+            color: #2C3E50;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .speaker-icon {
+            display: inline-block;
+            font-size: 1.5em;
+            cursor: pointer;
+            margin-left: 15px;
+            background: #3498DB;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            line-height: 50px;
+            text-align: center;
+            transition: all 0.3s;
+            vertical-align: middle;
+        }
+
+        .speaker-icon:hover {
+            background: #2980B9;
+            transform: scale(1.1);
+        }
+
+        .shapes-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            min-height: 300px;
+        }
+
+        .shape-option {
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            pointer-events: auto;
+        }
+
+        .shape-option:hover {
+            transform: scale(1.1);
+        }
+
+        .shape-option.selected {
+            transform: scale(1.15);
+            filter: drop-shadow(0 0 20px rgba(243, 156, 18, 0.8));
+        }
+
+        .shape-option.correct {
+            animation: celebrate 0.6s;
+        }
+
+        .shape-option.wrong {
+            animation: shake 0.5s;
+        }
+
+        @keyframes celebrate {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.2) rotate(-10deg); }
+            75% { transform: scale(1.2) rotate(10deg); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-15px); }
+            75% { transform: translateX(15px); }
+        }
+
+        .circle {
+            border-radius: 50%;
+        }
+
+        .square {
+            /* Square shape */
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            background: transparent !important;
+        }
+
+        .rectangle {
+            /* Rectangle shape */
+        }
+
+        .checkmark {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #2ECC71;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .shape-option.selected .checkmark {
+            display: flex;
+        }
+
+        .controls {
+            text-align: center;
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: #2ECC71;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        .btn:disabled {
+            background: #95A5A6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-next {
+            background: #3498DB;
+        }
+
+        .btn-home {
+            background: #9B59B6;
+        }
+
+        .feedback {
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-top: 20px;
+            min-height: 50px;
+        }
+
+        .feedback.correct {
+            color: #2ECC71;
+        }
+
+        .feedback.wrong {
+            color: #E74C3C;
+        }
+
+        .celebration {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 6em;
+            animation: pop 0.6s;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        @keyframes pop {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            50% { transform: translate(-50%, -50%) scale(1.3); }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .level-instruction {
+            text-align: center;
+            font-size: 1.2em;
+            color: #7F8C8D;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .question-text {
+                font-size: 1.5em;
+            }
+
+            .speaker-icon {
+                width: 40px;
+                height: 40px;
+                line-height: 40px;
+                font-size: 1.2em;
+            }
+
+            .shapes-container {
+                gap: 20px;
+            }
+
+            .level-btn {
+                padding: 12px 25px;
+                font-size: 1.1em;
+                margin: 5px;
+            }
+
+            .btn {
+                padding: 12px 30px;
+                font-size: 1.1em;
+            }
+
+            .game-section {
+                padding: 25px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TCBV2GCV"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
+    
+    <div class="container">
+        <h1>🔷 Learning Shapes 🔺</h1>
+        
+        <div class="level-selector">
+            <button class="level-btn active" onclick="setLevel(1)">Level 1</button>
+            <button class="level-btn" onclick="setLevel(2)">Level 2</button>
+        </div>
+
+        <div class="score-board">
+            <div>Score: <span class="score" id="score">0</span> / <span id="total">0</span></div>
+        </div>
+
+        <div class="game-section">
+            <div class="level-instruction" id="levelInstruction">Click on the correct shape</div>
+            
+            <div class="question-container">
+                <span class="question-text" id="questionText">Which one is a circle?</span>
+                <span class="speaker-icon" onclick="speakQuestion()">🔊</span>
+            </div>
+
+            <div class="shapes-container" id="shapesContainer"></div>
+
+            <div class="feedback" id="feedback"></div>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-next" id="nextBtn" onclick="nextQuestion()">Next Question ➡️</button>
+            <button class="btn btn-home" onclick="window.location.href='../math-index.html'">🏠 Home</button>
+        </div>
+    </div>
+
+    <script>
+        let currentLevel = 1;
+        let score = 0;
+        let totalQuestions = 0;
+        let currentQuestion = 0;
+        let selectedShapes = [];
+        let correctAnswers = [];
+        let hasAnswered = false;
+
+        const colors = ['#E74C3C', '#3498DB', '#2ECC71', '#F39C12', '#9B59B6', '#1ABC9C', '#E67E22', '#C0392B'];
+        const shapeNames = ['circle', 'square', 'triangle', 'rectangle'];
+        
+        const questionsLevel1 = [
+            {shape: 'circle', options: 2},
+            {shape: 'square', options: 2},
+            {shape: 'triangle', options: 2},
+            {shape: 'rectangle', options: 2},
+            {shape: 'circle', options: 3},
+            {shape: 'square', options: 3},
+            {shape: 'triangle', options: 3},
+            {shape: 'rectangle', options: 3},
+            {shape: 'circle', options: 4},
+            {shape: 'square', options: 4},
+            {shape: 'triangle', options: 4},
+            {shape: 'rectangle', options: 4}
+        ];
+
+        const questionsLevel2 = [
+            {shape: 'circle', count: 1, total: 3},
+            {shape: 'square', count: 1, total: 3},
+            {shape: 'triangle', count: 2, total: 4},
+            {shape: 'rectangle', count: 2, total: 4},
+            {shape: 'circle', count: 2, total: 5},
+            {shape: 'square', count: 2, total: 5},
+            {shape: 'triangle', count: 3, total: 5},
+            {shape: 'rectangle', count: 3, total: 5},
+            {shape: 'circle', count: 2, total: 6},
+            {shape: 'square', count: 3, total: 6},
+            {shape: 'triangle', count: 2, total: 6},
+            {shape: 'rectangle', count: 3, total: 6}
+        ];
+
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.85;
+                utterance.pitch = 1.2;
+                utterance.volume = 1;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function speakQuestion() {
+            const questionText = document.getElementById('questionText').textContent;
+            speak(questionText);
+        }
+
+        function setLevel(level) {
+            currentLevel = level;
+            currentQuestion = 0;
+            score = 0;
+            totalQuestions = 0;
+            
+            document.querySelectorAll('.level-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.getElementById('score').textContent = '0';
+            document.getElementById('total').textContent = '0';
+            document.getElementById('feedback').textContent = '';
+            
+            if (level === 1) {
+                document.getElementById('levelInstruction').textContent = 'Click on the correct shape';
+            } else {
+                document.getElementById('levelInstruction').textContent = 'Click on ALL the shapes of the given type';
+            }
+            
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const questions = currentLevel === 1 ? questionsLevel1 : questionsLevel2;
+            
+            if (currentQuestion >= questions.length) {
+                showFinalScore();
+                return;
+            }
+
+            hasAnswered = false;
+            selectedShapes = [];
+            correctAnswers = [];
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('nextBtn').disabled = false;
+
+            const question = questions[currentQuestion];
+            const shapesContainer = document.getElementById('shapesContainer');
+            shapesContainer.innerHTML = '';
+
+            if (currentLevel === 1) {
+                loadLevel1Question(question, shapesContainer);
+            } else {
+                loadLevel2Question(question, shapesContainer);
+            }
+
+            speakQuestion();
+        }
+
+        function loadLevel1Question(question, container) {
+            const questionText = `Which one is a ${question.shape}?`;
+            document.getElementById('questionText').textContent = questionText;
+
+            // Create array of shapes including the correct one
+            let shapes = [question.shape];
+            let otherShapes = shapeNames.filter(s => s !== question.shape);
+            
+            // Add random other shapes
+            for (let i = 0; i < question.options - 1; i++) {
+                const randomShape = otherShapes[Math.floor(Math.random() * otherShapes.length)];
+                shapes.push(randomShape);
+            }
+
+            // Shuffle shapes
+            shapes.sort(() => Math.random() - 0.5);
+
+            // Get unique colors for all shapes
+            const shuffledColors = [...colors].sort(() => Math.random() - 0.5);
+            const uniqueColors = shuffledColors.slice(0, shapes.length);
+
+            // Create shape elements with unique colors
+            shapes.forEach((shape, index) => {
+                const shapeDiv = createShape(shape, 150, uniqueColors[index]);
+                shapeDiv.classList.add('shape-option');
+                shapeDiv.onclick = () => selectShapeLevel1(index, shape, question.shape);
+                container.appendChild(shapeDiv);
+            });
+        }
+
+        function loadLevel2Question(question, container) {
+            const pluralShape = question.shape + (question.count > 1 ? 's' : '');
+            const questionText = `Pick all the ${pluralShape}`;
+            document.getElementById('questionText').textContent = questionText;
+
+            // Create array of shapes
+            let shapes = [];
+            
+            // Add correct shapes
+            for (let i = 0; i < question.count; i++) {
+                shapes.push(question.shape);
+                correctAnswers.push(shapes.length - 1);
+            }
+
+            // Add other random shapes
+            let otherShapes = shapeNames.filter(s => s !== question.shape);
+            for (let i = 0; i < question.total - question.count; i++) {
+                const randomShape = otherShapes[Math.floor(Math.random() * otherShapes.length)];
+                shapes.push(randomShape);
+            }
+
+            // Shuffle shapes
+            const shuffleArray = shapes.map((shape, index) => ({shape, originalIndex: index}));
+            shuffleArray.sort(() => Math.random() - 0.5);
+            
+            // Update correct answers after shuffle
+            correctAnswers = shuffleArray
+                .map((item, newIndex) => ({newIndex, isCorrect: item.originalIndex < question.count}))
+                .filter(item => item.isCorrect)
+                .map(item => item.newIndex);
+
+            // Create shape elements with varying sizes
+            shuffleArray.forEach((item, index) => {
+                const size = 100 + Math.random() * 80; // Random size between 100-180
+                
+                // Create wrapper for better click handling
+                const wrapper = document.createElement('div');
+                wrapper.style.display = 'inline-block';
+                wrapper.style.position = 'relative';
+                wrapper.classList.add('shape-option');
+                wrapper.onclick = () => selectShapeLevel2(index);
+                
+                const shapeDiv = createShape(item.shape, size);
+                shapeDiv.style.pointerEvents = 'none'; // Let wrapper handle clicks
+                
+                const checkmark = document.createElement('div');
+                checkmark.className = 'checkmark';
+                checkmark.textContent = '✓';
+                checkmark.style.pointerEvents = 'none'; // Don't block clicks
+                
+                wrapper.appendChild(shapeDiv);
+                wrapper.appendChild(checkmark);
+                container.appendChild(wrapper);
+            });
+        }
+
+        function createShape(shapeName, size, color) {
+            const div = document.createElement('div');
+            
+            // Use provided color or random if not provided
+            if (!color) {
+                color = colors[Math.floor(Math.random() * colors.length)];
+            }
+            
+            if (shapeName === 'circle') {
+                div.className = 'circle';
+                div.style.width = size + 'px';
+                div.style.height = size + 'px';
+                div.style.background = color;
+            } else if (shapeName === 'square') {
+                div.className = 'square';
+                div.style.width = size + 'px';
+                div.style.height = size + 'px';
+                div.style.background = color;
+            } else if (shapeName === 'triangle') {
+                div.className = 'triangle';
+                div.style.borderLeft = (size/2) + 'px solid transparent';
+                div.style.borderRight = (size/2) + 'px solid transparent';
+                div.style.borderBottom = size + 'px solid ' + color;
+            } else if (shapeName === 'rectangle') {
+                div.className = 'rectangle';
+                div.style.width = (size * 1.5) + 'px';
+                div.style.height = size + 'px';
+                div.style.background = color;
+            }
+            
+            return div;
+        }
+
+        function selectShapeLevel1(index, selectedShape, correctShape) {
+            if (hasAnswered) return;
+
+            hasAnswered = true;
+            const shapeOptions = document.querySelectorAll('.shape-option');
+            const feedback = document.getElementById('feedback');
+
+            if (selectedShape === correctShape) {
+                shapeOptions[index].classList.add('correct');
+                feedback.textContent = '✓ Correct! Well done!';
+                feedback.className = 'feedback correct';
+                speak('Correct! Well done!');
+                showCelebration('🎉');
+                score++;
+                totalQuestions++;
+                document.getElementById('score').textContent = score;
+                document.getElementById('total').textContent = totalQuestions;
+            } else {
+                shapeOptions[index].classList.add('wrong');
+                feedback.textContent = '✗ Try again! That\'s not a ' + correctShape;
+                feedback.className = 'feedback wrong';
+                speak('Try again! That is not a ' + correctShape);
+                totalQuestions++;
+                document.getElementById('total').textContent = totalQuestions;
+                
+                // Highlight correct answer after delay
+                setTimeout(() => {
+                    shapeOptions.forEach((shape, i) => {
+                        const shapeType = shape.classList.contains('circle') ? 'circle' :
+                                        shape.classList.contains('square') ? 'square' :
+                                        shape.classList.contains('triangle') ? 'triangle' : 'rectangle';
+                        if (shapeType === correctShape) {
+                            shape.classList.add('correct');
+                        }
+                    });
+                }, 1000);
+            }
+        }
+
+        function selectShapeLevel2(index) {
+            if (hasAnswered) return;
+
+            const shapeOptions = document.querySelectorAll('.shape-option');
+            const shape = shapeOptions[index];
+
+            if (selectedShapes.includes(index)) {
+                selectedShapes = selectedShapes.filter(i => i !== index);
+                shape.classList.remove('selected');
+            } else {
+                selectedShapes.push(index);
+                shape.classList.add('selected');
+            }
+
+            // Auto-check if selected count matches correct count
+            if (selectedShapes.length === correctAnswers.length) {
+                setTimeout(checkLevel2Answer, 500);
+            }
+        }
+
+        function checkLevel2Answer() {
+            if (hasAnswered) return;
+            if (selectedShapes.length === 0) return;
+
+            hasAnswered = true;
+            const shapeOptions = document.querySelectorAll('.shape-option');
+            const feedback = document.getElementById('feedback');
+
+            // Check if all selected are correct
+            const allCorrect = selectedShapes.length === correctAnswers.length &&
+                             selectedShapes.every(i => correctAnswers.includes(i));
+
+            if (allCorrect) {
+                selectedShapes.forEach(i => {
+                    shapeOptions[i].classList.add('correct');
+                });
+                feedback.textContent = '✓ Perfect! You found them all!';
+                feedback.className = 'feedback correct';
+                speak('Perfect! You found them all!');
+                showCelebration('🌟');
+                score++;
+                totalQuestions++;
+                document.getElementById('score').textContent = score;
+                document.getElementById('total').textContent = totalQuestions;
+            } else {
+                selectedShapes.forEach(i => {
+                    if (!correctAnswers.includes(i)) {
+                        shapeOptions[i].classList.add('wrong');
+                    } else {
+                        shapeOptions[i].classList.add('correct');
+                    }
+                });
+                feedback.textContent = '✗ Not quite! Check again';
+                feedback.className = 'feedback wrong';
+                speak('Not quite! Try again');
+                totalQuestions++;
+                document.getElementById('total').textContent = totalQuestions;
+
+                // Show all correct answers
+                setTimeout(() => {
+                    correctAnswers.forEach(i => {
+                        shapeOptions[i].classList.add('correct');
+                        shapeOptions[i].classList.add('selected');
+                    });
+                }, 1000);
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            loadQuestion();
+        }
+
+        function showFinalScore() {
+            const gameSection = document.querySelector('.game-section');
+            
+            gameSection.innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <div style="font-size: 5em; margin-bottom: 20px;">🎊</div>
+                    <h2 style="font-size: 2.5em; color: #2C3E50; margin-bottom: 20px;">Congratulations!</h2>
+                    <div style="font-size: 2em; color: #667eea; margin-bottom: 20px;">
+                        You completed Level ${currentLevel}!
+                    </div>
+                    <div style="font-size: 2em; color: #3498DB; margin-bottom: 20px;">
+                        Final Score: <span style="color: #F39C12; font-weight: bold;">${score}</span> / ${totalQuestions}
+                    </div>
+                    <button class="btn" onclick="location.reload()" style="margin-top: 30px; font-size: 1.3em;">
+                        🔄 Play Again
+                    </button>
+                </div>
+            `;
+
+            speak(`Congratulations! You completed level ${currentLevel}! You scored ${score} out of ${totalQuestions}.`);
+            
+            const percentage = Math.round((score / totalQuestions) * 100);
+            if (percentage === 100) {
+                showCelebration('🏆');
+            } else if (percentage >= 80) {
+                showCelebration('⭐');
+            }
+        }
+
+        function showCelebration(emoji) {
+            const celebration = document.createElement('div');
+            celebration.className = 'celebration';
+            celebration.textContent = emoji;
+            document.body.appendChild(celebration);
+            setTimeout(() => celebration.remove(), 600);
+        }
+
+        // Initialize
+        loadQuestion();
+    </script>
+</body>
+</html>
