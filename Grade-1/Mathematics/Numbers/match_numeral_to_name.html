@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TCBV2GCV');</script>
+    <!-- End Google Tag Manager -->
+    
+    
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Match Numerals to Number Names</title>
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 26px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            background: #ee5a52;
+            transform: scale(1.05);
+        }
+
+        .score-display {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2d3436;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            margin: 20px auto;
+            max-width: 300px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .instruction {
+            text-align: center;
+            color: #2d3436;
+            font-size: 1.5em;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        .game-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .column {
+            flex: 1;
+        }
+
+        .column-title {
+            text-align: center;
+            font-size: 1.3em;
+            color: #667eea;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .numeral-card {
+            background: linear-gradient(135deg, #a8e063 0%, #56ab2f 100%);
+            color: #2d3436;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 15px;
+            font-size: 2.5em;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            user-select: none;
+            position: relative;
+        }
+
+        .numeral-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .numeral-card.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .numeral-card.matched {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .name-card {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            color: #2d3436;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 15px;
+            font-size: 1.8em;
+            font-weight: bold;
+            text-align: center;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .name-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .name-card.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .name-card.matched {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .bounce {
+            animation: bounce 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes fadeOut {
+            0% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% { 
+                opacity: 0;
+                transform: scale(0.8);
+                visibility: hidden;
+            }
+        }
+
+        .disappear {
+            animation: fadeOut 0.8s forwards !important;
+            pointer-events: none !important;
+        }
+
+        .game-wrapper {
+            position: relative;
+        }
+
+        .check-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            border-radius: 25px;
+            font-size: 1.5em;
+            cursor: pointer;
+            font-weight: bold;
+            display: block;
+            margin: 30px auto;
+            transition: all 0.3s;
+        }
+
+        .check-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .check-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            margin: 20px 0;
+            min-height: 50px;
+        }
+
+        .feedback.success {
+            color: #2ecc71;
+        }
+
+        .feedback.error {
+            color: #e74c3c;
+        }
+
+        .next-button {
+            background: #f39c12;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 1.3em;
+            cursor: pointer;
+            font-weight: bold;
+            display: block;
+            margin: 20px auto;
+            transition: all 0.3s;
+        }
+
+        .next-button:hover {
+            background: #e67e22;
+            transform: scale(1.05);
+        }
+
+        .round-indicator {
+            text-align: center;
+            font-size: 1.2em;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        .final-screen {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .final-screen h2 {
+            color: #667eea;
+            font-size: 3em;
+            margin-bottom: 30px;
+        }
+
+        .trophy {
+            font-size: 5em;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                flex-direction: row !important; /* Keep side by side */
+                gap: 8px !important; /* Smaller gap */
+            }
+
+            .column {
+                flex: 1 !important;
+            }
+
+            .column-title {
+                font-size: 0.9rem !important;
+                margin-bottom: 8px !important;
+            }
+
+            /* Smaller numeral cards */
+            .numeral-card {
+                padding: 10px 5px !important;
+                margin: 5px 0 !important;
+                font-size: 1.8rem !important;
+                border-radius: 10px !important;
+            }
+
+            /* Smaller name cards */
+            .name-card {
+                padding: 8px 5px !important;
+                margin: 5px 0 !important;
+                font-size: 0.75rem !important;
+                min-height: 50px !important;
+                border-radius: 10px !important;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .instruction {
+                font-size: 1.2em;
+            }
+
+            .score-display {
+                top: 10px;
+                right: 10px;
+                font-size: 1.1em;
+                padding: 10px 15px;
+            }
+        }
+            /* === RESPONSIVE MOBILE FIXES === */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        /* Responsive containers */
+        .game-container, .container, .main-container {
+            max-width: 100% !important;
+            width: 95vw !important;
+            padding: clamp(15px, 3vw, 30px) !important;
+        }
+
+        /* Responsive typography */
+        h1, .title {
+            font-size: clamp(1.8rem, 6vw, 2.5rem) !important;
+        }
+
+        h2, .subtitle {
+            font-size: clamp(1.4rem, 5vw, 2rem) !important;
+        }
+
+        .instruction, .instructions, .question, .prompt {
+            font-size: clamp(1rem, 4vw, 1.4rem) !important;
+            padding: clamp(10px, 2vw, 20px) !important;
+        }
+
+        /* Responsive buttons */
+        button, .btn, .button, .back-button, .next-button, .home-button, .speaker-btn {
+            font-size: clamp(1rem, 4vw, 1.3rem) !important;
+            padding: clamp(10px, 2.5vw, 15px) clamp(20px, 4vw, 30px) !important;
+            min-height: 44px !important;
+            min-width: 44px !important;
+            touch-action: manipulation;
+        }
+
+        /* Responsive game elements */
+        .number-display, .number-box, .digit-display {
+            width: clamp(100px, 20vw, 200px) !important;
+            height: clamp(100px, 20vw, 200px) !important;
+            font-size: clamp(2.5rem, 8vw, 4rem) !important;
+        }
+
+        .choices, .options, .answer-options {
+            gap: clamp(10px, 2vw, 20px) !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+        }
+
+        .choice-button, .option-button, .answer-button {
+            font-size: clamp(1.2rem, 4vw, 1.6rem) !important;
+            padding: clamp(15px, 3vw, 25px) clamp(30px, 5vw, 50px) !important;
+            min-height: 60px !important;
+        }
+
+        /* Score and feedback */
+        .score-display, .feedback, .message {
+            font-size: clamp(1rem, 3vw, 1.5rem) !important;
+            padding: clamp(10px, 2vw, 15px) clamp(15px, 3vw, 25px) !important;
+        }
+
+        /* Ten frames and grids */
+        .ten-frame, .frame, .grid {
+            width: 90vw !important;
+            max-width: 500px !important;
+        }
+
+        .cell, .frame-cell, .grid-cell {
+            width: clamp(40px, 8vw, 70px) !important;
+            height: clamp(40px, 8vw, 70px) !important;
+            font-size: clamp(1.5rem, 5vw, 2.5rem) !important;
+        }
+
+        /* Draggable items */
+        .draggable-item, .drop-box, .drop-zone, .draggable {
+            width: clamp(50px, 12vw, 80px) !important;
+            height: clamp(50px, 12vw, 80px) !important;
+            font-size: clamp(1.5rem, 6vw, 2.5rem) !important;
+            touch-action: none;
+        }
+
+        /* Mobile specific */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px !important;
+            }
+
+            .back-button, .home-button {
+                top: 10px !important;
+                left: 10px !important;
+                padding: 8px 16px !important;
+                font-size: 1rem !important;
+            }
+
+            .score-display {
+                top: 10px !important;
+                right: 10px !important;
+            }
+
+            .game-container, .container {
+                margin-top: 80px !important;
+            }
+        }
+
+        /* Tablet adjustments */
+                /* === MOBILE LAYOUT V2 - OPTIMIZED === */
+        @media (max-width: 768px) {
+            body {
+                padding: 5px !important;
+            }
+
+            /* Small score at top-right */
+            .score-display {
+                position: fixed;
+                top: 5px !important;
+                right: 5px !important;
+                padding: 5px 10px !important;
+                font-size: 0.85rem !important;
+                border-radius: 12px !important;
+                z-index: 1000;
+            }
+
+            /* Home button at bottom center - small and fixed */
+            .back-button, .home-button {
+                position: fixed !important;
+                bottom: 10px !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                top: auto !important;
+                padding: 8px 20px !important;
+                font-size: 0.9rem !important;
+                border-radius: 20px !important;
+                z-index: 1000;
+                box-shadow: 0 -2px 10px rgba(0,0,0,0.2) !important;
+            }
+
+            /* Compact title */
+            h1, .title {
+                font-size: 1.4rem !important;
+                margin-top: 35px !important;
+                margin-bottom: 15px !important;
+                padding: 0 5px !important;
+                line-height: 1.2 !important;
+            }
+
+            /* Game container with breathing space */
+            .game-container, .container {
+                margin-top: 35px !important;
+                margin-bottom: 60px !important;
+                padding: 10px !important;
+            }
+
+            /* Keep columns side by side on mobile */
+            .game-container {
+                flex-direction: row !important;
+                gap: 8px !important;
+            }
+
+            .column {
+                flex: 1 !important;
+            }
+
+            .column-title {
+                font-size: 0.85rem !important;
+                margin-bottom: 6px !important;
+            }
+
+            /* Compact numeral cards */
+            .numeral-card {
+                padding: 8px 4px !important;
+                margin: 4px 0 !important;
+                font-size: 1.5rem !important;
+                border-radius: 8px !important;
+            }
+
+            /* Compact name cards */
+            .name-card {
+                padding: 8px 4px !important;
+                margin: 4px 0 !important;
+                font-size: 0.7rem !important;
+                min-height: 45px !important;
+                border-radius: 8px !important;
+                line-height: 1.1 !important;
+            }
+
+            /* Compact spacing for all elements */
+            .instruction, .instructions, .question {
+                font-size: 1rem !important;
+                margin: 10px 0 !important;
+                padding: 8px !important;
+            }
+
+            /* Breathing space for choices/options */
+            .choices, .options, .answer-options {
+                gap: 12px !important;
+                padding: 10px 0 !important;
+                margin-bottom: 15px !important;
+            }
+
+            /* Properly sized buttons */
+            .choice-button, .option-button, .answer-button {
+                padding: 12px 20px !important;
+                font-size: 1.1rem !important;
+                margin: 5px !important;
+            }
+
+            /* Number displays with breathing room */
+            .number-display, .number-box {
+                width: clamp(120px, 25vw, 180px) !important;
+                height: clamp(120px, 25vw, 180px) !important;
+                font-size: clamp(2.5rem, 10vw, 3.5rem) !important;
+                margin: 15px auto !important;
+            }
+
+            /* Ten frames and grids */
+            .ten-frame, .frame, .grid {
+                width: 92vw !important;
+                max-width: 450px !important;
+                margin: 15px auto !important;
+            }
+
+            .cell, .frame-cell {
+                width: clamp(35px, 7.5vw, 60px) !important;
+                height: clamp(35px, 7.5vw, 60px) !important;
+                gap: clamp(4px, 1vw, 8px) !important;
+            }
+
+            /* Draggable items */
+            .draggable-item, .drop-box {
+                width: clamp(45px, 11vw, 70px) !important;
+                height: clamp(45px, 11vw, 70px) !important;
+                margin: 4px !important;
+            }
+
+            /* Canvas elements */
+            canvas {
+                max-width: 90vw !important;
+                margin: 10px auto !important;
+            }
+
+            /* Feedback messages */
+            .feedback, .message {
+                font-size: 1.1rem !important;
+                padding: 10px !important;
+                margin: 10px 0 !important;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .game-container, .container {
+                width: 85vw !important;
+                max-width: 700px !important;
+            }
+        }
+
+        /* === LANDSCAPE MODE OPTIMIZATIONS === */
+        @media (max-height: 500px) and (orientation: landscape) {
+            body {
+                padding: 3px !important;
+            }
+
+            .container {
+                padding: 10px !important;
+                border-radius: 10px !important;
+            }
+
+            h1 {
+                font-size: 1.1rem !important;
+                margin: 3px 0 !important;
+            }
+
+            .instruction {
+                font-size: 0.8rem !important;
+                margin-bottom: 5px !important;
+            }
+
+            .score-display {
+                font-size: 0.75rem !important;
+                padding: 4px 10px !important;
+                margin: 3px auto !important;
+                max-width: 150px !important;
+            }
+
+            .game-container {
+                gap: 10px !important;
+                margin-bottom: 5px !important;
+            }
+
+            .column-title {
+                font-size: 0.85rem !important;
+                margin-bottom: 5px !important;
+            }
+
+            /* Much smaller cards for landscape */
+            .numeral-card {
+                padding: 6px 10px !important;
+                margin: 3px 0 !important;
+                font-size: 1.3rem !important;
+                border-radius: 8px !important;
+                min-height: auto !important;
+            }
+
+            .name-card {
+                padding: 6px 10px !important;
+                margin: 3px 0 !important;
+                font-size: 0.85rem !important;
+                min-height: 35px !important;
+                border-radius: 8px !important;
+            }
+
+            .check-button {
+                padding: 8px 20px !important;
+                font-size: 1rem !important;
+                margin: 10px auto !important;
+            }
+
+            .feedback {
+                font-size: 1rem !important;
+                padding: 5px !important;
+                margin: 5px 0 !important;
+                min-height: 30px !important;
+            }
+
+            .next-btn, .restart-btn {
+                padding: 6px 15px !important;
+                font-size: 0.85rem !important;
+                margin: 5px !important;
+            }
+
+            .back-button {
+                top: 3px !important;
+                left: 3px !important;
+                padding: 5px 10px !important;
+                font-size: 0.75rem !important;
+            }
+        }
+
+</style>
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TCBV2GCV"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
+    
+<div class="container">
+<!-- ✅ Back Button -->
+<button class="back-button" onclick="window.location.href='../math-index.html'">🏠 Home</button>
+<h1>🎯 Match Numerals to Number Names</h1>
+<p class="instruction">Click a numeral, then click its matching number name!</p>
+<div class="round-indicator" id="roundIndicator">Round 1 of 3</div>
+<div class="game-wrapper">
+<div class="game-container" id="gameContainer">
+<div class="column">
+<div class="column-title">Numerals</div>
+<div id="numeralsColumn"></div>
+</div>
+<div class="column">
+<div class="column-title">Number Names</div>
+<div id="namesColumn"></div>
+</div>
+</div>
+</div>
+<div class="score-display">
+            Score: <span id="score">0</span>/15
+        </div>
+<button class="check-button" disabled="" id="checkButton" onclick="checkAnswers()">Check Answers</button>
+<div class="feedback" id="feedback"></div>
+<button class="next-button" id="nextButton" onclick="nextRound()" style="display: none;">Next Round →</button>
+</div>
+<script>
+        let currentRound = 1;
+        let totalScore = 0;
+        let roundScore = 0;
+        const totalRounds = 3;
+        const questionsPerRound = 5;
+
+        const numberData = {
+            0: 'zero',
+            1: 'one',
+            2: 'two',
+            3: 'three',
+            4: 'four',
+            5: 'five',
+            6: 'six',
+            7: 'seven',
+            8: 'eight',
+            9: 'nine',
+            10: 'ten'
+        };
+
+        let currentQuestions = [];
+        let userAnswers = {};
+        let selectedNumeral = null;
+        let selectedName = null;
+        let matches = {};
+
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.9;
+                utterance.pitch = 1.1;
+                utterance.volume = 1;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function generateRound() {
+            currentQuestions = [];
+            
+            // ALWAYS include zero in each round
+            currentQuestions.push('0');
+            
+            // Add 4 more random numbers (avoiding zero since it's already added)
+            const allNumbers = Object.keys(numberData).filter(n => n !== '0');
+            
+            while (currentQuestions.length < questionsPerRound) {
+                const randomNum = allNumbers[Math.floor(Math.random() * allNumbers.length)];
+                if (!currentQuestions.includes(randomNum)) {
+                    currentQuestions.push(randomNum);
+                }
+            }
+
+            const shuffledNames = [...currentQuestions].sort(() => Math.random() - 0.5);
+            
+            userAnswers = {};
+            matches = {};
+            selectedNumeral = null;
+            selectedName = null;
+            displayRound(currentQuestions, shuffledNames);
+        }
+
+        function displayRound(numerals, names) {
+            const numeralsColumn = document.getElementById('numeralsColumn');
+            const namesColumn = document.getElementById('namesColumn');
+            
+            numeralsColumn.innerHTML = '';
+            namesColumn.innerHTML = '';
+
+            numerals.forEach(num => {
+                const card = document.createElement('div');
+                card.className = 'numeral-card';
+                card.textContent = num;
+                card.dataset.number = num;
+                card.onclick = () => selectNumeral(num, card);
+                numeralsColumn.appendChild(card);
+            });
+
+            names.forEach(num => {
+                const name = numberData[num];
+                const card = document.createElement('div');
+                card.className = 'name-card';
+                card.dataset.number = num;
+                card.innerHTML = `<span>${name}</span>`;
+                card.onclick = () => selectName(num, card);
+                namesColumn.appendChild(card);
+            });
+
+            document.getElementById('checkButton').disabled = true;
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('nextButton').style.display = 'none';
+        }
+
+        function selectNumeral(number, card) {
+            if (card.classList.contains('matched')) return;
+
+            // Deselect previous numeral
+            document.querySelectorAll('.numeral-card').forEach(c => c.classList.remove('selected'));
+            
+            selectedNumeral = number;
+            card.classList.add('selected');
+            speak(number);
+
+            // If a name is already selected, make the match
+            if (selectedName !== null) {
+                makeMatch();
+            }
+        }
+
+        function selectName(number, card) {
+            if (card.classList.contains('matched')) return;
+
+            // Deselect previous name
+            document.querySelectorAll('.name-card').forEach(c => c.classList.remove('selected'));
+            
+            selectedName = number;
+            card.classList.add('selected');
+            speak(numberData[number]);
+
+            // If a numeral is already selected, make the match
+            if (selectedNumeral !== null) {
+                makeMatch();
+            }
+        }
+
+        function makeMatch() {
+            // Store the match
+            matches[selectedNumeral] = selectedName;
+            userAnswers[selectedName] = selectedNumeral;
+
+            // Mark as matched
+            const numeralCard = document.querySelector(`.numeral-card[data-number="${selectedNumeral}"]`);
+            const nameCard = document.querySelector(`.name-card[data-number="${selectedName}"]`);
+            
+            numeralCard.classList.remove('selected');
+            nameCard.classList.remove('selected');
+            numeralCard.classList.add('matched');
+            nameCard.classList.add('matched');
+
+            // Reset selections
+            selectedNumeral = null;
+            selectedName = null;
+
+            // Enable check button if all matched
+            if (Object.keys(matches).length === questionsPerRound) {
+                document.getElementById('checkButton').disabled = false;
+            }
+        }
+
+        function checkAnswers() {
+            let correct = 0;
+            const allCards = document.querySelectorAll('.numeral-card, .name-card');
+
+            Object.entries(matches).forEach(([numeral, name]) => {
+                const numeralCard = document.querySelector(`.numeral-card[data-number="${numeral}"]`);
+                const nameCard = document.querySelector(`.name-card[data-number="${name}"]`);
+
+                if (numeral === name) {
+                    // Correct match - make them disappear
+                    numeralCard.style.background = 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)';
+                    nameCard.style.background = 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100())';
+                    
+                    // First bounce
+                    numeralCard.classList.add('bounce');
+                    nameCard.classList.add('bounce');
+                    
+                    // Make them disappear after showing correct feedback
+                    setTimeout(() => {
+                        // Clear inline styles to allow animation
+                        numeralCard.style.animation = '';
+                        nameCard.style.animation = '';
+                        numeralCard.classList.add('disappear');
+                        nameCard.classList.add('disappear');
+                    }, 1000);
+                    
+                    correct++;
+                } else {
+                    // Incorrect match
+                    numeralCard.style.background = 'linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)';
+                    nameCard.style.background = 'linear-gradient(135deg, #e74c3c 0%, #c0392b 100())';
+                    numeralCard.classList.add('shake');
+                    nameCard.classList.add('shake');
+                }
+            });
+
+            roundScore = correct;
+            totalScore += correct;
+
+            document.getElementById('score').textContent = totalScore;
+            document.getElementById('checkButton').disabled = true;
+
+            const feedback = document.getElementById('feedback');
+            if (correct === questionsPerRound) {
+                feedback.textContent = '🎉 Perfect! All correct!';
+                feedback.className = 'feedback success';
+                speak('Perfect! All correct!');
+            } else {
+                feedback.textContent = `You got ${correct} out of ${questionsPerRound} correct!`;
+                feedback.className = 'feedback error';
+                speak(`You got ${correct} out of ${questionsPerRound} correct`);
+            }
+
+            if (currentRound < totalRounds) {
+                document.getElementById('nextButton').style.display = 'block';
+            } else {
+                setTimeout(showFinalScore, 1500);
+            }
+        }
+
+        function nextRound() {
+            currentRound++;
+            document.getElementById('roundIndicator').textContent = `Round ${currentRound} of ${totalRounds}`;
+            
+            generateRound();
+        }
+
+        function showFinalScore() {
+            const wrapper = document.querySelector('.game-wrapper');
+            const percentage = Math.round((totalScore / (totalRounds * questionsPerRound)) * 100);
+            
+            wrapper.innerHTML = `
+                <div class="final-screen">
+                    <div class="trophy">🏆</div>
+                    <h2>Game Complete!</h2>
+                    <button class="next-button" onclick="location.reload()">🔄 Play Again</button>
+                </div>
+            `;
+
+            document.getElementById('checkButton').style.display = 'none';
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('roundIndicator').style.display = 'none';
+
+            speak(`Congratulations! You completed all rounds. Your final score is ${totalScore} out of ${totalRounds * questionsPerRound}. ${percentage >= 80 ? 'Excellent work!' : 'Great effort!'}`);
+        }
+
+        // Initialize first round
+        generateRound();
+    </script>
+</body>
+</html>
