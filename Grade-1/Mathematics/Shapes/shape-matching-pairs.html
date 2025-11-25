@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TCBV2GCV');</script>
+<!-- End Google Tag Manager -->
+
+    
+    
+    
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Shape Matching Pairs</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        font-family: "Arial Rounded MT Bold", sans-serif;
+        color: white;
+        text-align: center;
+        overflow-x: hidden;
+    }
+
+    h1 {
+        margin-top: 90px;
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    }
+
+    /* HOME BUTTON */
+    .home-button {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        background: white;
+        color: #667eea;
+        padding: clamp(8px, 2vw, 12px) clamp(15px, 3vw, 25px);
+        border-radius: 28px;
+        font-size: clamp(0.85rem, 3vw, 1.2rem);
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+    }
+
+    .home-button:hover {
+        transform: scale(1.05);
+    }
+
+    /* TABS */
+    .tabs {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin: 30px auto;
+        flex-wrap: wrap;
+    }
+
+    .tab-btn {
+        background: #ffcc66;
+        color: #5a4400;
+        border: none;
+        padding: 12px 24px;
+        font-size: clamp(0.9rem, 3vw, 1.2rem);
+        border-radius: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+        transition: 0.2s;
+    }
+
+    .tab-btn.active {
+        background: #ffd98e;
+        transform: scale(1.05);
+    }
+
+    .tab-btn:hover {
+        transform: scale(1.05);
+    }
+
+    /* FRAMES */
+    .frame {
+        display: none;
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 10px;
+    }
+
+    .frame.active {
+        display: block;
+    }
+
+    iframe {
+        width: 100%;
+        height: clamp(380px, 60vh, 520px);
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    @media (max-width: 768px) {
+        iframe {
+            height: 65vh;
+        }
+        h1 {
+            margin-top: 110px;
+        }
+        .tabs {
+            gap: 5px;
+        }
+        .tab-btn {
+            padding: 10px 15px;
+        }
+    }
+</style>
+</head>
+
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TCBV2GCV"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+    
+    
+    
+
+<button class="home-button" onclick="window.location.href='../grade-1-math-index.html'">
+    🏠 Home
+</button>
+
+<h1>Shape Matching Pairs</h1>
+
+<!-- TAB BUTTONS -->
+<div class="tabs">
+    <button class="tab-btn active" onclick="openChallenge(1)">Challenge 1</button>
+    <button class="tab-btn" onclick="openChallenge(2)">Challenge 2</button>
+    <button class="tab-btn" onclick="openChallenge(3)">Challenge 3</button>
+    <button class="tab-btn" onclick="openChallenge(4)">Challenge 4</button>
+    <button class="tab-btn" onclick="openChallenge(5)">Challenge 5</button>
+</div>
+
+<!-- CHALLENGE 1 -->
+<div class="frame active" id="ch1">
+    <iframe
+        data-src="https://wordwall.net/embed/5f88ccdbfac441609681439f46d289ef?themeId=2&templateId=25&fontStackId=0"
+        src=""
+        allowfullscreen="true"
+        webkitallowfullscreen="true"
+        mozallowfullscreen="true">
+    </iframe>
+</div>
+
+<!-- CHALLENGE 2 -->
+<div class="frame" id="ch2">
+    <iframe
+        data-src="https://wordwall.net/embed/cc73c803c8ea465db4982a42e4174cd8?themeId=1&templateId=3&fontStackId=0"
+        src=""
+        allowfullscreen="true"
+        webkitallowfullscreen="true"
+        mozallowfullscreen="true">
+    </iframe>
+</div>
+
+<!-- CHALLENGE 3 -->
+<div class="frame" id="ch3">
+    <iframe
+        data-src="https://wordwall.net/embed/cc73c803c8ea465db4982a42e4174cd8?themeId=1&templateId=46&fontStackId=0"
+        src=""
+        allowfullscreen="true"
+        webkitallowfullscreen="true"
+        mozallowfullscreen="true">
+    </iframe>
+</div>
+
+<!-- CHALLENGE 4 -->
+<div class="frame" id="ch4">
+    <iframe
+        data-src="https://wordwall.net/embed/cc73c803c8ea465db4982a42e4174cd8?themeId=1&templateId=5&fontStackId=0"
+        src=""
+        allowfullscreen="true"
+        webkitallowfullscreen="true"
+        mozallowfullscreen="true">
+    </iframe>
+</div>
+
+<!-- CHALLENGE 5 -->
+<div class="frame" id="ch5">
+    <iframe
+        data-src="https://wordwall.net/embed/cc73c803c8ea465db4982a42e4174cd8?themeId=1&templateId=8&fontStackId=0"
+        src=""
+        allowfullscreen="true"
+        webkitallowfullscreen="true"
+        mozallowfullscreen="true">
+    </iframe>
+</div>
+
+<script>
+function openChallenge(num) {
+    document.querySelectorAll(".frame").forEach(f =>
+        f.classList.remove("active")
+    );
+    document.querySelectorAll(".tab-btn").forEach(btn =>
+        btn.classList.remove("active")
+    );
+
+    const selectedFrame = document.getElementById("ch" + num);
+    selectedFrame.classList.add("active");
+    document.querySelectorAll(".tab-btn")[num - 1].classList.add("active");
+
+    const iframe = selectedFrame.querySelector("iframe");
+    const src = iframe.getAttribute("data-src");
+    iframe.src = src;
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.querySelector("#ch1 iframe").src =
+    document.querySelector("#ch1 iframe").getAttribute("data-src");
+</script>
+
+</body>
+</html>
