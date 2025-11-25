@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TCBV2GCV');</script>
+<!-- End Google Tag Manager -->
+
+    
+    
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pick the Colors</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2C3E50;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .score-item {
+            background: #ECF0F1;
+            padding: 15px 30px;
+            border-radius: 20px;
+        }
+
+        .question-text {
+            text-align: center;
+            font-size: 2em;
+            color: #2C3E50;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .color-highlight {
+            padding: 5px 15px;
+            border-radius: 10px;
+            color: white;
+        }
+
+        .objects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+            padding: 20px;
+        }
+
+        .object-card {
+            background: white;
+            border: 4px solid #BDC3C7;
+            border-radius: 20px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 140px;
+            position: relative;
+        }
+
+        .object-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .object-card.selected {
+            border-color: #3498DB;
+            background: #E3F2FD;
+            transform: scale(1.05);
+        }
+
+        .object-card.correct {
+            border-color: #27AE60;
+            background: #D5F4E6;
+            animation: correctPulse 0.5s;
+        }
+
+        .object-card.wrong {
+            border-color: #E74C3C;
+            background: #FADBD8;
+            animation: shake 0.5s;
+        }
+
+        .object-card.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .object-emoji {
+            font-size: 4em;
+            margin-bottom: 10px;
+        }
+
+        .object-name {
+            font-size: 1.1em;
+            color: #2C3E50;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2em;
+            display: none;
+        }
+
+        .object-card.selected .checkmark {
+            display: block;
+        }
+
+        .object-card.correct .checkmark {
+            display: block;
+        }
+
+        .feedback {
+            text-align: center;
+            font-size: 1.5em;
+            margin: 20px 0;
+            font-weight: bold;
+            min-height: 40px;
+        }
+
+        .feedback.correct {
+            color: #27AE60;
+        }
+
+        .feedback.wrong {
+            color: #E74C3C;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0px;
+            margin-top: 30px;
+        }
+
+        .check-btn {
+            background: #F39C12;
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 1.6em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            font-family: Arial, Helvetica, sans-serif;
+            margin-bottom: 15px;
+        }
+
+        .check-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            background: #E67E22;
+        }
+
+        .check-btn:disabled {
+            background: #95A5A6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .next-btn {
+            background: #2ECC71;
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 1.6em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            font-family: Arial, Helvetica, sans-serif;
+            margin-bottom: 15px;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            background: #27AE60;
+        }
+
+        .btn-home {
+            background: #9B59B6;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .btn-home:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        .celebration {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 8em;
+            animation: celebrate 0.8s;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        @keyframes celebrate {
+            0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) scale(1.3) rotate(180deg); }
+            100% { transform: translate(-50%, -50%) scale(1) rotate(360deg); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px 15px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .question-text {
+                font-size: 1.4em;
+            }
+
+            .objects-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 15px;
+            }
+
+            .object-emoji {
+                font-size: 3em;
+            }
+
+            .object-name {
+                font-size: 0.9em;
+            }
+
+            .score-board {
+                font-size: 1.1em;
+                gap: 15px;
+            }
+
+            .check-btn, .next-btn {
+                padding: 15px 40px;
+                font-size: 1.3em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .objects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .object-card {
+                min-height: 120px;
+                padding: 15px;
+            }
+
+            .object-emoji {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TCBV2GCV"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+    
+    
+    
+    <div class="container">
+        <h1>🎨 Pick the Colors</h1>
+
+        <div class="score-board">
+            <div class="score-item">
+                Question: <span id="questionNum">1</span> / <span id="totalQuestions">15</span>
+            </div>
+            <div class="score-item">
+                Score: <span id="score">0</span>
+            </div>
+        </div>
+
+        <div class="question-text" id="questionText"></div>
+
+        <div class="objects-grid" id="objectsGrid"></div>
+
+        <div class="feedback" id="feedback"></div>
+
+        <div class="controls">
+            <button class="check-btn" id="checkBtn" onclick="checkAnswer()" disabled>Check Answer</button>
+            <button class="next-btn" id="nextBtn" onclick="nextQuestion()" style="display: none;">Next ➡️</button>
+        </div>
+
+        <button class="btn-home" onclick="window.location.href='../grade-1-math-index.html'">🏠 Home</button>
+    </div>
+
+    <script>
+        const colorObjects = {
+            red: [
+                {emoji: '🔴', name: 'ball'},
+                {emoji: '🍎', name: 'apple'},
+                {emoji: '🚗', name: 'car'},
+                {emoji: '🌹', name: 'rose'},
+                {emoji: '❤️', name: 'heart'},
+                {emoji: '🍓', name: 'strawberry'},
+                {emoji: '🍅', name: 'tomato'}
+            ],
+            blue: [
+                {emoji: '🔵', name: 'ball'},
+                {emoji: '🚙', name: 'car'},
+                {emoji: '📘', name: 'book'},
+                {emoji: '🫐', name: 'berry'},
+                {emoji: '🩵', name: 'heart'}
+            ],
+            yellow: [
+                {emoji: '🟡', name: 'ball'},
+                {emoji: '🚕', name: 'car'},
+                {emoji: '🍌', name: 'banana'},
+                {emoji: '⭐', name: 'star'},
+                {emoji: '🌻', name: 'flower'},
+                {emoji: '🍋', name: 'lemon'},
+                {emoji: '💛', name: 'heart'}
+            ],
+            green: [
+                {emoji: '🟢', name: 'ball'},
+                {emoji: '🍏', name: 'apple'},
+                {emoji: '🌳', name: 'tree'},
+                {emoji: '🍃', name: 'leaf'},
+                {emoji: '💚', name: 'heart'},
+                {emoji: '🥒', name: 'cucumber'},
+                {emoji: '🥝', name: 'kiwi'}
+            ]
+        };
+
+        const colorCodes = {
+            red: '#E74C3C',
+            blue: '#3498DB',
+            yellow: '#F1C40F',
+            green: '#2ECC71'
+        };
+
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedObjects = [];
+        let correctAnswers = [];
+        let hasAnswered = false;
+
+        const questions = [];
+
+        // Generate questions
+        function generateQuestions() {
+            const colors = ['red', 'blue', 'yellow', 'green'];
+            const pickCounts = [1, 2, 3];
+
+            colors.forEach(color => {
+                pickCounts.forEach(count => {
+                    questions.push({
+                        color: color,
+                        pickCount: count
+                    });
+                });
+            });
+
+            // Shuffle questions
+            questions.sort(() => Math.random() - 0.5);
+        }
+
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.85;
+                utterance.pitch = 1.1;
+                utterance.volume = 1;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function loadQuestion() {
+            if (currentQuestion >= questions.length) {
+                showFinalScore();
+                return;
+            }
+
+            hasAnswered = false;
+            selectedObjects = [];
+            correctAnswers = [];
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('feedback').className = 'feedback';
+            document.getElementById('checkBtn').disabled = true;
+            document.getElementById('checkBtn').style.display = 'block';
+            document.getElementById('nextBtn').style.display = 'none';
+
+            const question = questions[currentQuestion];
+            const color = question.color;
+            const pickCount = question.pickCount;
+
+            // Update question display
+            document.getElementById('questionNum').textContent = currentQuestion + 1;
+            document.getElementById('totalQuestions').textContent = questions.length;
+
+            const questionText = document.getElementById('questionText');
+            questionText.innerHTML = `Pick <span class="color-highlight" style="background: ${colorCodes[color]}">${pickCount}</span> ${color} object${pickCount > 1 ? 's' : ''}`;
+
+            // Get objects for this color
+            const colorObjs = [...colorObjects[color]];
+            
+            // Select correct objects
+            const correctObjs = [];
+            for (let i = 0; i < pickCount && colorObjs.length > 0; i++) {
+                const randomIndex = Math.floor(Math.random() * colorObjs.length);
+                correctObjs.push(colorObjs.splice(randomIndex, 1)[0]);
+            }
+
+            // Get objects from other colors
+            const otherColors = Object.keys(colorObjects).filter(c => c !== color);
+            const wrongObjs = [];
+            const wrongCount = 6 - pickCount; // Total 6 objects
+
+            for (let i = 0; i < wrongCount; i++) {
+                const randomColor = otherColors[Math.floor(Math.random() * otherColors.length)];
+                const colorObjsCopy = [...colorObjects[randomColor]];
+                const randomObj = colorObjsCopy[Math.floor(Math.random() * colorObjsCopy.length)];
+                wrongObjs.push(randomObj);
+            }
+
+            // Combine and shuffle
+            const allObjects = [...correctObjs, ...wrongObjs];
+            allObjects.sort(() => Math.random() - 0.5);
+
+            // Store correct answer indices
+            correctAnswers = [];
+            allObjects.forEach((obj, index) => {
+                if (correctObjs.some(c => c.emoji === obj.emoji && c.name === obj.name)) {
+                    correctAnswers.push(index);
+                }
+            });
+
+            // Display objects
+            const grid = document.getElementById('objectsGrid');
+            grid.innerHTML = '';
+
+            allObjects.forEach((obj, index) => {
+                const card = document.createElement('div');
+                card.className = 'object-card';
+                card.onclick = () => selectObject(index);
+                card.innerHTML = `
+                    <div class="checkmark">✓</div>
+                    <div class="object-emoji">${obj.emoji}</div>
+                    <div class="object-name">${obj.name}</div>
+                `;
+                grid.appendChild(card);
+            });
+
+            speak(`Pick ${pickCount} ${color} object${pickCount > 1 ? 's' : ''}`);
+        }
+
+        function selectObject(index) {
+            if (hasAnswered) return;
+
+            const cards = document.querySelectorAll('.object-card');
+            const card = cards[index];
+
+            if (selectedObjects.includes(index)) {
+                // Deselect
+                selectedObjects = selectedObjects.filter(i => i !== index);
+                card.classList.remove('selected');
+            } else {
+                // Select
+                selectedObjects.push(index);
+                card.classList.add('selected');
+            }
+
+            // Enable check button if correct number selected
+            const question = questions[currentQuestion];
+            if (selectedObjects.length === question.pickCount) {
+                document.getElementById('checkBtn').disabled = false;
+            } else {
+                document.getElementById('checkBtn').disabled = true;
+            }
+        }
+
+        function checkAnswer() {
+            if (hasAnswered) return;
+            hasAnswered = true;
+
+            const cards = document.querySelectorAll('.object-card');
+            let allCorrect = true;
+
+            // Check if selected objects match correct answers
+            selectedObjects.sort((a, b) => a - b);
+            correctAnswers.sort((a, b) => a - b);
+
+            const isCorrect = JSON.stringify(selectedObjects) === JSON.stringify(correctAnswers);
+
+            cards.forEach((card, index) => {
+                card.classList.add('disabled');
+                
+                if (correctAnswers.includes(index)) {
+                    card.classList.add('correct');
+                    if (!selectedObjects.includes(index)) {
+                        allCorrect = false;
+                    }
+                } else if (selectedObjects.includes(index)) {
+                    card.classList.add('wrong');
+                    allCorrect = false;
+                }
+            });
+
+            const feedback = document.getElementById('feedback');
+            
+            if (isCorrect) {
+                score++;
+                document.getElementById('score').textContent = score;
+                feedback.textContent = '✓ Perfect! All correct!';
+                feedback.className = 'feedback correct';
+                speak('Perfect! All correct!');
+                showCelebration('🎉');
+            } else {
+                feedback.textContent = '✗ Not quite right. Try again next time!';
+                feedback.className = 'feedback wrong';
+                speak('Not quite right');
+            }
+
+            document.getElementById('checkBtn').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            loadQuestion();
+        }
+
+        function showCelebration(emoji) {
+            const celebration = document.createElement('div');
+            celebration.className = 'celebration';
+            celebration.textContent = emoji;
+            document.body.appendChild(celebration);
+            setTimeout(() => celebration.remove(), 800);
+        }
+
+        function showFinalScore() {
+            const container = document.querySelector('.container');
+            container.innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <div style="font-size: 5em; margin-bottom: 20px;">🎊</div>
+                    <h2 style="font-size: 2.5em; color: #2C3E50; margin-bottom: 20px;">Congratulations!</h2>
+                    <div style="font-size: 2em; color: #667eea; margin-bottom: 20px;">
+                        You completed all questions!
+                    </div>
+                    <div style="font-size: 2em; color: #3498DB; margin-bottom: 20px;">
+                        Final Score: <span style="color: #F39C12; font-weight: bold;">${score}</span> / ${questions.length}
+                    </div>
+                    <button class="next-btn" onclick="location.reload()" style="margin-top: 30px;">
+                        🔄 Play Again
+                    </button>
+                    <br><br>
+                    <button class="btn-home" onclick="window.location.href='../grade-1-math-index.html'">🏠 Home</button>
+                </div>
+            `;
+            speak(`Congratulations! You scored ${score} out of ${questions.length}`);
+        }
+
+        // Initialize
+        generateQuestions();
+        loadQuestion();
+    </script>
+</body>
+</html>
