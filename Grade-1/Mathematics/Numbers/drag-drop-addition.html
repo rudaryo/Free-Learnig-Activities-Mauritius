@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TCBV2GCV');</script>
+<!-- End Google Tag Manager -->
+
+
+
+    
+    
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop Addition Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            background: white;
+            color: #667eea;
+            padding: 15px 35px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 800;
+            font-size: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive, sans-serif;
+        }
+
+        .home-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            background: #667eea;
+            color: white;
+        }
+
+        .home-button:active {
+            transform: translateY(0);
+        }
+
+        .game-container {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .level-info {
+            font-size: 1.3em;
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        .instruction {
+            background: #fff4e6;
+            border: 3px solid #ffa726;
+            border-radius: 15px;
+            padding: 15px 25px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 1.3em;
+            color: #e65100;
+            font-weight: bold;
+        }
+
+        .circles-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 20px;
+        }
+
+        .circle-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .circle {
+            border-radius: 50%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            padding: 15px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .circle.left {
+            width: 180px;
+            height: 180px;
+            background: transparent;
+            border: 4px solid #f57c00;
+        }
+
+        .circle.middle {
+            width: 180px;
+            height: 180px;
+            background: transparent;
+            border: 4px solid #1976d2;
+        }
+
+        .circle.right {
+            width: 240px;
+            height: 240px;
+            background: transparent;
+            border: 5px dashed #e91e63;
+            box-shadow: 0 0 20px rgba(233, 30, 99, 0.3);
+        }
+
+        .circle.drag-over {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(233, 30, 99, 0.6);
+        }
+
+        .emoji {
+            font-size: 2.5em;
+            cursor: grab;
+            user-select: none;
+            transition: transform 0.2s;
+            position: relative;
+        }
+
+        .emoji:active {
+            cursor: grabbing;
+        }
+
+        .emoji:hover {
+            transform: scale(1.1);
+        }
+
+        .emoji.dragging {
+            opacity: 0.5;
+        }
+
+        .number-box {
+            background: white;
+            border: 3px solid #333;
+            border-radius: 15px;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .operator {
+            font-size: 3em;
+            font-weight: bold;
+            color: #333;
+            align-self: center;
+        }
+
+        .next-level-btn {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3em;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            display: none;
+            margin: 20px auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+
+        .next-level-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .next-level-btn:active {
+            transform: scale(0.95);
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3em;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 20px auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+            display: block;
+        }
+
+        .restart-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .restart-btn:active {
+            transform: scale(0.95);
+        }
+
+        .celebration {
+            display: none;
+            text-align: center;
+            font-size: 2em;
+            color: #4caf50;
+            font-weight: bold;
+            margin-top: 20px;
+            animation: bounce 0.5s ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .completion-message {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            display: none;
+            margin-top: 20px;
+        }
+
+        .completion-message h2 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .circles-container {
+                flex-direction: column;
+            }
+            
+            .operator {
+                transform: rotate(0deg);
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .home-button {
+                top: 10px;
+                left: 10px;
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TCBV2GCV"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+
+    
+    
+    
+ <button class="home-button" onclick="window.location.href='../math-index.html'">
+<span>🏠</span>
+<span>Home</span>
+</button>
+     
+    <div class="game-container">
+        <div class="header">
+            <h1>🎯 Drag and Drop Addition 🎯</h1>
+            <div class="level-info">Level <span id="current-level">1</span> of 4</div>
+        </div>
+
+        <div class="instruction" id="instruction">
+            Drag and drop the apples into the bigger circle!
+        </div>
+
+        <div class="circles-container">
+            <div class="circle-wrapper">
+                <div class="circle left" id="left-circle"></div>
+                <div class="number-box" id="left-number">0</div>
+            </div>
+
+            <div class="operator">+</div>
+
+            <div class="circle-wrapper">
+                <div class="circle middle" id="middle-circle"></div>
+                <div class="number-box" id="middle-number">0</div>
+            </div>
+
+            <div class="operator">=</div>
+
+            <div class="circle-wrapper">
+                <div class="circle right" id="right-circle"></div>
+                <div class="number-box" id="right-number">0</div>
+            </div>
+        </div>
+
+        <div class="celebration" id="celebration">🎉 Excellent! Well Done! 🎉</div>
+        
+        <button class="next-level-btn" id="next-level-btn">Next Level ➜</button>
+        
+        <button class="restart-btn" id="restart-btn">🔄 Restart Game</button>
+
+        <div class="completion-message" id="completion-message">
+            <h2>🏆 Congratulations! 🏆</h2>
+            <p>You completed all 4 levels!</p>
+            <p style="font-size: 3em; margin: 20px 0;">⭐⭐⭐⭐</p>
+        </div>
+    </div>
+
+    <script>
+        // Audio context for sound effects
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(frequency, duration) {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = frequency;
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + duration);
+        }
+
+        function playDropSound() {
+            playSound(523.25, 0.2); // C5 note
+        }
+
+        function playSuccessSound() {
+            playSound(659.25, 0.15); // E5
+            setTimeout(() => playSound(783.99, 0.15), 100); // G5
+            setTimeout(() => playSound(1046.50, 0.3), 200); // C6
+        }
+
+        // Game levels configuration with multiple possibilities
+        const levelPossibilities = [
+            // Level 1: Sum between 2 and 5 (7 possibilities)
+            [
+                { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 1, middleCount: 1, name: 'apples' }, // 2
+                { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 1, middleCount: 2, name: 'apples' }, // 3
+                { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 2, middleCount: 1, name: 'apples' }, // 3
+                { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 1, middleCount: 3, name: 'apples' }, // 4
+                { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 2, middleCount: 2, name: 'apples' }, // 4
+                { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 1, middleCount: 4, name: 'apples' }, // 5
+                { leftEmoji: '🍎', middleEmoji: '🍎', leftCount: 2, middleCount: 3, name: 'apples' }  // 5
+            ],
+            // Level 2: Sum between 2 and 10 (7 possibilities)
+            [
+                { leftEmoji: '🚗', middleEmoji: '🚗', leftCount: 1, middleCount: 1, name: 'cars' }, // 2
+                { leftEmoji: '🚗', middleEmoji: '🚗', leftCount: 2, middleCount: 2, name: 'cars' }, // 4
+                { leftEmoji: '🚗', middleEmoji: '🚗', leftCount: 3, middleCount: 3, name: 'cars' }, // 6
+                { leftEmoji: '🚗', middleEmoji: '🚗', leftCount: 4, middleCount: 3, name: 'cars' }, // 7
+                { leftEmoji: '🚗', middleEmoji: '🚗', leftCount: 5, middleCount: 3, name: 'cars' }, // 8
+                { leftEmoji: '🚗', middleEmoji: '🚗', leftCount: 4, middleCount: 5, name: 'cars' }, // 9
+                { leftEmoji: '🚗', middleEmoji: '🚗', leftCount: 5, middleCount: 5, name: 'cars' }  // 10
+            ],
+            // Level 3: Sum from 1 to 5 (7 possibilities - includes zero)
+            [
+                { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 0, middleCount: 1, name: 'stars' }, // 1
+                { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 1, middleCount: 0, name: 'stars' }, // 1
+                { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 2, middleCount: 0, name: 'stars' }, // 2
+                { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 1, middleCount: 2, name: 'stars' }, // 3
+                { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 1, middleCount: 3, name: 'stars' }, // 4
+                { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 2, middleCount: 3, name: 'stars' }, // 5
+                { leftEmoji: '⭐', middleEmoji: '⭐', leftCount: 0, middleCount: 5, name: 'stars' }  // 5
+            ],
+            // Level 4: Sum from 1 to 10 (7 possibilities - includes zero)
+            [
+                { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 1, middleCount: 0, name: 'bananas' }, // 1
+                { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 0, middleCount: 3, name: 'bananas' }, // 3
+                { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 2, middleCount: 3, name: 'bananas' }, // 5
+                { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 3, middleCount: 4, name: 'bananas' }, // 7
+                { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 5, middleCount: 3, name: 'bananas' }, // 8
+                { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 4, middleCount: 5, name: 'bananas' }, // 9
+                { leftEmoji: '🍌', middleEmoji: '🍌', leftCount: 0, middleCount: 10, name: 'bananas' }  // 10
+            ]
+        ];
+
+        let currentLevelConfig;
+
+        let currentLevel = 0;
+        let currentChallenge = 0;
+        let usedChallenges = []; // Track which challenges have been used in current level
+        let leftCircleEmojis = [];
+        let middleCircleEmojis = [];
+        let rightCircleEmojis = [];
+
+        function initLevel() {
+            // Select random configuration from current level's possibilities
+            const possibilities = levelPossibilities[currentLevel];
+            
+            // Get an unused challenge or reset if all have been used
+            if (usedChallenges.length >= possibilities.length) {
+                usedChallenges = [];
+            }
+            
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * possibilities.length);
+            } while (usedChallenges.includes(randomIndex));
+            
+            usedChallenges.push(randomIndex);
+            currentLevelConfig = possibilities[randomIndex];
+            
+            const leftCircle = document.getElementById('left-circle');
+            const middleCircle = document.getElementById('middle-circle');
+            const rightCircle = document.getElementById('right-circle');
+            const instruction = document.getElementById('instruction');
+            const celebration = document.getElementById('celebration');
+            const nextBtn = document.getElementById('next-level-btn');
+            
+            // Reset
+            leftCircle.innerHTML = '';
+            middleCircle.innerHTML = '';
+            rightCircle.innerHTML = '';
+            leftCircleEmojis = [];
+            middleCircleEmojis = [];
+            rightCircleEmojis = [];
+            celebration.style.display = 'none';
+            nextBtn.style.display = 'none';
+            
+            // Update level info
+            document.getElementById('current-level').textContent = `${currentLevel + 1} (${currentChallenge + 1}/7)`;
+            instruction.textContent = `Drag and drop the ${currentLevelConfig.name} into the bigger circle!`;
+            
+            // Set the initial numbers for left and middle (these won't change)
+            document.getElementById('left-number').textContent = currentLevelConfig.leftCount;
+            document.getElementById('middle-number').textContent = currentLevelConfig.middleCount;
+            
+            // Create emojis for left circle
+            for (let i = 0; i < currentLevelConfig.leftCount; i++) {
+                const emoji = createEmoji(currentLevelConfig.leftEmoji, 'left', i);
+                leftCircle.appendChild(emoji);
+                leftCircleEmojis.push(emoji);
+            }
+            
+            // Create emojis for middle circle
+            for (let i = 0; i < currentLevelConfig.middleCount; i++) {
+                const emoji = createEmoji(currentLevelConfig.middleEmoji, 'middle', i);
+                middleCircle.appendChild(emoji);
+                middleCircleEmojis.push(emoji);
+            }
+            
+            updateNumbers();
+            adjustEmojiSizes();
+        }
+
+        function createEmoji(symbol, source, index) {
+            const span = document.createElement('span');
+            span.className = 'emoji';
+            span.textContent = symbol;
+            span.draggable = true;
+            span.dataset.source = source;
+            span.dataset.index = index;
+            
+            span.addEventListener('dragstart', handleDragStart);
+            span.addEventListener('dragend', handleDragEnd);
+            
+            return span;
+        }
+
+        function handleDragStart(e) {
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', e.target.innerHTML);
+            e.dataTransfer.setData('source', e.target.dataset.source);
+        }
+
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            return false;
+        }
+
+        function handleDragEnter(e) {
+            e.target.classList.add('drag-over');
+        }
+
+        function handleDragLeave(e) {
+            e.target.classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            e.preventDefault();
+            
+            e.target.classList.remove('drag-over');
+            
+            const draggingEmoji = document.querySelector('.emoji.dragging');
+            if (draggingEmoji) {
+                const source = draggingEmoji.dataset.source;
+                
+                // Move emoji to right circle
+                const rightCircle = document.getElementById('right-circle');
+                rightCircle.appendChild(draggingEmoji);
+                rightCircleEmojis.push(draggingEmoji);
+                
+                // Remove from source array
+                if (source === 'left') {
+                    const index = leftCircleEmojis.indexOf(draggingEmoji);
+                    if (index > -1) leftCircleEmojis.splice(index, 1);
+                } else if (source === 'middle') {
+                    const index = middleCircleEmojis.indexOf(draggingEmoji);
+                    if (index > -1) middleCircleEmojis.splice(index, 1);
+                }
+                
+                draggingEmoji.dataset.source = 'right';
+                
+                // Play sound
+                playDropSound();
+                
+                // Update numbers
+                updateNumbers();
+                adjustEmojiSizes();
+                
+                // Check if level complete
+                checkLevelComplete();
+            }
+            
+            return false;
+        }
+
+        function updateNumbers() {
+            // Left and middle numbers stay constant (showing original counts)
+            // Only update the right number box to show current total
+            document.getElementById('right-number').textContent = rightCircleEmojis.length;
+        }
+
+        function adjustEmojiSizes() {
+            // Adjust emoji sizes based on count in each circle
+            const adjustSize = (emojis, maxSize) => {
+                const count = emojis.length;
+                let size;
+                if (count <= 2) size = maxSize;
+                else if (count <= 4) size = maxSize * 0.8;
+                else if (count <= 6) size = maxSize * 0.65;
+                else size = maxSize * 0.55;
+                
+                emojis.forEach(emoji => {
+                    emoji.style.fontSize = `${size}em`;
+                });
+            };
+            
+            adjustSize(leftCircleEmojis, 2.5);
+            adjustSize(middleCircleEmojis, 2.5);
+            adjustSize(rightCircleEmojis, 2.5);
+        }
+
+        function checkLevelComplete() {
+            if (leftCircleEmojis.length === 0 && middleCircleEmojis.length === 0) {
+                playSuccessSound();
+                document.getElementById('celebration').style.display = 'block';
+                
+                currentChallenge++;
+                
+                // Check if all 7 challenges completed for this level
+                if (currentChallenge >= 7) {
+                    // Level complete
+                    if (currentLevel < levelPossibilities.length - 1) {
+                        // More levels to go
+                        setTimeout(() => {
+                            document.getElementById('next-level-btn').style.display = 'block';
+                        }, 1000);
+                    } else {
+                        // Game complete
+                        setTimeout(() => {
+                            document.getElementById('completion-message').style.display = 'block';
+                        }, 1000);
+                    }
+                } else {
+                    // More challenges in this level - auto-load next challenge
+                    setTimeout(() => {
+                        initLevel();
+                    }, 1500);
+                }
+            }
+        }
+
+        // Setup drop zone
+        const rightCircle = document.getElementById('right-circle');
+        rightCircle.addEventListener('dragover', handleDragOver);
+        rightCircle.addEventListener('dragenter', handleDragEnter);
+        rightCircle.addEventListener('dragleave', handleDragLeave);
+        rightCircle.addEventListener('drop', handleDrop);
+
+        // Next level button
+        document.getElementById('next-level-btn').addEventListener('click', () => {
+            currentLevel++;
+            currentChallenge = 0;
+            usedChallenges = [];
+            initLevel();
+        });
+
+        // Restart button
+        document.getElementById('restart-btn').addEventListener('click', () => {
+            currentLevel = 0;
+            currentChallenge = 0;
+            usedChallenges = [];
+            document.getElementById('completion-message').style.display = 'none';
+            initLevel();
+        });
+
+        // Initialize first level
+        initLevel();
+    </script>
+</body>
+</html>

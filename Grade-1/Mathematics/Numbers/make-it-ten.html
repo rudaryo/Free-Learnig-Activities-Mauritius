@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TCBV2GCV');</script>
+<!-- End Google Tag Manager -->
+
+
+
+    
+    
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete the Ten Frame</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            background: white;
+            color: #667eea;
+            padding: 15px 35px;
+            border-radius: 50px;
+            border: none;
+            font-weight: bold;
+            font-size: 1.2em;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        .home-button:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 700px;
+            width: 100%;
+        }
+
+        .level-info {
+            text-align: center;
+            font-size: 1.2em;
+            color: #764ba2;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .statement {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .ten-frame {
+            display: grid;
+            grid-template-columns: repeat(5, 70px);
+            grid-template-rows: repeat(2, 70px);
+            gap: 8px;
+            margin: 30px auto;
+            width: fit-content;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 10px;
+        }
+
+        .cell {
+            width: 70px;
+            height: 70px;
+            border: 3px solid #2196f3;
+            border-radius: 8px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .cell.filled {
+            background: #fff9e6;
+            cursor: default;
+        }
+
+        .cell.empty:hover {
+            background: #e3f2fd;
+            transform: scale(1.05);
+        }
+
+        .cell .plus-sign {
+            color: #2196f3;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .dot {
+            width: 70%;
+            height: 70%;
+            border-radius: 50%;
+            animation: popIn 0.3s ease-out;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .dot.red { background: #e74c3c; }
+        .dot.blue { background: #3498db; }
+        .dot.green { background: #27ae60; }
+        .dot.orange { background: #ff6b35; }
+        .dot.purple { background: #9b59b6; }
+        .dot.pink { background: #e91e63; }
+
+        .question {
+            font-size: 1.3em;
+            margin: 30px 0 20px 0;
+            color: #333;
+        }
+
+        .equation {
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .equation-box {
+            border: 3px solid #333;
+            border-radius: 8px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            font-size: 1.5em;
+            transition: all 0.3s;
+        }
+
+        .equation-box.drag-over {
+            background: #e3f2fd;
+            transform: scale(1.1);
+            border-color: #2196f3;
+        }
+
+        .number-choices {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .number-choice {
+            border: 3px solid #2196f3;
+            border-radius: 12px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e3f2fd;
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #333;
+            cursor: grab;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .number-choice:hover {
+            transform: scale(1.1);
+            background: #bbdefb;
+        }
+
+        .number-choice:active {
+            cursor: grabbing;
+        }
+
+        .number-choice.dragging {
+            opacity: 0.5;
+        }
+
+        .number-choice.correct {
+            background: #4caf50;
+            color: white;
+            border-color: #4caf50;
+        }
+
+        .number-choice.used {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .feedback-message {
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-top: 20px;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feedback-message.correct {
+            color: #4caf50;
+            animation: bounceIn 0.5s;
+        }
+
+        .feedback-message.wrong {
+            color: #f44336;
+            animation: shake 0.5s;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .celebration {
+            display: none;
+            text-align: center;
+            font-size: 2em;
+            color: #4caf50;
+            font-weight: bold;
+            margin-top: 20px;
+            animation: bounce 0.5s ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .next-btn {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3em;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            display: none;
+            margin: 20px auto;
+        }
+
+        .next-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3em;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .restart-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .completion-message {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            display: none;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .ten-frame {
+                grid-template-columns: repeat(5, 55px);
+                grid-template-rows: repeat(2, 55px);
+            }
+            .cell {
+                width: 55px;
+                height: 55px;
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TCBV2GCV"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+
+    
+    
+    
+    <button class="home-button" onclick="window.location.href='../math-index.html'">🏠 Home</button>
+    
+    <div class="container">
+        <div class="level-info">Level <span id="level-display">1 (1/7)</span></div>
+
+        <div class="statement" id="statement">
+            There are <strong id="filled-count">0</strong> <span id="item-name">dots</span> on the frame.
+        </div>
+
+        <div class="ten-frame" id="ten-frame"></div>
+
+        <div class="question" id="question">
+            How many more <span id="item-name-2">dots</span> would make 10? Complete the addition sentence.
+        </div>
+
+        <div class="equation">
+            <span id="num1">0</span>
+            <span>+</span>
+            <div class="equation-box" id="answer-box"></div>
+            <span>= 10</span>
+        </div>
+
+        <div class="number-choices" id="number-choices"></div>
+
+        <div class="feedback-message" id="feedback-message"></div>
+
+        <div class="celebration" id="celebration">🎉 Excellent! Well Done! 🎉</div>
+        
+        <button class="next-btn" id="next-btn">Next Challenge ➜</button>
+        <button class="restart-btn" id="restart-btn">🔄 Restart Game</button>
+
+        <div class="completion-message" id="completion-message">
+            <h2>🏆 Congratulations! 🏆</h2>
+            <p>You completed all 4 levels!</p>
+            <p style="font-size: 3em; margin: 20px 0;">⭐⭐⭐⭐</p>
+        </div>
+    </div>
+
+    <script>
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(frequency, duration) {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            oscillator.frequency.value = frequency;
+            oscillator.type = 'sine';
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + duration);
+        }
+
+        function playClickSound() {
+            playSound(523.25, 0.1);
+        }
+
+        function playSuccessSound() {
+            playSound(659.25, 0.15);
+            setTimeout(() => playSound(783.99, 0.15), 100);
+            setTimeout(() => playSound(1046.50, 0.3), 200);
+        }
+
+        const levels = [
+            // Level 1: Dots
+            [
+                { filled: 6, type: 'dot', color: 'blue', name: 'blue dots' },
+                { filled: 3, type: 'dot', color: 'red', name: 'red dots' },
+                { filled: 7, type: 'dot', color: 'green', name: 'green dots' },
+                { filled: 4, type: 'dot', color: 'orange', name: 'orange dots' },
+                { filled: 5, type: 'dot', color: 'purple', name: 'purple dots' },
+                { filled: 2, type: 'dot', color: 'pink', name: 'pink dots' },
+                { filled: 8, type: 'dot', color: 'blue', name: 'blue dots' }
+            ],
+            // Level 2: Fruits
+            [
+                { filled: 3, type: 'emoji', emoji: '🍎', name: 'apples' },
+                { filled: 6, type: 'emoji', emoji: '🍌', name: 'bananas' },
+                { filled: 4, type: 'emoji', emoji: '🍊', name: 'oranges' },
+                { filled: 7, type: 'emoji', emoji: '🍓', name: 'strawberries' },
+                { filled: 5, type: 'emoji', emoji: '🍋', name: 'lemons' },
+                { filled: 2, type: 'emoji', emoji: '🍉', name: 'watermelons' },
+                { filled: 8, type: 'emoji', emoji: '🍇', name: 'grapes' }
+            ],
+            // Level 3: Dots
+            [
+                { filled: 1, type: 'dot', color: 'green', name: 'green dots' },
+                { filled: 5, type: 'dot', color: 'orange', name: 'orange dots' },
+                { filled: 7, type: 'dot', color: 'purple', name: 'purple dots' },
+                { filled: 3, type: 'dot', color: 'pink', name: 'pink dots' },
+                { filled: 6, type: 'dot', color: 'red', name: 'red dots' },
+                { filled: 4, type: 'dot', color: 'blue', name: 'blue dots' },
+                { filled: 9, type: 'dot', color: 'green', name: 'green dots' }
+            ],
+            // Level 4: Animals
+            [
+                { filled: 2, type: 'emoji', emoji: '🐶', name: 'dogs' },
+                { filled: 5, type: 'emoji', emoji: '🐱', name: 'cats' },
+                { filled: 7, type: 'emoji', emoji: '🐰', name: 'rabbits' },
+                { filled: 4, type: 'emoji', emoji: '🐻', name: 'bears' },
+                { filled: 6, type: 'emoji', emoji: '🐼', name: 'pandas' },
+                { filled: 8, type: 'emoji', emoji: '🐸', name: 'frogs' },
+                { filled: 3, type: 'emoji', emoji: '🐢', name: 'turtles' }
+            ]
+        ];
+
+        let currentLevel = 0;
+        let currentChallenge = 0;
+        let usedChallenges = [];
+        let currentConfig;
+        let filledCount = 0;
+
+        function initChallenge() {
+            const possibilities = levels[currentLevel];
+            
+            if (usedChallenges.length >= possibilities.length) {
+                usedChallenges = [];
+            }
+            
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * possibilities.length);
+            } while (usedChallenges.includes(randomIndex));
+            
+            usedChallenges.push(randomIndex);
+            currentConfig = possibilities[randomIndex];
+            filledCount = currentConfig.filled;
+            
+            document.getElementById('level-display').textContent = `${currentLevel + 1} (${currentChallenge + 1}/7)`;
+            document.getElementById('filled-count').textContent = currentConfig.filled;
+            document.getElementById('item-name').textContent = currentConfig.name;
+            document.getElementById('item-name-2').textContent = currentConfig.name;
+            document.getElementById('num1').textContent = currentConfig.filled;
+            document.getElementById('answer-box').textContent = ''; // Empty box
+            document.getElementById('celebration').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('feedback-message').textContent = '';
+            document.getElementById('feedback-message').className = 'feedback-message';
+            
+            createTenFrame();
+            createNumberChoices();
+        }
+
+        function createNumberChoices() {
+            const choicesContainer = document.getElementById('number-choices');
+            choicesContainer.innerHTML = '';
+            
+            const correctAnswer = 10 - currentConfig.filled;
+            const choices = new Set();
+            choices.add(correctAnswer);
+            
+            // Add 4 more random numbers (1-9, excluding correct answer)
+            while (choices.size < 5) {
+                const num = Math.floor(Math.random() * 9) + 1;
+                choices.add(num);
+            }
+            
+            // Shuffle and create elements
+            const shuffled = Array.from(choices).sort(() => Math.random() - 0.5);
+            
+            shuffled.forEach(num => {
+                const choice = document.createElement('div');
+                choice.className = 'number-choice';
+                choice.textContent = num;
+                choice.draggable = true;
+                choice.dataset.value = num;
+                
+                choice.addEventListener('dragstart', handleDragStart);
+                choice.addEventListener('dragend', handleDragEnd);
+                
+                choicesContainer.appendChild(choice);
+            });
+            
+            // Setup drop zone
+            const answerBox = document.getElementById('answer-box');
+            answerBox.addEventListener('dragover', handleDragOver);
+            answerBox.addEventListener('dragenter', handleDragEnter);
+            answerBox.addEventListener('dragleave', handleDragLeave);
+            answerBox.addEventListener('drop', handleDrop);
+        }
+
+        function handleDragStart(e) {
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', e.target.dataset.value);
+        }
+
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            return false;
+        }
+
+        function handleDragEnter(e) {
+            e.target.classList.add('drag-over');
+        }
+
+        function handleDragLeave(e) {
+            e.target.classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            e.target.classList.remove('drag-over');
+            
+            const droppedValue = parseInt(e.dataTransfer.getData('text/plain'));
+            const correctAnswer = 10 - currentConfig.filled;
+            const draggingElement = document.querySelector('.number-choice.dragging');
+            const feedbackMessage = document.getElementById('feedback-message');
+            
+            if (droppedValue === correctAnswer) {
+                // Correct answer
+                e.target.textContent = droppedValue;
+                if (draggingElement) {
+                    draggingElement.classList.add('correct');
+                    draggingElement.classList.add('used');
+                    draggingElement.draggable = false;
+                }
+                
+                // Show "Well done!" message
+                feedbackMessage.textContent = '✓ Well done!';
+                feedbackMessage.className = 'feedback-message correct';
+                
+                playSuccessSound();
+                
+                // Check if frame is also complete
+                if (filledCount === 10) {
+                    setTimeout(showCelebration, 500);
+                }
+            } else {
+                // Wrong answer - shake the box
+                e.target.style.animation = 'shake 0.3s';
+                setTimeout(() => {
+                    e.target.style.animation = '';
+                }, 300);
+                
+                // Show "Oops! Try again" message
+                feedbackMessage.textContent = '✗ Oops! Try again';
+                feedbackMessage.className = 'feedback-message wrong';
+                
+                // Clear message after 2 seconds
+                setTimeout(() => {
+                    feedbackMessage.textContent = '';
+                    feedbackMessage.className = 'feedback-message';
+                }, 2000);
+                
+                playWrongSound();
+            }
+            
+            return false;
+        }
+
+        function playWrongSound() {
+            playSound(200, 0.2);
+        }
+
+        function createTenFrame() {
+            const frame = document.getElementById('ten-frame');
+            frame.innerHTML = '';
+            
+            for (let i = 0; i < 10; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                
+                if (i < currentConfig.filled) {
+                    cell.classList.add('filled');
+                    if (currentConfig.type === 'dot') {
+                        const dot = document.createElement('div');
+                        dot.className = `dot ${currentConfig.color}`;
+                        cell.appendChild(dot);
+                    } else {
+                        cell.textContent = currentConfig.emoji;
+                    }
+                } else {
+                    cell.classList.add('empty');
+                    const plus = document.createElement('div');
+                    plus.className = 'plus-sign';
+                    plus.textContent = '+';
+                    cell.appendChild(plus);
+                    cell.onclick = () => fillCell(cell);
+                }
+                
+                frame.appendChild(cell);
+            }
+        }
+
+        function fillCell(cell) {
+            if (!cell.classList.contains('empty')) return;
+            
+            cell.innerHTML = '';
+            cell.classList.remove('empty');
+            cell.classList.add('filled');
+            
+            if (currentConfig.type === 'dot') {
+                const dot = document.createElement('div');
+                dot.className = `dot ${currentConfig.color}`;
+                cell.appendChild(dot);
+            } else {
+                cell.textContent = currentConfig.emoji;
+            }
+            
+            cell.onclick = null;
+            filledCount++;
+            
+            playClickSound();
+            
+            // Check if both frame AND equation are complete
+            const answerBox = document.getElementById('answer-box');
+            if (filledCount === 10 && answerBox.textContent != '') {
+                setTimeout(showCelebration, 300);
+            }
+        }
+
+        function showCelebration() {
+            document.getElementById('celebration').style.display = 'block';
+            
+            currentChallenge++;
+            
+            if (currentChallenge >= 7) {
+                if (currentLevel < levels.length - 1) {
+                    setTimeout(() => {
+                        document.getElementById('next-btn').style.display = 'block';
+                    }, 1000);
+                } else {
+                    setTimeout(() => {
+                        document.getElementById('completion-message').style.display = 'block';
+                    }, 1000);
+                }
+            } else {
+                setTimeout(() => {
+                    initChallenge();
+                }, 1500);
+            }
+        }
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            currentLevel++;
+            currentChallenge = 0;
+            usedChallenges = [];
+            initChallenge();
+        });
+
+        document.getElementById('restart-btn').addEventListener('click', () => {
+            currentLevel = 0;
+            currentChallenge = 0;
+            usedChallenges = [];
+            document.getElementById('completion-message').style.display = 'none';
+            initChallenge();
+        });
+
+        initChallenge();
+    </script>
+</body>
+</html>

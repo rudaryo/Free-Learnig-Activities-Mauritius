@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TCBV2GCV');</script>
+<!-- End Google Tag Manager -->
+
+    
+    
+    
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>I put the dots on the frame</title>
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            color: #667eea;
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+            font-weight: 800;
+            font-size: 26px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .home-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            background: #667eea;
+            color: white;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin-top: 80px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar-container {
+            background: #e0e0e0;
+            border-radius: 20px;
+            height: 40px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #56ab2f 0%, #a8e6cf 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .score-display {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 20px 30px;
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            text-align: center;
+        }
+
+        .score-label {
+            font-size: 1em;
+            color: #636e72;
+            margin-bottom: 5px;
+        }
+
+        .score-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #2d3436;
+        }
+
+        .instruction-box {
+            background: linear-gradient(135deg, #a8e6cf 0%, #56ab2f 100%);
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .speaker-icon {
+            font-size: 3em;
+            cursor: pointer;
+            transition: transform 0.2s;
+            user-select: none;
+        }
+
+        .speaker-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .speaker-icon:active {
+            transform: scale(0.95);
+        }
+
+        .speaker-icon.playing {
+            animation: pulse 0.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .instruction-text {
+            color: #2d3436;
+            font-size: 1.5em;
+            font-weight: bold;
+            flex: 1;
+        }
+
+        .ten-frame {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 8px;
+            margin: 30px auto;
+            max-width: 500px;
+            padding: 15px;
+            background: #e8f4f8;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .frame-cell {
+            aspect-ratio: 1;
+            border: 3px solid #4a90e2;
+            border-radius: 10px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .frame-cell.filled {
+            background: #fff9e6;
+        }
+
+        .dot {
+            width: 70%;
+            height: 70%;
+            border-radius: 50%;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            animation: popIn 0.3s ease-out;
+        }
+
+        .dot.red { background: #e74c3c; }
+        .dot.blue { background: #3498db; }
+        .dot.amber { background: #f39c12; }
+        .dot.pink { background: #e91e63; }
+        .dot.purple { background: #9b59b6; }
+        .dot.brown { background: #8b4513; }
+        .dot.green { background: #27ae60; }
+        .dot.orange { background: #ff6b35; }
+
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .tools-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0 0 0;
+            flex-wrap: wrap;
+        }
+
+        .tool-button {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            border: none;
+            padding: 20px 35px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.8em;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-family: 'Comic Sans MS', cursive;
+        }
+
+        .tool-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .tool-button:active {
+            transform: translateY(-2px);
+        }
+
+        .bin-button {
+            background: linear-gradient(135deg, #55efc4 0%, #00b894 100%);
+        }
+
+        .dot-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+            transition: background 0.3s ease;
+        }
+
+        .submit-button {
+            display: block;
+            margin: 20px auto 0;
+            background: linear-gradient(135deg, #55efc4 0%, #00b894 100%);
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            border-radius: 50px;
+            font-size: 1.8em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-family: 'Comic Sans MS', cursive;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .submit-button:active {
+            transform: scale(0.95);
+        }
+
+        .feedback {
+            text-align: center;
+            font-size: 3em;
+            font-weight: bold;
+            margin-top: 30px;
+            padding: 30px;
+            border-radius: 20px;
+            display: none;
+            animation: slideDown 0.5s ease-out;
+            min-height: 100px;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #a8e6cf 0%, #56ab2f 100%);
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .feedback.incorrect {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .final-results {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+
+        .final-results.show {
+            display: block;
+        }
+
+        .final-score {
+            font-size: 4em;
+            font-weight: bold;
+            color: #667eea;
+            margin: 20px 0;
+        }
+
+        .achievement-badge {
+            display: inline-block;
+            padding: 20px 40px;
+            border-radius: 20px;
+            font-size: 2em;
+            font-weight: bold;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .achievement-gold {
+            background: linear-gradient(135deg, #f7b731 0%, #f39c12 100%);
+            color: white;
+        }
+
+        .achievement-silver {
+            background: linear-gradient(135deg, #dfe6e9 0%, #b2bec3 100%);
+            color: #2d3436;
+        }
+
+        .achievement-bronze {
+            background: linear-gradient(135deg, #e17055 0%, #d63031 100%);
+            color: white;
+        }
+
+        .retry-button {
+            display: inline-block;
+            margin-top: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            border-radius: 50px;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-family: 'Comic Sans MS', cursive;
+            border: none;
+            cursor: pointer;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+        }
+
+        .retry-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+                margin-top: 60px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .instruction-text {
+                font-size: 1.2em;
+            }
+
+            .ten-frame {
+                max-width: 400px;
+            }
+
+            .tool-button {
+                padding: 15px 25px;
+                font-size: 1.4em;
+            }
+
+            .submit-button {
+                padding: 15px 40px;
+                font-size: 1.5em;
+            }
+
+            .score-display {
+                bottom: 10px;
+                right: 10px;
+                padding: 15px 20px;
+            }
+
+            .score-value {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TCBV2GCV"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+    
+    
+    
+<button class="home-button" onclick="window.location.href='../math-index.html'">
+<span>🏠</span>
+<span>Home</span>
+</button>
+<div class="celebration" id="celebration"></div>
+<div class="container">
+<h1>🎯 I put the dots on the frame</h1>
+<div class="progress-bar-container">
+<div class="progress-bar" id="progressBar">0/10</div>
+</div>
+<div class="score-display">
+<div class="score-label">Score</div>
+<div class="score-value" id="scoreDisplay">0/10</div>
+</div>
+<div id="assessmentSection">
+<div class="instruction-box">
+<div class="speaker-icon" id="speakerIcon" onclick="playInstruction()">🔊</div>
+<div class="instruction-text" id="instructionText">Click the speaker to hear the instruction!</div>
+</div>
+<div class="ten-frame" id="tenFrame">
+<div class="frame-cell"></div>
+<div class="frame-cell"></div>
+<div class="frame-cell"></div>
+<div class="frame-cell"></div>
+<div class="frame-cell"></div>
+<div class="frame-cell"></div>
+<div class="frame-cell"></div>
+<div class="frame-cell"></div>
+<div class="frame-cell"></div>
+<div class="frame-cell"></div>
+</div>
+<div class="tools-container">
+<button class="tool-button" onclick="addDot()">
+<span>1</span>
+<div class="dot-icon"></div>
+</button>
+<button class="tool-button bin-button" onclick="removeDot()">
+<span>1</span>
+<span style="font-size: 1.2em;">🗑️</span>
+</button>
+</div>
+<button class="submit-button" onclick="checkAnswer()">Submit</button>
+<div class="feedback" id="feedback"></div>
+</div>
+<div class="final-results" id="finalResults">
+<h2 style="color: #667eea; font-size: 2.5em;">🎊 Assessment Complete! 🎊</h2>
+<div class="final-score" id="finalScore"></div>
+<div class="achievement-badge" id="achievementBadge"></div>
+<p id="achievementMessage" style="font-size: 1.3em; color: #2d3436; margin: 20px 0;"></p>
+<button class="retry-button" onclick="restartAssessment()">🔄 Try Again</button>
+<a class="retry-button" href="../math-index.html" style="margin-left: 20px;">🏠 Back to Activities
+</a></div>
+</div>
+<script>
+        // Assessment data
+        let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // All numbers 1-10
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;
+        let currentFilled = 0;
+        let audioContext;
+        let isPlaying = false;
+        let currentColor = 'amber'; // Current dot color for this question
+
+        // Available colors
+        const dotColors = ['red', 'blue', 'amber', 'pink', 'purple', 'brown', 'green', 'orange'];
+
+        // Positive feedback messages
+        const positiveFeedback = [
+            "🌟 Terrific! You did it!",
+            "🎉 Wonderful! Perfect!",
+            "✨ Amazing! Great job!",
+            "🏆 Excellent work!",
+            "💫 Fantastic! You're a star!",
+            "🎊 Brilliant! Well done!",
+            "⭐ Superb! You got it right!",
+            "🌈 Outstanding! Keep it up!"
+        ];
+
+        // Negative feedback messages
+        const negativeFeedback = [
+            "🤔 Oops! The correct answer was",
+            "💭 Not quite! It should have been",
+            "🔄 Almost! The right answer was",
+            "💪 Good try! It was actually"
+        ];
+
+        // Initialize
+        function init() {
+            shuffleArray(numbers); // Randomize order
+            loadQuestion();
+        }
+
+        // Shuffle array
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // Load current question
+        function loadQuestion() {
+            const targetNumber = numbers[currentQuestionIndex];
+            currentFilled = 0;
+            
+            // Pick a random color for this question
+            currentColor = dotColors[Math.floor(Math.random() * dotColors.length)];
+            updateDotIconColor();
+            
+            clearFrame();
+            updateInstructionText(targetNumber);
+            updateProgress();
+            hideFeedback();
+            
+            // Don't auto-play - wait for user to click speaker
+        }
+
+        // Update the dot icon color to match current color
+        function updateDotIconColor() {
+            const dotIcon = document.querySelector('.dot-icon');
+            dotIcon.className = 'dot-icon';
+            dotIcon.classList.add(currentColor);
+            
+            // Set the background color directly
+            const colorMap = {
+                'red': '#e74c3c',
+                'blue': '#3498db',
+                'amber': '#f39c12',
+                'pink': '#e91e63',
+                'purple': '#9b59b6',
+                'brown': '#8b4513',
+                'green': '#27ae60',
+                'orange': '#ff6b35'
+            };
+            dotIcon.style.background = colorMap[currentColor];
+        }
+
+        // Update instruction text
+        function updateInstructionText(number) {
+            const instructionText = document.getElementById('instructionText');
+            instructionText.textContent = `Put ${number} dot${number > 1 ? 's' : ''} on the frame.`;
+        }
+
+        // Update progress display
+        function updateProgress() {
+            const progressBar = document.getElementById('progressBar');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+
+            const progress = ((currentQuestionIndex) / numbers.length) * 100;
+            progressBar.style.width = progress + '%';
+            progressBar.textContent = `${currentQuestionIndex}/${numbers.length}`;
+
+            // Update score as fraction
+            scoreDisplay.textContent = `${correctAnswers}/10`;
+        }
+
+        // Text-to-speech for instruction
+        function playInstruction() {
+            if (isPlaying) return;
+
+            const targetNumber = numbers[currentQuestionIndex];
+            const text = `Put ${targetNumber} dot${targetNumber > 1 ? 's' : ''} on the frame`;
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.8;
+            utterance.pitch = 1.2;
+            utterance.volume = 1;
+
+            const speakerIcon = document.getElementById('speakerIcon');
+            speakerIcon.classList.add('playing');
+            isPlaying = true;
+
+            utterance.onend = () => {
+                speakerIcon.classList.remove('playing');
+                isPlaying = false;
+            };
+
+            speechSynthesis.speak(utterance);
+        }
+
+        // Add a dot to the frame
+        function addDot() {
+            if (currentFilled >= 10) return;
+
+            const cells = document.querySelectorAll('.frame-cell');
+            const emptyCell = Array.from(cells).find(cell => !cell.classList.contains('filled'));
+
+            if (emptyCell) {
+                emptyCell.classList.add('filled');
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                dot.classList.add(currentColor); // Use current question's color
+                emptyCell.appendChild(dot);
+                currentFilled++;
+                playClickSound();
+            }
+        }
+
+        // Remove a dot from the frame
+        function removeDot() {
+            if (currentFilled <= 0) return;
+
+            const cells = document.querySelectorAll('.frame-cell');
+            const filledCells = Array.from(cells).filter(cell => cell.classList.contains('filled'));
+
+            if (filledCells.length > 0) {
+                const lastFilledCell = filledCells[filledCells.length - 1];
+                lastFilledCell.classList.remove('filled');
+                lastFilledCell.innerHTML = '';
+                currentFilled--;
+                playClickSound();
+            }
+        }
+
+        // Clear the entire frame
+        function clearFrame() {
+            const cells = document.querySelectorAll('.frame-cell');
+            cells.forEach(cell => {
+                cell.classList.remove('filled');
+                cell.innerHTML = '';
+            });
+        }
+
+        // Check the answer
+        function checkAnswer() {
+            const feedback = document.getElementById('feedback');
+            const targetNumber = numbers[currentQuestionIndex];
+
+            if (currentFilled === targetNumber) {
+                // Correct!
+                correctAnswers++;
+                const message = positiveFeedback[Math.floor(Math.random() * positiveFeedback.length)];
+                feedback.textContent = message;
+                feedback.className = 'feedback correct show';
+                speakFeedback(message);
+                celebrate();
+            } else {
+                // Incorrect
+                const message = negativeFeedback[Math.floor(Math.random() * negativeFeedback.length)] + ` ${targetNumber}!`;
+                feedback.textContent = message;
+                feedback.className = 'feedback incorrect show';
+                speakFeedback(message);
+            }
+
+            // Move to next question or show results
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < numbers.length) {
+                    loadQuestion();
+                } else {
+                    showFinalResults();
+                }
+            }, 3000);
+        }
+
+        // Show final results
+        function showFinalResults() {
+            document.getElementById('assessmentSection').style.display = 'none';
+            document.getElementById('finalResults').classList.add('show');
+
+            const finalScore = document.getElementById('finalScore');
+            const achievementBadge = document.getElementById('achievementBadge');
+            const achievementMessage = document.getElementById('achievementMessage');
+            const progressBar = document.getElementById('progressBar');
+
+            const percentage = Math.round((correctAnswers / numbers.length) * 100);
+            finalScore.textContent = `${correctAnswers}/${numbers.length} Correct (${percentage}%)`;
+
+            progressBar.style.width = '100%';
+            progressBar.textContent = '10/10';
+
+            // Determine achievement level
+            if (percentage >= 90) {
+                achievementBadge.textContent = '🏆 Gold Star!';
+                achievementBadge.className = 'achievement-badge achievement-gold';
+                achievementMessage.textContent = 'Outstanding! You mastered numbers 1-10!';
+                speakFeedback('Outstanding! You earned a gold star!');
+                celebrate();
+            } else if (percentage >= 70) {
+                achievementBadge.textContent = '⭐ Silver Star!';
+                achievementBadge.className = 'achievement-badge achievement-silver';
+                achievementMessage.textContent = 'Great job! You did really well!';
+                speakFeedback('Great job! You earned a silver star!');
+            } else {
+                achievementBadge.textContent = '🌟 Keep Practicing!';
+                achievementBadge.className = 'achievement-badge achievement-bronze';
+                achievementMessage.textContent = 'Good effort! Try again to improve your score!';
+                speakFeedback('Good effort! Keep practicing!');
+            }
+        }
+
+        // Restart assessment
+        function restartAssessment() {
+            currentQuestionIndex = 0;
+            correctAnswers = 0;
+            shuffleArray(numbers);
+            document.getElementById('assessmentSection').style.display = 'block';
+            document.getElementById('finalResults').classList.remove('show');
+            loadQuestion();
+        }
+
+        // Hide feedback
+        function hideFeedback() {
+            const feedback = document.getElementById('feedback');
+            feedback.className = 'feedback';
+        }
+
+        // Speak feedback message
+        function speakFeedback(message) {
+            const textOnly = message.replace(/[^\w\s!]/g, '');
+            const utterance = new SpeechSynthesisUtterance(textOnly);
+            utterance.rate = 0.9;
+            utterance.pitch = 1.3;
+            utterance.volume = 1;
+            speechSynthesis.speak(utterance);
+        }
+
+        // Simple click sound
+        function playClickSound() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            oscillator.frequency.value = 600;
+            gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.05);
+        }
+
+        // Celebration animation
+        function celebrate() {
+            const celebration = document.getElementById('celebration');
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f7b731', '#5f27cd', '#00d2d3', '#ff9ff3', '#54a0ff'];
+
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'absolute';
+                    confetti.style.width = '10px';
+                    confetti.style.height = '10px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.animation = 'fall 3s linear forwards';
+                    confetti.style.top = '-10px';
+                    celebration.appendChild(confetti);
+
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+
+        // Start the assessment
+        init();
+    </script>
+</body>
+</html>
