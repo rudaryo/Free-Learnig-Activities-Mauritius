@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TCBV2GCV');</script>
+<!-- End Google Tag Manager -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Learning Platform - SeDEC</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        .logo {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+            margin-bottom: 15px;
+        }
+
+        .welcome-text {
+            font-size: 1.1em;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .grades-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .grade-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grade-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .grade-card:hover::before {
+            top: -30%;
+            left: -30%;
+        }
+
+        .grade-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .grade-number {
+            font-size: 5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .grade-title {
+            font-size: 2em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .grade-description {
+            font-size: 1.1em;
+            opacity: 0.95;
+            margin-bottom: 15px;
+        }
+
+        .grade-age {
+            font-size: 0.95em;
+            opacity: 0.85;
+            font-style: italic;
+        }
+
+        .coming-soon-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .grade-card.coming-soon {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .grade-card.coming-soon:hover {
+            transform: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 80px;
+            padding: 30px;
+            font-size: 1em;
+            opacity: 0.9;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .logo {
+                font-size: 3em;
+            }
+
+            .grades-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .grade-card {
+                padding: 30px 20px;
+            }
+
+            .grade-number {
+                font-size: 4em;
+            }
+
+            body {
+                padding: 20px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TCBV2GCV"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+    <div class="container">
+        <header>
+            <div class="logo">🎓</div>
+            <h1>Interactive Learning Platform</h1>
+            <p class="subtitle">Choose Your Grade Level</p>
+            <p class="welcome-text">Welcome to our interactive learning platform! Select your grade to explore fun educational activities in Mathematics, English, and French.</p>
+        </header>
+
+        <div class="grades-grid">
+            <!-- Grade 1 - Active -->
+            <a href="Grade-1/grade-1-index.html" class="grade-card">
+                <div class="grade-number">1</div>
+                <div class="grade-title">Grade 1</div>
+                <div class="grade-description">Foundation Skills</div>
+                <div class="grade-age">Ages 5-6</div>
+            </a>
+
+            <!-- Grade 2 - Coming Soon -->
+            <div class="grade-card coming-soon">
+                <span class="coming-soon-badge">Coming Soon</span>
+                <div class="grade-number">2</div>
+                <div class="grade-title">Grade 2</div>
+                <div class="grade-description">Building Knowledge</div>
+                <div class="grade-age">Ages 6-7</div>
+            </div>
+
+            <!-- Grade 3 - Coming Soon -->
+            <div class="grade-card coming-soon">
+                <span class="coming-soon-badge">Coming Soon</span>
+                <div class="grade-number">3</div>
+                <div class="grade-title">Grade 3</div>
+                <div class="grade-description">Expanding Horizons</div>
+                <div class="grade-age">Ages 7-8</div>
+            </div>
+
+            <!-- Grade 4 - Coming Soon -->
+            <div class="grade-card coming-soon">
+                <span class="coming-soon-badge">Coming Soon</span>
+                <div class="grade-number">4</div>
+                <div class="grade-title">Grade 4</div>
+                <div class="grade-description">Exploring Ideas</div>
+                <div class="grade-age">Ages 8-9</div>
+            </div>
+
+            <!-- Grade 5 - Active -->
+            <a href="Grade-5/grade-5-index.html" class="grade-card">
+                <div class="grade-number">5</div>
+                <div class="grade-title">Grade 5</div>
+                <div class="grade-description">Advancing Excellence</div>
+                <div class="grade-age">Ages 9-10</div>
+            </a>
+
+            <!-- Grade 6 - Coming Soon -->
+            <div class="grade-card coming-soon">
+                <span class="coming-soon-badge">Coming Soon</span>
+                <div class="grade-number">6</div>
+                <div class="grade-title">Grade 6</div>
+                <div class="grade-description">Preparing for Success</div>
+                <div class="grade-age">Ages 10-11</div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>© 2024 Ramsamy Pierre Rudaryo</strong></p>
+            <p>Interactive Learning Platform - Making Learning Fun for Every Child</p>
+        </footer>
+    </div>
+</body>
+</html>
