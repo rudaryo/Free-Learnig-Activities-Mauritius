@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apprendre l'Alphabet Français - French Alphabet Learning Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            background: white;
+            color: #667eea;
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 800;
+            font-size: 18px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            background: #667eea;
+            color: white;
+        }
+
+        .container {
+            background: white;
+            border-radius: 30px;
+            padding: 30px;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #764ba2;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+
+        .game-modes {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .mode-btn.learn {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .mode-btn.quiz {
+            background: #FF9800;
+            color: white;
+        }
+
+        .mode-btn.match {
+            background: #2196F3;
+            color: white;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .mode-btn.active {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Learning Mode */
+        .alphabet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .letter-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .letter-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .letter-card.playing {
+            animation: pulse 0.5s;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        /* Quiz Mode */
+        .quiz-container {
+            display: none;
+        }
+
+        .quiz-container.active {
+            display: block;
+        }
+
+        .question-area {
+            background: #f0f4ff;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .question-letter {
+            font-size: 5em;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .play-sound-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .play-sound-btn:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            padding: 20px;
+            font-size: 1.2em;
+            border: 3px solid #ddd;
+            border-radius: 15px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .option-btn:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .option-btn.correct {
+            background: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        .option-btn.incorrect {
+            background: #f44336;
+            color: white;
+            border-color: #f44336;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .score-item {
+            background: #f0f4ff;
+            padding: 15px 30px;
+            border-radius: 15px;
+            font-weight: bold;
+        }
+
+        .score-item.correct-score {
+            color: #4CAF50;
+        }
+
+        .score-item.total-score {
+            color: #667eea;
+        }
+
+        /* Match Mode */
+        .match-container {
+            display: none;
+        }
+
+        .match-container.active {
+            display: block;
+        }
+
+        .match-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .match-card {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 2em;
+            font-weight: bold;
+            color: white;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .match-card.flipped {
+            background: white;
+            border: 3px solid #667eea;
+            color: #667eea;
+        }
+
+        .match-card.matched {
+            background: #4CAF50;
+            color: white;
+            cursor: default;
+            opacity: 0.7;
+        }
+
+        .match-card:not(.matched):hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .feedback {
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 20px 0;
+            min-height: 40px;
+        }
+
+        .feedback.correct {
+            color: #4CAF50;
+        }
+
+        .feedback.incorrect {
+            color: #f44336;
+        }
+
+        .next-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .next-btn:hover {
+            background: #5568d3;
+            transform: scale(1.05);
+        }
+
+        .next-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .alphabet-grid {
+                grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+                gap: 10px;
+            }
+
+            .letter-card {
+                padding: 15px;
+                font-size: 1.5em;
+            }
+
+            .match-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .question-letter {
+                font-size: 3em;
+            }
+
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .instructions {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <a href="grade-1-francais-index.html" class="back-button">
+        <span>🏠</span>
+        <span>Back</span>
+    </a>
+
+    <div class="container">
+        <h1>🎓 L'Alphabet Français</h1>
+        <p class="subtitle">Apprends l'alphabet en t'amusant!</p>
+
+        <div class="game-modes">
+            <button class="mode-btn learn active" onclick="switchMode('learn')">
+                📚 Apprendre
+            </button>
+            <button class="mode-btn quiz" onclick="switchMode('quiz')">
+                🎯 Quiz
+            </button>
+            <button class="mode-btn match" onclick="switchMode('match')">
+                🎴 Mémoriser
+            </button>
+        </div>
+
+        <!-- Learning Mode -->
+        <div id="learn-mode" class="learn-container">
+            <div class="instructions">
+                Clique sur une lettre pour entendre sa prononciation!
+            </div>
+            <div class="alphabet-grid" id="alphabetGrid"></div>
+        </div>
+
+        <!-- Quiz Mode -->
+        <div id="quiz-mode" class="quiz-container">
+            <div class="instructions">
+                Écoute le son et choisis la bonne lettre!
+            </div>
+            <div class="score-board">
+                <div class="score-item correct-score">
+                    ✅ Correct: <span id="correctCount">0</span>
+                </div>
+                <div class="score-item total-score">
+                    📊 Total: <span id="totalCount">0</span>
+                </div>
+            </div>
+            <div class="question-area">
+                <div class="question-letter" id="questionLetter">?</div>
+                <button class="play-sound-btn" onclick="playQuestionSound()">
+                    🔊 Écouter le son
+                </button>
+            </div>
+            <div class="options-grid" id="optionsGrid"></div>
+            <div class="feedback" id="feedback"></div>
+            <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+                Suivant ➡️
+            </button>
+        </div>
+
+        <!-- Match Mode -->
+        <div id="match-mode" class="match-container">
+            <div class="instructions">
+                Trouve les paires de lettres identiques!
+            </div>
+            <div class="score-board">
+                <div class="score-item total-score">
+                    🎯 Paires trouvées: <span id="matchScore">0</span> / <span id="matchTotal">0</span>
+                </div>
+            </div>
+            <div class="match-grid" id="matchGrid"></div>
+            <div class="feedback" id="matchFeedback"></div>
+        </div>
+    </div>
+
+    <script>
+        // French alphabet with pronunciation guide
+        const alphabet = [
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+            'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+        ];
+
+        const pronunciations = {
+            'a': 'ah', 'b': 'bay', 'c': 'say', 'd': 'day', 'e': 'euh',
+            'f': 'eff', 'g': 'zhay', 'h': 'ash', 'i': 'ee', 'j': 'zhee',
+            'k': 'kah', 'l': 'ell', 'm': 'emm', 'n': 'enn', 'o': 'oh',
+            'p': 'pay', 'q': 'kew', 'r': 'air', 's': 'ess', 't': 'tay',
+            'u': 'ew', 'v': 'vay', 'w': 'doo-bluh-vay', 'x': 'eeks',
+            'y': 'ee-grek', 'z': 'zed'
+        };
+
+        // Speech synthesis for pronunciation
+        function speakLetter(letter) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(letter);
+                utterance.lang = 'fr-FR';
+                utterance.rate = 0.8;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Initialize Learning Mode
+        function initLearnMode() {
+            const grid = document.getElementById('alphabetGrid');
+            grid.innerHTML = '';
+            
+            alphabet.forEach(letter => {
+                const card = document.createElement('div');
+                card.className = 'letter-card';
+                card.textContent = letter;
+                card.onclick = () => {
+                    card.classList.add('playing');
+                    speakLetter(letter);
+                    setTimeout(() => card.classList.remove('playing'), 500);
+                };
+                grid.appendChild(card);
+            });
+        }
+
+        // Quiz Mode
+        let currentQuizLetter = '';
+        let correctCount = 0;
+        let totalCount = 0;
+
+        function initQuizMode() {
+            correctCount = 0;
+            totalCount = 0;
+            updateQuizScore();
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('feedback').className = 'feedback';
+            document.getElementById('nextBtn').disabled = true;
+            
+            // Select random letter
+            currentQuizLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
+            
+            // Show question mark initially
+            document.getElementById('questionLetter').textContent = '?';
+            
+            // Generate options (1 correct + 3 random)
+            const options = [currentQuizLetter];
+            while (options.length < 4) {
+                const randomLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
+                if (!options.includes(randomLetter)) {
+                    options.push(randomLetter);
+                }
+            }
+            
+            // Shuffle options
+            options.sort(() => Math.random() - 0.5);
+            
+            // Display options
+            const optionsGrid = document.getElementById('optionsGrid');
+            optionsGrid.innerHTML = '';
+            options.forEach(letter => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = letter;
+                btn.onclick = () => checkAnswer(letter, btn);
+                optionsGrid.appendChild(btn);
+            });
+        }
+
+        function playQuestionSound() {
+            speakLetter(currentQuizLetter);
+        }
+
+        function checkAnswer(selectedLetter, btn) {
+            totalCount++;
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.disabled = true);
+            
+            const feedback = document.getElementById('feedback');
+            
+            if (selectedLetter === currentQuizLetter) {
+                correctCount++;
+                btn.classList.add('correct');
+                feedback.textContent = '🎉 Bravo! C\'est correct!';
+                feedback.className = 'feedback correct';
+            } else {
+                btn.classList.add('incorrect');
+                // Show correct answer
+                allBtns.forEach(b => {
+                    if (b.textContent === currentQuizLetter) {
+                        b.classList.add('correct');
+                    }
+                });
+                feedback.textContent = `❌ Non, c'était ${currentQuizLetter}`;
+                feedback.className = 'feedback incorrect';
+            }
+            
+            // Reveal the letter
+            document.getElementById('questionLetter').textContent = currentQuizLetter;
+            
+            updateQuizScore();
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        function updateQuizScore() {
+            document.getElementById('correctCount').textContent = correctCount;
+            document.getElementById('totalCount').textContent = totalCount;
+        }
+
+        // Match Mode
+        let matchCards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let totalPairs = 0;
+
+        function initMatchMode() {
+            // Select 8 random letters and duplicate them
+            const selectedLetters = [];
+            const shuffledAlphabet = [...alphabet].sort(() => Math.random() - 0.5);
+            for (let i = 0; i < 8; i++) {
+                selectedLetters.push(shuffledAlphabet[i], shuffledAlphabet[i]);
+            }
+            
+            // Shuffle the pairs
+            matchCards = selectedLetters.sort(() => Math.random() - 0.5);
+            flippedCards = [];
+            matchedPairs = 0;
+            totalPairs = 8;
+            
+            // Display cards
+            const grid = document.getElementById('matchGrid');
+            grid.innerHTML = '';
+            
+            matchCards.forEach((letter, index) => {
+                const card = document.createElement('div');
+                card.className = 'match-card';
+                card.dataset.index = index;
+                card.dataset.letter = letter;
+                card.textContent = '?';
+                card.onclick = () => flipCard(card);
+                grid.appendChild(card);
+            });
+            
+            updateMatchScore();
+        }
+
+        function flipCard(card) {
+            if (card.classList.contains('matched') || 
+                card.classList.contains('flipped') || 
+                flippedCards.length >= 2) {
+                return;
+            }
+            
+            card.classList.add('flipped');
+            card.textContent = card.dataset.letter;
+            flippedCards.push(card);
+            speakLetter(card.dataset.letter);
+            
+            if (flippedCards.length === 2) {
+                setTimeout(checkMatch, 1000);
+            }
+        }
+
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            const feedback = document.getElementById('matchFeedback');
+            
+            if (card1.dataset.letter === card2.dataset.letter) {
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                matchedPairs++;
+                feedback.textContent = '✅ Bien joué!';
+                feedback.className = 'feedback correct';
+                
+                if (matchedPairs === totalPairs) {
+                    setTimeout(() => {
+                        feedback.textContent = '🎊 Félicitations! Tu as trouvé toutes les paires!';
+                    }, 500);
+                }
+            } else {
+                card1.classList.remove('flipped');
+                card2.classList.remove('flipped');
+                card1.textContent = '?';
+                card2.textContent = '?';
+                feedback.textContent = '❌ Essaie encore!';
+                feedback.className = 'feedback incorrect';
+            }
+            
+            flippedCards = [];
+            updateMatchScore();
+            
+            setTimeout(() => {
+                feedback.textContent = '';
+                feedback.className = 'feedback';
+            }, 1500);
+        }
+
+        function updateMatchScore() {
+            document.getElementById('matchScore').textContent = matchedPairs;
+            document.getElementById('matchTotal').textContent = totalPairs;
+        }
+
+        // Mode switching
+        function switchMode(mode) {
+            // Update button states
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            if (mode === 'learn') {
+                document.querySelector('.mode-btn.learn').classList.add('active');
+                document.getElementById('learn-mode').classList.remove('hidden');
+                document.getElementById('quiz-mode').classList.remove('active');
+                document.getElementById('match-mode').classList.remove('active');
+                initLearnMode();
+            } else if (mode === 'quiz') {
+                document.querySelector('.mode-btn.quiz').classList.add('active');
+                document.getElementById('learn-mode').classList.add('hidden');
+                document.getElementById('quiz-mode').classList.add('active');
+                document.getElementById('match-mode').classList.remove('active');
+                initQuizMode();
+            } else if (mode === 'match') {
+                document.querySelector('.mode-btn.match').classList.add('active');
+                document.getElementById('learn-mode').classList.add('hidden');
+                document.getElementById('quiz-mode').classList.remove('active');
+                document.getElementById('match-mode').classList.add('active');
+                initMatchMode();
+            }
+        }
+
+        // Initialize on load
+        window.onload = () => {
+            initLearnMode();
+        };
+    </script>
+</body>
+</html>
