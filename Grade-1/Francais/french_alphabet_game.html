@@ -129,13 +129,13 @@
         .letter-card {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 20px;
+            padding: 25px;
             border-radius: 15px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            font-size: 2em;
+            font-size: 2.8em;
             font-weight: bold;
         }
 
@@ -172,7 +172,7 @@
         }
 
         .question-letter {
-            font-size: 5em;
+            font-size: 6em;
             color: #667eea;
             font-weight: bold;
             margin-bottom: 20px;
@@ -203,8 +203,8 @@
         }
 
         .option-btn {
-            padding: 20px;
-            font-size: 1.2em;
+            padding: 30px;
+            font-size: 2em;
             border: 3px solid #ddd;
             border-radius: 15px;
             background: white;
@@ -235,7 +235,7 @@
             display: flex;
             justify-content: space-around;
             margin-bottom: 20px;
-            font-size: 1.3em;
+            font-size: 1.5em;
         }
 
         .score-item {
@@ -278,7 +278,7 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 2em;
+            font-size: 2.5em;
             font-weight: bold;
             color: white;
             position: relative;
@@ -305,10 +305,10 @@
 
         .feedback {
             text-align: center;
-            font-size: 1.5em;
+            font-size: 1.8em;
             font-weight: bold;
             margin: 20px 0;
-            min-height: 40px;
+            min-height: 50px;
         }
 
         .feedback.correct {
@@ -356,7 +356,7 @@
 
             .letter-card {
                 padding: 15px;
-                font-size: 1.5em;
+                font-size: 2em;
             }
 
             .match-grid {
@@ -364,7 +364,12 @@
             }
 
             .question-letter {
-                font-size: 3em;
+                font-size: 4em;
+            }
+
+            .option-btn {
+                font-size: 1.5em;
+                padding: 20px;
             }
 
             .back-button {
@@ -528,9 +533,9 @@
             // Show question mark initially
             document.getElementById('questionLetter').textContent = '?';
             
-            // Generate options (1 correct + 3 random)
+            // Generate options (1 correct + 2 random = 3 total)
             const options = [currentQuizLetter];
-            while (options.length < 4) {
+            while (options.length < 3) {
                 const randomLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
                 if (!options.includes(randomLetter)) {
                     options.push(randomLetter);
