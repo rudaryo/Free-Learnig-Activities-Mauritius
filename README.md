@@ -1,7 +1,7 @@
 # Learning For Fun - Interactive Educational Platform
 
 ## 🎓 Overview
-Welcome to the **Learning For Fun** interactive educational platform developed by Ramsamy Rudaryo. This platform provides engaging, interactive learning activities for primary school pupils (Grades 1-6).
+Welcome to the **Learning For Fun** interactive educational platform developed by Ramsamy Rudaryo. This platform provides engaging, interactive learning activities for children (6-11).
 
 ## 📚 Current Content
 
