@@ -1,7 +1,7 @@
 # Learning For Fun - Interactive Educational Platform
 
 ## 🎓 Overview
-Welcome to the **Learning For Fun** interactive educational platform developed by Service Diocésain de l'Éducation Catholique (SeDEC) for Roman Catholic Authority schools in Mauritius. This platform provides engaging, interactive learning activities for primary school students (Grades 1-6).
+Welcome to the **Learning For Fun** interactive educational platform developed by Ramsamy Rudaryo. This platform provides engaging, interactive learning activities for primary school pupils (Grades 1-6).
 
 ## 📚 Current Content
 
