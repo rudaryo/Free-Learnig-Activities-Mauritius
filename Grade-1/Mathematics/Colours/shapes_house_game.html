@@ -19,7 +19,7 @@
         }
         
         .game-container {
-            max-width: 1000px;
+            max-width: 1400px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
@@ -215,23 +215,23 @@
         </div>
         
         <div class="canvas-area">
-            <svg viewBox="0 0 800 700" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 1000 700" xmlns="http://www.w3.org/2000/svg">
                 <!-- Sun with spikes -->
                 <g id="sunGroup">
                     <!-- Sun spikes (longer) -->
-                    <polygon points="700,10 690,45 710,45" fill="white" stroke="#000" stroke-width="3"/>
-                    <polygon points="750,30 720,55 730,65" fill="white" stroke="#000" stroke-width="3"/>
-                    <polygon points="770,80 730,70 730,90" fill="white" stroke="#000" stroke-width="3"/>
-                    <polygon points="750,130 720,105 730,95" fill="white" stroke="#000" stroke-width="3"/>
-                    <polygon points="700,150 690,115 710,115" fill="white" stroke="#000" stroke-width="3"/>
-                    <polygon points="650,130 680,105 670,95" fill="white" stroke="#000" stroke-width="3"/>
-                    <polygon points="630,80 670,70 670,90" fill="white" stroke="#000" stroke-width="3"/>
-                    <polygon points="650,30 680,55 670,65" fill="white" stroke="#000" stroke-width="3"/>
+                    <polygon points="900,10 890,45 910,45" fill="white" stroke="#000" stroke-width="3"/>
+                    <polygon points="950,30 920,55 930,65" fill="white" stroke="#000" stroke-width="3"/>
+                    <polygon points="970,80 930,70 930,90" fill="white" stroke="#000" stroke-width="3"/>
+                    <polygon points="950,130 920,105 930,95" fill="white" stroke="#000" stroke-width="3"/>
+                    <polygon points="900,150 890,115 910,115" fill="white" stroke="#000" stroke-width="3"/>
+                    <polygon points="850,130 880,105 870,95" fill="white" stroke="#000" stroke-width="3"/>
+                    <polygon points="830,80 870,70 870,90" fill="white" stroke="#000" stroke-width="3"/>
+                    <polygon points="850,30 880,55 870,65" fill="white" stroke="#000" stroke-width="3"/>
                     
                     <!-- Sun circle -->
-                    <circle class="shape" id="sun" cx="700" cy="80" r="50"/>
+                    <circle class="shape" id="sun" cx="900" cy="80" r="50"/>
                 </g>
-                <text class="hint" data-parent="sun" x="700" y="90" font-size="30" font-weight="bold" text-anchor="middle" fill="#ffcc00">Y</text>
+                <text class="hint" data-parent="sun" x="900" y="90" font-size="30" font-weight="bold" text-anchor="middle" fill="#ffcc00">Y</text>
                 
                 <!-- Left Tree Trunk -->
                 <rect class="shape tree-trunk" id="leftTrunk" x="35" y="500" width="30" height="50"/>
@@ -242,12 +242,12 @@
                 <text class="hint" data-parent="leftLeaves" x="50" y="425" font-size="30" font-weight="bold" text-anchor="middle" fill="#00ff00">G</text>
                 
                 <!-- Right Tree Trunk -->
-                <rect class="shape tree-trunk" id="rightTrunk" x="735" y="500" width="30" height="50"/>
-                <text class="hint" data-parent="rightTrunk" x="750" y="532" font-size="20" font-weight="bold" text-anchor="middle" fill="#8B4513">Br</text>
+                <rect class="shape tree-trunk" id="rightTrunk" x="935" y="500" width="30" height="50"/>
+                <text class="hint" data-parent="rightTrunk" x="950" y="532" font-size="20" font-weight="bold" text-anchor="middle" fill="#8B4513">Br</text>
                       
                 <!-- Right Tree Leaves (Triangle) -->
-                <polygon class="shape tree-leaves" id="rightLeaves" points="750,320 710,500 790,500"/>
-                <text class="hint" data-parent="rightLeaves" x="750" y="425" font-size="30" font-weight="bold" text-anchor="middle" fill="#00ff00">G</text>
+                <polygon class="shape tree-leaves" id="rightLeaves" points="950,320 910,500 990,500"/>
+                <text class="hint" data-parent="rightLeaves" x="950" y="425" font-size="30" font-weight="bold" text-anchor="middle" fill="#00ff00">G</text>
                 
                 <!-- Roof (Triangle) -->
                 <polygon class="shape" id="roof" points="400,150 200,350 600,350"/>
