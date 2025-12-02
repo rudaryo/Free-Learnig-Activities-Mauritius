@@ -390,8 +390,25 @@
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(currentQuestionText);
-                utterance.rate = 0.8;
-                utterance.pitch = 1.1;
+                
+                // Try to find a more natural voice
+                const voices = window.speechSynthesis.getVoices();
+                // Prefer: Google UK English Female, Microsoft voices, or any 'natural' voice
+                const preferredVoice = voices.find(voice => 
+                    voice.name.includes('Google UK English Female') ||
+                    voice.name.includes('Google US English') ||
+                    voice.name.includes('Microsoft Zira') ||
+                    voice.name.includes('Samantha') ||
+                    voice.name.includes('Karen') ||
+                    voice.lang.includes('en-') && voice.name.includes('Natural')
+                ) || voices.find(voice => voice.lang.includes('en-')) || voices[0];
+                
+                if (preferredVoice) {
+                    utterance.voice = preferredVoice;
+                }
+                
+                utterance.rate = 0.75;  // Slower = more natural
+                utterance.pitch = 1.0;  // Normal pitch = less robotic
                 utterance.volume = 1;
                 
                 const speakerBtn = document.getElementById('speakerBtn');
@@ -406,11 +423,35 @@
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(text);
-                utterance.rate = 0.85;
-                utterance.pitch = 1.2;
+                
+                // Try to find a more natural voice
+                const voices = window.speechSynthesis.getVoices();
+                const preferredVoice = voices.find(voice => 
+                    voice.name.includes('Google UK English Female') ||
+                    voice.name.includes('Google US English') ||
+                    voice.name.includes('Microsoft Zira') ||
+                    voice.name.includes('Samantha') ||
+                    voice.name.includes('Karen') ||
+                    voice.lang.includes('en-') && voice.name.includes('Natural')
+                ) || voices.find(voice => voice.lang.includes('en-')) || voices[0];
+                
+                if (preferredVoice) {
+                    utterance.voice = preferredVoice;
+                }
+                
+                utterance.rate = 0.8;   // Slightly slower for enthusiasm
+                utterance.pitch = 1.1;  // Slightly higher for friendliness
                 utterance.volume = 1;
+                
                 window.speechSynthesis.speak(utterance);
             }
+        }
+
+        // Load voices when they become available
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.onvoiceschanged = function() {
+                // Voices are now loaded
+            };
         }
 
         function startGame() {
