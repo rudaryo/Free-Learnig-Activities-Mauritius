@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sort Shorter Objects</title>
+    <title>Sort Shorter Objects - Grade 1</title>
     
     <!-- Google Tag Manager -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FTVV63VK10"></script>
@@ -356,7 +356,7 @@
         <h1>📏 Sort the Shorter Objects 📏</h1>
         <p class="subtitle">Grade 1 - Drag & Drop Activity</p>
         
-        <div class="level-indicator" id="levelIndicator">Level 1 - Sort 2 Objects</div>
+        <div class="level-indicator" id="levelIndicator">Level 1</div>
         
         <div class="instruction-box">
             <button class="speaker-btn" id="speakerBtn" onclick="speakInstruction()">🔊</button>
@@ -471,7 +471,7 @@
             const taskCount = currentObjects.filter(obj => obj.type === currentTask).length;
             const taskWord = currentTask === 'short' ? 'short' : 'long';
             
-            document.getElementById('levelIndicator').textContent = `Level ${currentLevel} - ${numObjects} ${selectedPair.name}s (Find ${taskCount} ${taskWord})`;
+            document.getElementById('levelIndicator').textContent = `Level ${currentLevel}`;
             
             // Update instruction text
             const instructionText = currentTask === 'short' 
