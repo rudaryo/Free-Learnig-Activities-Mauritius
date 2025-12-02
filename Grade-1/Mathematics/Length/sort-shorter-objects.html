@@ -273,6 +273,15 @@
             background: #FF8C00;
         }
 
+        .btn-retry {
+            background: #dc3545;
+            display: none;
+        }
+
+        .btn-retry:hover {
+            background: #c82333;
+        }
+
         .completion-message {
             text-align: center;
             padding: 40px;
@@ -385,6 +394,7 @@
         <div class="buttons">
             <button class="btn btn-home" onclick="window.location.href='../grade-1-math-index.html'">🏠 Home</button>
             <button class="btn btn-check" id="checkBtn" onclick="checkAnswer()">✔️ Check Answer</button>
+            <button class="btn btn-retry" id="retryBtn" onclick="retryLevel()">🔄 Try Again</button>
             <button class="btn btn-next" id="nextBtn" onclick="nextLevel()">Next Level ➡️</button>
         </div>
         
@@ -446,6 +456,7 @@
             document.getElementById('feedback').textContent = '';
             document.getElementById('checkBtn').style.display = 'inline-block';
             document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('retryBtn').style.display = 'none';
             
             // Randomly choose short or long
             currentTask = Math.random() > 0.5 ? 'short' : 'long';
@@ -588,6 +599,8 @@
             if (objectsInRight.length === 0) {
                 showFeedback(false, `Drag the ${taskWord} objects to the green box!`);
                 playOopsAudio();
+                document.getElementById('checkBtn').style.display = 'none';
+                document.getElementById('retryBtn').style.display = 'inline-block';
                 return;
             }
             
@@ -595,6 +608,8 @@
             if (objectsInRight.length !== totalTarget) {
                 showFeedback(false, `You need exactly ${totalTarget} ${taskWord} object${totalTarget > 1 ? 's' : ''}!`);
                 playOopsAudio();
+                document.getElementById('checkBtn').style.display = 'none';
+                document.getElementById('retryBtn').style.display = 'inline-block';
                 return;
             }
             
@@ -625,9 +640,13 @@
             if (!allCorrect) {
                 showFeedback(false, `Oops! Some ${oppositeWord} ones got mixed in. Try again!`);
                 playOopsAudio();
+                document.getElementById('checkBtn').style.display = 'none';
+                document.getElementById('retryBtn').style.display = 'inline-block';
             } else if (leftBehindTarget) {
                 showFeedback(false, `You missed some ${taskWord} ones in the yellow box!`);
                 playOopsAudio();
+                document.getElementById('checkBtn').style.display = 'none';
+                document.getElementById('retryBtn').style.display = 'inline-block';
             } else {
                 showFeedback(true, '');
                 const praises = ['brilliant.mp3', 'fantastic.mp3', 'wonderful.mp3', 'You_did_well.mp3'];
@@ -645,6 +664,23 @@
                     }, 1500);
                 }
             }
+        }
+
+        function retryLevel() {
+            // Move all objects back to left column
+            const rightContainer = document.getElementById('rightContainer');
+            const leftContainer = document.getElementById('leftContainer');
+            const objectsInRight = rightContainer.querySelectorAll('.draggable-object');
+            
+            objectsInRight.forEach(obj => {
+                obj.classList.remove('correct', 'wrong');
+                leftContainer.appendChild(obj);
+            });
+            
+            // Clear feedback and reset buttons
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('retryBtn').style.display = 'none';
+            document.getElementById('checkBtn').style.display = 'inline-block';
         }
 
         function showFeedback(isCorrect, message) {
