@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sort Shorter Objects - Grade 1</title>
+    
+    <!-- Google Tag Manager -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FTVV63VK10"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-FTVV63VK10');
+    </script>
+    <!-- End Google Tag Manager -->
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.3em;
+            margin-bottom: 30px;
+        }
+
+        .level-indicator {
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #764ba2;
+            margin-bottom: 20px;
+        }
+
+        .instruction-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .speaker-btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 2em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .speaker-btn:hover {
+            transform: scale(1.1);
+            background: #f0f0f0;
+        }
+
+        .speaker-btn.speaking {
+            animation: speakerPulse 0.5s ease infinite;
+        }
+
+        @keyframes speakerPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .game-area {
+            display: flex;
+            gap: 40px;
+            margin: 40px 0;
+            min-height: 500px;
+        }
+
+        .column {
+            flex: 1;
+            border: 4px dashed #ccc;
+            border-radius: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            min-height: 500px;
+        }
+
+        .column h3 {
+            text-align: center;
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .left-column {
+            background: #fff3cd;
+            border-color: #ffc107;
+        }
+
+        .right-column {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+
+        .right-column.drag-over {
+            background: #b8e6c4;
+            border-color: #1e7e34;
+            border-style: solid;
+        }
+
+        .objects-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .draggable-object {
+            cursor: move;
+            padding: 15px;
+            background: white;
+            border-radius: 15px;
+            border: 3px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            user-select: none;
+            touch-action: none;
+        }
+
+        .draggable-object:hover {
+            transform: scale(1.05);
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .draggable-object.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg);
+        }
+
+        .draggable-object img {
+            height: 70px;
+            object-fit: contain;
+            pointer-events: none;
+        }
+
+        .draggable-object.correct {
+            animation: correctPulse 0.6s ease;
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .draggable-object.wrong {
+            animation: wrongShake 0.5s ease;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .feedback {
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            margin: 20px 0;
+            min-height: 60px;
+        }
+
+        .feedback.correct {
+            color: #28a745;
+        }
+
+        .feedback.wrong {
+            color: #dc3545;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+            font-size: 1.4em;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+
+        .btn-home {
+            background: #FF6B6B;
+        }
+
+        .btn-home:hover {
+            background: #EE5A5A;
+        }
+
+        .btn-check {
+            background: #28a745;
+        }
+
+        .btn-check:hover {
+            background: #218838;
+        }
+
+        .btn-next {
+            background: #FFA500;
+            display: none;
+        }
+
+        .btn-next:hover {
+            background: #FF8C00;
+        }
+
+        .completion-message {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border-radius: 20px;
+            margin: 30px 0;
+            display: none;
+        }
+
+        .completion-message.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .completion-message h2 {
+            font-size: 2.8em;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 15px;
+        }
+
+        .completion-message p {
+            font-size: 1.5em;
+            color: #fff;
+        }
+
+        .attribution {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .attribution a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .game-area {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .instruction-box {
+                font-size: 1.5em;
+                padding: 20px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .draggable-object img {
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📏 Sort the Shorter Objects 📏</h1>
+        <p class="subtitle">Grade 1 - Drag & Drop Activity</p>
+        
+        <div class="level-indicator" id="levelIndicator">Level 1 - Sort 2 Objects</div>
+        
+        <div class="instruction-box">
+            <button class="speaker-btn" id="speakerBtn" onclick="speakInstruction()">🔊</button>
+            <span id="instructionText">Drag all the <u>shorter</u> objects to the green box!</span>
+        </div>
+        
+        <div class="completion-message" id="completionMessage">
+            <h2>🌟 FANTASTIC! 🌟</h2>
+            <p>You completed all levels!</p>
+        </div>
+        
+        <div class="game-area" id="gameArea">
+            <div class="column left-column">
+                <h3>📦 All Objects</h3>
+                <div class="objects-container" id="leftContainer"></div>
+            </div>
+            
+            <div class="column right-column" id="rightColumn">
+                <h3>✅ Shorter Objects</h3>
+                <div class="objects-container" id="rightContainer"></div>
+            </div>
+        </div>
+        
+        <div class="feedback" id="feedback"></div>
+        
+        <div class="buttons">
+            <button class="btn btn-home" onclick="window.location.href='../grade-1-math-index.html'">🏠 Home</button>
+            <button class="btn btn-check" id="checkBtn" onclick="checkAnswer()">✔️ Check Answer</button>
+            <button class="btn btn-next" id="nextBtn" onclick="nextLevel()">Next Level ➡️</button>
+        </div>
+        
+        <div class="attribution">
+            <p><strong>Image Attribution:</strong> Images from <a href="https://www.freepik.com" target="_blank">Freepik</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Image pairs
+        const imagePairs = [
+            { name: 'pencil', long: 'Asset/Pencil_L.png', short: 'Asset/Pencil_S.png' },
+            { name: 'ruler', long: 'Asset/Ruler_L.png', short: 'Asset/Ruler_S.png' },
+            { name: 'car', long: 'Asset/Car_L.png', short: 'Asset/Car_S.png' },
+            { name: 'fish', long: 'Asset/Fish_L.png', short: 'Asset/Fish_S.png' },
+            { name: 'train', long: 'Asset/Train_L.png', short: 'Asset/Train_S.png' }
+        ];
+
+        let currentLevel = 1; // Levels: 1=2 objects, 2=3 objects, 3=4 objects, 4=5 objects
+        let currentObjects = [];
+        let draggedElement = null;
+
+        function playAudio(audioFile) {
+            const audio = new Audio(`Asset/${audioFile}`);
+            audio.volume = 1.0;
+            audio.play().catch(err => console.error('Audio playback failed:', err));
+        }
+
+        function speakInstruction() {
+            // Play custom instruction audio
+            const audio = new Audio('Asset/drag_all_the_shorter_objects_to_the_green_box.mp3');
+            audio.volume = 1.0;
+            
+            const speakerBtn = document.getElementById('speakerBtn');
+            speakerBtn.classList.add('speaking');
+            
+            audio.onended = () => speakerBtn.classList.remove('speaking');
+            audio.onerror = (err) => console.error('Audio playback failed:', err);
+            
+            audio.play().catch(err => {
+                console.error('Audio playback failed:', err);
+                speakerBtn.classList.remove('speaking');
+            });
+        }
+
+        function startLevel() {
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('checkBtn').style.display = 'inline-block';
+            document.getElementById('nextBtn').style.display = 'none';
+            
+            const numObjects = currentLevel + 1; // Level 1=2, Level 2=3, etc.
+            document.getElementById('levelIndicator').textContent = `Level ${currentLevel} - Sort ${numObjects} Objects`;
+            
+            // Shuffle and select objects
+            const shuffled = [...imagePairs].sort(() => Math.random() - 0.5);
+            const selected = shuffled.slice(0, numObjects);
+            
+            currentObjects = [];
+            selected.forEach(pair => {
+                currentObjects.push({ type: 'short', image: pair.short, name: pair.name });
+                currentObjects.push({ type: 'long', image: pair.long, name: pair.name });
+            });
+            
+            // Shuffle all objects
+            currentObjects.sort(() => Math.random() - 0.5);
+            
+            renderObjects();
+            setTimeout(() => speakInstruction(), 500);
+        }
+
+        function renderObjects() {
+            const leftContainer = document.getElementById('leftContainer');
+            const rightContainer = document.getElementById('rightContainer');
+            
+            leftContainer.innerHTML = '';
+            rightContainer.innerHTML = '';
+            
+            currentObjects.forEach((obj, index) => {
+                const div = document.createElement('div');
+                div.className = 'draggable-object';
+                div.draggable = true;
+                div.dataset.type = obj.type;
+                div.dataset.index = index;
+                
+                const img = document.createElement('img');
+                img.src = obj.image;
+                img.alt = obj.name;
+                
+                img.onerror = function() {
+                    console.error('Failed to load image:', this.src);
+                };
+                
+                div.appendChild(img);
+                leftContainer.appendChild(div);
+                
+                // Drag events
+                div.addEventListener('dragstart', handleDragStart);
+                div.addEventListener('dragend', handleDragEnd);
+            });
+            
+            // Drop zone events
+            const rightColumn = document.getElementById('rightColumn');
+            rightColumn.addEventListener('dragover', handleDragOver);
+            rightColumn.addEventListener('drop', handleDrop);
+            rightColumn.addEventListener('dragleave', handleDragLeave);
+        }
+
+        function handleDragStart(e) {
+            draggedElement = e.target;
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        }
+
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            e.currentTarget.classList.add('drag-over');
+            return false;
+        }
+
+        function handleDragLeave(e) {
+            e.currentTarget.classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            e.preventDefault();
+            
+            const rightColumn = document.getElementById('rightColumn');
+            rightColumn.classList.remove('drag-over');
+            
+            if (draggedElement) {
+                const rightContainer = document.getElementById('rightContainer');
+                rightContainer.appendChild(draggedElement);
+            }
+            
+            return false;
+        }
+
+        function checkAnswer() {
+            const rightContainer = document.getElementById('rightContainer');
+            const objectsInRight = rightContainer.querySelectorAll('.draggable-object');
+            
+            const numObjects = currentLevel + 1;
+            const expectedCount = numObjects;
+            
+            // Check if correct number of objects
+            if (objectsInRight.length !== expectedCount) {
+                showFeedback(false, `You need exactly ${expectedCount} shorter objects!`);
+                playAudio('oops_keep_trying.mp3');
+                return;
+            }
+            
+            // Check if all are "short" type
+            let allCorrect = true;
+            objectsInRight.forEach(obj => {
+                if (obj.dataset.type !== 'short') {
+                    allCorrect = false;
+                    obj.classList.add('wrong');
+                    setTimeout(() => obj.classList.remove('wrong'), 600);
+                } else {
+                    obj.classList.add('correct');
+                }
+            });
+            
+            if (allCorrect) {
+                showFeedback(true, '');
+                const praises = ['brilliant.mp3', 'fantastic.mp3', 'wonderful.mp3', 'marvellous.mp3', 'You_did_well.mp3'];
+                playAudio(praises[Math.floor(Math.random() * praises.length)]);
+                
+                document.getElementById('checkBtn').style.display = 'none';
+                
+                if (currentLevel < 4) {
+                    setTimeout(() => {
+                        document.getElementById('nextBtn').style.display = 'inline-block';
+                    }, 1000);
+                } else {
+                    setTimeout(() => {
+                        showCompletion();
+                    }, 1500);
+                }
+            } else {
+                showFeedback(false, 'Oops! Some objects are not shorter. Try again!');
+                playAudio('oops_keep_trying.mp3');
+            }
+        }
+
+        function showFeedback(isCorrect, message) {
+            const feedback = document.getElementById('feedback');
+            
+            if (isCorrect) {
+                const messages = ['🎉 Brilliant! 🎉', '⭐ Fantastic! ⭐', '🌟 Wonderful! 🌟', '👏 Marvellous! 👏', '🎊 You did well! 🎊'];
+                feedback.textContent = messages[Math.floor(Math.random() * messages.length)];
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = `💪 ${message} 💪`;
+                feedback.className = 'feedback wrong';
+            }
+        }
+
+        function nextLevel() {
+            currentLevel++;
+            startLevel();
+        }
+
+        function showCompletion() {
+            const completion = document.getElementById('completionMessage');
+            const h2 = completion.querySelector('h2');
+            const p = completion.querySelector('p');
+            
+            h2.textContent = '🏆 AMAZING WORK! 🏆';
+            p.textContent = 'You completed all 4 levels! You are a sorting champion! 🌟';
+            
+            completion.classList.add('show');
+            document.getElementById('gameArea').style.display = 'none';
+            document.getElementById('feedback').textContent = '';
+            
+            playAudio('marvellous.mp3');
+            
+            const nextBtn = document.getElementById('nextBtn');
+            nextBtn.textContent = '🔄 Play Again';
+            nextBtn.style.display = 'inline-block';
+            nextBtn.onclick = () => {
+                completion.classList.remove('show');
+                document.getElementById('gameArea').style.display = 'flex';
+                nextBtn.textContent = 'Next Level ➡️';
+                nextBtn.onclick = nextLevel;
+                currentLevel = 1;
+                startLevel();
+            };
+        }
+
+        // Initialize game
+        startLevel();
+        
+        // Disable right-click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.keyCode === 123 || 
+                (e.ctrlKey && e.shiftKey && e.keyCode === 73) ||
+                (e.ctrlKey && e.shiftKey && e.keyCode === 74) ||
+                (e.ctrlKey && e.keyCode === 85)) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
