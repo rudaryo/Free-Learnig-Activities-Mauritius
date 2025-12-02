@@ -329,7 +329,7 @@
         
         <div class="question-box">
             <button class="speaker-btn" id="speakerBtn" onclick="speakQuestion()">🔊</button>
-            <span id="questionText">Pick the TALLER tree</span>
+            <span id="questionText">Pick the <u>taller</u> tree</span>
         </div>
         
         <div class="completion-message" id="completionMessage">
@@ -435,7 +435,7 @@
             document.getElementById('progress').textContent = `Question ${currentQuestion + 1} of 20`;
             
             currentQuestionText = `Pick the ${question.askFor} ${question.image.name}`;
-            document.getElementById('questionText').textContent = `Pick the ${question.askFor.toUpperCase()} ${question.image.name}`;
+            document.getElementById('questionText').innerHTML = `Pick the <u>${question.askFor}</u> ${question.image.name}`;
             
             setTimeout(() => speakQuestion(), 500);
             
