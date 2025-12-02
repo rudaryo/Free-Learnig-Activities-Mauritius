@@ -584,7 +584,13 @@
             const feedback = document.getElementById('feedback');
             
             if (isCorrect) {
-                const messages = ['🎉 Brilliant! 🎉', '⭐ Fantastic! ⭐', '🌟 Wonderful! 🌟', '👏 Marvellous! 👏', '🎊 You did well! 🎊'];
+                const messages = [
+                    '🎉 Brilliant! 🎉',
+                    '⭐ Fantastic! ⭐',
+                    '🌟 Wonderful! 🌟',
+                    '👏 Marvellous! 👏',
+                    '🎊 You did well! 🎊'
+                ];
                 feedback.textContent = messages[Math.floor(Math.random() * messages.length)];
                 feedback.className = 'feedback correct';
             } else {
