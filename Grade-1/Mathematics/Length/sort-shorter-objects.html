@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sort Shorter Objects - Grade 1</title>
+    <title>Sort Shorter Objects</title>
     
     <!-- Google Tag Manager -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FTVV63VK10"></script>
@@ -414,6 +414,13 @@
             audio.play().catch(err => console.error('Audio playback failed:', err));
         }
 
+        function playOopsAudio() {
+            // Randomly choose between the two oops audio files
+            const oopsAudios = ['oops_keep_trying.mp3', 'keep_tyring.mp3'];
+            const randomAudio = oopsAudios[Math.floor(Math.random() * oopsAudios.length)];
+            playAudio(randomAudio);
+        }
+
         function speakInstruction() {
             // Play audio based on current task
             const audioFile = currentTask === 'short' 
@@ -580,14 +587,14 @@
             // Check if nothing was moved
             if (objectsInRight.length === 0) {
                 showFeedback(false, `Drag the ${taskWord} objects to the green box!`);
-                playAudio('oops_keep_trying.mp3');
+                playOopsAudio();
                 return;
             }
             
             // Check if correct number of objects moved
             if (objectsInRight.length !== totalTarget) {
                 showFeedback(false, `You need exactly ${totalTarget} ${taskWord} object${totalTarget > 1 ? 's' : ''}!`);
-                playAudio('oops_keep_trying.mp3');
+                playOopsAudio();
                 return;
             }
             
@@ -617,13 +624,13 @@
             
             if (!allCorrect) {
                 showFeedback(false, `Oops! Some ${oppositeWord} ones got mixed in. Try again!`);
-                playAudio('oops_keep_trying.mp3');
+                playOopsAudio();
             } else if (leftBehindTarget) {
                 showFeedback(false, `You missed some ${taskWord} ones in the yellow box!`);
-                playAudio('oops_keep_trying.mp3');
+                playOopsAudio();
             } else {
                 showFeedback(true, '');
-                const praises = ['brilliant.mp3', 'fantastic.mp3', 'wonderful.mp3', 'marvellous.mp3', 'You_did_well.mp3'];
+                const praises = ['brilliant.mp3', 'fantastic.mp3', 'wonderful.mp3', 'You_did_well.mp3'];
                 playAudio(praises[Math.floor(Math.random() * praises.length)]);
                 
                 document.getElementById('checkBtn').style.display = 'none';
@@ -648,7 +655,6 @@
                     '🎉 Brilliant! 🎉',
                     '⭐ Fantastic! ⭐',
                     '🌟 Wonderful! 🌟',
-                    '👏 Marvellous! 👏',
                     '🎊 You did well! 🎊'
                 ];
                 feedback.textContent = messages[Math.floor(Math.random() * messages.length)];
@@ -676,7 +682,7 @@
             document.getElementById('gameArea').style.display = 'none';
             document.getElementById('feedback').textContent = '';
             
-            playAudio('marvellous.mp3');
+            playAudio('wonderful.mp3');
             
             const nextBtn = document.getElementById('nextBtn');
             nextBtn.textContent = '🔄 Play Again';
