@@ -375,7 +375,7 @@
             </div>
             
             <div class="column right-column" id="rightColumn">
-                <h3>✅ Shorter Objects</h3>
+                <h3 id="rightColumnTitle">✅ Short Objects</h3>
                 <div class="objects-container" id="rightContainer"></div>
             </div>
         </div>
@@ -403,9 +403,10 @@
             { name: 'train', long: 'Asset/Train_L.png', short: 'Asset/Train_S.png' }
         ];
 
-        let currentLevel = 1; // Levels: 1=2 objects, 2=3 objects, 3=4 objects, 4=5 objects
+        let currentLevel = 1;
         let currentObjects = [];
         let draggedElement = null;
+        let currentTask = 'short'; // 'short' or 'long'
 
         function playAudio(audioFile) {
             const audio = new Audio(`Asset/${audioFile}`);
@@ -414,8 +415,12 @@
         }
 
         function speakInstruction() {
-            // Play custom instruction audio
-            const audio = new Audio('Asset/drag_all_the_shorter_objects_to_the_green_box.mp3');
+            // Play audio based on current task
+            const audioFile = currentTask === 'short' 
+                ? 'drag_all_the_short_objects_to_the_green_box.mp3'
+                : 'drag_all_the_long_objects_to_the_green_box.mp3';
+            
+            const audio = new Audio(`Asset/${audioFile}`);
             audio.volume = 1.0;
             
             const speakerBtn = document.getElementById('speakerBtn');
@@ -435,18 +440,48 @@
             document.getElementById('checkBtn').style.display = 'inline-block';
             document.getElementById('nextBtn').style.display = 'none';
             
-            const numObjects = currentLevel + 1; // Level 1=2, Level 2=3, etc.
-            document.getElementById('levelIndicator').textContent = `Level ${currentLevel} - Sort ${numObjects} Objects`;
+            // Randomly choose short or long
+            currentTask = Math.random() > 0.5 ? 'short' : 'long';
             
-            // Shuffle and select objects
+            // Level 1 = 3 objects, Level 2 = 4 objects, Level 3 = 5 objects, Level 4 = 5 objects
+            const numObjects = currentLevel === 1 ? 3 : currentLevel === 2 ? 4 : 5;
+            
+            // Pick one random object type for this level
             const shuffled = [...imagePairs].sort(() => Math.random() - 0.5);
-            const selected = shuffled.slice(0, numObjects);
+            const selectedPair = shuffled[0];
             
+            // Create a mix of short and long objects (at least 1 of each, rest random)
             currentObjects = [];
-            selected.forEach(pair => {
-                currentObjects.push({ type: 'short', image: pair.short, name: pair.name });
-                currentObjects.push({ type: 'long', image: pair.long, name: pair.name });
-            });
+            
+            // Ensure at least 1 short and 1 long
+            currentObjects.push({ type: 'short', image: selectedPair.short, name: selectedPair.name });
+            currentObjects.push({ type: 'long', image: selectedPair.long, name: selectedPair.name });
+            
+            // Fill remaining slots randomly
+            for (let i = 2; i < numObjects; i++) {
+                const isShort = Math.random() > 0.5;
+                currentObjects.push({
+                    type: isShort ? 'short' : 'long',
+                    image: isShort ? selectedPair.short : selectedPair.long,
+                    name: selectedPair.name
+                });
+            }
+            
+            // Count how many match the task
+            const taskCount = currentObjects.filter(obj => obj.type === currentTask).length;
+            const taskWord = currentTask === 'short' ? 'short' : 'long';
+            
+            document.getElementById('levelIndicator').textContent = `Level ${currentLevel} - ${numObjects} ${selectedPair.name}s (Find ${taskCount} ${taskWord})`;
+            
+            // Update instruction text
+            const instructionText = currentTask === 'short' 
+                ? 'Drag all the <u>short</u> objects to the green box!'
+                : 'Drag all the <u>long</u> objects to the green box!';
+            document.getElementById('instructionText').innerHTML = instructionText;
+            
+            // Update right column title
+            const columnTitle = currentTask === 'short' ? '✅ Short Objects' : '✅ Long Objects';
+            document.getElementById('rightColumnTitle').textContent = columnTitle;
             
             // Shuffle all objects
             currentObjects.sort(() => Math.random() - 0.5);
@@ -534,22 +569,32 @@
 
         function checkAnswer() {
             const rightContainer = document.getElementById('rightContainer');
+            const leftContainer = document.getElementById('leftContainer');
             const objectsInRight = rightContainer.querySelectorAll('.draggable-object');
+            const objectsInLeft = leftContainer.querySelectorAll('.draggable-object');
             
-            const numObjects = currentLevel + 1;
-            const expectedCount = numObjects;
+            // Count how many match the current task
+            const totalTarget = currentObjects.filter(obj => obj.type === currentTask).length;
+            const taskWord = currentTask === 'short' ? 'short' : 'long';
             
-            // Check if correct number of objects
-            if (objectsInRight.length !== expectedCount) {
-                showFeedback(false, `You need exactly ${expectedCount} shorter objects!`);
+            // Check if nothing was moved
+            if (objectsInRight.length === 0) {
+                showFeedback(false, `Drag the ${taskWord} objects to the green box!`);
                 playAudio('oops_keep_trying.mp3');
                 return;
             }
             
-            // Check if all are "short" type
+            // Check if correct number of objects moved
+            if (objectsInRight.length !== totalTarget) {
+                showFeedback(false, `You need exactly ${totalTarget} ${taskWord} object${totalTarget > 1 ? 's' : ''}!`);
+                playAudio('oops_keep_trying.mp3');
+                return;
+            }
+            
+            // Check if all moved objects match the task type
             let allCorrect = true;
             objectsInRight.forEach(obj => {
-                if (obj.dataset.type !== 'short') {
+                if (obj.dataset.type !== currentTask) {
                     allCorrect = false;
                     obj.classList.add('wrong');
                     setTimeout(() => obj.classList.remove('wrong'), 600);
@@ -558,7 +603,25 @@
                 }
             });
             
-            if (allCorrect) {
+            // Also check if any matching ones were left behind
+            let leftBehindTarget = false;
+            objectsInLeft.forEach(obj => {
+                if (obj.dataset.type === currentTask) {
+                    leftBehindTarget = true;
+                    obj.classList.add('wrong');
+                    setTimeout(() => obj.classList.remove('wrong'), 600);
+                }
+            });
+            
+            const oppositeWord = currentTask === 'short' ? 'long' : 'short';
+            
+            if (!allCorrect) {
+                showFeedback(false, `Oops! Some ${oppositeWord} ones got mixed in. Try again!`);
+                playAudio('oops_keep_trying.mp3');
+            } else if (leftBehindTarget) {
+                showFeedback(false, `You missed some ${taskWord} ones in the yellow box!`);
+                playAudio('oops_keep_trying.mp3');
+            } else {
                 showFeedback(true, '');
                 const praises = ['brilliant.mp3', 'fantastic.mp3', 'wonderful.mp3', 'marvellous.mp3', 'You_did_well.mp3'];
                 playAudio(praises[Math.floor(Math.random() * praises.length)]);
@@ -574,9 +637,6 @@
                         showCompletion();
                     }, 1500);
                 }
-            } else {
-                showFeedback(false, 'Oops! Some objects are not shorter. Try again!');
-                playAudio('oops_keep_trying.mp3');
             }
         }
 
