@@ -651,17 +651,14 @@
             const feedback = document.getElementById('feedback');
             
             if (isCorrect) {
-                const messages = [
-                    '🎉 Brilliant! 🎉',
-                    '⭐ Fantastic! ⭐',
-                    '🌟 Wonderful! 🌟',
-                    '🎊 You did well! 🎊'
-                ];
-                feedback.textContent = messages[Math.floor(Math.random() * messages.length)];
+                // Show thumbs up emoji for correct answers
+                feedback.textContent = '👍';
                 feedback.className = 'feedback correct';
+                feedback.style.fontSize = '4em'; // Make it big!
             } else {
                 feedback.textContent = `💪 ${message} 💪`;
                 feedback.className = 'feedback wrong';
+                feedback.style.fontSize = '2em'; // Normal size for text
             }
         }
 
