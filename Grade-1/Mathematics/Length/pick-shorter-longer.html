@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pick Longer or Shorter - Grade 1</title>
+    
+    <!-- Google Tag Manager -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FTVV63VK10"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-FTVV63VK10');
+    </script>
+    <!-- End Google Tag Manager -->
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.3em;
+            margin-bottom: 30px;
+        }
+
+        .progress {
+            text-align: center;
+            font-size: 1.5em;
+            color: #764ba2;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .question-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 2.2em;
+            font-weight: bold;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .speaker-btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 2em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .speaker-btn:hover {
+            transform: scale(1.1);
+            background: #f0f0f0;
+        }
+
+        .speaker-btn.speaking {
+            animation: speakerPulse 0.5s ease infinite;
+        }
+
+        @keyframes speakerPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .objects-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 40px;
+            margin: 40px 0;
+            min-height: 400px;
+            padding-left: 50px;
+        }
+
+        .object-wrapper {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 3px solid transparent;
+            min-width: 80%;
+        }
+
+        .object-wrapper:hover {
+            transform: scale(1.02);
+            border-color: #667eea;
+            background: #e8ecff;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .object-wrapper img {
+            height: 80px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .object-wrapper.correct {
+            animation: correctPulse 0.6s ease;
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .object-wrapper.wrong {
+            animation: wrongShake 0.5s ease;
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .feedback {
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            margin: 20px 0;
+            min-height: 60px;
+        }
+
+        .feedback.correct {
+            color: #28a745;
+        }
+
+        .feedback.wrong {
+            color: #dc3545;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+            font-size: 1.4em;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+
+        .btn-home {
+            background: #FF6B6B;
+        }
+
+        .btn-home:hover {
+            background: #EE5A5A;
+        }
+
+        .btn-next {
+            background: #28a745;
+            display: none;
+        }
+
+        .btn-next:hover {
+            background: #218838;
+        }
+
+        .btn-retry {
+            background: #FFA500;
+            display: none;
+        }
+
+        .btn-retry:hover {
+            background: #FF8C00;
+        }
+
+        .completion-message {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border-radius: 20px;
+            margin: 30px 0;
+            display: none;
+        }
+
+        .completion-message.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .completion-message h2 {
+            font-size: 2.8em;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 15px;
+        }
+
+        .completion-message p {
+            font-size: 1.5em;
+            color: #fff;
+        }
+
+        .attribution {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .attribution a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .question-box {
+                font-size: 1.6em;
+                padding: 20px;
+            }
+
+            .objects-container {
+                gap: 20px;
+                padding-left: 20px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .object-wrapper img {
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📏 Pick Longer or Shorter 📏</h1>
+        <p class="subtitle">Grade 1 - Learning Length</p>
+        
+        <div class="progress" id="progress">Question 1 of 20</div>
+        
+        <div class="question-box">
+            <button class="speaker-btn" id="speakerBtn" onclick="speakQuestion()">🔊</button>
+            <span id="questionText">Pick the LONGER pencil</span>
+        </div>
+        
+        <div class="completion-message" id="completionMessage">
+            <h2>🌟 FANTASTIC! 🌟</h2>
+            <p>You completed the game!</p>
+        </div>
+        
+        <div class="objects-container" id="objectsContainer"></div>
+        
+        <div class="feedback" id="feedback"></div>
+        
+        <div class="buttons">
+            <button class="btn btn-home" onclick="window.location.href='../grade-1-math-index.html'">🏠 Home</button>
+            <button class="btn btn-retry" id="retryBtn" onclick="retryQuestion()">🔄 Try Again</button>
+            <button class="btn btn-next" id="nextBtn" onclick="nextQuestion()">Next ➡️</button>
+        </div>
+        
+        <div class="attribution">
+            <p><strong>Image Attribution:</strong> Images from <a href="https://www.freepik.com" target="_blank">Freepik</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Image pairs - Make sure these match your exact file names in the Asset folder
+        const imagePairs = [
+            { name: 'pencil', long: 'Asset/Pencil_L.png', short: 'Asset/Pencil_S.png' },
+            { name: 'ruler', long: 'Asset/Ruler_L.png', short: 'Asset/Ruler_S.png' },
+            { name: 'car', long: 'Asset/Car_L.png', short: 'Asset/Car_S.png' },
+            { name: 'fish', long: 'Asset/Fish_L.png', short: 'Asset/Fish_S.png' },
+            { name: 'keyboard', long: 'Asset/Piano_L.png', short: 'Asset/Piano_S.png' },
+            { name: 'train', long: 'Asset/Train_L.png', short: 'Asset/Train_S.png' }
+        ];
+
+        let currentQuestion = 0;
+        let correctAnswers = 0;
+        let answered = false;
+        let currentQuestionText = '';
+        let questions = [];
+        let lastUsedImage = null;
+
+        function generateQuestions() {
+            questions = [];
+            
+            for (let i = 0; i < 20; i++) {
+                let filteredImages = lastUsedImage 
+                    ? imagePairs.filter(img => img.name !== lastUsedImage.name)
+                    : imagePairs;
+                
+                if (filteredImages.length === 0) {
+                    filteredImages = imagePairs.filter(img => img.name !== lastUsedImage.name);
+                }
+                
+                const randomIndex = Math.floor(Math.random() * filteredImages.length);
+                const selectedImage = filteredImages[randomIndex];
+                const askFor = i % 2 === 0 ? 'longer' : 'shorter';
+                
+                questions.push({
+                    image: selectedImage,
+                    askFor: askFor
+                });
+                
+                lastUsedImage = selectedImage;
+            }
+        }
+
+        function speakQuestion() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(currentQuestionText);
+                utterance.rate = 0.8;
+                utterance.pitch = 1.1;
+                utterance.volume = 1;
+                
+                const speakerBtn = document.getElementById('speakerBtn');
+                speakerBtn.classList.add('speaking');
+                utterance.onend = () => speakerBtn.classList.remove('speaking');
+                
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.85;
+                utterance.pitch = 1.2;
+                utterance.volume = 1;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function startGame() {
+            currentQuestion = 0;
+            correctAnswers = 0;
+            generateQuestions();
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            answered = false;
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('retryBtn').style.display = 'none';
+            
+            const question = questions[currentQuestion];
+            document.getElementById('progress').textContent = `Question ${currentQuestion + 1} of 20`;
+            
+            currentQuestionText = `Pick the ${question.askFor} ${question.image.name}`;
+            document.getElementById('questionText').textContent = `Pick the ${question.askFor.toUpperCase()} ${question.image.name}`;
+            
+            setTimeout(() => speakQuestion(), 500);
+            
+            const correctIndex = question.askFor === 'longer' ? 1 : 0;
+            const container = document.getElementById('objectsContainer');
+            container.innerHTML = '';
+            
+            const positions = Math.random() > 0.5 ? [0, 1] : [1, 0];
+            const images = [question.image.short, question.image.long];
+            
+            positions.forEach(pos => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'object-wrapper';
+                wrapper.onclick = () => checkAnswer(pos === correctIndex, wrapper);
+                
+                const img = document.createElement('img');
+                img.src = images[pos];
+                img.alt = question.image.name;
+                img.draggable = false;
+                
+                // Add error handling for images
+                img.onerror = function() {
+                    console.error('Failed to load image:', this.src);
+                    this.alt = '❌ Image not found: ' + this.src;
+                };
+                
+                wrapper.appendChild(img);
+                container.appendChild(wrapper);
+            });
+        }
+
+        function checkAnswer(isCorrect, wrapperElement) {
+            if (answered) return;
+            answered = true;
+            
+            const feedback = document.getElementById('feedback');
+            const nextBtn = document.getElementById('nextBtn');
+            const retryBtn = document.getElementById('retryBtn');
+            
+            if (isCorrect) {
+                correctAnswers++;
+                wrapperElement.classList.add('correct');
+                
+                const encouragements = [
+                    'Excellent! Well done!',
+                    'Fantastic! You got it!',
+                    'Brilliant! Great job!',
+                    'Amazing! Perfect!',
+                    'Wonderful! Keep it up!',
+                    'Super! You\'re doing great!',
+                    'Outstanding! Correct!',
+                    'Excellent work!',
+                    'Perfect! Well done!',
+                    'Great job! You\'re a star!'
+                ];
+                
+                const randomIndex = Math.floor(Math.random() * encouragements.length);
+                const encouragement = encouragements[randomIndex];
+                const emojis = ['🎉', '⭐', '🌟', '👏', '🎊', '💫', '🏆', '✨', '🎯', '🌈'];
+                
+                feedback.textContent = `${emojis[randomIndex]} ${encouragement} ${emojis[randomIndex]}`;
+                feedback.className = 'feedback correct';
+                speakText(encouragement);
+                
+                // Show Next button for correct answers
+                setTimeout(() => {
+                    nextBtn.style.display = 'inline-block';
+                }, 1000);
+            } else {
+                wrapperElement.classList.add('wrong');
+                const wrongMessage = 'Good try! Keep learning!';
+                feedback.textContent = `💪 ${wrongMessage} 💪`;
+                feedback.className = 'feedback wrong';
+                speakText(wrongMessage);
+                
+                // Show Retry button for wrong answers
+                setTimeout(() => {
+                    retryBtn.style.display = 'inline-block';
+                }, 1000);
+            }
+        }
+
+        function retryQuestion() {
+            // Reset the current question
+            answered = false;
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('retryBtn').style.display = 'none';
+            
+            // Remove correct/wrong classes from wrappers
+            document.querySelectorAll('.object-wrapper').forEach(wrapper => {
+                wrapper.classList.remove('correct', 'wrong');
+            });
+            
+            // Reload the same question
+            loadQuestion();
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            
+            if (currentQuestion >= 20) {
+                showCompletion();
+            } else {
+                loadQuestion();
+            }
+        }
+
+        function showCompletion() {
+            const completion = document.getElementById('completionMessage');
+            const h2 = completion.querySelector('h2');
+            const p = completion.querySelector('p');
+            
+            let title, message, audioMessage;
+            
+            if (correctAnswers === 20) {
+                title = '🏆 PERFECT SCORE! 🏆';
+                message = 'WOW! You got all 20 correct! You are a LENGTH CHAMPION! 🌟';
+                audioMessage = 'Perfect score! Wow! You got all 20 correct! You are a length champion!';
+            } else if (correctAnswers >= 18) {
+                title = '⭐ AMAZING! ⭐';
+                message = `Fantastic! You got ${correctAnswers} out of 20 correct! You're a superstar! 🌟`;
+                audioMessage = `Amazing! Fantastic! You got ${correctAnswers} out of 20 correct! You're a superstar!`;
+            } else if (correctAnswers >= 15) {
+                title = '🌟 EXCELLENT! 🌟';
+                message = `Great work! You got ${correctAnswers} out of 20 correct! Keep it up! 👏`;
+                audioMessage = `Excellent! Great work! You got ${correctAnswers} out of 20 correct! Keep it up!`;
+            } else if (correctAnswers >= 12) {
+                title = '👍 WELL DONE! 👍';
+                message = `Good job! You got ${correctAnswers} out of 20 correct! You're learning! 💪`;
+                audioMessage = `Well done! Good job! You got ${correctAnswers} out of 20 correct! You're learning!`;
+            } else if (correctAnswers >= 10) {
+                title = '😊 GOOD EFFORT! 😊';
+                message = `Nice try! You got ${correctAnswers} out of 20 correct! Keep practicing! 📏`;
+                audioMessage = `Good effort! Nice try! You got ${correctAnswers} out of 20 correct! Keep practicing!`;
+            } else {
+                title = '💪 KEEP TRYING! 💪';
+                message = `You got ${correctAnswers} out of 20 correct! Practice makes perfect! 🌈`;
+                audioMessage = `Keep trying! You got ${correctAnswers} out of 20 correct! Practice makes perfect!`;
+            }
+            
+            h2.textContent = title;
+            p.textContent = message;
+            setTimeout(() => speakText(audioMessage), 500);
+            
+            completion.classList.add('show');
+            document.getElementById('objectsContainer').innerHTML = '';
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('questionText').textContent = '';
+            document.getElementById('progress').textContent = '';
+            
+            const nextBtn = document.getElementById('nextBtn');
+            nextBtn.textContent = '🔄 Play Again';
+            nextBtn.style.display = 'inline-block';
+            nextBtn.onclick = () => {
+                completion.classList.remove('show');
+                nextBtn.textContent = 'Next ➡️';
+                nextBtn.onclick = nextQuestion;
+                startGame();
+            };
+        }
+
+        // Initialize game
+        startGame();
+        
+        // Disable right-click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('dragstart', e => {
+            if (e.target.tagName === 'IMG') e.preventDefault();
+        });
+        document.addEventListener('selectstart', e => {
+            if (e.target.tagName === 'IMG') e.preventDefault();
+        });
+        document.addEventListener('keydown', e => {
+            if (e.keyCode === 123 || 
+                (e.ctrlKey && e.shiftKey && e.keyCode === 73) ||
+                (e.ctrlKey && e.shiftKey && e.keyCode === 74) ||
+                (e.ctrlKey && e.keyCode === 85)) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
