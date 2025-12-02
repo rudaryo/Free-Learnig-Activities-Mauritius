@@ -419,32 +419,11 @@
             }
         }
 
-        function speakText(text) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                
-                // Try to find a more natural voice
-                const voices = window.speechSynthesis.getVoices();
-                const preferredVoice = voices.find(voice => 
-                    voice.name.includes('Google UK English Female') ||
-                    voice.name.includes('Google US English') ||
-                    voice.name.includes('Microsoft Zira') ||
-                    voice.name.includes('Samantha') ||
-                    voice.name.includes('Karen') ||
-                    voice.lang.includes('en-') && voice.name.includes('Natural')
-                ) || voices.find(voice => voice.lang.includes('en-')) || voices[0];
-                
-                if (preferredVoice) {
-                    utterance.voice = preferredVoice;
-                }
-                
-                utterance.rate = 0.8;   // Slightly slower for enthusiasm
-                utterance.pitch = 1.1;  // Slightly higher for friendliness
-                utterance.volume = 1;
-                
-                window.speechSynthesis.speak(utterance);
-            }
+        function speakText(audioFileName) {
+            // Play custom audio file instead of text-to-speech
+            const audio = new Audio(`Asset/${audioFileName}`);
+            audio.volume = 1.0;
+            audio.play().catch(err => console.error('Audio playback failed:', err));
         }
 
         // Load voices when they become available
@@ -515,26 +494,24 @@
                 correctAnswers++;
                 wrapperElement.classList.add('correct');
                 
-                const encouragements = [
-                    'Excellent! Well done!',
-                    'Fantastic! You got it!',
-                    'Brilliant! Great job!',
-                    'Amazing! Perfect!',
-                    'Wonderful! Keep it up!',
-                    'Super! You\'re doing great!',
-                    'Outstanding! Correct!',
-                    'Excellent work!',
-                    'Perfect! Well done!',
-                    'Great job! You\'re a star!'
+                // Array of praise audio files and corresponding text
+                const praises = [
+                    { audio: 'brilliant.mp3', text: 'Brilliant!' },
+                    { audio: 'fantastic.mp3', text: 'Fantastic!' },
+                    { audio: 'wonderful.mp3', text: 'Wonderful!' },
+                    { audio: 'marvellous.mp3', text: 'Marvellous!' },
+                    { audio: 'You_did_well.mp3', text: 'You did well!' }
                 ];
                 
-                const randomIndex = Math.floor(Math.random() * encouragements.length);
-                const encouragement = encouragements[randomIndex];
-                const emojis = ['🎉', '⭐', '🌟', '👏', '🎊', '💫', '🏆', '✨', '🎯', '🌈'];
+                const randomIndex = Math.floor(Math.random() * praises.length);
+                const praise = praises[randomIndex];
+                const emojis = ['🎉', '⭐', '🌟', '👏', '🎊'];
                 
-                feedback.textContent = `${emojis[randomIndex]} ${encouragement} ${emojis[randomIndex]}`;
+                feedback.textContent = `${emojis[randomIndex]} ${praise.text} ${emojis[randomIndex]}`;
                 feedback.className = 'feedback correct';
-                speakText(encouragement);
+                
+                // Play custom audio
+                speakText(praise.audio);
                 
                 // Show Next button for correct answers
                 setTimeout(() => {
@@ -542,10 +519,20 @@
                 }, 1000);
             } else {
                 wrapperElement.classList.add('wrong');
-                const wrongMessage = 'Good try! Keep learning!';
-                feedback.textContent = `💪 ${wrongMessage} 💪`;
+                
+                // Wrong answer audio files
+                const wrongAudios = [
+                    { audio: 'oops_keep_trying.mp3', text: 'Oops! Keep trying!' },
+                    { audio: 'keep_tyring.mp3', text: 'Keep trying!' }
+                ];
+                
+                const wrongChoice = wrongAudios[Math.floor(Math.random() * wrongAudios.length)];
+                
+                feedback.textContent = `💪 ${wrongChoice.text} 💪`;
                 feedback.className = 'feedback wrong';
-                speakText(wrongMessage);
+                
+                // Play custom audio
+                speakText(wrongChoice.audio);
                 
                 // Show Retry button for wrong answers
                 setTimeout(() => {
