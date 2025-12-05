@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TCBV2GCV');</script>
+<!-- End Google Tag Manager -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 Time Colouring Book - Learning for Fun</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            touch-action: manipulation;
+        }
+        
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+        }
+        
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            color: #667eea;
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: none;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin: 15px 0;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            padding: 20px;
+            max-width: 900px;
+            width: 100%;
+            margin-top: 60px;
+        }
+        
+        .picture-gallery {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border: 3px solid #9C27B0;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .gallery-title {
+            text-align: center;
+            color: #7B1FA2;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .thumbnail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+            justify-items: center;
+        }
+        
+        .thumbnail-container {
+            text-align: center;
+        }
+        
+        .thumbnail {
+            width: 100px;
+            height: 100px;
+            border: 4px solid #ddd;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            object-fit: cover;
+            background: white;
+        }
+        
+        .thumbnail:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+        
+        .thumbnail.selected {
+            border-color: #9C27B0;
+            transform: scale(1.05);
+            box-shadow: 0 0 0 4px rgba(156, 39, 176, 0.3);
+        }
+        
+        .thumbnail-label {
+            margin-top: 5px;
+            font-size: 11px;
+            font-weight: bold;
+            color: #7B1FA2;
+        }
+        
+        .color-palette {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+        
+        .color-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .color-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .color-btn.selected {
+            border-color: #333;
+            transform: scale(1.15);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+        }
+        
+        .tools {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .tool-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .tool-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .canvas-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            background: white;
+            border-radius: 15px;
+            padding: 10px;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+            min-height: 400px;
+        }
+        
+        #coloringCanvas {
+            border: 3px solid #333;
+            border-radius: 10px;
+            cursor: crosshair;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .selected-color-indicator {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .color-preview {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 3px solid #333;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+        
+        .loading-message {
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 20px;
+            color: #666;
+        }
+        
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .thumbnail {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .thumbnail-grid {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+                gap: 10px;
+            }
+            
+            .color-btn {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .tool-btn {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            
+            .game-container {
+                margin-top: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TCBV2GCV"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+    <button class="back-button" onclick="window.location.href='../grade-1-math-index.html'">← Home</button>
+    
+    <div class="header">
+        <h1>🕐 Time Colouring Book 🎨</h1>
+        <p>👆 Click a picture below to start coloring!</p>
+    </div>
+    
+    <div class="game-container">
+        <!-- Picture Gallery -->
+        <div class="picture-gallery">
+            <div class="gallery-title">🖼️ Choose Your Time Activity 🖼️</div>
+            <div class="thumbnail-grid" id="thumbnailGrid"></div>
+        </div>
+        
+        <!-- Color Palette -->
+        <div class="color-palette" id="colorPalette"></div>
+        
+        <!-- Tools -->
+        <div class="tools">
+            <button class="tool-btn" onclick="clearCanvas()">🗑️ Clear Picture</button>
+            <button class="tool-btn" onclick="undoLast()">↩️ Undo</button>
+            <button class="tool-btn" onclick="saveDrawing()">💾 Save Picture</button>
+        </div>
+        
+        <div class="selected-color-indicator">
+            Selected Color: <span class="color-preview" id="selectedColorPreview"></span>
+        </div>
+        
+        <!-- Canvas Area -->
+        <div class="canvas-container">
+            <div id="canvasArea">
+                <div class="loading-message">
+                    👆 Click on a picture above to start coloring! 🎨<br>
+                    <small style="color: #999; font-size: 16px;">Choose from the time activities</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Time activity images
+        const imagePaths = [
+            { path: 'Assets/Its_Time_to_Wake_Up.PNG', label: 'Wake Up' },
+            { path: 'Assets/Its_Breakfast_Time.PNG', label: 'Breakfast' },
+            { path: 'Assets/Its_Time_to_Go_to_School.PNG', label: 'Go to School' },
+            { path: 'Assets/Its_Learning_Time.PNG', label: 'Learning Time' },
+            { path: 'Assets/Its_Recess_Time.PNG', label: 'Recess' },
+            { path: 'Assets/Its_Time_to_Go_Home.PNG', label: 'Go Home' },
+            { path: 'Assets/Its_Dinner_Time.PNG', label: 'Dinner' },
+            { path: 'Assets/Its_Bedtime.PNG', label: 'Bedtime' }
+        ];
+        
+        let canvas = null;
+        let ctx = null;
+        let loadedImages = [];
+        let currentImageIndex = -1;
+        let imageStates = {};
+        
+        // Color palette
+        const colors = [
+            { name: 'Red', value: '#FF0000' },
+            { name: 'Orange', value: '#FF8C00' },
+            { name: 'Yellow', value: '#FFD700' },
+            { name: 'Green', value: '#00FF00' },
+            { name: 'Blue', value: '#0000FF' },
+            { name: 'Purple', value: '#9370DB' },
+            { name: 'Pink', value: '#FF69B4' },
+            { name: 'Brown', value: '#8B4513' },
+            { name: 'Black', value: '#000000' },
+            { name: 'White', value: '#FFFFFF' },
+            { name: 'Light Blue', value: '#87CEEB' },
+            { name: 'Light Green', value: '#90EE90' },
+            { name: 'Peach', value: '#FFDAB9' },
+            { name: 'Lime', value: '#32CD32' },
+            { name: 'Coral', value: '#FF7F50' },
+        ];
+        
+        let selectedColor = colors[0].value;
+        let history = [];
+        
+        // Initialize
+        function init() {
+            createColorPalette();
+            updateColorPreview();
+            createThumbnailGallery();
+        }
+        
+        // Create thumbnail gallery
+        function createThumbnailGallery() {
+            const grid = document.getElementById('thumbnailGrid');
+            
+            imagePaths.forEach((item, index) => {
+                const container = document.createElement('div');
+                container.className = 'thumbnail-container';
+                
+                const img = document.createElement('img');
+                img.src = item.path;
+                img.className = 'thumbnail';
+                img.alt = item.label;
+                img.onerror = function() {
+                    console.error(`Failed to load: ${item.path}`);
+                    this.style.border = '4px dashed #ff0000';
+                    this.alt = '❌ Not found';
+                };
+                img.onclick = () => loadPicture(index);
+                
+                const label = document.createElement('div');
+                label.className = 'thumbnail-label';
+                label.textContent = item.label;
+                
+                container.appendChild(img);
+                container.appendChild(label);
+                grid.appendChild(container);
+                
+                // Preload the full image
+                const fullImg = new Image();
+                fullImg.onload = function() {
+                    loadedImages[index] = {
+                        image: fullImg,
+                        name: item.label
+                    };
+                };
+                fullImg.onerror = function() {
+                    console.error(`Failed to preload: ${item.path}`);
+                };
+                fullImg.src = item.path;
+            });
+        }
+        
+        // Load selected picture
+        function loadPicture(index) {
+            if (!loadedImages[index]) {
+                alert('⏳ Image still loading or not found...');
+                return;
+            }
+            
+            // Save current state if exists
+            if (canvas && ctx && currentImageIndex >= 0) {
+                saveCurrentState();
+            }
+            
+            currentImageIndex = index;
+            
+            // Update thumbnail selection
+            document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
+                if (i === index) {
+                    thumb.classList.add('selected');
+                } else {
+                    thumb.classList.remove('selected');
+                }
+            });
+            
+            // Display the image
+            displayCurrentImage();
+        }
+        
+        // Display current image
+        function displayCurrentImage() {
+            const currentImg = loadedImages[currentImageIndex];
+            if (!currentImg) return;
+            
+            createCanvas(currentImg.image);
+            
+            // Restore saved state if exists
+            if (imageStates[currentImageIndex]) {
+                ctx.putImageData(imageStates[currentImageIndex], 0, 0);
+            }
+        }
+        
+        // Save current state
+        function saveCurrentState() {
+            if (canvas && ctx && currentImageIndex >= 0) {
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                imageStates[currentImageIndex] = imageData;
+            }
+        }
+        
+        // Create color palette
+        function createColorPalette() {
+            const palette = document.getElementById('colorPalette');
+            colors.forEach((color, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'color-btn';
+                btn.style.backgroundColor = color.value;
+                btn.title = color.name;
+                btn.onclick = () => selectColor(color.value, btn);
+                if (index === 0) btn.classList.add('selected');
+                palette.appendChild(btn);
+            });
+        }
+        
+        // Select color
+        function selectColor(color, btn) {
+            selectedColor = color;
+            document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            updateColorPreview();
+        }
+        
+        // Update color preview
+        function updateColorPreview() {
+            document.getElementById('selectedColorPreview').style.backgroundColor = selectedColor;
+        }
+        
+        // Create canvas
+        function createCanvas(img) {
+            const canvasArea = document.getElementById('canvasArea');
+            canvasArea.innerHTML = '';
+            
+            canvas = document.createElement('canvas');
+            canvas.id = 'coloringCanvas';
+            
+            const maxWidth = 800;
+            const maxHeight = 600;
+            let width = img.width;
+            let height = img.height;
+            
+            if (width > maxWidth || height > maxHeight) {
+                const ratio = Math.min(maxWidth / width, maxHeight / height);
+                width = width * ratio;
+                height = height * ratio;
+            }
+            
+            canvas.width = width;
+            canvas.height = height;
+            ctx = canvas.getContext('2d', { willReadFrequently: true });
+            ctx.drawImage(img, 0, 0, width, height);
+            
+            canvasArea.appendChild(canvas);
+            
+            canvas.addEventListener('click', handleCanvasClick);
+            canvas.addEventListener('touchstart', handleCanvasTouch);
+            
+            history = [];
+            saveToHistory();
+        }
+        
+        // Canvas interaction
+        function handleCanvasClick(e) {
+            if (!canvas) return;
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const x = Math.floor((e.clientX - rect.left) * scaleX);
+            const y = Math.floor((e.clientY - rect.top) * scaleY);
+            saveToHistory();
+            floodFill(x, y, selectedColor);
+        }
+        
+        function handleCanvasTouch(e) {
+            if (!canvas) return;
+            e.preventDefault();
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const x = Math.floor((touch.clientX - rect.left) * scaleX);
+            const y = Math.floor((touch.clientY - rect.top) * scaleY);
+            saveToHistory();
+            floodFill(x, y, selectedColor);
+        }
+        
+        // Flood fill algorithm
+        function floodFill(x, y, fillColor) {
+            if (!canvas || !ctx) return;
+            
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const targetColor = getPixelColor(imageData, x, y);
+            const fillColorRgb = hexToRgb(fillColor);
+            
+            if (colorsMatch(targetColor, fillColorRgb)) return;
+            
+            const pixelsToCheck = [[x, y]];
+            const visited = new Set();
+            
+            while (pixelsToCheck.length > 0) {
+                const [currentX, currentY] = pixelsToCheck.pop();
+                const key = `${currentX},${currentY}`;
+                
+                if (visited.has(key)) continue;
+                visited.add(key);
+                
+                if (currentX < 0 || currentX >= canvas.width || 
+                    currentY < 0 || currentY >= canvas.height) continue;
+                
+                const currentColor = getPixelColor(imageData, currentX, currentY);
+                
+                if (colorsMatch(currentColor, targetColor)) {
+                    setPixelColor(imageData, currentX, currentY, fillColorRgb);
+                    pixelsToCheck.push([currentX + 1, currentY]);
+                    pixelsToCheck.push([currentX - 1, currentY]);
+                    pixelsToCheck.push([currentX, currentY + 1]);
+                    pixelsToCheck.push([currentX, currentY - 1]);
+                }
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+        }
+        
+        function getPixelColor(imageData, x, y) {
+            const index = (y * imageData.width + x) * 4;
+            return {
+                r: imageData.data[index],
+                g: imageData.data[index + 1],
+                b: imageData.data[index + 2],
+                a: imageData.data[index + 3]
+            };
+        }
+        
+        function setPixelColor(imageData, x, y, color) {
+            const index = (y * imageData.width + x) * 4;
+            imageData.data[index] = color.r;
+            imageData.data[index + 1] = color.g;
+            imageData.data[index + 2] = color.b;
+            imageData.data[index + 3] = 255;
+        }
+        
+        function colorsMatch(c1, c2) {
+            return c1.r === c2.r && c1.g === c2.g && c1.b === c2.b;
+        }
+        
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+        
+        function saveToHistory() {
+            if (!canvas || !ctx) return;
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            history.push(imageData);
+            if (history.length > 20) history.shift();
+        }
+        
+        function undoLast() {
+            if (!canvas || !ctx) {
+                alert('Please select a picture first! 📷');
+                return;
+            }
+            if (history.length > 1) {
+                history.pop();
+                ctx.putImageData(history[history.length - 1], 0, 0);
+            } else {
+                alert('Nothing to undo! 😊');
+            }
+        }
+        
+        function clearCanvas() {
+            if (!canvas || !ctx || currentImageIndex < 0) {
+                alert('Please select a picture first! 📷');
+                return;
+            }
+            if (confirm('Clear all colors from this picture? 🤔')) {
+                const currentImg = loadedImages[currentImageIndex];
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(currentImg.image, 0, 0, canvas.width, canvas.height);
+                delete imageStates[currentImageIndex];
+                history = [];
+                saveToHistory();
+                alert('✅ Picture cleared! 🎨');
+            }
+        }
+        
+        function saveDrawing() {
+            if (!canvas || currentImageIndex < 0) {
+                alert('Please select a picture first! 📷');
+                return;
+            }
+            const imageName = imagePaths[currentImageIndex].label.replace(/\s+/g, '-').toLowerCase();
+            const link = document.createElement('a');
+            link.download = `time-coloring-${imageName}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+            alert('🎉 Picture saved! 🌟');
+        }
+        
+        init();
+    </script>
+</body>
+</html>
