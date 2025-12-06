@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TCBV2GCV');</script>
+<!-- End Google Tag Manager -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Time Activities | Learning for Fun</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            color: #667eea;
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: none;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 80px auto 20px;
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        .welcome-screen {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .welcome-screen h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .welcome-screen p {
+            color: #666;
+            font-size: 1.3rem;
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+
+        .start-button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+            transition: all 0.3s ease;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .start-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(245, 87, 108, 0.6);
+        }
+
+        .game-area {
+            display: none;
+        }
+
+        .instruction {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.3rem;
+            color: #f5576c;
+            font-weight: bold;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 15px 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-box span {
+            display: block;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .info-box strong {
+            color: #f5576c;
+            font-size: 1.5rem;
+        }
+
+        .timer {
+            font-size: 2rem;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .timer.warning {
+            color: #f44336;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .matching-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .pictures-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .picture-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .picture-img {
+            width: 7.5cm;
+            height: 5cm;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 3px solid #ddd;
+            background: white;
+        }
+
+        .drop-zone {
+            flex: 1;
+            min-height: 5cm;
+            border: 3px dashed #ccc;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            transition: all 0.3s ease;
+            padding: 10px;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+            text-align: center;
+        }
+
+        .drop-zone.drag-over {
+            background: #e3f2fd;
+            border-color: #667eea;
+            transform: scale(1.05);
+        }
+
+        .drop-zone.filled {
+            border: 3px solid #4caf50;
+            background: #e8f5e9;
+        }
+
+        .drop-zone.incorrect {
+            border: 3px solid #f44336;
+            background: #ffebee;
+        }
+
+        .statements-column {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border-radius: 15px;
+        }
+
+        .statement-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            cursor: move;
+            transition: all 0.3s ease;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+            text-align: center;
+            border: 3px solid transparent;
+        }
+
+        .statement-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .statement-card.dragging {
+            opacity: 0.5;
+        }
+
+        .statement-card.placed {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .check-button {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.4);
+            transition: all 0.3s ease;
+            font-weight: bold;
+            display: none;
+            margin: 30px auto;
+        }
+
+        .check-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(79, 172, 254, 0.6);
+        }
+
+        .completion-screen {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .completion-screen h2 {
+            color: #667eea;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .completion-screen .stars {
+            font-size: 4rem;
+            margin: 20px 0;
+        }
+
+        .completion-screen p {
+            font-size: 1.5rem;
+            color: #666;
+            margin: 20px 0;
+        }
+
+        .restart-button {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.4);
+            transition: all 0.3s ease;
+            font-weight: bold;
+            margin: 10px;
+        }
+
+        .restart-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(79, 172, 254, 0.6);
+        }
+
+        .feedback-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 40px 60px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            font-size: 2rem;
+            font-weight: bold;
+            display: none;
+            z-index: 1000;
+            animation: fadeInOut 2s forwards;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+            20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+            80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+        }
+
+        .feedback-message.correct {
+            color: #4caf50;
+        }
+
+        .feedback-message.incorrect {
+            color: #f44336;
+        }
+
+        @media (max-width: 1024px) {
+            .matching-container {
+                grid-template-columns: 1fr;
+            }
+
+            .picture-img {
+                width: 6cm;
+                height: 4cm;
+            }
+
+            .drop-zone {
+                min-height: 4cm;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 60px 20px 20px;
+                margin-top: 60px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .picture-box {
+                flex-direction: column;
+            }
+
+            .picture-img {
+                width: 100%;
+                height: auto;
+            }
+
+            .drop-zone {
+                width: 100%;
+                min-height: 80px;
+                font-size: 2rem;
+            }
+
+            .statement-card {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TCBV2GCV"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+    <button class="back-button" onclick="window.location.href='../grade-1-math-index.html'">
+        ← Home
+    </button>
+
+    <div class="container">
+        <div class="header">
+            <h1>⏰ Match Time Activities</h1>
+            <p>Drag the correct statement to each picture!</p>
+        </div>
+
+        <!-- Welcome Screen -->
+        <div class="welcome-screen" id="welcomeScreen">
+            <h2>👋 Hello Pupils!</h2>
+            <p style="font-size: 1.3rem; color: #555; margin: 20px 0;">
+                Look at each picture and drag the correct time statement to the empty box!
+            </p>
+            
+            <div style="margin: 30px 0; padding: 20px; background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); max-width: 500px; margin: 30px auto;">
+                <p style="color: #f5576c; font-weight: bold; margin-bottom: 15px;">👀 How to Play:</p>
+                <p style="color: #666; font-size: 1.1rem; margin: 10px 0;">1. 👁️ Look at the picture</p>
+                <p style="color: #666; font-size: 1.1rem; margin: 10px 0;">2. 👆 Drag the matching statement</p>
+                <p style="color: #666; font-size: 1.1rem; margin: 10px 0;">3. ✅ Click "Check Answers" when done!</p>
+            </div>
+            
+            <button class="start-button" onclick="startGame()">START GAME</button>
+        </div>
+
+        <!-- Game Area -->
+        <div class="game-area" id="gameArea">
+            <div class="instruction">
+                👆 Drag each statement to match the correct picture!
+            </div>
+
+            <div class="progress-info" id="progressInfo">
+                <div class="info-box">
+                    <span>Time Left</span>
+                    <strong class="timer" id="timer">3:00</strong>
+                </div>
+                <div class="info-box">
+                    <span>Matched</span>
+                    <strong><span id="matchedCount">0</span> / 11</strong>
+                </div>
+            </div>
+
+            <div class="matching-container">
+                <!-- Pictures Column -->
+                <div class="pictures-column" id="picturesColumn"></div>
+
+                <!-- Statements Column -->
+                <div class="statements-column" id="statementsColumn"></div>
+            </div>
+
+            <button class="check-button" id="checkButton" onclick="checkAnswers()">
+                ✅ CHECK MY ANSWERS
+            </button>
+        </div>
+
+        <!-- Completion Screen -->
+        <div class="completion-screen" id="completionScreen">
+            <h2>🎉 Excellent Work!</h2>
+            <div class="stars" id="rewardStars">⭐⭐⭐</div>
+            <p id="completionMessage">You matched all the time activities correctly!</p>
+            <p style="font-size: 2rem; color: #667eea; font-weight: bold; margin: 20px 0;" id="timeResult"></p>
+            <p style="font-size: 1.8rem; color: #4caf50; font-weight: bold;" id="rewardMessage"></p>
+            <button class="restart-button" onclick="restartGame()">🔄 PLAY AGAIN</button>
+            <button class="restart-button" onclick="goHome()" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                🏠 GO HOME
+            </button>
+        </div>
+    </div>
+
+    <!-- Feedback Message -->
+    <div class="feedback-message" id="feedbackMessage"></div>
+
+    <script>
+        // Game data - pictures and their matching statements
+        const activities = [
+            { image: 'Assets/Its_Time_to_Wake_Up.PNG', statement: "It's time to wake up!" },
+            { image: 'Assets/Time_to_Get_Ready.PNG', statement: "It's time to get ready!" },
+            { image: 'Assets/Its_Time_to_Get_Dressed.PNG', statement: "It's time to get dressed!" },
+            { image: 'Assets/Its_Breakfast_Time.PNG', statement: "It's breakfast time!" },
+            { image: 'Assets/Its_Time_to_Go_to School.PNG', statement: "It's time to go to school!" },
+            { image: 'Assets/Its_Learning_Time.PNG', statement: "It's learning time!" },
+            { image: 'Assets/Its_Recess_Time.PNG', statement: "It's recess time!" },
+            { image: 'Assets/Its_Snack_Time.PNG', statement: "It's snack time!" },
+            { image: 'Assets/Its_Time_to_Go_Home.PNG', statement: "It's time to go home!" },
+            { image: 'Assets/Its_Dinner_Time.PNG', statement: "It's dinner time!" },
+            { image: 'Assets/Its_Bedtime.PNG', statement: "It's bedtime!" }
+        ];
+
+        let placements = {};
+        let draggedElement = null;
+        let timerInterval = null;
+        let timeRemaining = 180; // 3 minutes in seconds
+        let startTime = null;
+
+        // Start Game
+        function startGame() {
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('gameArea').style.display = 'block';
+            setupGame();
+            startTimer();
+        }
+
+        // Setup Game
+        function setupGame() {
+            const picturesColumn = document.getElementById('picturesColumn');
+            const statementsColumn = document.getElementById('statementsColumn');
+
+            // Shuffle BOTH pictures and statements for complete randomness each time
+            const shuffledPictures = [...activities].sort(() => Math.random() - 0.5);
+            const shuffledStatements = [...activities].sort(() => Math.random() - 0.5);
+
+            // Create picture boxes
+            shuffledPictures.forEach((activity, index) => {
+                const pictureBox = document.createElement('div');
+                pictureBox.className = 'picture-box';
+
+                const img = document.createElement('img');
+                img.src = activity.image;
+                img.className = 'picture-img';
+                img.alt = activity.statement;
+
+                const dropZone = document.createElement('div');
+                dropZone.className = 'drop-zone';
+                dropZone.dataset.correctStatement = activity.statement;
+                dropZone.dataset.index = index;
+
+                dropZone.addEventListener('dragover', handleDragOver);
+                dropZone.addEventListener('dragleave', handleDragLeave);
+                dropZone.addEventListener('drop', handleDrop);
+
+                pictureBox.appendChild(img);
+                pictureBox.appendChild(dropZone);
+                picturesColumn.appendChild(pictureBox);
+            });
+
+            // Create statement cards
+            shuffledStatements.forEach((activity) => {
+                const statementCard = document.createElement('div');
+                statementCard.className = 'statement-card';
+                statementCard.textContent = activity.statement;
+                statementCard.draggable = true;
+                statementCard.dataset.statement = activity.statement;
+
+                statementCard.addEventListener('dragstart', handleDragStart);
+                statementCard.addEventListener('dragend', handleDragEnd);
+
+                statementsColumn.appendChild(statementCard);
+            });
+        }
+
+        function handleDragStart(e) {
+            draggedElement = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.innerHTML);
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            this.classList.add('drag-over');
+            return false;
+        }
+
+        function handleDragLeave(e) {
+            this.classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+
+            this.classList.remove('drag-over');
+
+            if (draggedElement && !this.classList.contains('filled')) {
+                const statement = draggedElement.dataset.statement;
+                const index = this.dataset.index;
+
+                this.textContent = statement;
+                this.classList.add('filled');
+
+                draggedElement.classList.add('placed');
+                draggedElement.draggable = false;
+
+                placements[index] = statement;
+
+                updateProgress();
+
+                if (Object.keys(placements).length === activities.length) {
+                    document.getElementById('checkButton').style.display = 'block';
+                }
+            }
+
+            return false;
+        }
+
+        function updateProgress() {
+            document.getElementById('matchedCount').textContent = Object.keys(placements).length;
+        }
+
+        // Timer Functions
+        function startTimer() {
+            startTime = Date.now();
+            timeRemaining = 180; // Reset to 3 minutes
+            updateTimerDisplay();
+            
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                updateTimerDisplay();
+                
+                // Warning at 30 seconds
+                if (timeRemaining === 30) {
+                    document.getElementById('timer').classList.add('warning');
+                    speakMessage('Hurry up! Only 30 seconds left!');
+                }
+                
+                // Time's up!
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    timeUp();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            const display = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('timer').textContent = display;
+        }
+
+        function timeUp() {
+            speakMessage('Time is up! Let me check your answers.');
+            document.getElementById('checkButton').style.display = 'none';
+            
+            setTimeout(() => {
+                checkAnswers();
+            }, 1500);
+        }
+
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }
+
+        function getTimeTaken() {
+            return 180 - timeRemaining;
+        }
+
+        function checkAnswers() {
+            stopTimer();
+            
+            let allCorrect = true;
+            const dropZones = document.querySelectorAll('.drop-zone');
+
+            dropZones.forEach((zone) => {
+                const correctStatement = zone.dataset.correctStatement;
+                const index = zone.dataset.index;
+                const placedStatement = placements[index];
+
+                zone.classList.remove('incorrect');
+
+                if (placedStatement === correctStatement) {
+                    zone.classList.add('filled');
+                } else {
+                    zone.classList.add('incorrect');
+                    allCorrect = false;
+                }
+            });
+
+            if (allCorrect) {
+                const timeTaken = getTimeTaken();
+                showFeedback('Perfect!', 'correct');
+                speakMessage('Perfect! You matched all the time activities correctly!');
+                
+                setTimeout(() => {
+                    completeGame(timeTaken);
+                }, 2000);
+            } else {
+                showFeedback('Not quite right. Try again!', 'incorrect');
+                speakMessage('Not quite right. Check the red boxes and try again!');
+                
+                // Restart timer for retry
+                startTimer();
+            }
+        }
+
+        function showFeedback(message, type) {
+            const feedbackDiv = document.getElementById('feedbackMessage');
+            feedbackDiv.textContent = message;
+            feedbackDiv.className = 'feedback-message ' + type;
+            feedbackDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                feedbackDiv.style.display = 'none';
+            }, 2000);
+        }
+
+        function speakMessage(message) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(message);
+                utterance.rate = 0.8;
+                utterance.pitch = 1.2;
+                utterance.volume = 1;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function completeGame(timeTaken) {
+            const minutes = Math.floor(timeTaken / 60);
+            const seconds = timeTaken % 60;
+            const timeDisplay = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Calculate reward based on time
+            let stars = '';
+            let reward = '';
+            let rewardMessage = '';
+            
+            if (timeTaken <= 60) {
+                // Under 1 minute - AMAZING!
+                stars = '🌟⭐🌟⭐🌟';
+                reward = '🏆 SUPER CHAMPION! 🏆';
+                rewardMessage = 'WOW! You are incredibly fast!';
+                speakMessage('Amazing! You finished in under one minute! You are a super champion!');
+            } else if (timeTaken <= 120) {
+                // Under 2 minutes - EXCELLENT!
+                stars = '⭐🌟⭐🌟';
+                reward = '🥇 EXCELLENT WORK! 🥇';
+                rewardMessage = 'You did a fantastic job!';
+                speakMessage('Excellent work! You finished in less than two minutes!');
+            } else if (timeTaken <= 180) {
+                // Under 3 minutes - GREAT!
+                stars = '⭐⭐⭐';
+                reward = '🎖️ GREAT JOB! 🎖️';
+                rewardMessage = 'Well done! You completed all matches!';
+                speakMessage('Great job! You matched everything correctly!');
+            } else {
+                // Over 3 minutes but correct
+                stars = '⭐⭐';
+                reward = '👏 GOOD EFFORT! 👏';
+                rewardMessage = 'Keep practicing to get faster!';
+                speakMessage('Good effort! Keep practicing to improve your speed!');
+            }
+            
+            document.getElementById('rewardStars').textContent = stars;
+            document.getElementById('timeResult').textContent = `Time: ${timeDisplay}`;
+            document.getElementById('rewardMessage').textContent = reward;
+            document.getElementById('completionMessage').textContent = rewardMessage;
+            
+            document.getElementById('gameArea').style.display = 'none';
+            document.getElementById('completionScreen').style.display = 'block';
+        }
+
+        function restartGame() {
+            stopTimer();
+            document.getElementById('completionScreen').style.display = 'none';
+            document.getElementById('welcomeScreen').style.display = 'block';
+            
+            placements = {};
+            timeRemaining = 180;
+            document.getElementById('timer').classList.remove('warning');
+            document.getElementById('picturesColumn').innerHTML = '';
+            document.getElementById('statementsColumn').innerHTML = '';
+            document.getElementById('checkButton').style.display = 'none';
+            updateProgress();
+        }
+
+        function goHome() {
+            window.location.href = '../grade-1-math-index.html';
+        }
+    </script>
+</body>
+</html>
