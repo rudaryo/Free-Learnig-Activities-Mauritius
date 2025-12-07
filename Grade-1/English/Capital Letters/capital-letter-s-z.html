@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TCBV2GCV');</script>
+<!-- End Google Tag Manager -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recognise and Identify Capital Letters (S-Z) | Learning for Fun</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            color: #667eea;
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: none;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            text-align: center;
+        }
+
+        .welcome-letter {
+            font-size: 15rem;
+            font-weight: bold;
+            color: #FF6B6B;
+            margin: 20px 0;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .welcome-options {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .option-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .option-circle:hover {
+            transform: scale(1.1);
+        }
+
+        .start-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            font-weight: bold;
+            margin-top: 30px;
+        }
+
+        .start-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+
+        /* Game Screen */
+        .game-screen {
+            display: none;
+        }
+
+        .progress-bar {
+            background: #f0f0f0;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .question-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .instruction {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .big-letter {
+            font-size: 12rem;
+            font-weight: bold;
+            margin: 30px 0;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .choices {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .choice-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .choice-circle:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .choice-circle.correct {
+            animation: correctPulse 0.6s;
+        }
+
+        .choice-circle.wrong {
+            animation: shake 0.5s;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-20px); }
+            75% { transform: translateX(20px); }
+        }
+
+        /* Completion Screen */
+        .completion-screen {
+            display: none;
+            text-align: center;
+        }
+
+        .stars {
+            font-size: 5rem;
+            margin: 30px 0;
+        }
+
+        .completion-message {
+            font-size: 2rem;
+            color: #667eea;
+            margin: 20px 0;
+        }
+
+        .score-display {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #4caf50;
+            margin: 20px 0;
+        }
+
+        .replay-button {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.4);
+            transition: all 0.3s ease;
+            font-weight: bold;
+            margin: 10px;
+        }
+
+        .replay-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(79, 172, 254, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .big-letter {
+                font-size: 8rem;
+            }
+
+            .choice-circle {
+                width: 100px;
+                height: 100px;
+                font-size: 3.5rem;
+            }
+
+            .welcome-letter {
+                font-size: 10rem;
+            }
+
+            .option-circle {
+                width: 90px;
+                height: 90px;
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TCBV2GCV"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+    <button class="back-button" onclick="window.location.href='../../grade-1-english-index.html'">
+        ← Home
+    </button>
+
+    <div class="container">
+        <h1>🔤 Recognise and Identify Capital Letters (S-Z)</h1>
+
+        <!-- Welcome Screen -->
+        <div class="welcome-screen" id="welcomeScreen">
+            <p style="font-size: 1.3rem; color: #666; margin: 20px 0;">
+                Let's learn Capital Letters!
+            </p>
+            <div class="welcome-letter">S</div>
+            <p style="font-size: 1.5rem; color: #667eea; font-weight: bold;">
+                Can you find the letter S?
+            </p>
+            <div class="welcome-options">
+                <div class="option-circle" style="background: #FF6B6B;">C</div>
+                <div class="option-circle" style="background: #4ECDC4;">G</div>
+                <div class="option-circle" style="background: #95E1D3;">S</div>
+            </div>
+            <button class="start-button" onclick="startGame()">START LEARNING</button>
+        </div>
+
+        <!-- Game Screen -->
+        <div class="game-screen" id="gameScreen">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="question-container">
+                <p class="instruction">Listen and click the correct letter!</p>
+                <div class="big-letter" id="letterDisplay"></div>
+                <div class="choices" id="choicesContainer"></div>
+            </div>
+        </div>
+
+        <!-- Completion Screen -->
+        <div class="completion-screen" id="completionScreen">
+            <div class="stars">⭐⭐⭐</div>
+            <div class="completion-message">Excellent Work!</div>
+            <div class="score-display" id="finalScore"></div>
+            <p style="font-size: 1.3rem; color: #666; margin: 20px 0;">
+                You've learned capital letters S to Z!
+            </p>
+            <button class="replay-button" onclick="restartGame()">🔄 PLAY AGAIN</button>
+            <button class="replay-button" onclick="goHome()" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                🏠 GO HOME
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const letters = ['S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+        const colors = ['#FF6B6B', '#4ECDC4', '#95E1D3', '#F8B500', '#C44569', '#7B68EE', '#FF9FF3', '#54A0FF'];
+        
+        const allLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+        
+        let currentLetterIndex = 0;
+        let attempts = 0;
+        let correctAnswers = 0;
+
+        const level2Questions = [
+            { letter: 'S', choices: ['S', 'C', 'G'] },
+            { letter: 'T', choices: ['T', 'I', 'L'] },
+            { letter: 'U', choices: ['U', 'V', 'C'] },
+            { letter: 'V', choices: ['V', 'U', 'Y'] },
+            { letter: 'W', choices: ['W', 'M', 'N'] },
+            { letter: 'X', choices: ['X', 'K', 'Y'] },
+            { letter: 'Y', choices: ['Y', 'V', 'T'] },
+            { letter: 'Z', choices: ['Z', 'N', 'S'] }
+        ];
+
+        function startGame() {
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('gameScreen').style.display = 'block';
+            loadLetter();
+        }
+
+        function loadLetter() {
+            if (currentLetterIndex >= letters.length) {
+                showCompletion();
+                return;
+            }
+
+            const letter = letters[currentLetterIndex];
+            attempts = 0;
+
+            // Display letter
+            document.getElementById('letterDisplay').textContent = letter;
+            document.getElementById('letterDisplay').style.color = colors[currentLetterIndex];
+
+            // Update progress
+            const progress = ((currentLetterIndex) / letters.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+
+            // Speak the letter
+            speakLetter(letter);
+
+            // Show choices for level 2
+            setTimeout(() => {
+                showLevel2();
+            }, 2000);
+        }
+
+        function showLevel2() {
+            const question = level2Questions[currentLetterIndex];
+            const choicesContainer = document.getElementById('choicesContainer');
+            choicesContainer.innerHTML = '';
+
+            // Shuffle choices
+            const shuffled = [...question.choices].sort(() => Math.random() - 0.5);
+
+            shuffled.forEach((choice) => {
+                const circle = document.createElement('div');
+                circle.className = 'choice-circle';
+                circle.textContent = choice;
+                circle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                circle.onclick = () => checkLevel2Answer(choice, question.letter, circle);
+                choicesContainer.appendChild(circle);
+            });
+
+            // Hide main letter, show instruction
+            document.getElementById('letterDisplay').style.display = 'none';
+            document.querySelector('.instruction').textContent = `Click on the letter ${question.letter}!`;
+            
+            // Speak instruction
+            speakMessage(`Click on the letter ${question.letter}`);
+        }
+
+        function checkLevel2Answer(selected, correct, element) {
+            attempts++;
+
+            if (selected === correct) {
+                element.classList.add('correct');
+                correctAnswers++;
+                
+                // Random positive feedback
+                const feedback = ['Excellent!', 'Marvellous!', 'Well done!', 'Brilliant!', 'Perfect!'];
+                const message = feedback[Math.floor(Math.random() * feedback.length)];
+                speakMessage(message);
+
+                setTimeout(() => {
+                    currentLetterIndex++;
+                    document.getElementById('letterDisplay').style.display = 'block';
+                    document.querySelector('.instruction').textContent = 'Listen and click the correct letter!';
+                    loadLetter();
+                }, 1500);
+            } else {
+                element.classList.add('wrong');
+                speakMessage('Try again!');
+                
+                setTimeout(() => {
+                    element.classList.remove('wrong');
+                }, 500);
+
+                if (attempts >= 3) {
+                    speakMessage(`The correct answer is ${correct}`);
+                    setTimeout(() => {
+                        currentLetterIndex++;
+                        document.getElementById('letterDisplay').style.display = 'block';
+                        document.querySelector('.instruction').textContent = 'Listen and click the correct letter!';
+                        loadLetter();
+                    }, 2000);
+                }
+            }
+        }
+
+        function speakLetter(letter) {
+            const message = `Capital ${letter}`;
+            speakMessage(message);
+        }
+
+        function speakMessage(message) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(message);
+                utterance.rate = 0.8;
+                utterance.pitch = 1.2;
+                utterance.volume = 1;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function showCompletion() {
+            document.getElementById('gameScreen').style.display = 'none';
+            document.getElementById('completionScreen').style.display = 'block';
+            
+            const percentage = Math.round((correctAnswers / letters.length) * 100);
+            document.getElementById('finalScore').textContent = `${correctAnswers} / ${letters.length} (${percentage}%)`;
+            
+            speakMessage('Congratulations! You completed all the capital letters from S to Z!');
+        }
+
+        function restartGame() {
+            currentLetterIndex = 0;
+            attempts = 0;
+            correctAnswers = 0;
+            document.getElementById('completionScreen').style.display = 'none';
+            document.getElementById('welcomeScreen').style.display = 'block';
+        }
+
+        function goHome() {
+            window.location.href = '../../grade-1-english-index.html';
+        }
+    </script>
+</body>
+</html>
