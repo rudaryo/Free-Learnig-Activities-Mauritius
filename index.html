@@ -21,20 +21,336 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         body {
             font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(to bottom, #87CEEB 0%, #98D8E8 50%, #90EE90 100%);
             min-height: 100vh;
             padding: 40px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background Elements */
+        .background-scene {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Sun */
+        .sun {
+            position: absolute;
+            top: 50px;
+            right: 100px;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, #FFD700 0%, #FFA500 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 60px rgba(255, 215, 0, 0.8);
+            animation: sunPulse 4s ease-in-out infinite;
+        }
+
+        .sun::before,
+        .sun::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+        }
+
+        .sun::before {
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+        }
+
+        .sun::after {
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.2) 0%, transparent 70%);
+        }
+
+        @keyframes sunPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Mountains */
+        .mountains {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 300px;
+        }
+
+        .mountain {
+            position: absolute;
+            bottom: 0;
+        }
+
+        .mountain-1 {
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 250px solid transparent;
+            border-right: 250px solid transparent;
+            border-bottom: 200px solid #8B7355;
+            opacity: 0.7;
+        }
+
+        .mountain-2 {
+            left: 300px;
+            width: 0;
+            height: 0;
+            border-left: 200px solid transparent;
+            border-right: 200px solid transparent;
+            border-bottom: 250px solid #A0826D;
+            opacity: 0.6;
+        }
+
+        .mountain-3 {
+            right: 100px;
+            width: 0;
+            height: 0;
+            border-left: 300px solid transparent;
+            border-right: 300px solid transparent;
+            border-bottom: 220px solid #B8956A;
+            opacity: 0.5;
+        }
+
+        /* Clouds */
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 100px;
+            animation: cloudFloat 30s linear infinite;
+        }
+
+        .cloud::before,
+        .cloud::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 100px;
+        }
+
+        .cloud-1 {
+            width: 100px;
+            height: 40px;
+            top: 80px;
+            left: -150px;
+        }
+
+        .cloud-1::before {
+            width: 50px;
+            height: 50px;
+            top: -25px;
+            left: 15px;
+        }
+
+        .cloud-1::after {
+            width: 60px;
+            height: 35px;
+            top: -20px;
+            right: 15px;
+        }
+
+        .cloud-2 {
+            width: 120px;
+            height: 45px;
+            top: 150px;
+            left: -200px;
+            animation-duration: 35s;
+            animation-delay: 5s;
+        }
+
+        .cloud-2::before {
+            width: 55px;
+            height: 55px;
+            top: -28px;
+            left: 20px;
+        }
+
+        .cloud-2::after {
+            width: 65px;
+            height: 40px;
+            top: -22px;
+            right: 20px;
+        }
+
+        .cloud-3 {
+            width: 90px;
+            height: 35px;
+            top: 200px;
+            left: -100px;
+            animation-duration: 40s;
+            animation-delay: 10s;
+        }
+
+        .cloud-3::before {
+            width: 45px;
+            height: 45px;
+            top: -22px;
+            left: 12px;
+        }
+
+        .cloud-3::after {
+            width: 50px;
+            height: 30px;
+            top: -18px;
+            right: 12px;
+        }
+
+        @keyframes cloudFloat {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(100vw + 200px)); }
+        }
+
+        /* Butterflies */
+        .butterfly {
+            position: absolute;
+            font-size: 2em;
+            animation: butterflyFly 15s ease-in-out infinite;
+        }
+
+        .butterfly-1 {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .butterfly-2 {
+            top: 40%;
+            right: 15%;
+            animation-delay: 3s;
+            animation-duration: 18s;
+        }
+
+        .butterfly-3 {
+            top: 60%;
+            left: 20%;
+            animation-delay: 6s;
+            animation-duration: 20s;
+        }
+
+        .butterfly-4 {
+            top: 30%;
+            right: 25%;
+            animation-delay: 9s;
+            animation-duration: 17s;
+        }
+
+        @keyframes butterflyFly {
+            0%, 100% { 
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% { 
+                transform: translate(50px, -30px) rotate(5deg);
+            }
+            50% { 
+                transform: translate(100px, 20px) rotate(-5deg);
+            }
+            75% { 
+                transform: translate(50px, 40px) rotate(3deg);
+            }
+        }
+
+        /* Birds */
+        .bird {
+            position: absolute;
+            font-size: 1.5em;
+            animation: birdFly 25s linear infinite;
+        }
+
+        .bird-1 {
+            top: 15%;
+            left: -50px;
+        }
+
+        .bird-2 {
+            top: 25%;
+            left: -100px;
+            animation-delay: 8s;
+        }
+
+        @keyframes birdFly {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(100vw + 100px)); }
+        }
+
+        /* Stars (for decoration) */
+        .sparkle {
+            position: absolute;
+            font-size: 1.2em;
+            animation: sparkleAnim 2s ease-in-out infinite;
+        }
+
+        .sparkle-1 {
+            top: 100px;
+            left: 15%;
+            animation-delay: 0s;
+        }
+
+        .sparkle-2 {
+            top: 180px;
+            right: 20%;
+            animation-delay: 0.7s;
+        }
+
+        .sparkle-3 {
+            top: 250px;
+            left: 30%;
+            animation-delay: 1.4s;
+        }
+
+        @keyframes sparkleAnim {
+            0%, 100% { 
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 1;
+                transform: scale(1.3);
+            }
+        }
+
+        /* Flowers at bottom */
+        .flower {
+            position: absolute;
+            bottom: 0;
+            font-size: 2em;
+            animation: flowerSway 3s ease-in-out infinite;
+        }
+
+        .flower-1 { left: 5%; animation-delay: 0s; }
+        .flower-2 { left: 15%; animation-delay: 0.5s; }
+        .flower-3 { left: 25%; animation-delay: 1s; }
+        .flower-4 { right: 25%; animation-delay: 0.3s; }
+        .flower-5 { right: 15%; animation-delay: 0.8s; }
+        .flower-6 { right: 5%; animation-delay: 0.2s; }
+
+        @keyframes flowerSway {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         header {
             text-align: center;
             color: white;
             margin-bottom: 50px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
         }
 
         .logo {
@@ -51,7 +367,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         h1 {
             font-size: 3em;
             margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
         }
 
         .subtitle {
@@ -66,6 +382,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             max-width: 800px;
             margin: 0 auto;
             line-height: 1.8;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
         }
 
         .grades-grid {
@@ -79,7 +399,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
 
         .grade-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #FF6B9D 0%, #C06C84 50%, #6C5B7B 100%);
             border-radius: 20px;
             padding: 40px 30px;
             text-align: center;
@@ -99,7 +419,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
             transform: rotate(45deg);
             transition: all 0.5s ease;
         }
@@ -151,7 +471,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
 
         .grade-card.coming-soon {
-            opacity: 0.6;
+            opacity: 0.7;
             cursor: not-allowed;
         }
 
@@ -167,7 +487,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             padding: 30px;
             font-size: 1em;
             opacity: 0.9;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
         }
 
         footer p {
@@ -199,6 +523,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             body {
                 padding: 20px 10px;
             }
+
+            .sun {
+                width: 80px;
+                height: 80px;
+                top: 30px;
+                right: 30px;
+            }
+
+            .butterfly {
+                font-size: 1.5em;
+            }
+
+            .mountains {
+                height: 150px;
+            }
         }
     </style>
 </head>
@@ -207,6 +546,47 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TCBV2GCV"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Animated Background Scene -->
+    <div class="background-scene">
+        <!-- Sun -->
+        <div class="sun"></div>
+
+        <!-- Clouds -->
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+
+        <!-- Butterflies -->
+        <div class="butterfly butterfly-1">🦋</div>
+        <div class="butterfly butterfly-2">🦋</div>
+        <div class="butterfly butterfly-3">🦋</div>
+        <div class="butterfly butterfly-4">🦋</div>
+
+        <!-- Birds -->
+        <div class="bird bird-1">🐦</div>
+        <div class="bird bird-2">🐦</div>
+
+        <!-- Sparkles -->
+        <div class="sparkle sparkle-1">✨</div>
+        <div class="sparkle sparkle-2">✨</div>
+        <div class="sparkle sparkle-3">✨</div>
+
+        <!-- Mountains -->
+        <div class="mountains">
+            <div class="mountain mountain-1"></div>
+            <div class="mountain mountain-2"></div>
+            <div class="mountain mountain-3"></div>
+        </div>
+
+        <!-- Flowers -->
+        <div class="flower flower-1">🌸</div>
+        <div class="flower flower-2">🌼</div>
+        <div class="flower flower-3">🌺</div>
+        <div class="flower flower-4">🌻</div>
+        <div class="flower flower-5">🌷</div>
+        <div class="flower flower-6">🌹</div>
+    </div>
 
     <div class="container">
         <header>
