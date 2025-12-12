@@ -11,7 +11,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Morning or Afternoon Quiz</title>
+    <title>Morning or Afternoon Quiz | Learning for Fun</title>
     <style>
         * {
             margin: 0;
@@ -404,6 +404,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         let score = 0;
         let shuffledActivities = [];
 
+        // Audio files for correct answers
+        const correctAudios = [
+            'Assets/You_did_well.mp3',
+            'Assets/brilliant.mp3',
+            'Assets/fantastic.mp3',
+            'Assets/marvellous.mp3',
+            'Assets/wonderful.mp3'
+        ];
+
+        // Audio files for incorrect answers
+        const incorrectAudios = [
+            'Assets/keep_tyring.mp3',
+            'Assets/oops_keep_trying.mp3'
+        ];
+
+        // Function to play random audio from array
+        function playRandomAudio(audioArray) {
+            const randomAudio = audioArray[Math.floor(Math.random() * audioArray.length)];
+            const audio = new Audio(randomAudio);
+            audio.play().catch(error => {
+                console.log('Audio playback failed:', error);
+            });
+        }
+
         function startQuiz() {
             document.getElementById('welcomeScreen').style.display = 'none';
             document.getElementById('quizArea').style.display = 'block';
@@ -457,7 +481,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 selectedBtn.classList.add('correct');
                 score++;
                 updateScore();
-                speakMessage('Correct! ' + activity.description + ' This happens in the ' + selectedTime + '!');
+                playRandomAudio(correctAudios);
                 
                 // Move to next question after delay
                 setTimeout(() => {
@@ -472,7 +496,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 const correctBtn = activity.time === 'morning' ? morningBtn : afternoonBtn;
                 correctBtn.classList.add('correct');
                 
-                speakMessage('Oops! ' + activity.description + ' This happens in the ' + activity.time + '!');
+                playRandomAudio(incorrectAudios);
                 
                 // Move to next question after delay
                 setTimeout(() => {
@@ -499,35 +523,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             if (score === activities.length) {
                 stars = '🌟⭐🌟⭐🌟';
                 message = '🏆 PERFECT! You know your daily routine! 🏆';
-                speakMessage('Perfect score! You are a time expert!');
+                playRandomAudio(correctAudios);
             } else if (score >= activities.length * 0.8) {
                 stars = '⭐🌟⭐🌟';
                 message = '🥇 EXCELLENT! Almost perfect!';
-                speakMessage('Excellent work! You did very well!');
+                playRandomAudio(correctAudios);
             } else if (score >= activities.length * 0.6) {
                 stars = '⭐⭐⭐';
                 message = '👏 GOOD JOB! Keep practicing!';
-                speakMessage('Good job! Keep practicing!');
+                playRandomAudio(correctAudios);
             } else {
                 stars = '⭐⭐';
                 message = '💪 NICE TRY! Practice makes perfect!';
-                speakMessage('Nice try! Practice makes perfect!');
+                playRandomAudio(incorrectAudios);
             }
             
             document.getElementById('stars').textContent = stars;
             document.getElementById('finalScore').textContent = `Score: ${score} / ${activities.length} (${percentage}%)`;
             document.getElementById('rewardMessage').textContent = message;
-        }
-
-        function speakMessage(message) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(message);
-                utterance.rate = 0.85;
-                utterance.pitch = 1.2;
-                utterance.volume = 1;
-                window.speechSynthesis.speak(utterance);
-            }
         }
 
         function restartQuiz() {
