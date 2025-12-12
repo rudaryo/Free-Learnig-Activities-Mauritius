@@ -367,7 +367,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <p>🎯 Look at each picture carefully!</p>
                 <p>🌅 Click MORNING if it happens in the morning</p>
                 <p>🌆 Click AFTERNOON if it happens in the afternoon</p>
-                <p>☀️🌙 Click MORNING AND AFTERNOON if it happens in both!</p>
+                <p>☀️🌙 Some activities happen in BOTH - choose wisely!</p>
                 <p>⏰ You have 15 seconds for each question!</p>
                 <p>⭐ Try to get all answers correct!</p>
             </div>
@@ -567,6 +567,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             
             // Set picture
             document.getElementById('quizPicture').src = activity.image;
+            
+            // Show or hide the 'both' button based on the activity
+            const bothBtn = document.querySelector('.time-button.both');
+            if (activity.time === 'both') {
+                bothBtn.style.display = 'flex'; // Show the both button
+            } else {
+                bothBtn.style.display = 'none'; // Hide the both button
+            }
             
             // Reset buttons
             const buttons = document.querySelectorAll('.time-button');
