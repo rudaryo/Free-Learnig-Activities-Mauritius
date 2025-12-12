@@ -108,6 +108,56 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             line-height: 1.6;
         }
 
+        .level-selection {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .level-selection h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .level-buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .level-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 30px 40px;
+            font-size: 1.3rem;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            font-weight: bold;
+            min-width: 250px;
+        }
+
+        .level-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+
+        .level-button .level-number {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .level-button .level-desc {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
         .instructions {
             margin: 30px auto;
             padding: 25px;
@@ -246,6 +296,114 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             display: block;
         }
 
+        /* Drag and Drop Styles */
+        .pattern-item.drop-zone {
+            background: #f5f5f5;
+            border: 4px dashed #999;
+            cursor: pointer;
+        }
+
+        .pattern-item.drop-zone::after {
+            content: '?';
+            font-size: 2.5rem;
+            color: #999;
+        }
+
+        .pattern-item.drop-zone.drag-over {
+            background: #e3f2fd;
+            border-color: #667eea;
+            transform: scale(1.05);
+        }
+
+        .pattern-item.filled {
+            border-color: #4caf50;
+            background: #c8e6c9;
+        }
+
+        .pattern-item.filled::after {
+            content: '';
+        }
+
+        .choices-title {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #667eea;
+            font-weight: bold;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .choices-container-drag {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 30px;
+            background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%);
+            border-radius: 20px;
+            min-height: 140px;
+        }
+
+        .draggable-item {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border: 4px solid #667eea;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            cursor: grab;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            user-select: none;
+        }
+
+        .draggable-item:active {
+            cursor: grabbing;
+        }
+
+        .draggable-item:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .draggable-item.dragging {
+            opacity: 0.5;
+        }
+
+        .draggable-item.used {
+            opacity: 0.3;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .check-button {
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4);
+            transition: all 0.3s ease;
+            font-weight: bold;
+            display: block;
+            margin: 30px auto;
+        }
+
+        .check-button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(76, 175, 80, 0.6);
+        }
+
+        .check-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         @keyframes correctPulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.02); }
@@ -336,7 +494,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- Welcome Screen -->
         <div class="welcome-screen" id="welcomeScreen">
             <div class="header">
-                <h1>✓ Tick the Correct Pattern</h1>
+                <h1>📋 Level 1: Tick the Correct Pattern</h1>
             </div>
 
             <h2>Can You Find the Correct Pattern?</h2>
@@ -346,9 +504,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <p>🔍 Find which pattern follows the correct sequence</p>
                 <p>✓ Click on the pattern you think is correct</p>
                 <p>⭐ 8 questions - Choose between (a) and (b)!</p>
+                <p>🎯 Complete this level to unlock Level 2!</p>
             </div>
             
-            <button class="start-button" onclick="startGame()">🚀 START GAME!</button>
+            <button class="start-button" onclick="startGame()">🚀 START LEVEL 1!</button>
+        </div>
+
+        <!-- Level Selection Screen -->
+        <div class="level-selection" id="levelSelection">
+            <div class="header">
+                <h1>✓ Choose Your Level</h1>
+            </div>
+
+            <h2>Select a Level to Start!</h2>
+
+            <div class="level-buttons">
+                <button class="level-button" onclick="startLevel(1)">
+                    <span class="level-number">📋 LEVEL 1</span>
+                    <span class="level-desc">Tick the Correct Pattern<br>8 Questions</span>
+                </button>
+                <button class="level-button" onclick="startLevel(2)">
+                    <span class="level-number">🎯 LEVEL 2</span>
+                    <span class="level-desc">Drag & Drop Patterns<br>8 Patterns</span>
+                </button>
+            </div>
+
+            <button class="restart-button" onclick="backToWelcome()" style="margin-top: 30px;">← BACK</button>
         </div>
 
         <!-- Game Area -->
@@ -384,7 +565,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="score-display" id="finalScore"></div>
             <p id="rewardMessage"></p>
             <button class="restart-button" onclick="restartGame()">🔄 PLAY AGAIN</button>
-            <button class="restart-button" onclick="goHome()" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+            <button class="restart-button" onclick="nextLevel()" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                ➡️ NEXT LEVEL (Drag & Drop)
+            </button>
+            <button class="restart-button" onclick="goHome()">
                 🏠 GO HOME
             </button>
         </div>
@@ -619,6 +803,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         function restartGame() {
             document.getElementById('completionScreen').style.display = 'none';
             document.getElementById('welcomeScreen').style.display = 'block';
+        }
+
+        function nextLevel() {
+            window.location.href = 'complete-pattern-drag-drop.html';
         }
 
         function goHome() {
