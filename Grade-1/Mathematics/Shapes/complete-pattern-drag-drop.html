@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TCBV2GCV');</script>
+<!-- End Google Tag Manager -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete the Pattern | Learning for Fun</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            color: #667eea;
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: none;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 80px auto 20px;
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 15px 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #f5576c;
+        }
+
+        .score {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #4caf50;
+        }
+
+        .welcome-screen {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .welcome-screen h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .welcome-screen p {
+            color: #666;
+            font-size: 1.3rem;
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+
+        .instructions {
+            margin: 30px auto;
+            padding: 25px;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border-radius: 20px;
+            max-width: 600px;
+        }
+
+        .instructions p {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+
+        .start-button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+            transition: all 0.3s ease;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .start-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(245, 87, 108, 0.6);
+        }
+
+        .game-area {
+            display: none;
+        }
+
+        .question-text {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .pattern-display {
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe0b2 100%);
+            border: 5px solid #ffa726;
+            border-radius: 25px;
+            padding: 30px;
+            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            min-height: 150px;
+        }
+
+        .pattern-item {
+            width: 90px;
+            height: 90px;
+            background: white;
+            border: 4px solid #ddd;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .pattern-item.drop-zone {
+            background: #f5f5f5;
+            border: 4px dashed #999;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .pattern-item.drop-zone::after {
+            content: '?';
+            font-size: 2.5rem;
+            color: #999;
+        }
+
+        .pattern-item.drop-zone.drag-over {
+            background: #e3f2fd;
+            border-color: #667eea;
+            transform: scale(1.05);
+        }
+
+        .pattern-item.filled {
+            border-color: #4caf50;
+            background: #c8e6c9;
+        }
+
+        .pattern-item.filled::after {
+            content: '';
+        }
+
+        .pattern-item.incorrect {
+            border-color: #f44336;
+            background: #ffcdd2;
+            animation: shake 0.5s;
+        }
+
+        .choices-title {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #667eea;
+            font-weight: bold;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .choices-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 30px;
+            background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%);
+            border-radius: 20px;
+            min-height: 140px;
+        }
+
+        .draggable-item {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border: 4px solid #667eea;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            cursor: grab;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            user-select: none;
+        }
+
+        .draggable-item:active {
+            cursor: grabbing;
+        }
+
+        .draggable-item:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .draggable-item.dragging {
+            opacity: 0.5;
+        }
+
+        .draggable-item.used {
+            opacity: 0.3;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .check-button {
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4);
+            transition: all 0.3s ease;
+            font-weight: bold;
+            display: block;
+            margin: 30px auto;
+        }
+
+        .check-button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(76, 175, 80, 0.6);
+        }
+
+        .check-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .completion-screen {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .completion-screen h2 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .stars {
+            font-size: 4rem;
+            margin: 20px 0;
+        }
+
+        .score-display {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4caf50;
+            margin: 20px 0;
+        }
+
+        .completion-screen p {
+            font-size: 1.5rem;
+            color: #f5576c;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .restart-button {
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4);
+            transition: all 0.3s ease;
+            font-weight: bold;
+            margin: 10px;
+        }
+
+        .restart-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(76, 175, 80, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .pattern-item, .draggable-item {
+                width: 70px;
+                height: 70px;
+                font-size: 2.5rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .question-text {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TCBV2GCV"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+    <button class="back-button" onclick="goHome()">← HOME</button>
+
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div class="welcome-screen" id="welcomeScreen">
+            <div class="header">
+                <h1>🎯 Level 2: Complete the Pattern</h1>
+            </div>
+
+            <h2>Drag & Drop to Complete!</h2>
+            
+            <div class="instructions">
+                <p>👀 Look carefully at the pattern!</p>
+                <p>🖱️ Drag the correct emoji from below</p>
+                <p>📍 Drop it in the blank box to complete the pattern</p>
+                <p>✅ Click CHECK ANSWER when you're done!</p>
+                <p>⭐ 8 patterns to complete!</p>
+            </div>
+            
+            <button class="start-button" onclick="startGame()">🚀 START GAME!</button>
+        </div>
+
+        <!-- Game Area -->
+        <div class="game-area" id="gameArea">
+            <div class="header">
+                <h1>🎯 Complete the Pattern</h1>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-info">
+                    Pattern <span id="currentPattern">1</span> / 8
+                </div>
+                <div class="score">
+                    Score: <span id="score">0</span>
+                </div>
+            </div>
+
+            <div class="question-text">Drag the correct emoji to complete the pattern</div>
+
+            <div class="pattern-display" id="patternDisplay">
+                <!-- Pattern will be displayed here -->
+            </div>
+
+            <div class="choices-title">Drag from here:</div>
+
+            <div class="choices-container" id="choicesContainer">
+                <!-- Draggable choices will be displayed here -->
+            </div>
+
+            <button class="check-button" id="checkButton" onclick="checkAnswer()" disabled>✅ CHECK ANSWER</button>
+        </div>
+
+        <!-- Completion Screen -->
+        <div class="completion-screen" id="completionScreen">
+            <h2 id="completionTitle">🎉 Game Complete!</h2>
+            <div class="stars" id="stars">⭐⭐⭐</div>
+            <div class="score-display" id="finalScore"></div>
+            <p id="rewardMessage"></p>
+            <button class="restart-button" onclick="restartGame()">🔄 PLAY AGAIN</button>
+            <button class="restart-button" onclick="previousLevel()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                ← BACK TO LEVEL 1
+            </button>
+            <button class="restart-button" onclick="goHome()">
+                🏠 GO HOME
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Pattern data - drag and drop version
+        const patterns = [
+            {
+                pattern: ['🌻', '🧸', '🌻', '🧸', '🌻'],
+                blanks: [5],
+                correct: ['🧸'],
+                choices: ['🧸', '🌻', '⚽', '🎈']
+            },
+            {
+                pattern: ['🔴', '🔵', '🔴', '🔵', '🔴'],
+                blanks: [5],
+                correct: ['🔵'],
+                choices: ['🔴', '🔵', '🟢', '🟡']
+            },
+            {
+                pattern: ['🍎', '🍌', '🍎', '🍌', '🍎'],
+                blanks: [5],
+                correct: ['🍌'],
+                choices: ['🍎', '🍌', '🍊', '🍇']
+            },
+            {
+                pattern: ['❤️', '💙', '❤️', '💙', '❤️'],
+                blanks: [5],
+                correct: ['💙'],
+                choices: ['❤️', '💙', '💚', '💛']
+            },
+            {
+                pattern: ['⭐', '🌙', '⭐', '🌙', '⭐'],
+                blanks: [5],
+                correct: ['🌙'],
+                choices: ['⭐', '🌙', '☀️', '💫']
+            },
+            {
+                pattern: ['🟥', '🟦', '🟥', '🟦', '🟥'],
+                blanks: [5],
+                correct: ['🟦'],
+                choices: ['🟥', '🟦', '🟩', '🟨']
+            },
+            {
+                pattern: ['☀️', '☁️', '☀️', '☁️', '☀️'],
+                blanks: [5],
+                correct: ['☁️'],
+                choices: ['☀️', '☁️', '🌧️', '⛈️']
+            },
+            {
+                pattern: ['🌸', '🦋', '🌸', '🦋', '🌸'],
+                blanks: [5],
+                correct: ['🦋'],
+                choices: ['🌸', '🦋', '🌻', '🐝']
+            }
+        ];
+
+        let currentPatternIndex = 0;
+        let score = 0;
+        let droppedItems = {};
+        let hasChecked = false;
+
+        // Audio files for correct answers
+        const correctAudios = [
+            'Assets/You_did_well.mp3',
+            'Assets/brilliant.mp3',
+            'Assets/fantastic.mp3',
+            'Assets/marvellous.mp3',
+            'Assets/wonderful.mp3'
+        ];
+
+        // Audio files for incorrect answers
+        const incorrectAudios = [
+            'Assets/keep_tyring.mp3',
+            'Assets/oops_keep_trying.mp3'
+        ];
+
+        function playRandomAudio(audioArray) {
+            const randomAudio = audioArray[Math.floor(Math.random() * audioArray.length)];
+            const audio = new Audio(randomAudio);
+            audio.play().catch(error => {
+                console.log('Audio playback failed:', error);
+            });
+        }
+
+        function startGame() {
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('gameArea').style.display = 'block';
+            
+            currentPatternIndex = 0;
+            score = 0;
+            
+            updateScore();
+            loadPattern();
+        }
+
+        function loadPattern() {
+            if (currentPatternIndex >= patterns.length) {
+                endGame();
+                return;
+            }
+
+            const pattern = patterns[currentPatternIndex];
+            droppedItems = {};
+            hasChecked = false;
+            
+            document.getElementById('currentPattern').textContent = currentPatternIndex + 1;
+            document.getElementById('checkButton').disabled = true;
+            
+            // Display pattern with drop zones
+            const patternDisplay = document.getElementById('patternDisplay');
+            patternDisplay.innerHTML = '';
+            
+            pattern.pattern.forEach((item, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'pattern-item';
+                itemDiv.textContent = item;
+                patternDisplay.appendChild(itemDiv);
+            });
+            
+            // Add drop zone(s)
+            pattern.blanks.forEach(blankIndex => {
+                const dropZone = document.createElement('div');
+                dropZone.className = 'pattern-item drop-zone';
+                dropZone.dataset.index = blankIndex;
+                dropZone.addEventListener('dragover', allowDrop);
+                dropZone.addEventListener('dragleave', dragLeave);
+                dropZone.addEventListener('drop', drop);
+                patternDisplay.appendChild(dropZone);
+            });
+            
+            // Display draggable choices
+            const choicesContainer = document.getElementById('choicesContainer');
+            choicesContainer.innerHTML = '';
+            
+            const shuffledChoices = [...pattern.choices].sort(() => Math.random() - 0.5);
+            
+            shuffledChoices.forEach((choice, index) => {
+                const draggable = document.createElement('div');
+                draggable.className = 'draggable-item';
+                draggable.textContent = choice;
+                draggable.draggable = true;
+                draggable.dataset.emoji = choice;
+                draggable.dataset.id = `choice-${index}`;
+                draggable.addEventListener('dragstart', dragStart);
+                draggable.addEventListener('dragend', dragEnd);
+                choicesContainer.appendChild(draggable);
+            });
+        }
+
+        function dragStart(e) {
+            if (hasChecked) return;
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', e.target.dataset.emoji);
+            e.dataTransfer.setData('id', e.target.dataset.id);
+        }
+
+        function dragEnd(e) {
+            e.target.classList.remove('dragging');
+        }
+
+        function allowDrop(e) {
+            if (hasChecked) return;
+            e.preventDefault();
+            e.currentTarget.classList.add('drag-over');
+        }
+
+        function dragLeave(e) {
+            e.currentTarget.classList.remove('drag-over');
+        }
+
+        function drop(e) {
+            if (hasChecked) return;
+            e.preventDefault();
+            e.currentTarget.classList.remove('drag-over');
+            
+            const emoji = e.dataTransfer.getData('text/plain');
+            const draggedId = e.dataTransfer.getData('id');
+            const dropZone = e.currentTarget;
+            const blankIndex = parseInt(dropZone.dataset.index);
+            
+            // Fill the drop zone
+            dropZone.textContent = emoji;
+            dropZone.classList.add('filled');
+            dropZone.classList.remove('drop-zone');
+            
+            // Mark the dragged item as used
+            const draggedElement = document.querySelector(`[data-id="${draggedId}"]`);
+            if (draggedElement) {
+                draggedElement.classList.add('used');
+            }
+            
+            // Store the dropped item
+            droppedItems[blankIndex] = emoji;
+            
+            // Enable check button if all blanks are filled
+            const pattern = patterns[currentPatternIndex];
+            if (Object.keys(droppedItems).length === pattern.blanks.length) {
+                document.getElementById('checkButton').disabled = false;
+            }
+        }
+
+        function checkAnswer() {
+            if (hasChecked) return;
+            hasChecked = true;
+            
+            const pattern = patterns[currentPatternIndex];
+            let isCorrect = true;
+            
+            pattern.blanks.forEach((blankIndex, i) => {
+                const dropZone = document.querySelector(`[data-index="${blankIndex}"]`);
+                const droppedEmoji = droppedItems[blankIndex];
+                const correctEmoji = pattern.correct[i];
+                
+                if (droppedEmoji === correctEmoji) {
+                    dropZone.classList.add('filled');
+                    dropZone.style.borderColor = '#4caf50';
+                    dropZone.style.background = '#c8e6c9';
+                } else {
+                    isCorrect = false;
+                    dropZone.classList.add('incorrect');
+                }
+            });
+            
+            if (isCorrect) {
+                score++;
+                updateScore();
+                playRandomAudio(correctAudios);
+            } else {
+                playRandomAudio(incorrectAudios);
+            }
+            
+            // Move to next pattern after delay
+            setTimeout(() => {
+                currentPatternIndex++;
+                loadPattern();
+            }, 2500);
+        }
+
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+        }
+
+        function endGame() {
+            const percentage = Math.round((score / patterns.length) * 100);
+            
+            document.getElementById('gameArea').style.display = 'none';
+            document.getElementById('completionScreen').style.display = 'block';
+            
+            let stars = '';
+            let message = '';
+            
+            if (score === patterns.length) {
+                stars = '🌟⭐🌟⭐🌟';
+                message = '🏆 PERFECT! You are a Pattern Master! 🏆';
+                playRandomAudio(correctAudios);
+            } else if (score >= patterns.length * 0.75) {
+                stars = '⭐🌟⭐🌟';
+                message = '🥇 EXCELLENT! Great pattern skills!';
+                playRandomAudio(correctAudios);
+            } else if (score >= patterns.length * 0.5) {
+                stars = '⭐⭐⭐';
+                message = '👏 GOOD JOB! Keep practicing!';
+                playRandomAudio(correctAudios);
+            } else {
+                stars = '⭐⭐';
+                message = '💪 NICE TRY! Practice makes perfect!';
+                playRandomAudio(incorrectAudios);
+            }
+            
+            document.getElementById('stars').textContent = stars;
+            document.getElementById('finalScore').textContent = `Score: ${score} / ${patterns.length} (${percentage}%)`;
+            document.getElementById('rewardMessage').textContent = message;
+        }
+
+        function restartGame() {
+            document.getElementById('completionScreen').style.display = 'none';
+            document.getElementById('welcomeScreen').style.display = 'block';
+        }
+
+        function previousLevel() {
+            window.location.href = 'identify-correct-pattern.html';
+        }
+
+        function goHome() {
+            window.location.href = '../grade-1-math-index.html';
+        }
+    </script>
+</body>
+</html>
