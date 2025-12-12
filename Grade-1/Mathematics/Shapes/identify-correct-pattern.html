@@ -392,53 +392,62 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <script>
         // Pattern questions - 2 options each (a and b)
+        // Using distinct colors, different objects, and clear shapes
         const questions = [
+            // Question 1: Different objects (sunflower & teddy)
             {
                 options: [
                     { label: '(a)', pattern: ['🌻', '🧸', '🌻', '🧸', '🌻', '🧸', 'blank'], correct: true },
                     { label: '(b)', pattern: ['🌻', '🧸', '🌻', '🧸', '🌻', '🌻', 'blank'], correct: false }
                 ]
             },
+            // Question 2: Distinct colored shapes (red & blue circles)
             {
                 options: [
-                    { label: '(a)', pattern: ['🎾', '🏸', '🎾', '🏸', '🎾', '🎾', 'blank'], correct: false },
-                    { label: '(b)', pattern: ['🎾', '🏸', '🎾', '🏸', '🏸', '🏸', 'blank'], correct: true }
+                    { label: '(a)', pattern: ['🔴', '🔵', '🔴', '🔵', '🔴', '🔴', 'blank'], correct: false },
+                    { label: '(b)', pattern: ['🔴', '🔵', '🔴', '🔵', '🔴', '🔵', 'blank'], correct: true }
                 ]
             },
-            {
-                options: [
-                    { label: '(a)', pattern: ['👟', '👕', '⚽', '👟', '👕', '⚽', 'blank'], correct: true },
-                    { label: '(b)', pattern: ['👟', '👕', '⚽', '👟', '👕', '👕', 'blank'], correct: false }
-                ]
-            },
-            {
-                options: [
-                    { label: '(a)', pattern: ['🎒', '🪑', '🧸', '🪑', '🎒', '🧸', 'blank'], correct: false },
-                    { label: '(b)', pattern: ['🎒', '🪑', '🧸', '🪑', '🎒', '🦆', 'blank'], correct: true }
-                ]
-            },
-            {
-                options: [
-                    { label: '(a)', pattern: ['🔴', '🔵', '🔴', '🔵', '🔴', '🔵', 'blank'], correct: true },
-                    { label: '(b)', pattern: ['🔴', '🔵', '🔴', '🔵', '🔴', '🔴', 'blank'], correct: false }
-                ]
-            },
-            {
-                options: [
-                    { label: '(a)', pattern: ['⭐', '⭐', '🌙', '⭐', '⭐', '⭐', 'blank'], correct: false },
-                    { label: '(b)', pattern: ['⭐', '⭐', '🌙', '⭐', '⭐', '🌙', 'blank'], correct: true }
-                ]
-            },
+            // Question 3: Different objects (apple & banana - clear color difference)
             {
                 options: [
                     { label: '(a)', pattern: ['🍎', '🍌', '🍎', '🍌', '🍎', '🍌', 'blank'], correct: true },
                     { label: '(b)', pattern: ['🍎', '🍌', '🍎', '🍌', '🍌', '🍌', 'blank'], correct: false }
                 ]
             },
+            // Question 4: Distinct colored hearts (red & blue)
             {
                 options: [
-                    { label: '(a)', pattern: ['🚗', '🚗', '🚕', '🚗', '🚗', '🚗', 'blank'], correct: false },
-                    { label: '(b)', pattern: ['🚗', '🚗', '🚕', '🚗', '🚗', '🚕', 'blank'], correct: true }
+                    { label: '(a)', pattern: ['❤️', '💙', '❤️', '💙', '❤️', '💙', 'blank'], correct: false },
+                    { label: '(b)', pattern: ['❤️', '💙', '❤️', '💙', '💙', '💙', 'blank'], correct: true }
+                ]
+            },
+            // Question 5: Different shapes (star & moon)
+            {
+                options: [
+                    { label: '(a)', pattern: ['⭐', '🌙', '⭐', '🌙', '⭐', '🌙', 'blank'], correct: true },
+                    { label: '(b)', pattern: ['⭐', '🌙', '⭐', '🌙', '⭐', '⭐', 'blank'], correct: false }
+                ]
+            },
+            // Question 6: Distinct colored squares (red & blue)
+            {
+                options: [
+                    { label: '(a)', pattern: ['🟥', '🟦', '🟥', '🟦', '🟥', '🟥', 'blank'], correct: false },
+                    { label: '(b)', pattern: ['🟥', '🟦', '🟥', '🟦', '🟥', '🟦', 'blank'], correct: true }
+                ]
+            },
+            // Question 7: Different objects (sun & cloud)
+            {
+                options: [
+                    { label: '(a)', pattern: ['☀️', '☁️', '☀️', '☁️', '☀️', '☁️', 'blank'], correct: true },
+                    { label: '(b)', pattern: ['☀️', '☁️', '☀️', '☁️', '☀️', '☀️', 'blank'], correct: false }
+                ]
+            },
+            // Question 8: Different objects (flower & butterfly)
+            {
+                options: [
+                    { label: '(a)', pattern: ['🌸', '🦋', '🌸', '🦋', '🌸', '🌸', 'blank'], correct: false },
+                    { label: '(b)', pattern: ['🌸', '🦋', '🌸', '🦋', '🌸', '🦋', 'blank'], correct: true }
                 ]
             }
         ];
