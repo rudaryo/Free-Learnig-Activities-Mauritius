@@ -90,6 +90,28 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             color: #4caf50;
         }
 
+        .timer {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+            padding: 10px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .timer.warning {
+            color: #f44336;
+            animation: timerPulse 1s infinite;
+            background: #ffebee;
+        }
+
+        @keyframes timerPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
         .welcome-screen {
             text-align: center;
             padding: 40px;
@@ -347,8 +369,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             <div class="progress-bar">
                 <div class="progress-info">
-                    Question <span id="currentQuestion">1</span> / <span id="totalQuestions">12</span>
+                    Question <span id="currentQuestion">1</span> / <span id="totalQuestions">11</span>
                 </div>
+                <div class="timer" id="timer">⏰ 15</div>
                 <div class="score">
                     Score: <span id="score">0</span>
                 </div>
@@ -393,7 +416,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             { image: 'Assets/Its_Time_to_Go_to_School.PNG', time: "morning", description: "It's time to go to school!" },
             { image: 'Assets/Its_Time_Take_The_School_Bus.PNG', time: "morning", description: "It's time to take the school bus!" },
             { image: 'Assets/Its_Learning_Time.PNG', time: "morning", description: "It's learning time!" },
-            { image: 'Assets/Its_Recess_Time.PNG', time: "morning", description: "It's recess time!" },
             { image: 'Assets/Its_Snack_Time.PNG', time: "afternoon", description: "It's snack time!" },
             { image: 'Assets/Its_Time_to_Go_Home.PNG', time: "afternoon", description: "It's time to go home!" },
             { image: 'Assets/Im_Home.png', time: "afternoon", description: "I'm home!" },
@@ -403,6 +425,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         let currentQuestionIndex = 0;
         let score = 0;
         let shuffledActivities = [];
+        let timerInterval = null;
+        let timeRemaining = 15;
 
         // Audio files for correct answers
         const correctAudios = [
@@ -428,6 +452,68 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             });
         }
 
+        function startTimer() {
+            timeRemaining = 15;
+            updateTimerDisplay();
+            
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                updateTimerDisplay();
+                
+                // Warning at 5 seconds
+                if (timeRemaining === 5) {
+                    document.getElementById('timer').classList.add('warning');
+                }
+                
+                // Time's up
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    handleTimeout();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }
+
+        function updateTimerDisplay() {
+            const timerElement = document.getElementById('timer');
+            timerElement.textContent = `⏰ ${timeRemaining}`;
+            
+            if (timeRemaining > 5) {
+                timerElement.classList.remove('warning');
+            }
+        }
+
+        function handleTimeout() {
+            const buttons = document.querySelectorAll('.time-button');
+            buttons.forEach(btn => btn.classList.add('disabled'));
+            
+            // Show correct answer
+            const activity = shuffledActivities[currentQuestionIndex];
+            const morningBtn = document.querySelector('.time-button.morning');
+            const afternoonBtn = document.querySelector('.time-button.afternoon');
+            const correctBtn = activity.time === 'morning' ? morningBtn : afternoonBtn;
+            correctBtn.classList.add('correct');
+            
+            // Play incorrect audio
+            playRandomAudio(incorrectAudios);
+            
+            // Move to next question after delay
+            setTimeout(() => {
+                currentQuestionIndex++;
+                loadQuestion();
+            }, 2500);
+        }
+
         function startQuiz() {
             document.getElementById('welcomeScreen').style.display = 'none';
             document.getElementById('quizArea').style.display = 'block';
@@ -445,6 +531,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         function loadQuestion() {
             if (currentQuestionIndex >= shuffledActivities.length) {
+                stopTimer();
                 endQuiz();
                 return;
             }
@@ -462,9 +549,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             buttons.forEach(btn => {
                 btn.classList.remove('correct', 'incorrect', 'disabled');
             });
+            
+            // Start timer for this question
+            startTimer();
         }
 
         function checkAnswer(selectedTime) {
+            // Stop the timer
+            stopTimer();
+            
             const activity = shuffledActivities[currentQuestionIndex];
             const buttons = document.querySelectorAll('.time-button');
             
