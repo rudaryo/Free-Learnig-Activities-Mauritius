@@ -11,7 +11,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Morning or Afternoon Quiz | Learning for Fun</title>
+    <title>Morning, Afternoon, or Both Quiz | Learning for Fun</title>
     <style>
         * {
             margin: 0;
@@ -222,6 +222,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             box-shadow: 0 12px 30px rgba(255, 167, 38, 0.3);
         }
 
+        .time-button.both {
+            border-color: #9c27b0;
+            color: #9c27b0;
+        }
+
+        .time-button.both:hover {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            border-color: #9c27b0;
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(156, 39, 176, 0.3);
+        }
+
         .time-button.afternoon {
             border-color: #5c6bc0;
             color: #5c6bc0;
@@ -346,7 +358,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- Welcome Screen -->
         <div class="welcome-screen" id="welcomeScreen">
             <div class="header">
-                <h1>🌅 Morning or Afternoon? 🌆</h1>
+                <h1>🌅 Morning, Afternoon, or Both? 🌆</h1>
             </div>
 
             <h2>Welcome! Let's Learn About Time!</h2>
@@ -355,6 +367,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <p>🎯 Look at each picture carefully!</p>
                 <p>🌅 Click MORNING if it happens in the morning</p>
                 <p>🌆 Click AFTERNOON if it happens in the afternoon</p>
+                <p>☀️🌙 Click MORNING AND AFTERNOON if it happens in both!</p>
+                <p>⏰ You have 15 seconds for each question!</p>
                 <p>⭐ Try to get all answers correct!</p>
             </div>
             
@@ -364,7 +378,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- Quiz Area -->
         <div class="quiz-area" id="quizArea">
             <div class="header">
-                <h1>🌅 Morning or Afternoon? 🌆</h1>
+                <h1>🌅 Morning, Afternoon, or Both? 🌆</h1>
             </div>
 
             <div class="progress-bar">
@@ -385,6 +399,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <button class="time-button morning" onclick="checkAnswer('morning')">
                     <div class="icon">🌅</div>
                     <div>MORNING</div>
+                </button>
+                <button class="time-button both" onclick="checkAnswer('both')">
+                    <div class="icon">☀️🌙</div>
+                    <div>MORNING AND AFTERNOON</div>
                 </button>
                 <button class="time-button afternoon" onclick="checkAnswer('afternoon')">
                     <div class="icon">🌆</div>
@@ -415,7 +433,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             { image: 'Assets/Its_Breakfast_Time.PNG', time: "morning", description: "It's breakfast time!" },
             { image: 'Assets/Its_Time_to_Go_to_School.PNG', time: "morning", description: "It's time to go to school!" },
             { image: 'Assets/Its_Time_Take_The_School_Bus.PNG', time: "morning", description: "It's time to take the school bus!" },
-            { image: 'Assets/Its_Learning_Time.PNG', time: "morning", description: "It's learning time!" },
+            { image: 'Assets/Its_Learning_Time.PNG', time: "both", description: "It's learning time!" },
             { image: 'Assets/Its_Snack_Time.PNG', time: "afternoon", description: "It's snack time!" },
             { image: 'Assets/Its_Time_to_Go_Home.PNG', time: "afternoon", description: "It's time to go home!" },
             { image: 'Assets/Im_Home.png', time: "afternoon", description: "I'm home!" },
@@ -501,7 +519,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             const activity = shuffledActivities[currentQuestionIndex];
             const morningBtn = document.querySelector('.time-button.morning');
             const afternoonBtn = document.querySelector('.time-button.afternoon');
-            const correctBtn = activity.time === 'morning' ? morningBtn : afternoonBtn;
+            const bothBtn = document.querySelector('.time-button.both');
+            
+            let correctBtn;
+            if (activity.time === 'morning') correctBtn = morningBtn;
+            else if (activity.time === 'afternoon') correctBtn = afternoonBtn;
+            else if (activity.time === 'both') correctBtn = bothBtn;
+            
             correctBtn.classList.add('correct');
             
             // Play incorrect audio
@@ -567,7 +591,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             // Find the clicked button
             const morningBtn = document.querySelector('.time-button.morning');
             const afternoonBtn = document.querySelector('.time-button.afternoon');
-            const selectedBtn = selectedTime === 'morning' ? morningBtn : afternoonBtn;
+            const bothBtn = document.querySelector('.time-button.both');
+            
+            let selectedBtn;
+            if (selectedTime === 'morning') selectedBtn = morningBtn;
+            else if (selectedTime === 'afternoon') selectedBtn = afternoonBtn;
+            else if (selectedTime === 'both') selectedBtn = bothBtn;
             
             if (selectedTime === activity.time) {
                 // Correct answer
@@ -586,7 +615,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 selectedBtn.classList.add('incorrect');
                 
                 // Show correct answer
-                const correctBtn = activity.time === 'morning' ? morningBtn : afternoonBtn;
+                let correctBtn;
+                if (activity.time === 'morning') correctBtn = morningBtn;
+                else if (activity.time === 'afternoon') correctBtn = afternoonBtn;
+                else if (activity.time === 'both') correctBtn = bothBtn;
+                
                 correctBtn.classList.add('correct');
                 
                 playRandomAudio(incorrectAudios);
