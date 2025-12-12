@@ -11,7 +11,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pattern Recognition Game</title>
+    <title>Complete the Pattern | Learning for Fun</title>
     <style>
         * {
             margin: 0;
@@ -434,6 +434,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="score-display" id="finalScore"></div>
             <p id="rewardMessage"></p>
             <button class="restart-button" onclick="restartGame()">🔄 PLAY AGAIN</button>
+            <button class="restart-button" onclick="nextLevel()" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                ➡️ NEXT LEVEL (AAB Pattern)
+            </button>
             <button class="restart-button" onclick="previousLevel()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
                 ← BACK TO LEVEL 1
             </button>
@@ -718,6 +721,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         function restartGame() {
             document.getElementById('completionScreen').style.display = 'none';
             document.getElementById('welcomeScreen').style.display = 'block';
+        }
+
+        function nextLevel() {
+            window.location.href = 'pattern-level-3-aab.html';
         }
 
         function previousLevel() {
