@@ -65,7 +65,7 @@ button{
 .phrase{
     padding:2px 4px;
     border-radius:5px;
-    transition:background 0.2s ease;
+    transition:background 0.15s ease;
 }
 
 .phrase.active{
@@ -94,6 +94,7 @@ button{
 </div>
 
 <script>
+/* ===== STORY PHRASES WITH TIMESTAMPS ===== */
 const phrases = [
   { text:"In a small village named Pamplemousses,", start:0.0, end:3.2 },
   { text:"there lived a kind old man named Mr. Thomas.", start:3.2, end:7.1 },
@@ -119,308 +120,23 @@ const phrases = [
 const storyDiv = document.getElementById("story");
 const audio = document.getElementById("audio");
 
-// Build story text
+/* ===== BUILD STORY TEXT ===== */
 storyDiv.innerHTML = phrases.map((p,i)=>
   `<span class="phrase" id="p${i}">${p.text}</span>`
 ).join(" ");
 
+/* ===== CLEAR HIGHLIGHTS ===== */
 function clearHighlight(){
   phrases.forEach((_,i)=>{
     document.getElementById("p"+i).classList.remove("active");
   });
 }
 
-// Sync highlight with audio
-audio.addEventListener("timeupdate",()=>{
-  const t = audio.currentTime<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mr. Thomas of Pamplemousses – Read Along</title>
+/* ===== HIGH-SPEED SYNC (NO LAG) ===== */
+const HIGHLIGHT_OFFSET = 0.18; // 🔧 tweak 0.15–0.22 if needed
 
-<style>
-body{
-    font-family:'Comic Sans MS','Arial',sans-serif;
-    background:linear-gradient(to bottom,#87CEEB,#98D8E8,#90EE90);
-    min-height:100vh;
-    padding:20px;
-}
-
-.container{
-    max-width:900px;
-    margin:40px auto;
-    background:white;
-    padding:30px;
-    border-radius:20px;
-    box-shadow:0 10px 40px rgba(0,0,0,.3);
-}
-
-h1{
-    text-align:center;
-    color:#667eea;
-}
-
-.subtitle{
-    text-align:center;
-    margin-bottom:20px;
-    color:#555;
-}
-
-.controls{
-    display:flex;
-    justify-content:center;
-    gap:15px;
-    margin-bottom:20px;
-}
-
-button{
-    padding:12px 25px;
-    border:none;
-    border-radius:10px;
-    font-weight:bold;
-    cursor:pointer;
-    font-size:1em;
-}
-
-.play{background:#48bb78;color:white}
-.pause{background:#ed8936;color:white}
-.restart{background:#f56565;color:white}
-
-.story-text{
-    font-size:1.4em;
-    line-height:2;
-    border:3px solid #667eea;
-    padding:25px;
-    border-radius:12px;
-    background:#f9fbff;
-}
-
-.phrase{
-    padding:2px 4px;
-    border-radius:5px;
-    transition:background 0.2s ease;
-}
-
-.phrase.active{
-    background:#ffd700;
-    font-weight:bold;
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-    <h1>🧓 Mr. Thomas of Pamplemousses</h1>
-    <p class="subtitle">Read-Along Story • Human Voice</p>
-
-    <div class="controls">
-        <button class="play" onclick="playAudio()">▶ Play</button>
-        <button class="pause" onclick="pauseAudio()">⏸ Pause</button>
-        <button class="restart" onclick="restartAudio()">🔄 Restart</button>
-    </div>
-
-    <div class="story-text" id="story"></div>
-
-    <!-- Human narration -->
-    <audio id="audio" src="The_Kind_Old_Man.mp3"></audio>
-</div>
-
-<script>
-const phrases = [
-  { text:"In a small village named Pamplemousses,", start:0.0, end:3.2 },
-  { text:"there lived a kind old man named Mr. Thomas.", start:3.2, end:7.1 },
-  { text:"His eyes were bright and happy,", start:7.1, end:10.2 },
-  { text:"and his long white beard looked soft and fluffy.", start:10.2, end:15.0 },
-  { text:"Every morning, Mr. Thomas walked through the village streets,", start:15.0, end:20.5 },
-  { text:"saying hello to everyone with a big, friendly smile.", start:20.5, end:25.4 },
-  { text:"He helped the baker carry heavy bags of flour", start:25.4, end:30.3 },
-  { text:"and told fun stories to the children at the well-known village garden.", start:30.3, end:36.8 },
-  { text:"Children like to hear his funny stories.", start:36.8, end:40.2 },
-  { text:"He watered plants for sick neighbors and fixed broken fences for elderly friends.", start:40.2, end:47.5 },
-  { text:"Mr. Thomas also shared his fresh vegetables from his garden with families who needed food.", start:47.5, end:55.8 },
-  { text:"When big storms came with loud thunder,", start:55.8, end:60.0 },
-  { text:"Mr. Thomas opened his warm house to his scared dogs looking for a safe place.", start:60.0, end:67.2 },
-  { text:"All the village people loved his caring and helpful ways.", start:67.2, end:72.0 },
-  { text:"One special day,", start:72.0, end:74.0 },
-  { text:"everyone surprised Mr. Thomas with a wonderful party to say thank you for all his good deeds.", start:74.0, end:83.5 },
-  { text:"Happy tears rolled down his wrinkled face when he saw how much everyone cared.", start:83.5, end:91.5 },
-  { text:"Mr. Thomas showed everyone that being kind and helpful", start:91.5, end:96.0 },
-  { text:"makes the world a better and happier place for all.", start:96.0, end:101.0 }
-];
-
-const storyDiv = document.getElementById("story");
-const audio = document.getElementById("audio");
-
-// Build story text
-storyDiv.innerHTML = phrases.map((p,i)=>
-  `<span class="phrase" id="p${i}">${p.text}</span>`
-).join(" ");
-
-function clearHighlight(){
-  phrases.forEach((_,i)=>{
-    document.getElementById("p"+i).classList.remove("active");
-  });
-}
-
-// Sync highlight with audio
-audio.addEventListener("timeupdate",()=>{
-  const t = audio.currentTime<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mr. Thomas of Pamplemousses – Read Along</title>
-
-<style>
-body{
-    font-family:'Comic Sans MS','Arial',sans-serif;
-    background:linear-gradient(to bottom,#87CEEB,#98D8E8,#90EE90);
-    min-height:100vh;
-    padding:20px;
-}
-
-.container{
-    max-width:900px;
-    margin:40px auto;
-    background:white;
-    padding:30px;
-    border-radius:20px;
-    box-shadow:0 10px 40px rgba(0,0,0,.3);
-}
-
-h1{
-    text-align:center;
-    color:#667eea;
-}
-
-.subtitle{
-    text-align:center;
-    margin-bottom:20px;
-    color:#555;
-}
-
-.controls{
-    display:flex;
-    justify-content:center;
-    gap:15px;
-    margin-bottom:20px;
-}
-
-button{
-    padding:12px 25px;
-    border:none;
-    border-radius:10px;
-    font-weight:bold;
-    cursor:pointer;
-    font-size:1em;
-}
-
-.play{background:#48bb78;color:white}
-.pause{background:#ed8936;color:white}
-.restart{background:#f56565;color:white}
-
-.story-text{
-    font-size:1.4em;
-    line-height:2;
-    border:3px solid #667eea;
-    padding:25px;
-    border-radius:12px;
-    background:#f9fbff;
-}
-
-.phrase{
-    padding:2px 4px;
-    border-radius:5px;
-    transition:background 0.2s ease;
-}
-
-.phrase.active{
-    background:#ffd700;
-    font-weight:bold;
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-    <h1>🧓 Mr. Thomas of Pamplemousses</h1>
-    <p class="subtitle">Read-Along Story • Human Voice</p>
-
-    <div class="controls">
-        <button class="play" onclick="playAudio()">▶ Play</button>
-        <button class="pause" onclick="pauseAudio()">⏸ Pause</button>
-        <button class="restart" onclick="restartAudio()">🔄 Restart</button>
-    </div>
-
-    <div class="story-text" id="story"></div>
-
-    <!-- Human narration -->
-    <audio id="audio" src="The_Kind_Old_Man.mp3"></audio>
-</div>
-
-<script>
-const phrases = [
-  { text:"In a small village named Pamplemousses,", start:0.0, end:3.2 },
-  { text:"there lived a kind old man named Mr. Thomas.", start:3.2, end:7.1 },
-  { text:"His eyes were bright and happy,", start:7.1, end:10.2 },
-  { text:"and his long white beard looked soft and fluffy.", start:10.2, end:15.0 },
-  { text:"Every morning, Mr. Thomas walked through the village streets,", start:15.0, end:20.5 },
-  { text:"saying hello to everyone with a big, friendly smile.", start:20.5, end:25.4 },
-  { text:"He helped the baker carry heavy bags of flour", start:25.4, end:30.3 },
-  { text:"and told fun stories to the children at the well-known village garden.", start:30.3, end:36.8 },
-  { text:"Children like to hear his funny stories.", start:36.8, end:40.2 },
-  { text:"He watered plants for sick neighbors and fixed broken fences for elderly friends.", start:40.2, end:47.5 },
-  { text:"Mr. Thomas also shared his fresh vegetables from his garden with families who needed food.", start:47.5, end:55.8 },
-  { text:"When big storms came with loud thunder,", start:55.8, end:60.0 },
-  { text:"Mr. Thomas opened his warm house to his scared dogs looking for a safe place.", start:60.0, end:67.2 },
-  { text:"All the village people loved his caring and helpful ways.", start:67.2, end:72.0 },
-  { text:"One special day,", start:72.0, end:74.0 },
-  { text:"everyone surprised Mr. Thomas with a wonderful party to say thank you for all his good deeds.", start:74.0, end:83.5 },
-  { text:"Happy tears rolled down his wrinkled face when he saw how much everyone cared.", start:83.5, end:91.5 },
-  { text:"Mr. Thomas showed everyone that being kind and helpful", start:91.5, end:96.0 },
-  { text:"makes the world a better and happier place for all.", start:96.0, end:101.0 }
-];
-
-const storyDiv = document.getElementById("story");
-const audio = document.getElementById("audio");
-
-// Build story text
-storyDiv.innerHTML = phrases.map((p,i)=>
-  `<span class="phrase" id="p${i}">${p.text}</span>`
-).join(" ");
-
-function clearHighlight(){
-  phrases.forEach((_,i)=>{
-    document.getElementById("p"+i).classList.remove("active");
-  });
-}
-
-// Sync highlight with audio
-audio.addEventListener("timeupdate",()=>{
-  const t = audio.currentTime+0.18;
-  phrases.forEach((p,i)=>{
-    const el = document.getElementById("p"+i);
-    if(t >= p.start && t <= p.end){
-      el.classList.add("active");
-    } else {
-      el.classList.remove("active");
-    }
-  });
-});
-
-function playAudio(){ audio.play(); }
-function pauseAudio(){ audio.pause(); }
-function restartAudio(){
-  audio.currentTime = 0;
-  audio.play();
-}
-</script>
-
-</body>
-</html>
+function syncHighlight(){
+  const t = audio.currentTime + HIGHLIGHT_OFFSET;
 
   phrases.forEach((p,i)=>{
     const el = document.getElementById("p"+i);
@@ -430,38 +146,31 @@ function restartAudio(){
       el.classList.remove("active");
     }
   });
-});
 
-function playAudio(){ audio.play(); }
-function pauseAudio(){ audio.pause(); }
+  if(!audio.paused){
+    requestAnimationFrame(syncHighlight);
+  }
+}
+
+/* ===== CONTROLS ===== */
+function playAudio(){
+  audio.play();
+  requestAnimationFrame(syncHighlight);
+}
+
+function pauseAudio(){
+  audio.pause();
+}
+
 function restartAudio(){
   audio.currentTime = 0;
   audio.play();
+  requestAnimationFrame(syncHighlight);
 }
 </script>
 
 </body>
 </html>
 
-  phrases.forEach((p,i)=>{
-    const el = document.getElementById("p"+i);
-    if(t >= p.start && t <= p.end){
-      el.classList.add("active");
-    } else {
-      el.classList.remove("active");
-    }
-  });
-});
-
-function playAudio(){ audio.play(); }
-function pauseAudio(){ audio.pause(); }
-function restartAudio(){
-  audio.currentTime = 0;
-  audio.play();
-}
-</script>
-
-</body>
-</html>
 
 
