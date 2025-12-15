@@ -330,16 +330,44 @@
     </div>
 
     <script>
-        // Story text
-        const story = `In a small village named Pamplemousses, there lived a kind old man named Mr. Thomas. His eyes were bright and happy, and his long white beard looked soft and fluffy. Every morning, Mr. Thomas walked through the village streets, saying hello to everyone with a big, friendly smile. He helped the baker carry heavy bags of flour and told fun stories to the children at the well-known village garden. Children like to hear his funny stories. He watered plants for sick neighbors and fixed broken fences for elderly friends. Mr. Thomas also shared his fresh vegetables from his garden with families who needed food. When big storms came with loud thunder, Mr. Thomas opened his warm house to his scared dogs looking for a safe place. All the village people loved his caring and helpful ways. One special day, everyone surprised Mr. Thomas with a wonderful party to say thank you for all his good deeds. Happy tears rolled down his wrinkled face when he saw how much everyone cared. Mr. Thomas showed everyone that being kind and helpful makes the world a better and happier place for all.`;
+        // Story text broken into phrases for group highlighting
+        const phrases = [
+            "In a small village named Pamplemousses,",
+            "there lived a kind old man named Mr. Thomas.",
+            "His eyes were bright and happy,",
+            "and his long white beard looked soft and fluffy.",
+            "Every morning,",
+            "Mr. Thomas walked through the village streets,",
+            "saying hello to everyone with a big, friendly smile.",
+            "He helped the baker carry heavy bags of flour",
+            "and told fun stories to the children at the well-known village garden.",
+            "Children like to hear his funny stories.",
+            "He watered plants for sick neighbors",
+            "and fixed broken fences for elderly friends.",
+            "Mr. Thomas also shared his fresh vegetables from his garden",
+            "with families who needed food.",
+            "When big storms came with loud thunder,",
+            "Mr. Thomas opened his warm house to his scared dogs",
+            "looking for a safe place.",
+            "All the village people loved his caring and helpful ways.",
+            "One special day,",
+            "everyone surprised Mr. Thomas with a wonderful party",
+            "to say thank you for all his good deeds.",
+            "Happy tears rolled down his wrinkled face",
+            "when he saw how much everyone cared.",
+            "Mr. Thomas showed everyone",
+            "that being kind and helpful",
+            "makes the world a better and happier place for all."
+        ];
+        
+        const story = phrases.join(' ');
         
         let synth = window.speechSynthesis;
         let utterance = null;
-        let words = [];
-        let currentWordIndex = 0;
+        let currentPhraseIndex = 0;
         let isPaused = false;
         let voices = [];
-        let highlightInterval = null; // Store interval globally
+        let highlightInterval = null;
         
         // Load voices
         function loadVoices() {
@@ -362,12 +390,11 @@
         }
         loadVoices();
         
-        // Initialize story text with word spans
+        // Initialize story text with phrase spans
         function initStory() {
             const storyContainer = document.getElementById('storyText');
-            words = story.split(' ');
-            storyContainer.innerHTML = words.map((word, index) => {
-                return `<span class="word" id="word-${index}">${word}</span>`;
+            storyContainer.innerHTML = phrases.map((phrase, index) => {
+                return `<span class="word" id="phrase-${index}">${phrase}</span>`;
             }).join(' ');
         }
         
@@ -379,7 +406,7 @@
                 synth.resume();
                 isPaused = false;
             } else {
-                currentWordIndex = 0;
+                currentPhraseIndex = 0;
                 clearAllHighlights();
                 
                 utterance = new SpeechSynthesisUtterance(story);
@@ -388,34 +415,34 @@
                     utterance.voice = voices[window.selectedVoiceIndex];
                 }
                 
-                utterance.rate = 0.7; // Moderate speed - clear but not too slow
+                utterance.rate = 0.8; // Good moderate speed
                 utterance.pitch = 1.4; // Child-like pitch
                 
-                const totalWords = words.length;
+                const totalPhrases = phrases.length;
                 const estimatedDuration = story.length / 15;
                 const adjustedDuration = estimatedDuration / utterance.rate;
-                const msPerWord = (adjustedDuration * 1000) / totalWords;
+                const msPerPhrase = (adjustedDuration * 1000) / totalPhrases;
                 
                 utterance.onstart = function() {
                     highlightInterval = setInterval(() => {
-                        if (currentWordIndex < totalWords) {
-                            if (currentWordIndex > 0) {
-                                const prevElement = document.getElementById(`word-${currentWordIndex - 1}`);
+                        if (currentPhraseIndex < totalPhrases) {
+                            if (currentPhraseIndex > 0) {
+                                const prevElement = document.getElementById(`phrase-${currentPhraseIndex - 1}`);
                                 if (prevElement) {
                                     prevElement.classList.remove('highlight');
                                 }
                             }
                             
-                            const currentElement = document.getElementById(`word-${currentWordIndex}`);
+                            const currentElement = document.getElementById(`phrase-${currentPhraseIndex}`);
                             if (currentElement) {
                                 currentElement.classList.add('highlight');
                             }
                             
-                            currentWordIndex++;
+                            currentPhraseIndex++;
                         } else {
                             clearInterval(highlightInterval);
                         }
-                    }, msPerWord);
+                    }, msPerPhrase);
                 };
                 
                 utterance.onend = function() {
@@ -448,7 +475,7 @@
         function restartReading() {
             synth.cancel();
             isPaused = false;
-            currentWordIndex = 0;
+            currentPhraseIndex = 0;
             // Stop any ongoing highlighting
             if (highlightInterval) {
                 clearInterval(highlightInterval);
@@ -459,8 +486,8 @@
         }
         
         function clearAllHighlights() {
-            words.forEach((_, index) => {
-                const element = document.getElementById(`word-${index}`);
+            phrases.forEach((_, index) => {
+                const element = document.getElementById(`phrase-${index}`);
                 if (element) {
                     element.classList.remove('highlight');
                 }
