@@ -1,525 +1,299 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mr. Thomas of Pamplemousses - Read Along</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        
-        body {
-            font-family: 'Comic Sans MS', 'Arial', sans-serif;
-            background: linear-gradient(to bottom, #87CEEB 0%, #98D8E8 50%, #90EE90 100%);
-            min-height: 100vh;
-            padding: 20px;
-            position: relative;
-            overflow-x: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mr. Thomas of Pamplemousses - Read Along</title>
 
-        /* Animated Background Elements */
-        .background-scene {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        .sun {
-            position: absolute;
-            top: 50px;
-            right: 100px;
-            width: 120px;
-            height: 120px;
-            background: radial-gradient(circle, #FFD700 0%, #FFA500 100%);
-            border-radius: 50%;
-            box-shadow: 0 0 60px rgba(255, 215, 0, 0.8);
-            animation: sunPulse 4s ease-in-out infinite;
-        }
+body {
+    font-family: 'Comic Sans MS', 'Arial', sans-serif;
+    background: linear-gradient(to bottom, #87CEEB 0%, #98D8E8 50%, #90EE90 100%);
+    min-height: 100vh;
+    padding: 20px;
+    overflow-x: hidden;
+}
 
-        @keyframes sunPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
+/* Background Scene */
+.background-scene {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
 
-        .cloud {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 100px;
-            animation: cloudFloat 30s linear infinite;
-        }
+.sun {
+    position: absolute;
+    top: 40px;
+    right: 60px;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, #FFD700, #FFA500);
+    border-radius: 50%;
+    box-shadow: 0 0 50px rgba(255,215,0,.8);
+}
 
-        .cloud-1 {
-            width: 100px;
-            height: 40px;
-            top: 80px;
-            left: -150px;
-        }
+.cloud {
+    position: absolute;
+    width: 120px;
+    height: 40px;
+    background: rgba(255,255,255,.8);
+    border-radius: 100px;
+    top: 100px;
+    animation: cloudMove 35s linear infinite;
+}
 
-        .cloud-2 {
-            width: 120px;
-            height: 45px;
-            top: 150px;
-            left: -200px;
-            animation-duration: 35s;
-            animation-delay: 5s;
-        }
+.cloud:nth-child(2) {
+    top: 160px;
+    animation-duration: 45s;
+}
 
-        @keyframes cloudFloat {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(100vw + 200px)); }
-        }
+@keyframes cloudMove {
+    from { transform: translateX(-200px); }
+    to { transform: translateX(120vw); }
+}
 
-        .butterfly {
-            position: absolute;
-            font-size: 2em;
-            animation: butterflyFly 15s ease-in-out infinite;
-        }
+.flower {
+    position: absolute;
+    bottom: 10px;
+    font-size: 2em;
+}
 
-        .butterfly-1 { top: 20%; left: 10%; }
-        .butterfly-2 { top: 40%; right: 15%; animation-delay: 3s; }
+.flower:nth-child(1){ left:5%; }
+.flower:nth-child(2){ left:15%; }
+.flower:nth-child(3){ right:15%; }
+.flower:nth-child(4){ right:5%; }
 
-        @keyframes butterflyFly {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(50px, -30px) rotate(5deg); }
-            50% { transform: translate(100px, 20px) rotate(-5deg); }
-            75% { transform: translate(50px, 40px) rotate(3deg); }
-        }
+/* Back Button */
+.back-button {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background: white;
+    color: #667eea;
+    padding: 10px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    z-index: 1000;
+}
 
-        .flower {
-            position: absolute;
-            bottom: 0;
-            font-size: 2em;
-            animation: flowerSway 3s ease-in-out infinite;
-        }
+/* Main Container */
+.container {
+    max-width: 900px;
+    margin: 70px auto;
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 40px rgba(0,0,0,.3);
+    position: relative;
+    z-index: 1;
+}
 
-        .flower-1 { left: 5%; }
-        .flower-2 { left: 15%; animation-delay: 0.5s; }
-        .flower-3 { right: 15%; animation-delay: 0.3s; }
-        .flower-4 { right: 5%; animation-delay: 0.8s; }
+h1 {
+    text-align: center;
+    color: #667eea;
+    margin-bottom: 10px;
+}
 
-        @keyframes flowerSway {
-            0%, 100% { transform: rotate(-2deg); }
-            50% { transform: rotate(2deg); }
-        }
-        
-        .back-button {
-            position: fixed;
-            top: 15px;
-            left: 15px;
-            background: white;
-            color: #667eea;
-            padding: 12px 24px;
-            border-radius: 30px;
-            border: none;
-            font-weight: bold;
-            font-size: 16px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .back-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-            background: #667eea;
-            color: white;
-        }
-        
-        .container {
-            max-width: 900px;
-            margin: 60px auto 20px;
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            position: relative;
-            z-index: 1;
-        }
-        
-        h1 {
-            text-align: center;
-            color: #667eea;
-            margin-bottom: 10px;
-            font-size: 2em;
-        }
+.subtitle {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #555;
+}
 
-        .character-image {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+/* Image */
+.character-image {
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-        .character-image img {
-            max-width: 200px;
-            width: 100%;
-            height: auto;
-            border-radius: 50%;
-            border: 5px solid #667eea;
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-            background: white;
-            padding: 10px;
-        }
+.character-image img {
+    width: 180px;
+    border-radius: 50%;
+    border: 5px solid #667eea;
+}
 
-        .subtitle {
-            text-align: center;
-            color: #636e72;
-            margin-bottom: 25px;
-            font-size: 1.1em;
-        }
-        
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-        
-        button {
-            padding: 15px 30px;
-            font-size: 1.1em;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-            font-family: 'Arial', sans-serif;
-        }
-        
-        .start-btn {
-            background-color: #48bb78;
-            color: white;
-        }
-        
-        .start-btn:hover {
-            background-color: #38a169;
-            transform: translateY(-2px);
-        }
-        
-        .pause-btn {
-            background-color: #ed8936;
-            color: white;
-        }
-        
-        .pause-btn:hover {
-            background-color: #dd6b20;
-        }
-        
-        .restart-btn {
-            background-color: #f56565;
-            color: white;
-        }
-        
-        .restart-btn:hover {
-            background-color: #e53e3e;
-        }
-        
-        .story-text {
-            font-size: 1.4em;
-            line-height: 2.0;
-            color: #2d3748;
-            text-align: justify;
-            padding: 30px;
-            background: linear-gradient(to bottom, #f7fafc 0%, #ffffff 100%);
-            border: 3px solid #667eea;
-            border-radius: 12px;
-            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .word {
-            display: inline;
-            padding: 2px 4px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-        
-        .word.highlight {
-            background-color: #ffd700;
-            color: #1a202c;
-            font-weight: bold;
-            transform: scale(1.1);
-            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.6);
-        }
+/* Controls */
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
 
-        @media (max-width: 768px) {
-            .container {
-                margin: 80px 10px 20px;
-                padding: 20px;
-            }
+button {
+    padding: 12px 25px;
+    font-size: 1em;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
 
-            h1 {
-                font-size: 1.5em;
-            }
+.start-btn { background:#48bb78; color:white; }
+.pause-btn { background:#ed8936; color:white; }
+.restart-btn { background:#f56565; color:white; }
 
-            .character-image img {
-                max-width: 150px;
-            }
+/* Story Text */
+.story-text {
+    font-size: 1.4em;
+    line-height: 2;
+    padding: 25px;
+    border: 3px solid #667eea;
+    border-radius: 12px;
+    background: #f9fbff;
+}
 
-            .story-text {
-                font-size: 1.2em;
-                padding: 20px;
-            }
+.word {
+    padding: 2px 4px;
+    border-radius: 5px;
+    transition: background .3s;
+}
 
-            button {
-                padding: 12px 20px;
-                font-size: 1em;
-            }
-
-            .back-button {
-                padding: 8px 16px;
-                font-size: 14px;
-            }
-
-            .sun {
-                width: 80px;
-                height: 80px;
-                top: 30px;
-                right: 30px;
-            }
-
-            .butterfly {
-                font-size: 1.5em;
-            }
-        }
-    </style>
+.word.highlight {
+    background: #ffd700;
+    font-weight: bold;
+}
+</style>
 </head>
+
 <body>
-    <!-- Animated Background -->
-    <div class="background-scene">
-        <div class="sun"></div>
-        <div class="cloud cloud-1"></div>
-        <div class="cloud cloud-2"></div>
-        <div class="butterfly butterfly-1">🦋</div>
-        <div class="butterfly butterfly-2">🦋</div>
-        <div class="flower flower-1">🌸</div>
-        <div class="flower flower-2">🌼</div>
-        <div class="flower flower-3">🌺</div>
-        <div class="flower flower-4">🌻</div>
+
+<div class="background-scene">
+    <div class="sun"></div>
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+    <div class="flower">🌸</div>
+    <div class="flower">🌼</div>
+    <div class="flower">🌺</div>
+    <div class="flower">🌻</div>
+</div>
+
+<a href="../book-corner-index.html" class="back-button">🏠 Back</a>
+
+<div class="container">
+    <div class="character-image">
+        <img src="Kind_Man.PNG" alt="Mr Thomas">
     </div>
 
-    <a href="../book-corner-index.html" class="back-button">
-        <span>🏠</span>
-        <span>Back</span>
-    </a>
+    <h1>🧓 Mr. Thomas of Pamplemousses</h1>
+    <p class="subtitle">Read-Along Story • Grade 4</p>
 
-    <div class="container">
-        <div class="character-image">
-            <img src="Kind_Man.PNG" alt="Mr. Thomas" />
-        </div>
-        <h1>🧓 Mr. Thomas of Pamplemousses</h1>
-        <p class="subtitle">Read-Along Story • Grade 4</p>
-        
-        <div class="controls">
-            <button class="start-btn" onclick="startReading()">▶️ Start</button>
-            <button class="pause-btn" onclick="pauseReading()">⏸️ Pause</button>
-            <button class="restart-btn" onclick="restartReading()">🔄 Restart</button>
-        </div>
-        
-        <div class="story-text" id="storyText"></div>
+    <div class="controls">
+        <button class="start-btn" onclick="startReading()">▶ Start</button>
+        <button class="pause-btn" onclick="pauseReading()">⏸ Pause</button>
+        <button class="restart-btn" onclick="restartReading()">🔄 Restart</button>
     </div>
 
-    <script>
-        // Story text broken into phrases for group highlighting (based on exact timing)
-        const phrases = [
-            "In a small village named Pamplemousses,", // (i)
-            "there lived a kind old man named Mr. Thomas.", // (ii)
-            "His eyes were bright and happy,", // (iii)
-            "and his long white beard looked soft and fluffy.", // (iv)
-            "Every morning, Mr. Thomas walked through the village streets,", // (v)
-            "saying hello to everyone with a big, friendly smile.", // (vi)
-            "He helped the baker carry heavy bags of flour", // (vii)
-            "and told fun stories to the children at the well-known village garden.", // (viii)
-            "Children like to hear his funny stories.", // (ix)
-            "He watered plants for sick neighbors and fixed broken fences for elderly friends.", // (x)
-            "Mr. Thomas also shared his fresh vegetables from his garden with families who needed food.", // (xi)
-            "When big storms came with loud thunder", // (xii)
-            "Mr. Thomas opened his warm house to his scared dogs looking for a safe place.", // (xiii)
-            "All the village people loved his caring and helpful ways.", // (xiv)
-            "One special day,", // (xv)
-            "everyone surprised Mr. Thomas with a wonderful party to say thank you for all his good deeds.", // (xvi)
-            "Happy tears rolled down his wrinkled face when he saw how much everyone cared.", // (xvii)
-            "Mr. Thomas showed everyone that being kind and helpful", // (xviii) - you had (xix) but this should be (xviii)
-            "makes the world a better and happier place for all." // (xix) - you had (xx) but this should be (xix)
-        ];
-        
-        const story = phrases.join(' ');
-        
-        let synth = window.speechSynthesis;
-        let utterance = null;
-        let currentPhraseIndex = 0;
-        let isPaused = false;
-        let voices = [];
-        let highlightInterval = null;
-        
-        // Load voices
-        function loadVoices() {
-            voices = synth.getVoices();
-            const englishVoices = voices.filter(voice => voice.lang.startsWith('en'));
-            const childVoices = englishVoices.filter(voice => 
-                voice.name.includes('Google UK English Female') ||
-                voice.name.includes('Samantha') ||
-                voice.name.includes('Victoria') ||
-                voice.name.includes('Karen') ||
-                voice.name.includes('Google US English Female') ||
-                voice.name.toLowerCase().includes('female')
-            );
-            const selectedVoice = childVoices.length > 0 ? childVoices[0] : englishVoices[0];
-            window.selectedVoiceIndex = voices.indexOf(selectedVoice);
-        }
-        
-        if (synth.onvoiceschanged !== undefined) {
-            synth.onvoiceschanged = loadVoices;
-        }
-        loadVoices();
-        
-        // Initialize story text with phrase spans
-        function initStory() {
-            const storyContainer = document.getElementById('storyText');
-            storyContainer.innerHTML = phrases.map((phrase, index) => {
-                return `<span class="word" id="phrase-${index}">${phrase}</span>`;
-            }).join(' ');
-        }
-        
-        // Start reading
-        function startReading() {
-            synth.cancel();
-            
-            if (isPaused) {
-                synth.resume();
-                isPaused = false;
-            } else {
-                currentPhraseIndex = 0;
-                clearAllHighlights();
-                
-                utterance = new SpeechSynthesisUtterance(story);
-                
-                if (voices[window.selectedVoiceIndex]) {
-                    utterance.voice = voices[window.selectedVoiceIndex];
-                }
-                
-                utterance.rate = 0.8; // Good moderate speed
-                utterance.pitch = 1.4; // Child-like pitch
-                
-                const totalPhrases = phrases.length;
-                const estimatedDuration = story.length / 15;
-                const adjustedDuration = estimatedDuration / utterance.rate;
-                const msPerPhrase = (adjustedDuration * 1000) / totalPhrases;
-                const fasterMsPerPhrase = msPerPhrase * 0.85; // Make highlighting 15% faster to catch up
-                
-                utterance.onstart = function() {
-                    // Highlight the first phrase immediately
-                    const firstElement = document.getElementById('phrase-0');
-                    if (firstElement) {
-                        firstElement.classList.add('highlight');
-                    }
-                    currentPhraseIndex = 1; // Start from second phrase
-                    
-                    highlightInterval = setInterval(() => {
-                        if (currentPhraseIndex < totalPhrases) {
-                            // Remove highlight from previous phrase
-                            const prevElement = document.getElementById(`phrase-${currentPhraseIndex - 1}`);
-                            if (prevElement) {
-                                prevElement.classList.remove('highlight');
-                            }
-                            
-                            // Highlight current phrase
-                            const currentElement = document.getElementById(`phrase-${currentPhraseIndex}`);
-                            if (currentElement) {
-                                currentElement.classList.add('highlight');
-                            }
-                            
-                            currentPhraseIndex++;
-                        } else {
-                            clearInterval(highlightInterval);
-                        }
-                    }, fasterMsPerPhrase);
-                };
-                
-                utterance.onend = function() {
-                    clearInterval(highlightInterval);
-                    synth.cancel();
-                    isPaused = false;
-                };
-                
-                utterance.onerror = function(event) {
-                    clearInterval(highlightInterval);
-                    console.error('Speech synthesis error:', event);
-                    synth.cancel();
-                    isPaused = false;
-                };
-                
-                synth.speak(utterance);
-            }
-        }
-        
-        function pauseReading() {
-            synth.pause();
-            isPaused = true;
-            // Stop the highlighting
-            if (highlightInterval) {
-                clearInterval(highlightInterval);
-                highlightInterval = null;
-            }
-        }
-        
-        function restartReading() {
-            synth.cancel();
-            isPaused = false;
-            currentPhraseIndex = 0;
-            // Stop any ongoing highlighting
-            if (highlightInterval) {
-                clearInterval(highlightInterval);
-                highlightInterval = null;
-            }
-            clearAllHighlights();
-            startReading();
-        }
-        
-        function clearAllHighlights() {
-            phrases.forEach((_, index) => {
-                const element = document.getElementById(`phrase-${index}`);
-                if (element) {
-                    element.classList.remove('highlight');
-                }
-            });
-        }
-        
-        // Initialize on load
-        initStory();
+    <div class="story-text" id="storyText"></div>
+</div>
 
-        // Stop speech when page is closed, refreshed, or navigated away
-        window.addEventListener('beforeunload', function() {
-            synth.cancel();
-            if (highlightInterval) {
-                clearInterval(highlightInterval);
-            }
-        });
+<script>
+const phrases = [
+"In a small village named Pamplemousses,",
+"there lived a kind old man named Mr. Thomas.",
+"His eyes were bright and happy,",
+"and his long white beard looked soft and fluffy.",
+"Every morning, Mr. Thomas walked through the village streets,",
+"saying hello to everyone with a big, friendly smile.",
+"He helped the baker carry heavy bags of flour",
+"and told fun stories to the children at the well-known village garden.",
+"Children like to hear his funny stories.",
+"He watered plants for sick neighbors and fixed broken fences for elderly friends.",
+"Mr. Thomas also shared his fresh vegetables from his garden with families who needed food.",
+"When big storms came with loud thunder,",
+"Mr. Thomas opened his warm house to his scared dogs looking for a safe place.",
+"All the village people loved his caring and helpful ways.",
+"One special day,",
+"everyone surprised Mr. Thomas with a wonderful party to say thank you for all his good deeds.",
+"Happy tears rolled down his wrinkled face when he saw how much everyone cared.",
+"Mr. Thomas showed everyone that being kind and helpful",
+"makes the world a better and happier place for all."
+];
 
-        window.addEventListener('pagehide', function() {
-            synth.cancel();
-            if (highlightInterval) {
-                clearInterval(highlightInterval);
-            }
-        });
+const synth = window.speechSynthesis;
+let voices = [];
+let index = 0;
+let paused = false;
+let utterance = null;
 
-        // Also stop when back button is clicked
-        window.addEventListener('unload', function() {
-            synth.cancel();
-            if (highlightInterval) {
-                clearInterval(highlightInterval);
-            }
-        });
-    </script>
+function loadVoices(){
+    voices = synth.getVoices();
+}
+speechSynthesis.onvoiceschanged = loadVoices;
+loadVoices();
+
+function initStory(){
+    const box = document.getElementById("storyText");
+    box.innerHTML = phrases.map((p,i)=>
+        `<span class="word" id="p${i}">${p}</span>`
+    ).join(" ");
+}
+initStory();
+
+function clearHighlight(){
+    phrases.forEach((_,i)=>{
+        document.getElementById("p"+i)?.classList.remove("highlight");
+    });
+}
+
+function speakPhrase(){
+    if(index >= phrases.length) return;
+
+    clearHighlight();
+    document.getElementById("p"+index).classList.add("highlight");
+
+    utterance = new SpeechSynthesisUtterance(phrases[index]);
+    utterance.voice = voices.find(v=>v.lang.startsWith("en")) || voices[0];
+    utterance.rate = 0.8;
+    utterance.pitch = 1.4;
+
+    utterance.onend = ()=>{
+        if(!paused){
+            index++;
+            speakPhrase();
+        }
+    };
+
+    synth.speak(utterance);
+}
+
+function startReading(){
+    if(paused){
+        paused = false;
+        speakPhrase();
+        return;
+    }
+    synth.cancel();
+    index = 0;
+    paused = false;
+    clearHighlight();
+    speakPhrase();
+}
+
+function pauseReading(){
+    paused = true;
+    synth.cancel();
+}
+
+function restartReading(){
+    synth.cancel();
+    paused = false;
+    index = 0;
+    clearHighlight();
+    speakPhrase();
+}
+
+window.addEventListener("beforeunload",()=>synth.cancel());
+</script>
+
 </body>
 </html>
+
