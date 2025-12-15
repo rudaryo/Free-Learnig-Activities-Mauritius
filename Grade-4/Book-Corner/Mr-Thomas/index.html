@@ -339,6 +339,7 @@
         let currentWordIndex = 0;
         let isPaused = false;
         let voices = [];
+        let highlightInterval = null; // Store interval globally
         
         // Load voices
         function loadVoices() {
@@ -387,7 +388,7 @@
                     utterance.voice = voices[window.selectedVoiceIndex];
                 }
                 
-                utterance.rate = 0.9; // Normal speed
+                utterance.rate = 0.5; // Slower speed for better clarity
                 utterance.pitch = 1.4; // Child-like pitch
                 
                 const totalWords = words.length;
@@ -395,7 +396,6 @@
                 const adjustedDuration = estimatedDuration / utterance.rate;
                 const msPerWord = (adjustedDuration * 1000) / totalWords;
                 
-                let highlightInterval;
                 utterance.onstart = function() {
                     highlightInterval = setInterval(() => {
                         if (currentWordIndex < totalWords) {
@@ -438,12 +438,22 @@
         function pauseReading() {
             synth.pause();
             isPaused = true;
+            // Stop the highlighting
+            if (highlightInterval) {
+                clearInterval(highlightInterval);
+                highlightInterval = null;
+            }
         }
         
         function restartReading() {
             synth.cancel();
             isPaused = false;
             currentWordIndex = 0;
+            // Stop any ongoing highlighting
+            if (highlightInterval) {
+                clearInterval(highlightInterval);
+                highlightInterval = null;
+            }
             clearAllHighlights();
             startReading();
         }
