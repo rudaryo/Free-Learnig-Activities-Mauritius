@@ -424,25 +424,36 @@
                 const msPerPhrase = (adjustedDuration * 1000) / totalPhrases;
                 
                 utterance.onstart = function() {
-                    highlightInterval = setInterval(() => {
-                        if (currentPhraseIndex < totalPhrases) {
-                            if (currentPhraseIndex > 0) {
+                    // Highlight the first phrase immediately
+                    const firstElement = document.getElementById('phrase-0');
+                    if (firstElement) {
+                        firstElement.classList.add('highlight');
+                    }
+                    
+                    // Wait 1 second, then start moving through phrases
+                    setTimeout(() => {
+                        currentPhraseIndex = 1;
+                        
+                        highlightInterval = setInterval(() => {
+                            if (currentPhraseIndex < totalPhrases) {
+                                // Remove highlight from previous phrase
                                 const prevElement = document.getElementById(`phrase-${currentPhraseIndex - 1}`);
                                 if (prevElement) {
                                     prevElement.classList.remove('highlight');
                                 }
+                                
+                                // Highlight current phrase
+                                const currentElement = document.getElementById(`phrase-${currentPhraseIndex}`);
+                                if (currentElement) {
+                                    currentElement.classList.add('highlight');
+                                }
+                                
+                                currentPhraseIndex++;
+                            } else {
+                                clearInterval(highlightInterval);
                             }
-                            
-                            const currentElement = document.getElementById(`phrase-${currentPhraseIndex}`);
-                            if (currentElement) {
-                                currentElement.classList.add('highlight');
-                            }
-                            
-                            currentPhraseIndex++;
-                        } else {
-                            clearInterval(highlightInterval);
-                        }
-                    }, msPerPhrase);
+                        }, msPerPhrase + 1000); // Add 1 second pause between highlights
+                    }, msPerPhrase + 1000); // Wait before starting second phrase
                 };
                 
                 utterance.onend = function() {
@@ -496,6 +507,29 @@
         
         // Initialize on load
         initStory();
+
+        // Stop speech when page is closed, refreshed, or navigated away
+        window.addEventListener('beforeunload', function() {
+            synth.cancel();
+            if (highlightInterval) {
+                clearInterval(highlightInterval);
+            }
+        });
+
+        window.addEventListener('pagehide', function() {
+            synth.cancel();
+            if (highlightInterval) {
+                clearInterval(highlightInterval);
+            }
+        });
+
+        // Also stop when back button is clicked
+        window.addEventListener('unload', function() {
+            synth.cancel();
+            if (highlightInterval) {
+                clearInterval(highlightInterval);
+            }
+        });
     </script>
 </body>
 </html>
