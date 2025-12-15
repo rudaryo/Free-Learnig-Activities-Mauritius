@@ -3,126 +3,72 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mr. Thomas of Pamplemousses - Read Along</title>
+<title>Mr. Thomas of Pamplemousses – Read Along</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-
 body{
     font-family:'Comic Sans MS','Arial',sans-serif;
-    background:linear-gradient(to bottom,#87CEEB 0%,#98D8E8 50%,#90EE90 100%);
+    background:linear-gradient(to bottom,#87CEEB,#98D8E8,#90EE90);
     min-height:100vh;
     padding:20px;
-    overflow-x:hidden;
 }
 
-/* Background */
-.background-scene{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:0;
-}
-.sun{
-    position:absolute;
-    top:40px;right:60px;
-    width:100px;height:100px;
-    background:radial-gradient(circle,#FFD700,#FFA500);
-    border-radius:50%;
-    box-shadow:0 0 50px rgba(255,215,0,.8);
-}
-.cloud{
-    position:absolute;
-    width:120px;height:40px;
-    background:rgba(255,255,255,.8);
-    border-radius:100px;
-    top:100px;
-    animation:cloudMove 40s linear infinite;
-}
-.cloud:nth-child(2){top:160px;animation-duration:55s}
-@keyframes cloudMove{
-    from{transform:translateX(-200px)}
-    to{transform:translateX(120vw)}
-}
-.flower{
-    position:absolute;
-    bottom:10px;
-    font-size:2em;
-}
-.flower:nth-child(1){left:5%}
-.flower:nth-child(2){left:15%}
-.flower:nth-child(3){right:15%}
-.flower:nth-child(4){right:5%}
-
-/* Back */
-.back-button{
-    position:fixed;
-    top:15px;left:15px;
-    background:white;
-    color:#667eea;
-    padding:10px 20px;
-    border-radius:30px;
-    font-weight:bold;
-    text-decoration:none;
-    z-index:1000;
-}
-
-/* Container */
 .container{
     max-width:900px;
-    margin:70px auto;
+    margin:40px auto;
     background:white;
-    border-radius:20px;
     padding:30px;
+    border-radius:20px;
     box-shadow:0 10px 40px rgba(0,0,0,.3);
-    position:relative;
-    z-index:1;
-}
-h1{text-align:center;color:#667eea}
-.subtitle{text-align:center;margin-bottom:25px;color:#555}
-
-/* Image */
-.character-image{text-align:center;margin-bottom:20px}
-.character-image img{
-    width:180px;
-    border-radius:50%;
-    border:5px solid #667eea;
 }
 
-/* Controls */
+h1{
+    text-align:center;
+    color:#667eea;
+}
+
+.subtitle{
+    text-align:center;
+    margin-bottom:20px;
+    color:#555;
+}
+
 .controls{
     display:flex;
     justify-content:center;
     gap:15px;
-    margin-bottom:25px;
+    margin-bottom:20px;
 }
+
 button{
     padding:12px 25px;
-    font-size:1em;
     border:none;
     border-radius:10px;
-    cursor:pointer;
     font-weight:bold;
+    cursor:pointer;
+    font-size:1em;
 }
-.start-btn{background:#48bb78;color:white}
-.pause-btn{background:#ed8936;color:white}
-.restart-btn{background:#f56565;color:white}
 
-/* Story */
+.play{background:#48bb78;color:white}
+.pause{background:#ed8936;color:white}
+.restart{background:#f56565;color:white}
+
 .story-text{
     font-size:1.4em;
     line-height:2;
-    padding:25px;
     border:3px solid #667eea;
+    padding:25px;
     border-radius:12px;
     background:#f9fbff;
 }
-.word{
+
+.phrase{
     padding:2px 4px;
     border-radius:5px;
-    transition:all .3s ease;
+    transition:background 0.2s ease;
 }
-.word.highlight{
+
+.phrase.active{
     background:#ffd700;
     font-weight:bold;
 }
@@ -131,154 +77,78 @@ button{
 
 <body>
 
-<div class="background-scene">
-    <div class="sun"></div>
-    <div class="cloud"></div>
-    <div class="cloud"></div>
-    <div class="flower">🌸</div>
-    <div class="flower">🌼</div>
-    <div class="flower">🌺</div>
-    <div class="flower">🌻</div>
-</div>
-
-<a href="../book-corner-index.html" class="back-button">🏠 Back</a>
-
 <div class="container">
-    <div class="character-image">
-        <img src="Kind_Man.PNG" alt="Mr Thomas">
-    </div>
-
     <h1>🧓 Mr. Thomas of Pamplemousses</h1>
-    <p class="subtitle">Read-Along Story • Grade 4</p>
+    <p class="subtitle">Read-Along Story • Human Voice</p>
 
     <div class="controls">
-        <button class="start-btn" onclick="startReading()">▶ Start</button>
-        <button class="pause-btn" onclick="pauseReading()">⏸ Pause</button>
-        <button class="restart-btn" onclick="restartReading()">🔄 Restart</button>
+        <button class="play" onclick="playAudio()">▶ Play</button>
+        <button class="pause" onclick="pauseAudio()">⏸ Pause</button>
+        <button class="restart" onclick="restartAudio()">🔄 Restart</button>
     </div>
 
-    <div class="story-text" id="storyText"></div>
+    <div class="story-text" id="story"></div>
+
+    <!-- Human narration -->
+    <audio id="audio" src="The_Kind_Old_Man.mp3"></audio>
 </div>
 
 <script>
 const phrases = [
-"In a small village named Pamplemousses,",
-"there lived a kind old man named Mr. Thomas.",
-"His eyes were bright and happy,",
-"and his long white beard looked soft and fluffy.",
-"Every morning, Mr. Thomas walked through the village streets,",
-"saying hello to everyone with a big, friendly smile.",
-"He helped the baker carry heavy bags of flour",
-"and told fun stories to the children at the well-known village garden.",
-"Children like to hear his funny stories.",
-"He watered plants for sick neighbors and fixed broken fences for elderly friends.",
-"Mr. Thomas also shared his fresh vegetables from his garden with families who needed food.",
-"When big storms came with loud thunder,",
-"Mr. Thomas opened his warm house to his scared dogs looking for a safe place.",
-"All the village people loved his caring and helpful ways.",
-"One special day,",
-"everyone surprised Mr. Thomas with a wonderful party to say thank you for all his good deeds.",
-"Happy tears rolled down his wrinkled face when he saw how much everyone cared.",
-"Mr. Thomas showed everyone that being kind and helpful",
-"makes the world a better and happier place for all."
+  { text:"In a small village named Pamplemousses,", start:0.0, end:3.2 },
+  { text:"there lived a kind old man named Mr. Thomas.", start:3.2, end:7.1 },
+  { text:"His eyes were bright and happy,", start:7.1, end:10.2 },
+  { text:"and his long white beard looked soft and fluffy.", start:10.2, end:15.0 },
+  { text:"Every morning, Mr. Thomas walked through the village streets,", start:15.0, end:20.5 },
+  { text:"saying hello to everyone with a big, friendly smile.", start:20.5, end:25.4 },
+  { text:"He helped the baker carry heavy bags of flour", start:25.4, end:30.3 },
+  { text:"and told fun stories to the children at the well-known village garden.", start:30.3, end:36.8 },
+  { text:"Children like to hear his funny stories.", start:36.8, end:40.2 },
+  { text:"He watered plants for sick neighbors and fixed broken fences for elderly friends.", start:40.2, end:47.5 },
+  { text:"Mr. Thomas also shared his fresh vegetables from his garden with families who needed food.", start:47.5, end:55.8 },
+  { text:"When big storms came with loud thunder,", start:55.8, end:60.0 },
+  { text:"Mr. Thomas opened his warm house to his scared dogs looking for a safe place.", start:60.0, end:67.2 },
+  { text:"All the village people loved his caring and helpful ways.", start:67.2, end:72.0 },
+  { text:"One special day,", start:72.0, end:74.0 },
+  { text:"everyone surprised Mr. Thomas with a wonderful party to say thank you for all his good deeds.", start:74.0, end:83.5 },
+  { text:"Happy tears rolled down his wrinkled face when he saw how much everyone cared.", start:83.5, end:91.5 },
+  { text:"Mr. Thomas showed everyone that being kind and helpful", start:91.5, end:96.0 },
+  { text:"makes the world a better and happier place for all.", start:96.0, end:101.0 }
 ];
 
-const synth = window.speechSynthesis;
-let voices = [];
-let selectedVoice = null;
-let index = 0;
-let paused = false;
-let utterance = null;
+const storyDiv = document.getElementById("story");
+const audio = document.getElementById("audio");
 
-/* Load & select warm female voice */
-function loadVoices(){
-    voices = synth.getVoices();
-
-    const femaleVoices = voices.filter(v =>
-        v.lang.startsWith("en") &&
-        (
-            v.name.toLowerCase().includes("female") ||
-            v.name.includes("Samantha") ||
-            v.name.includes("Victoria") ||
-            v.name.includes("Karen") ||
-            v.name.includes("Zira") ||
-            v.name.includes("Google UK English Female") ||
-            v.name.includes("Google US English Female")
-        )
-    );
-
-    selectedVoice =
-        femaleVoices[0] ||
-        voices.find(v => v.lang.startsWith("en")) ||
-        voices[0];
-}
-
-speechSynthesis.onvoiceschanged = loadVoices;
-loadVoices();
-
-/* Build story text */
-function initStory(){
-    const box = document.getElementById("storyText");
-    box.innerHTML = phrases.map((p,i)=>
-        `<span class="word" id="p${i}">${p}</span>`
-    ).join(" ");
-}
-initStory();
+// Build story text
+storyDiv.innerHTML = phrases.map((p,i)=>
+  `<span class="phrase" id="p${i}">${p.text}</span>`
+).join(" ");
 
 function clearHighlight(){
-    phrases.forEach((_,i)=>{
-        document.getElementById("p"+i)?.classList.remove("highlight");
-    });
+  phrases.forEach((_,i)=>{
+    document.getElementById("p"+i).classList.remove("active");
+  });
 }
 
-function speakPhrase(){
-    if(index >= phrases.length) return;
-
-    clearHighlight();
-    document.getElementById("p"+index).classList.add("highlight");
-
-    utterance = new SpeechSynthesisUtterance(phrases[index]);
-    utterance.voice = selectedVoice;
-    utterance.rate = 0.8;   // calm & clear
-    utterance.pitch = 1.4;  // warm female tone
-
-    utterance.onend = ()=>{
-        if(!paused){
-            index++;
-            speakPhrase();
-        }
-    };
-
-    synth.speak(utterance);
-}
-
-function startReading(){
-    if(paused){
-        paused = false;
-        speakPhrase();
-        return;
+// Sync highlight with audio
+audio.addEventListener("timeupdate",()=>{
+  const t = audio.currentTime;
+  phrases.forEach((p,i)=>{
+    const el = document.getElementById("p"+i);
+    if(t >= p.start && t <= p.end){
+      el.classList.add("active");
+    } else {
+      el.classList.remove("active");
     }
-    synth.cancel();
-    index = 0;
-    paused = false;
-    clearHighlight();
-    speakPhrase();
-}
+  });
+});
 
-function pauseReading(){
-    paused = true;
-    synth.cancel();
+function playAudio(){ audio.play(); }
+function pauseAudio(){ audio.pause(); }
+function restartAudio(){
+  audio.currentTime = 0;
+  audio.play();
 }
-
-function restartReading(){
-    synth.cancel();
-    paused = false;
-    index = 0;
-    clearHighlight();
-    speakPhrase();
-}
-
-window.addEventListener("beforeunload",()=>synth.cancel());
 </script>
 
 </body>
