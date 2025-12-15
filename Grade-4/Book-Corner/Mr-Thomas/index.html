@@ -415,6 +415,7 @@
                 const estimatedDuration = story.length / 15;
                 const adjustedDuration = estimatedDuration / utterance.rate;
                 const msPerPhrase = (adjustedDuration * 1000) / totalPhrases;
+                const fasterMsPerPhrase = msPerPhrase * 0.85; // Make highlighting 15% faster to catch up
                 
                 utterance.onstart = function() {
                     // Highlight the first phrase immediately
@@ -442,7 +443,7 @@
                         } else {
                             clearInterval(highlightInterval);
                         }
-                    }, msPerPhrase);
+                    }, fasterMsPerPhrase);
                 };
                 
                 utterance.onend = function() {
