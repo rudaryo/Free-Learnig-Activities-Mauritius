@@ -330,34 +330,27 @@
     </div>
 
     <script>
-        // Story text broken into phrases for group highlighting
+        // Story text broken into phrases for group highlighting (based on exact timing)
         const phrases = [
-            "In a small village named Pamplemousses,",
-            "there lived a kind old man named Mr. Thomas.",
-            "His eyes were bright and happy,",
-            "and his long white beard looked soft and fluffy.",
-            "Every morning,",
-            "Mr. Thomas walked through the village streets,",
-            "saying hello to everyone with a big, friendly smile.",
-            "He helped the baker carry heavy bags of flour",
-            "and told fun stories to the children at the well-known village garden.",
-            "Children like to hear his funny stories.",
-            "He watered plants for sick neighbors",
-            "and fixed broken fences for elderly friends.",
-            "Mr. Thomas also shared his fresh vegetables from his garden",
-            "with families who needed food.",
-            "When big storms came with loud thunder,",
-            "Mr. Thomas opened his warm house to his scared dogs",
-            "looking for a safe place.",
-            "All the village people loved his caring and helpful ways.",
-            "One special day,",
-            "everyone surprised Mr. Thomas with a wonderful party",
-            "to say thank you for all his good deeds.",
-            "Happy tears rolled down his wrinkled face",
-            "when he saw how much everyone cared.",
-            "Mr. Thomas showed everyone",
-            "that being kind and helpful",
-            "makes the world a better and happier place for all."
+            "In a small village named Pamplemousses,", // (i)
+            "there lived a kind old man named Mr. Thomas.", // (ii)
+            "His eyes were bright and happy,", // (iii)
+            "and his long white beard looked soft and fluffy.", // (iv)
+            "Every morning, Mr. Thomas walked through the village streets,", // (v)
+            "saying hello to everyone with a big, friendly smile.", // (vi)
+            "He helped the baker carry heavy bags of flour", // (vii)
+            "and told fun stories to the children at the well-known village garden.", // (viii)
+            "Children like to hear his funny stories.", // (ix)
+            "He watered plants for sick neighbors and fixed broken fences for elderly friends.", // (x)
+            "Mr. Thomas also shared his fresh vegetables from his garden with families who needed food.", // (xi)
+            "When big storms came with loud thunder", // (xii)
+            "Mr. Thomas opened his warm house to his scared dogs looking for a safe place.", // (xiii)
+            "All the village people loved his caring and helpful ways.", // (xiv)
+            "One special day,", // (xv)
+            "everyone surprised Mr. Thomas with a wonderful party to say thank you for all his good deeds.", // (xvi)
+            "Happy tears rolled down his wrinkled face when he saw how much everyone cared.", // (xvii)
+            "Mr. Thomas showed everyone that being kind and helpful", // (xviii) - you had (xix) but this should be (xviii)
+            "makes the world a better and happier place for all." // (xix) - you had (xx) but this should be (xix)
         ];
         
         const story = phrases.join(' ');
@@ -429,31 +422,27 @@
                     if (firstElement) {
                         firstElement.classList.add('highlight');
                     }
+                    currentPhraseIndex = 1; // Start from second phrase
                     
-                    // Wait 1 second, then start moving through phrases
-                    setTimeout(() => {
-                        currentPhraseIndex = 1;
-                        
-                        highlightInterval = setInterval(() => {
-                            if (currentPhraseIndex < totalPhrases) {
-                                // Remove highlight from previous phrase
-                                const prevElement = document.getElementById(`phrase-${currentPhraseIndex - 1}`);
-                                if (prevElement) {
-                                    prevElement.classList.remove('highlight');
-                                }
-                                
-                                // Highlight current phrase
-                                const currentElement = document.getElementById(`phrase-${currentPhraseIndex}`);
-                                if (currentElement) {
-                                    currentElement.classList.add('highlight');
-                                }
-                                
-                                currentPhraseIndex++;
-                            } else {
-                                clearInterval(highlightInterval);
+                    highlightInterval = setInterval(() => {
+                        if (currentPhraseIndex < totalPhrases) {
+                            // Remove highlight from previous phrase
+                            const prevElement = document.getElementById(`phrase-${currentPhraseIndex - 1}`);
+                            if (prevElement) {
+                                prevElement.classList.remove('highlight');
                             }
-                        }, msPerPhrase + 1000); // Add 1 second pause between highlights
-                    }, msPerPhrase + 1000); // Wait before starting second phrase
+                            
+                            // Highlight current phrase
+                            const currentElement = document.getElementById(`phrase-${currentPhraseIndex}`);
+                            if (currentElement) {
+                                currentElement.classList.add('highlight');
+                            }
+                            
+                            currentPhraseIndex++;
+                        } else {
+                            clearInterval(highlightInterval);
+                        }
+                    }, msPerPhrase);
                 };
                 
                 utterance.onend = function() {
