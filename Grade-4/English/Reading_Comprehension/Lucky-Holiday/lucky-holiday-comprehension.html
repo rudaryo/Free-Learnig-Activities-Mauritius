@@ -330,6 +330,89 @@
             min-height: 100px;
         }
 
+        /* Cloze Test Styles */
+        .cloze-blank {
+            display: inline-block;
+            min-width: 120px;
+            height: 40px;
+            border: 3px dashed #667eea;
+            border-radius: 8px;
+            background: white;
+            margin: 0 5px;
+            vertical-align: middle;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .cloze-blank.drag-over {
+            background: #e6f2ff;
+            border-color: #48bb78;
+            transform: scale(1.05);
+        }
+
+        .cloze-blank.filled {
+            background: #e6f2ff;
+            border: 3px solid #667eea;
+        }
+
+        .cloze-blank.correct {
+            background: #c6f6d5;
+            border-color: #48bb78;
+        }
+
+        .cloze-blank.wrong {
+            background: #fed7d7;
+            border-color: #f56565;
+        }
+
+        .cloze-word {
+            background: white;
+            color: #667eea;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: move;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .cloze-word:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .cloze-word.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+
+        .cloze-word.used {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .word-in-cloze {
+            background: white;
+            color: #667eea;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            font-size: 0.85em;
+        }
+
+        .word-in-cloze:hover {
+            background: #f0f0f0;
+        }
+
         .drop-zone {
             background: white;
             padding: 20px;
@@ -650,6 +733,56 @@
             <button class="submit-btn" onclick="checkLevel3()">Check Order</button>
             <div id="level3Result"></div>
         </div>
+
+        <!-- Level 4: Cloze Test (Drag & Drop) -->
+        <div class="level-section locked" id="level4">
+            <div class="level-header">
+                <div class="level-icon">✏️</div>
+                <h2 class="level-title">Level 4: Cloze Test</h2>
+            </div>
+
+            <div style="background: #e6f2ff; padding: 20px; border-radius: 10px; margin-bottom: 25px; border-left: 5px solid #667eea;">
+                <p style="font-size: 1.1em; line-height: 1.6; color: #2d3436;">
+                    <strong>📝 Instructions:</strong> Read the story carefully. Some words are missing! Drag the words from the word bank below and drop them into the correct blank spaces. Click on any word you've placed to remove it and try again.
+                </p>
+            </div>
+
+            <div style="background: #f9f9f9; padding: 30px; border-radius: 15px; border: 3px solid #667eea; margin-bottom: 30px; font-size: 1.3em; line-height: 2.2;">
+                <p style="margin-bottom: 20px;">Emma and her family went on a <span class="cloze-blank" data-answer="holiday" id="cloze1"></span> to the beach. They stayed in a small house next door to a <span class="cloze-blank" data-answer="kind" id="cloze2"></span> old lady named Mrs. Rose.</p>
+                
+                <p style="margin-bottom: 20px;">"Hello!" said Mrs. Rose with a <span class="cloze-blank" data-answer="huge" id="cloze3"></span> smile. "Welcome to our village! I hope you have a <span class="cloze-blank" data-answer="wonderful" id="cloze4"></span> time here."</p>
+                
+                <p style="margin-bottom: 20px;">Mrs. Rose was very <span class="cloze-blank" data-answer="friendly" id="cloze5"></span>. Every morning, she brought them <span class="cloze-blank" data-answer="delicious" id="cloze6"></span> homemade cookies that were still warm.</p>
+                
+                <p style="margin-bottom: 20px;">On the third day, Emma found a shiny shell on the beach. It was smooth and <span class="cloze-blank" data-answer="ripe" id="cloze7"></span> orange in color, like a sunset.</p>
+                
+                <p style="margin-bottom: 20px;">"That's a <span class="cloze-blank" data-answer="lucky" id="cloze8"></span> shell," said Mrs. Rose. "Keep it as a <span class="cloze-blank" data-answer="souvenir" id="cloze9"></span> from your trip!"</p>
+                
+                <p>Emma smiled. She felt so happy. This was the best holiday ever, thanks to the kind lady <span class="cloze-blank" data-answer="next door" id="cloze10"></span>.</p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 15px; margin-bottom: 30px;">
+                <h3 style="color: white; font-size: 1.5em; margin-bottom: 15px; text-align: center;">📦 Word Bank - Drag these words:</h3>
+                <div id="clozeWordBank" style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; min-height: 80px; padding: 15px; background: rgba(255, 255, 255, 0.2); border-radius: 10px;">
+                    <div class="cloze-word" draggable="true" data-word="lucky">lucky</div>
+                    <div class="cloze-word" draggable="true" data-word="wonderful">wonderful</div>
+                    <div class="cloze-word" draggable="true" data-word="next door">next door</div>
+                    <div class="cloze-word" draggable="true" data-word="kind">kind</div>
+                    <div class="cloze-word" draggable="true" data-word="ripe">ripe</div>
+                    <div class="cloze-word" draggable="true" data-word="huge">huge</div>
+                    <div class="cloze-word" draggable="true" data-word="holiday">holiday</div>
+                    <div class="cloze-word" draggable="true" data-word="friendly">friendly</div>
+                    <div class="cloze-word" draggable="true" data-word="delicious">delicious</div>
+                    <div class="cloze-word" draggable="true" data-word="souvenir">souvenir</div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 15px; justify-content: center;">
+                <button class="submit-btn" onclick="checkLevel4()">Check Answers</button>
+                <button class="submit-btn" style="background: #ed8936;" onclick="resetLevel4()">Reset</button>
+            </div>
+            <div id="level4Result"></div>
+        </div>
     </div>
 
     <script>
@@ -914,8 +1047,9 @@
             if (isCorrect) {
                 resultDiv.innerHTML = `
                     <div class="result-message success">
-                        🎉🎊 Outstanding! You completed all 3 levels perfectly!<br>
-                        <strong>You are a Reading Comprehension Champion!</strong> 🏆
+                        🎉🎊 Outstanding! You completed all the levels perfectly!<br>
+                        <strong>Ready for the final challenge?</strong>
+                        <button class="next-level-btn" onclick="unlockLevel4()">Continue to Level 4 →</button>
                     </div>
                 `;
             } else {
@@ -927,6 +1061,182 @@
                 `;
                 setTimeout(() => resultDiv.innerHTML = '', 4000);
             }
+        }
+
+        function unlockLevel4() {
+            document.getElementById('level4').classList.remove('locked');
+            document.getElementById('level4').scrollIntoView({ behavior: 'smooth' });
+            initLevel4DragDrop();
+        }
+
+        // Level 4: Cloze Test Drag & Drop
+        let clozeDraggedWord = null;
+        let clozeDraggedElement = null;
+
+        function initLevel4DragDrop() {
+            const clozeWords = document.querySelectorAll('.cloze-word');
+            const clozeBlanks = document.querySelectorAll('.cloze-blank');
+
+            // Draggable words
+            clozeWords.forEach(word => {
+                word.addEventListener('dragstart', (e) => {
+                    if (word.classList.contains('used')) return;
+                    clozeDraggedWord = word.dataset.word;
+                    clozeDraggedElement = word;
+                    word.classList.add('dragging');
+                });
+
+                word.addEventListener('dragend', () => {
+                    word.classList.remove('dragging');
+                });
+            });
+
+            // Drop zones (blanks)
+            clozeBlanks.forEach(blank => {
+                blank.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    blank.classList.add('drag-over');
+                });
+
+                blank.addEventListener('dragleave', () => {
+                    blank.classList.remove('drag-over');
+                });
+
+                blank.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    blank.classList.remove('drag-over');
+
+                    // If blank already has a word, return it to bank
+                    if (blank.dataset.currentWord) {
+                        returnClozeWordToBank(blank.dataset.currentWord);
+                    }
+
+                    // Place new word in blank
+                    const wordSpan = document.createElement('span');
+                    wordSpan.className = 'word-in-cloze';
+                    wordSpan.textContent = clozeDraggedWord;
+                    wordSpan.onclick = function() {
+                        removeClozeWordFromBlank(blank);
+                    };
+
+                    blank.innerHTML = '';
+                    blank.appendChild(wordSpan);
+                    blank.dataset.currentWord = clozeDraggedWord;
+                    blank.classList.add('filled');
+
+                    // Mark word as used
+                    clozeDraggedElement.classList.add('used');
+                });
+            });
+        }
+
+        function removeClozeWordFromBlank(blank) {
+            const word = blank.dataset.currentWord;
+            if (!word) return;
+
+            returnClozeWordToBank(word);
+            blank.innerHTML = '';
+            blank.dataset.currentWord = '';
+            blank.classList.remove('filled', 'correct', 'wrong');
+        }
+
+        function returnClozeWordToBank(word) {
+            const allWords = document.querySelectorAll('.cloze-word');
+            allWords.forEach(w => {
+                if (w.dataset.word === word) {
+                    w.classList.remove('used');
+                }
+            });
+        }
+
+        function checkLevel4() {
+            const blanks = document.querySelectorAll('.cloze-blank');
+            let correctCount = 0;
+            let allFilled = true;
+
+            // Define acceptable answers (some blanks have multiple correct options)
+            const acceptableAnswers = {
+                'cloze1': ['holiday'],
+                'cloze2': ['kind', 'friendly'],  // Both acceptable
+                'cloze3': ['huge'],
+                'cloze4': ['wonderful'],
+                'cloze5': ['friendly', 'kind'],  // Both acceptable
+                'cloze6': ['delicious'],
+                'cloze7': ['ripe'],
+                'cloze8': ['lucky'],
+                'cloze9': ['souvenir'],
+                'cloze10': ['next door']
+            };
+
+            blanks.forEach(blank => {
+                const blankId = blank.id;
+                const userAnswer = blank.dataset.currentWord;
+                const correctAnswers = acceptableAnswers[blankId];
+
+                blank.classList.remove('correct', 'wrong');
+
+                if (!userAnswer) {
+                    allFilled = false;
+                    return;
+                }
+
+                // Check if user's answer is in the list of acceptable answers
+                if (correctAnswers && correctAnswers.includes(userAnswer)) {
+                    blank.classList.add('correct');
+                    correctCount++;
+                } else {
+                    blank.classList.add('wrong');
+                }
+            });
+
+            const resultDiv = document.getElementById('level4Result');
+            
+            if (!allFilled) {
+                resultDiv.innerHTML = `
+                    <div class="result-message error">
+                        ⚠️ Please fill in all 10 blanks before checking!
+                    </div>
+                `;
+                setTimeout(() => resultDiv.innerHTML = '', 3000);
+                return;
+            }
+
+            if (correctCount === 10) {
+                resultDiv.innerHTML = `
+                    <div class="result-message success">
+                        🎉🏆 PERFECT SCORE! You completed all 4 levels! 🏆🎉<br>
+                        <strong>You are a TRUE Reading Comprehension CHAMPION!</strong><br>
+                        Excellent work! 🌟✨
+                    </div>
+                `;
+            } else {
+                resultDiv.innerHTML = `
+                    <div class="result-message error">
+                        You got ${correctCount} out of 10 correct. Try again!<br>
+                        <small>(Green = correct, Red = wrong)</small>
+                    </div>
+                `;
+                setTimeout(() => resultDiv.innerHTML = '', 5000);
+            }
+        }
+
+        function resetLevel4() {
+            // Clear all blanks
+            const blanks = document.querySelectorAll('.cloze-blank');
+            blanks.forEach(blank => {
+                blank.innerHTML = '';
+                blank.dataset.currentWord = '';
+                blank.classList.remove('filled', 'correct', 'wrong');
+            });
+
+            // Return all words to bank
+            const words = document.querySelectorAll('.cloze-word');
+            words.forEach(word => {
+                word.classList.remove('used');
+            });
+
+            // Hide result message
+            document.getElementById('level4Result').innerHTML = '';
         }
 
         // Load story image if provided
