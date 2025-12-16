@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Lucky Holiday - Reading Comprehension</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #87CEEB 0%, #98D8E8 50%, #90EE90 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .background-scene {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .sun {
+            position: absolute;
+            top: 50px;
+            right: 100px;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, #FFD700 0%, #FFA500 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 60px rgba(255, 215, 0, 0.8);
+            animation: sunPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes sunPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 100px;
+            animation: cloudFloat 30s linear infinite;
+        }
+
+        .cloud-1 { width: 100px; height: 40px; top: 80px; left: -150px; }
+        .cloud-2 { width: 120px; height: 45px; top: 150px; left: -200px; animation-duration: 35s; animation-delay: 5s; }
+
+        @keyframes cloudFloat {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(100vw + 200px)); }
+        }
+
+        .butterfly {
+            position: absolute;
+            font-size: 2em;
+            animation: butterflyFly 15s ease-in-out infinite;
+        }
+
+        .butterfly-1 { top: 20%; left: 10%; }
+        .butterfly-2 { top: 40%; right: 15%; animation-delay: 3s; }
+
+        @keyframes butterflyFly {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(50px, -30px) rotate(5deg); }
+            50% { transform: translate(100px, 20px) rotate(-5deg); }
+            75% { transform: translate(50px, 40px) rotate(3deg); }
+        }
+
+        .back-button {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background: white;
+            color: #667eea;
+            padding: 12px 24px;
+            border-radius: 30px;
+            border: none;
+            font-weight: bold;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            background: #667eea;
+            color: white;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 60px auto 20px;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #636e72;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+
+        /* Story Section */
+        .story-section {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 15px;
+            border: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+
+        .story-image {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .story-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .story-text {
+            font-size: 1.3em;
+            line-height: 1.8;
+            color: #2d3436;
+        }
+
+        .story-text h2 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .story-text p {
+            margin-bottom: 12px;
+        }
+
+        .keywords-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .keywords-box h3 {
+            margin-bottom: 10px;
+        }
+
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .keyword {
+            background: white;
+            color: #667eea;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        /* Level Sections */
+        .level-section {
+            margin-top: 30px;
+            padding: 25px;
+            background: #f0f4ff;
+            border-radius: 15px;
+            border: 3px solid #667eea;
+        }
+
+        .level-section.locked {
+            opacity: 0.5;
+            pointer-events: none;
+            position: relative;
+        }
+
+        .level-section.locked::after {
+            content: "🔒 Complete previous level to unlock";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .level-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .level-icon {
+            font-size: 2.5em;
+        }
+
+        .level-title {
+            color: #667eea;
+            font-size: 1.8em;
+        }
+
+        /* Questions */
+        .question {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-text {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #2d3436;
+        }
+
+        .options {
+            display: flex;
+            gap: 15px;
+        }
+
+        .option-btn {
+            flex: 1;
+            padding: 15px;
+            border: 3px solid #ddd;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .option-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .option-btn.correct {
+            background: #48bb78;
+            color: white;
+            border-color: #48bb78;
+        }
+
+        .option-btn.wrong {
+            background: #f56565;
+            color: white;
+            border-color: #f56565;
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        /* Fill in the Blanks */
+        .sentence {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            line-height: 2;
+        }
+
+        .blank-select {
+            padding: 8px 15px;
+            font-size: 1.1em;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            margin: 0 5px;
+            font-weight: bold;
+        }
+
+        .blank-select.correct {
+            background: #48bb78;
+            color: white;
+            border-color: #48bb78;
+        }
+
+        .blank-select.wrong {
+            background: #f56565;
+            color: white;
+            border-color: #f56565;
+        }
+
+        /* Drag and Drop */
+        .sentences-pool {
+            background: #e6f2ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            min-height: 100px;
+        }
+
+        .drop-zone {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .drop-slot {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f9f9f9;
+            border: 2px dashed #667eea;
+            border-radius: 8px;
+            min-height: 60px;
+        }
+
+        .slot-number {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: white;
+            background: #667eea;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .draggable-sentence {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: 2px solid #667eea;
+            cursor: move;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+
+        .draggable-sentence:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .draggable-sentence.dragging {
+            opacity: 0.5;
+        }
+
+        /* Submit/Check Buttons */
+        .submit-btn {
+            background: #667eea;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .submit-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Result Messages */
+        .result-message {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .result-message.success {
+            background: #c6f6d5;
+            color: #22543d;
+            border: 3px solid #48bb78;
+        }
+
+        .result-message.error {
+            background: #fed7d7;
+            color: #742a2a;
+            border: 3px solid #f56565;
+        }
+
+        .next-level-btn {
+            background: #48bb78;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .next-level-btn:hover {
+            background: #38a169;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 80px 10px 20px;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .story-text {
+                font-size: 1.1em;
+            }
+
+            .options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background-scene">
+        <div class="sun"></div>
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="butterfly butterfly-1">🦋</div>
+        <div class="butterfly butterfly-2">🦋</div>
+    </div>
+
+    <a href="../reading-comp-index.html" class="back-button">
+        <span>🏠</span>
+        <span>Back</span>
+    </a>
+
+    <div class="container">
+        <h1>📖 Reading Comprehension</h1>
+        <p class="subtitle">The Lucky Holiday • Grade 4</p>
+
+        <!-- Story Section -->
+        <div class="story-section">
+            <div class="story-image">
+                <img src="lucky-holiday-image.png" alt="The Lucky Holiday" id="storyImage" style="display: none;">
+            </div>
+            
+            <div class="story-text">
+                <h2>The Lucky Holiday</h2>
+                <p>Emma and her family went on a <strong>holiday</strong> to the beach. They stayed in a small house <strong>next door</strong> to a <strong>kind</strong> old lady named Mrs. Rose.</p>
+                
+                <p>"Hello!" said Mrs. Rose with a <strong>huge</strong> smile. "Welcome to our village! I hope you have a <strong>wonderful</strong> time here."</p>
+                
+                <p>Mrs. Rose was very <strong>friendly</strong>. Every morning, she brought them <strong>delicious</strong> homemade cookies that were still warm.</p>
+                
+                <p>On the third day, Emma found a shiny shell on the beach. It was smooth and <strong>ripe</strong> orange in color, like a sunset.</p>
+                
+                <p>"That's a <strong>lucky</strong> shell," said Mrs. Rose. "Keep it as a <strong>souvenir</strong> from your trip!"</p>
+                
+                <p>Emma smiled. She felt so happy. This was the best holiday ever, thanks to the kind lady next door.</p>
+            </div>
+
+            <div class="keywords-box">
+                <h3>Keywords:</h3>
+                <div class="keywords">
+                    <span class="keyword">lucky</span>
+                    <span class="keyword">wonderful</span>
+                    <span class="keyword">next door</span>
+                    <span class="keyword">kind</span>
+                    <span class="keyword">ripe</span>
+                    <span class="keyword">huge</span>
+                    <span class="keyword">holiday</span>
+                    <span class="keyword">friendly</span>
+                    <span class="keyword">delicious</span>
+                    <span class="keyword">souvenir</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Level 1: True or False -->
+        <div class="level-section" id="level1">
+            <div class="level-header">
+                <div class="level-icon">✅</div>
+                <h2 class="level-title">Level 1: True or False</h2>
+            </div>
+
+            <!-- Questions will be generated dynamically by JavaScript -->
+
+            <div id="level1Result"></div>
+        </div>
+
+        <!-- Level 2: Fill in the Blanks -->
+        <div class="level-section locked" id="level2">
+            <div class="level-header">
+                <div class="level-icon">✏️</div>
+                <h2 class="level-title">Level 2: Fill in the Blanks</h2>
+            </div>
+
+            <div class="question">
+                <p class="sentence">
+                    1. Emma and her family went on a 
+                    <select class="blank-select" id="blank1" onchange="checkBlank(1)">
+                        <option value="">Choose...</option>
+                        <option value="holiday">holiday</option>
+                        <option value="shopping">shopping</option>
+                    </select>
+                    to the beach.
+                </p>
+            </div>
+
+            <div class="question">
+                <p class="sentence">
+                    2. Mrs. Rose lived 
+                    <select class="blank-select" id="blank2" onchange="checkBlank(2)">
+                        <option value="">Choose...</option>
+                        <option value="next door">next door</option>
+                        <option value="far away">far away</option>
+                    </select>
+                    to Emma's house.
+                </p>
+            </div>
+
+            <div class="question">
+                <p class="sentence">
+                    3. Mrs. Rose brought them 
+                    <select class="blank-select" id="blank3" onchange="checkBlank(3)">
+                        <option value="">Choose...</option>
+                        <option value="delicious">delicious</option>
+                        <option value="terrible">terrible</option>
+                    </select>
+                    homemade cookies.
+                </p>
+            </div>
+
+            <div class="question">
+                <p class="sentence">
+                    4. The shell was 
+                    <select class="blank-select" id="blank4" onchange="checkBlank(4)">
+                        <option value="">Choose...</option>
+                        <option value="lucky">lucky</option>
+                        <option value="unlucky">unlucky</option>
+                    </select>
+                    according to Mrs. Rose.
+                </p>
+            </div>
+
+            <button class="submit-btn" id="level2Submit" onclick="checkLevel2()" disabled>Check Answers</button>
+            <div id="level2Result"></div>
+        </div>
+
+        <!-- Level 3: Reorder Sentences -->
+        <div class="level-section locked" id="level3">
+            <div class="level-header">
+                <div class="level-icon">🔢</div>
+                <h2 class="level-title">Level 3: Put the Events in Order</h2>
+            </div>
+
+            <p style="font-size: 1.2em; margin-bottom: 20px; color: #2d3436;">
+                <strong>Drag the sentences to the correct boxes to show the order of events:</strong>
+            </p>
+
+            <div class="sentences-pool" id="sentencesPool">
+                <div class="draggable-sentence" draggable="true" data-id="1">
+                    Emma and her family arrived at the beach for their holiday.
+                </div>
+                <div class="draggable-sentence" draggable="true" data-id="2">
+                    Mrs. Rose welcomed them with a huge smile.
+                </div>
+                <div class="draggable-sentence" draggable="true" data-id="3">
+                    Mrs. Rose brought delicious cookies every morning.
+                </div>
+                <div class="draggable-sentence" draggable="true" data-id="4">
+                    Emma found a shiny orange shell on the beach.
+                </div>
+                <div class="draggable-sentence" draggable="true" data-id="5">
+                    Mrs. Rose told Emma to keep the shell as a souvenir.
+                </div>
+            </div>
+
+            <div class="drop-zone" id="dropZone">
+                <div class="drop-slot" data-position="1">
+                    <div class="slot-number">1</div>
+                    <div class="slot-content" style="flex: 1; color: #999;">Drop sentence here...</div>
+                </div>
+                <div class="drop-slot" data-position="2">
+                    <div class="slot-number">2</div>
+                    <div class="slot-content" style="flex: 1; color: #999;">Drop sentence here...</div>
+                </div>
+                <div class="drop-slot" data-position="3">
+                    <div class="slot-number">3</div>
+                    <div class="slot-content" style="flex: 1; color: #999;">Drop sentence here...</div>
+                </div>
+                <div class="drop-slot" data-position="4">
+                    <div class="slot-number">4</div>
+                    <div class="slot-content" style="flex: 1; color: #999;">Drop sentence here...</div>
+                </div>
+                <div class="drop-slot" data-position="5">
+                    <div class="slot-number">5</div>
+                    <div class="slot-content" style="flex: 1; color: #999;">Drop sentence here...</div>
+                </div>
+            </div>
+
+            <button class="submit-btn" onclick="checkLevel3()">Check Order</button>
+            <div id="level3Result"></div>
+        </div>
+    </div>
+
+    <script>
+        // Shuffle function
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Question Bank - 15 True/False questions
+        const questionBank = [
+            { text: "Emma went on holiday to the mountains.", answer: false },
+            { text: "Emma went on holiday to the beach.", answer: true },
+            { text: "Mrs. Rose lived next door to Emma's holiday house.", answer: true },
+            { text: "Mrs. Rose lived far away from Emma's house.", answer: false },
+            { text: "Mrs. Rose brought them delicious cookies every morning.", answer: true },
+            { text: "Mrs. Rose brought them sandwiches every morning.", answer: false },
+            { text: "Emma found a shell that was blue in color.", answer: false },
+            { text: "Emma found a shell that was orange in color.", answer: true },
+            { text: "Mrs. Rose told Emma to keep the shell as a souvenir.", answer: true },
+            { text: "Mrs. Rose had a huge smile when she welcomed them.", answer: true },
+            { text: "Mrs. Rose was unfriendly to Emma's family.", answer: false },
+            { text: "The cookies were warm when Mrs. Rose brought them.", answer: true },
+            { text: "Emma found the shell on the third day.", answer: true },
+            { text: "The shell was smooth and shiny.", answer: true },
+            { text: "Emma was unhappy during the holiday.", answer: false }
+        ];
+
+        // Generate Level 1 with random 5 questions
+        function generateLevel1() {
+            // Randomly select 5 questions
+            const shuffled = shuffleArray([...questionBank]);
+            const selectedQuestions = shuffled.slice(0, 5);
+            
+            const level1Container = document.getElementById('level1');
+            const level1Header = level1Container.querySelector('.level-header');
+            const resultDiv = document.getElementById('level1Result');
+            
+            // Clear existing questions
+            const existingQuestions = level1Container.querySelectorAll('.question');
+            existingQuestions.forEach(q => q.remove());
+            
+            // Create new questions
+            selectedQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.id = `q${index + 1}`;
+                questionDiv.innerHTML = `
+                    <p class="question-text">${index + 1}. ${q.text}</p>
+                    <div class="options">
+                        <button class="option-btn" onclick="checkAnswer(${index + 1}, ${q.answer})">True</button>
+                        <button class="option-btn" onclick="checkAnswer(${index + 1}, ${!q.answer})">False</button>
+                    </div>
+                `;
+                level1Container.insertBefore(questionDiv, resultDiv);
+            });
+        }
+
+        // Level 1: True or False
+        let level1Answers = { 1: false, 2: false, 3: false, 4: false, 5: false };
+        let level1Correct = 0;
+
+        function checkAnswer(questionNum, isCorrect) {
+            const question = document.getElementById(`q${questionNum}`);
+            const buttons = question.querySelectorAll('.option-btn');
+            
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                
+                // Only highlight the button that was clicked
+                if (event.target === btn) {
+                    if (isCorrect) {
+                        btn.classList.add('correct');
+                        if (!level1Answers[questionNum]) {
+                            level1Correct++;
+                            level1Answers[questionNum] = true;
+                        }
+                    } else {
+                        btn.classList.add('wrong');
+                    }
+                }
+            });
+
+            // Check if all answered
+            if (level1Correct === 5) {
+                setTimeout(() => {
+                    const resultDiv = document.getElementById('level1Result');
+                    resultDiv.innerHTML = `
+                        <div class="result-message success">
+                            🎉 Perfect! You got all 5 correct!
+                            <button class="next-level-btn" onclick="unlockLevel2()">Continue to Level 2 →</button>
+                        </div>
+                    `;
+                }, 500);
+            }
+        }
+
+        function unlockLevel2() {
+            document.getElementById('level2').classList.remove('locked');
+            document.getElementById('level2').scrollIntoView({ behavior: 'smooth' });
+            shuffleLevel2();
+        }
+
+        // Shuffle Level 2 questions
+        function shuffleLevel2() {
+            const level2Container = document.getElementById('level2');
+            const questions = Array.from(level2Container.querySelectorAll('.question'));
+            const submitBtn = document.getElementById('level2Submit');
+            const resultDiv = document.getElementById('level2Result');
+            
+            // Shuffle questions
+            const shuffled = shuffleArray(questions);
+            
+            // Clear and re-append before submit button
+            shuffled.forEach(q => level2Container.insertBefore(q, submitBtn));
+        }
+
+        // Level 2: Fill in the Blanks
+        const level2Answers = {
+            1: 'holiday',
+            2: 'next door',
+            3: 'delicious',
+            4: 'lucky'
+        };
+        let level2Filled = 0;
+
+        function checkBlank(num) {
+            const select = document.getElementById(`blank${num}`);
+            const value = select.value;
+            
+            if (value === level2Answers[num]) {
+                select.classList.add('correct');
+                select.classList.remove('wrong');
+                select.disabled = true;
+                level2Filled++;
+            } else if (value !== '') {
+                select.classList.add('wrong');
+                select.classList.remove('correct');
+            }
+
+            // Enable submit button when all filled
+            document.getElementById('level2Submit').disabled = (level2Filled !== 4);
+        }
+
+        function checkLevel2() {
+            const resultDiv = document.getElementById('level2Result');
+            resultDiv.innerHTML = `
+                <div class="result-message success">
+                    🎉 Excellent! All blanks filled correctly!
+                    <button class="next-level-btn" onclick="unlockLevel3()">Continue to Level 3 →</button>
+                </div>
+            `;
+        }
+
+        function unlockLevel3() {
+            document.getElementById('level3').classList.remove('locked');
+            document.getElementById('level3').scrollIntoView({ behavior: 'smooth' });
+            initDragAndDrop();
+        }
+
+        // Level 3: Drag and Drop
+        let draggedElement = null;
+        const correctOrder = ['1', '2', '3', '4', '5'];
+
+        function shuffleSentences() {
+            const pool = document.getElementById('sentencesPool');
+            const sentences = Array.from(pool.querySelectorAll('.draggable-sentence'));
+            
+            // Fisher-Yates shuffle algorithm
+            for (let i = sentences.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [sentences[i], sentences[j]] = [sentences[j], sentences[i]];
+            }
+            
+            // Clear and re-append in shuffled order
+            pool.innerHTML = '';
+            sentences.forEach(sentence => pool.appendChild(sentence));
+        }
+
+        function initDragAndDrop() {
+            // Shuffle sentences first
+            shuffleSentences();
+            
+            const draggables = document.querySelectorAll('.draggable-sentence');
+            const dropSlots = document.querySelectorAll('.drop-slot');
+
+            draggables.forEach(draggable => {
+                draggable.addEventListener('dragstart', (e) => {
+                    draggedElement = draggable;
+                    draggable.classList.add('dragging');
+                });
+
+                draggable.addEventListener('dragend', () => {
+                    draggable.classList.remove('dragging');
+                });
+            });
+
+            dropSlots.forEach(slot => {
+                slot.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    slot.style.background = '#e6f2ff';
+                });
+
+                slot.addEventListener('dragleave', () => {
+                    slot.style.background = '#f9f9f9';
+                });
+
+                slot.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    slot.style.background = '#f9f9f9';
+                    
+                    const slotContent = slot.querySelector('.slot-content');
+                    
+                    // If slot already has content, return it to pool
+                    if (slotContent.dataset.sentenceId) {
+                        const oldSentence = document.querySelector(`[data-id="${slotContent.dataset.sentenceId}"]`);
+                        if (oldSentence) {
+                            document.getElementById('sentencesPool').appendChild(oldSentence);
+                        }
+                    }
+                    
+                    // Place new sentence
+                    slotContent.textContent = draggedElement.textContent;
+                    slotContent.dataset.sentenceId = draggedElement.dataset.id;
+                    slotContent.style.color = '#2d3436';
+                    draggedElement.remove();
+                });
+            });
+        }
+
+        function checkLevel3() {
+            const slots = document.querySelectorAll('.drop-slot');
+            let userOrder = [];
+            let allFilled = true;
+
+            slots.forEach(slot => {
+                const content = slot.querySelector('.slot-content');
+                if (content.dataset.sentenceId) {
+                    userOrder.push(content.dataset.sentenceId);
+                } else {
+                    allFilled = false;
+                }
+            });
+
+            const resultDiv = document.getElementById('level3Result');
+
+            if (!allFilled) {
+                resultDiv.innerHTML = `
+                    <div class="result-message error">
+                        ⚠️ Please fill all 5 positions before checking!
+                    </div>
+                `;
+                setTimeout(() => resultDiv.innerHTML = '', 3000);
+                return;
+            }
+
+            const isCorrect = JSON.stringify(userOrder) === JSON.stringify(correctOrder);
+
+            if (isCorrect) {
+                resultDiv.innerHTML = `
+                    <div class="result-message success">
+                        🎉🎊 Outstanding! You completed all 3 levels perfectly!<br>
+                        <strong>You are a Reading Comprehension Champion!</strong> 🏆
+                    </div>
+                `;
+            } else {
+                resultDiv.innerHTML = `
+                    <div class="result-message error">
+                        ❌ Not quite right. Try again!<br>
+                        <small>Hint: Think about what happened first, then next, and so on...</small>
+                    </div>
+                `;
+                setTimeout(() => resultDiv.innerHTML = '', 4000);
+            }
+        }
+
+        // Load story image if provided
+        window.onload = function() {
+            // Generate Level 1 with random 5 questions from bank
+            generateLevel1();
+            
+            const img = document.getElementById('storyImage');
+            img.onerror = function() {
+                this.style.display = 'none';
+            };
+            img.onload = function() {
+                this.style.display = 'block';
+            };
+        };
+    </script>
+</body>
+</html>

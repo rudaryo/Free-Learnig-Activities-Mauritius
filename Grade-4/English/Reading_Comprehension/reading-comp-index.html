@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Comprehension - Grade 4</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #87CEEB 0%, #98D8E8 50%, #90EE90 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .background-scene {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .sun {
+            position: absolute;
+            top: 50px;
+            right: 100px;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, #FFD700 0%, #FFA500 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 60px rgba(255, 215, 0, 0.8);
+            animation: sunPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes sunPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 100px;
+            animation: cloudFloat 30s linear infinite;
+        }
+
+        .cloud-1 { width: 100px; height: 40px; top: 80px; left: -150px; }
+        .cloud-2 { width: 120px; height: 45px; top: 150px; left: -200px; animation-duration: 35s; animation-delay: 5s; }
+
+        @keyframes cloudFloat {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(100vw + 200px)); }
+        }
+
+        .butterfly {
+            position: absolute;
+            font-size: 2em;
+            animation: butterflyFly 15s ease-in-out infinite;
+        }
+
+        .butterfly-1 { top: 20%; left: 10%; }
+        .butterfly-2 { top: 40%; right: 15%; animation-delay: 3s; }
+
+        @keyframes butterflyFly {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(50px, -30px) rotate(5deg); }
+            50% { transform: translate(100px, 20px) rotate(-5deg); }
+            75% { transform: translate(50px, 40px) rotate(3deg); }
+        }
+
+        .flower {
+            position: absolute;
+            bottom: 0;
+            font-size: 2em;
+            animation: flowerSway 3s ease-in-out infinite;
+        }
+
+        .flower-1 { left: 5%; }
+        .flower-2 { left: 15%; animation-delay: 0.5s; }
+        .flower-3 { right: 15%; animation-delay: 0.3s; }
+        .flower-4 { right: 5%; animation-delay: 0.8s; }
+
+        @keyframes flowerSway {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        .back-button {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background: white;
+            color: #667eea;
+            padding: 12px 24px;
+            border-radius: 30px;
+            border: none;
+            font-weight: bold;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            background: #667eea;
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 60px auto 20px;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #636e72;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .story-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .story-card:hover::before {
+            top: -30%;
+            left: -30%;
+        }
+
+        .story-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .story-icon {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .story-title {
+            font-size: 1.6em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .story-description {
+            font-size: 1em;
+            opacity: 0.95;
+            line-height: 1.5;
+            position: relative;
+            z-index: 1;
+        }
+
+        .new-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #48bb78;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        .coming-soon-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        .story-card.coming-soon {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .story-card.coming-soon:hover {
+            transform: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 80px 10px 20px;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .stories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background-scene">
+        <div class="sun"></div>
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="butterfly butterfly-1">🦋</div>
+        <div class="butterfly butterfly-2">🦋</div>
+        <div class="flower flower-1">🌸</div>
+        <div class="flower flower-2">🌼</div>
+        <div class="flower flower-3">🌺</div>
+        <div class="flower flower-4">🌻</div>
+    </div>
+
+    <a href="../english-index.html" class="back-button">
+        <span>🏠</span>
+        <span>Back</span>
+    </a>
+
+    <div class="container">
+        <h1>📚 Reading Comprehension</h1>
+        <p class="subtitle">Choose a story to read and test your understanding!</p>
+
+        <div class="stories-grid">
+            <!-- Story 1: The Lucky Holiday -->
+            <a href="Lucky-Holiday/lucky-holiday.html" class="story-card">
+                <span class="new-badge">New!</span>
+                <div class="story-icon">🏖️</div>
+                <h3 class="story-title">The Lucky Holiday</h3>
+                <p class="story-description">Join Emma on her beach holiday and meet the kind Mrs. Rose. Complete 3 levels of activities!</p>
+            </a>
+
+            <!-- Story 2 - Coming Soon -->
+            <div class="story-card coming-soon">
+                <span class="coming-soon-badge">Coming Soon</span>
+                <div class="story-icon">🌳</div>
+                <h3 class="story-title">The Magical Forest</h3>
+                <p class="story-description">Discover the secrets of a mysterious forest filled with talking animals.</p>
+            </div>
+
+            <!-- Story 3 - Coming Soon -->
+            <div class="story-card coming-soon">
+                <span class="coming-soon-badge">Coming Soon</span>
+                <div class="story-icon">⭐</div>
+                <h3 class="story-title">The Child Who Never Gave Up</h3>
+                <p class="story-description">An inspiring story about believing in yourself and never giving up on your dreams.</p>
+            </div>
+
+            <!-- Story 4 - Coming Soon -->
+            <div class="story-card coming-soon">
+                <span class="coming-soon-badge">Coming Soon</span>
+                <div class="story-icon">🚕</div>
+                <h3 class="story-title">The Generous Taxi Driver</h3>
+                <p class="story-description">Meet a kind taxi driver who helps two tourists discover the best places in Port Louis.</p>
+            </div>
+
+            <!-- Story 5 - Coming Soon -->
+            <div class="story-card coming-soon">
+                <span class="coming-soon-badge">Coming Soon</span>
+                <div class="story-icon">🦁</div>
+                <h3 class="story-title">A Day at Casela Nature Park</h3>
+                <p class="story-description">Experience an exciting day with wild animals and adventures at Casela Park.</p>
+            </div>
+
+            <!-- Story 6 - Coming Soon -->
+            <div class="story-card coming-soon">
+                <span class="coming-soon-badge">Coming Soon</span>
+                <div class="story-icon">🚗</div>
+                <h3 class="story-title">A Fun Family Road Trip</h3>
+                <p class="story-description">Join a family on their exciting journey exploring new places together.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
