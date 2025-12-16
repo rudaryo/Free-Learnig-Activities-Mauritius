@@ -22,16 +22,8 @@ body{
     box-shadow:0 10px 40px rgba(0,0,0,.3);
 }
 
-h1{
-    text-align:center;
-    color:#667eea;
-}
-
-.subtitle{
-    text-align:center;
-    margin-bottom:20px;
-    color:#555;
-}
+h1{text-align:center;color:#667eea}
+.subtitle{text-align:center;margin-bottom:20px;color:#555}
 
 .controls{
     display:flex;
@@ -65,7 +57,7 @@ button{
 .phrase{
     padding:2px 4px;
     border-radius:5px;
-    transition:background 0.15s ease;
+    transition:background 0.12s linear;
 }
 
 .phrase.active{
@@ -90,11 +82,13 @@ button{
     <div class="story-text" id="story"></div>
 
     <!-- Human narration -->
-    <audio id="audio" src="The_Kind_Old_Man.mp3"></audio>
+    <audio id="audio" preload="auto">
+        <source src="The_Kind_Old_Man.mp3" type="audio/mpeg">
+    </audio>
 </div>
 
 <script>
-/* ===== STORY PHRASES WITH TIMESTAMPS ===== */
+/* ================= STORY DATA ================= */
 const phrases = [
   { text:"In a small village named Pamplemousses,", start:0.0, end:3.2 },
   { text:"there lived a kind old man named Mr. Thomas.", start:3.2, end:7.1 },
@@ -103,74 +97,8 @@ const phrases = [
   { text:"Every morning, Mr. Thomas walked through the village streets,", start:15.0, end:20.5 },
   { text:"saying hello to everyone with a big, friendly smile.", start:20.5, end:25.4 },
   { text:"He helped the baker carry heavy bags of flour", start:25.4, end:30.3 },
-  { text:"and told fun stories to the children at the well-known village garden.", start:30.3, end:36.8 },
-  { text:"Children like to hear his funny stories.", start:36.8, end:40.2 },
-  { text:"He watered plants for sick neighbors and fixed broken fences for elderly friends.", start:40.2, end:47.5 },
-  { text:"Mr. Thomas also shared his fresh vegetables from his garden with families who needed food.", start:47.5, end:55.8 },
-  { text:"When big storms came with loud thunder,", start:55.8, end:60.0 },
-  { text:"Mr. Thomas opened his warm house to his scared dogs looking for a safe place.", start:60.0, end:67.2 },
-  { text:"All the village people loved his caring and helpful ways.", start:67.2, end:72.0 },
-  { text:"One special day,", start:72.0, end:74.0 },
-  { text:"everyone surprised Mr. Thomas with a wonderful party to say thank you for all his good deeds.", start:74.0, end:83.5 },
-  { text:"Happy tears rolled down his wrinkled face when he saw how much everyone cared.", start:83.5, end:91.5 },
-  { text:"Mr. Thomas showed everyone that being kind and helpful", start:91.5, end:96.0 },
-  { text:"makes the world a better and happier place for all.", start:96.0, end:101.0 }
-];
+  { text:"and told fun stories to the children at the well-known village garden.", start:30
 
-const storyDiv = document.getElementById("story");
-const audio = document.getElementById("audio");
-
-/* ===== BUILD STORY TEXT ===== */
-storyDiv.innerHTML = phrases.map((p,i)=>
-  `<span class="phrase" id="p${i}">${p.text}</span>`
-).join(" ");
-
-/* ===== CLEAR HIGHLIGHTS ===== */
-function clearHighlight(){
-  phrases.forEach((_,i)=>{
-    document.getElementById("p"+i).classList.remove("active");
-  });
-}
-
-/* ===== HIGH-SPEED SYNC (NO LAG) ===== */
-const HIGHLIGHT_OFFSET = 0.20; // 🔧 tweak 0.15–0.22 if needed
-
-function syncHighlight(){
-  const t = audio.currentTime + HIGHLIGHT_OFFSET;
-
-  phrases.forEach((p,i)=>{
-    const el = document.getElementById("p"+i);
-    if(t >= p.start && t <= p.end){
-      el.classList.add("active");
-    } else {
-      el.classList.remove("active");
-    }
-  });
-
-  if(!audio.paused){
-    requestAnimationFrame(syncHighlight);
-  }
-}
-
-/* ===== CONTROLS ===== */
-function playAudio(){
-  audio.play();
-  requestAnimationFrame(syncHighlight);
-}
-
-function pauseAudio(){
-  audio.pause();
-}
-
-function restartAudio(){
-  audio.currentTime = 0;
-  audio.play();
-  requestAnimationFrame(syncHighlight);
-}
-</script>
-
-</body>
-</html>
 
 
 
