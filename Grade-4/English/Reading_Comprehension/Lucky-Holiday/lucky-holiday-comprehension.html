@@ -572,7 +572,7 @@
         <!-- Story Section -->
         <div class="story-section">
             <div class="story-image">
-                <img src="lucky-holiday-image.png" alt="The Lucky Holiday" id="storyImage" style="display: none;">
+                <img src="lucky-holiday-image.png" alt="The Lucky Holiday" id="storyImage">
             </div>
             
             <div class="story-text">
@@ -1243,15 +1243,7 @@
         window.onload = function() {
             // Generate Level 1 with random 5 questions from bank
             generateLevel1();
-            
-            const img = document.getElementById('storyImage');
-            img.onerror = function() {
-                this.style.display = 'none';
-            };
-            img.onload = function() {
-                this.style.display = 'block';
-            };
         };
     </script>
 </body>
-</html>
+    </html>
