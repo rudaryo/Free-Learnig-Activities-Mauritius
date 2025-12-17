@@ -333,7 +333,7 @@
         /* Cloze Test Styles */
         .cloze-blank {
             display: inline-block;
-            min-width: 120px;
+            width: 130px;
             height: 40px;
             border: 3px dashed #667eea;
             border-radius: 8px;
@@ -351,18 +351,26 @@
         }
 
         .cloze-blank.filled {
-            background: #e6f2ff;
-            border: 3px solid #667eea;
+            background: white;
+            border: 3px dashed #667eea;
         }
 
         .cloze-blank.correct {
             background: #c6f6d5;
-            border-color: #48bb78;
+            border: 3px dashed #48bb78;
+        }
+
+        .cloze-blank.correct .word-in-cloze {
+            color: #22543d;
         }
 
         .cloze-blank.wrong {
             background: #fed7d7;
-            border-color: #f56565;
+            border: 3px dashed #f56565;
+        }
+
+        .cloze-blank.wrong .word-in-cloze {
+            color: #742a2a;
         }
 
         .cloze-word {
@@ -389,24 +397,32 @@
         }
 
         .cloze-word.used {
-            opacity: 0.3;
-            cursor: not-allowed;
+            display: none; /* Hide completely when dragged */
         }
 
         .word-in-cloze {
-            background: white;
+            background: transparent;
             color: #667eea;
-            padding: 8px 16px;
-            border-radius: 20px;
+            padding: 8px 10px;
+            border: none;
             font-weight: bold;
             cursor: pointer;
-            display: inline-block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            font-size: 0.85em;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            font-size: 0.95em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .word-in-cloze:hover {
+            background: rgba(102, 126, 234, 0.1);
         }
 
         .word-in-cloze:hover {
@@ -1145,6 +1161,7 @@
             allWords.forEach(w => {
                 if (w.dataset.word === word) {
                     w.classList.remove('used');
+                    w.style.display = ''; // Make sure it's visible again
                 }
             });
         }
