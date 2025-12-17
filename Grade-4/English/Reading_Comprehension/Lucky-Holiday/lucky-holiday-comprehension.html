@@ -632,6 +632,7 @@
 
             <!-- Questions will be generated dynamically by JavaScript -->
 
+            <button class="submit-btn" onclick="resetLevel1()" style="background: #ed8936; display: none;" id="level1ResetBtn">🔄 Reset Level 1</button>
             <div id="level1Result"></div>
         </div>
 
@@ -690,7 +691,10 @@
                 </p>
             </div>
 
-            <button class="submit-btn" id="level2Submit" onclick="checkLevel2()" disabled>Check Answers</button>
+            <div style="display: flex; gap: 15px; justify-content: center;">
+                <button class="submit-btn" id="level2Submit" onclick="checkLevel2()" disabled>Check Answers</button>
+                <button class="submit-btn" onclick="resetLevel2()" style="background: #ed8936;">🔄 Reset Level 2</button>
+            </div>
             <div id="level2Result"></div>
         </div>
 
@@ -746,7 +750,10 @@
                 </div>
             </div>
 
-            <button class="submit-btn" onclick="checkLevel3()">Check Order</button>
+            <div style="display: flex; gap: 15px; justify-content: center;">
+                <button class="submit-btn" onclick="checkLevel3()">Check Order</button>
+                <button class="submit-btn" onclick="resetLevel3()" style="background: #ed8936;">🔄 Reset Level 3</button>
+            </div>
             <div id="level3Result"></div>
         </div>
 
@@ -864,6 +871,14 @@
         let level1Answers = { 1: false, 2: false, 3: false, 4: false, 5: false };
         let level1Correct = 0;
 
+        function resetLevel1() {
+            level1Answers = { 1: false, 2: false, 3: false, 4: false, 5: false };
+            level1Correct = 0;
+            document.getElementById('level1Result').innerHTML = '';
+            document.getElementById('level1ResetBtn').style.display = 'none';
+            generateLevel1();
+        }
+
         function checkAnswer(questionNum, isCorrect) {
             const question = document.getElementById(`q${questionNum}`);
             const buttons = question.querySelectorAll('.option-btn');
@@ -896,6 +911,12 @@
                         </div>
                     `;
                 }, 500);
+            } else if (Object.values(level1Answers).every(v => v === true || v === false)) {
+                // All questions answered but not all correct - show reset
+                const answeredCount = Object.values(level1Answers).filter(v => v === true).length;
+                if (answeredCount === 5 && level1Correct < 5) {
+                    document.getElementById('level1ResetBtn').style.display = 'block';
+                }
             }
         }
 
@@ -903,6 +924,19 @@
             document.getElementById('level2').classList.remove('locked');
             document.getElementById('level2').scrollIntoView({ behavior: 'smooth' });
             shuffleLevel2();
+        }
+
+        function resetLevel2() {
+            // Reset all dropdowns
+            for (let i = 1; i <= 4; i++) {
+                const select = document.getElementById(`blank${i}`);
+                select.value = '';
+                select.classList.remove('correct', 'wrong');
+                select.disabled = false;
+            }
+            level2Filled = 0;
+            document.getElementById('level2Submit').disabled = true;
+            document.getElementById('level2Result').innerHTML = '';
         }
 
         // Shuffle Level 2 questions
@@ -960,6 +994,27 @@
             document.getElementById('level3').classList.remove('locked');
             document.getElementById('level3').scrollIntoView({ behavior: 'smooth' });
             initDragAndDrop();
+        }
+
+        function resetLevel3() {
+            // Return all sentences to pool
+            const dropSlots = document.querySelectorAll('.drop-slot');
+            const sentencesPool = document.getElementById('sentencesPool');
+            
+            dropSlots.forEach(slot => {
+                const content = slot.querySelector('.slot-content');
+                if (content.dataset.sentenceId) {
+                    const sentence = document.querySelector(`[data-id="${content.dataset.sentenceId}"]`);
+                    if (sentence) {
+                        sentencesPool.appendChild(sentence);
+                    }
+                    content.textContent = 'Drop sentence here...';
+                    content.style.color = '#999';
+                    delete content.dataset.sentenceId;
+                }
+            });
+            
+            document.getElementById('level3Result').innerHTML = '';
         }
 
         // Level 3: Drag and Drop
