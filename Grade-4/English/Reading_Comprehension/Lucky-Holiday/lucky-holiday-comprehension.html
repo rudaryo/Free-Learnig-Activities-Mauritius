@@ -1224,6 +1224,7 @@
                         🎉🏆 PERFECT SCORE! You completed all 4 levels! 🏆🎉<br>
                         <strong>You are a TRUE Reading Comprehension CHAMPION!</strong><br>
                         Excellent work! 🌟✨
+                        <button class="next-level-btn" onclick="restartAllLevels()" style="background: #ed8936; margin-top: 15px;">🔄 Restart All Levels</button>
                     </div>
                 `;
             } else {
@@ -1254,6 +1255,11 @@
 
             // Hide result message
             document.getElementById('level4Result').innerHTML = '';
+        }
+
+        function restartAllLevels() {
+            // Reload the page to start fresh
+            window.location.reload();
         }
 
         // Load story image if provided
