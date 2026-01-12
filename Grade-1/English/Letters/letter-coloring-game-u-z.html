@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter Coloring Game (u-z)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Comic Sans MS', cursive; background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .nav-buttons { display: flex; gap: 15px; margin-bottom: 20px; width: 100%; max-width: 900px; justify-content: space-between; }
+        .nav-btn { background: white; border: none; padding: 15px 30px; border-radius: 50px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s; }
+        .nav-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+        .home-btn { background: #ff6b6b; color: white; }
+        .next-btn { background: #51cf66; color: white; }
+        .prev-btn { background: #fab005; color: white; }
+        .container { background: white; padding: 40px; border-radius: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); max-width: 900px; width: 100%; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .instruction-box { background: #ffd43b; border: 4px solid #333; border-radius: 15px; padding: 20px; margin-bottom: 30px; position: relative; }
+        .instruction-box::before { content: ''; position: absolute; left: -20px; top: 50%; transform: translateY(-50%); border-top: 15px solid transparent; border-bottom: 15px solid transparent; border-right: 20px solid #333; }
+        .instruction-text { font-size: 24px; font-weight: bold; color: #333; }
+        .color-key { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
+        .color-box { width: 80px; height: 80px; border: 3px solid #333; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: bold; cursor: pointer; transition: all 0.3s; }
+        .color-box:hover { transform: scale(1.1); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .color-box.selected { border: 5px solid #000; box-shadow: 0 0 0 3px #ffd43b; }
+        .grid-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; margin: 0 auto; max-width: 600px; background: #333; padding: 3px; border-radius: 10px; }
+        .letter-cell { background: white; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: bold; cursor: pointer; transition: all 0.2s; border: 2px solid transparent; }
+        .letter-text { transition: transform 0.2s; display: inline-block; } .letter-cell:hover .letter-text { transform: scale(1.3); }
+        .success-message { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); background: white; padding: 40px 60px; border-radius: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); text-align: center; z-index: 1000; transition: transform 0.3s; }
+        .success-message.show { transform: translate(-50%, -50%) scale(1); }
+        .success-message h2 { font-size: 48px; color: #51cf66; margin-bottom: 20px; }
+        .reset-btn { background: #fab005; color: white; border: none; padding: 15px 40px; border-radius: 50px; font-size: 20px; font-weight: bold; cursor: pointer; margin-top: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s; }
+        .complete-badge { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 10px 20px; border-radius: 20px; margin-top: 10px; display: inline-block; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+    </style>
+</head>
+<body>
+    <div class="nav-buttons">
+        <button class="nav-btn prev-btn" onclick="goPrev()">← Previous (p-t)</button>
+        <button class="nav-btn home-btn" onclick="goHome()">🏠 Home</button>
+        <button class="nav-btn next-btn" onclick="goHome()">🎉 Complete!</button>
+    </div>
+    <div class="container">
+        <div class="header"><h1 style="color: #a8edea; font-size: 42px;">🎨 Letter Coloring Game</h1><p style="font-size: 24px; color: #666; margin-top: 10px;">Letters: u, v, w, x, y, z</p><span class="complete-badge">🏆 Final Level!</span></div>
+        <div class="instruction-box"><p class="instruction-text">Activity: I colour the letters as shown.</p></div>
+        <div class="color-key" id="colorKey"></div>
+        <div class="grid-container" id="grid"></div>
+        <div style="text-align: center; margin-top: 30px;"><button class="reset-btn" onclick="resetGame()">🔄 Reset Game</button></div>
+    </div>
+    <div class="success-message" id="successMessage"><h2>🎉 Congratulations!</h2><p style="font-size: 28px; margin-bottom: 15px;">You completed ALL letter coloring games!</p><p>You know all 26 letters! 🌟</p><button class="reset-btn" onclick="closeSuccess()">Play Again</button><button class="home-btn nav-btn" onclick="goHome()" style="margin-left: 10px;">Go Home 🏠</button></div>
+    <script>
+        const colors = [{letter:'u',color:'#ff6b6b'},{letter:'v',color:'#4ecdc4'},{letter:'w',color:'#ffe66d'},{letter:'x',color:'#95e1d3'},{letter:'y',color:'#c7b3e5'},{letter:'z',color:'#ff9ff3'}];
+        const gridLetters = [['v','x','w','y','u','z'],['w','u','v','u','x','y'],['y','v','z','x','w','z'],['w','x','u','x','v','u'],['u','y','w','v','z','x'],['z','w','y','z','u','v']];
+        let selectedColor=null,selectedLetter=null,coloredCells=new Set();
+        function initColorKey(){const k=document.getElementById('colorKey');colors.forEach(i=>{const b=document.createElement('div');b.className='color-box';b.style.background=i.color;b.textContent=i.letter;b.onclick=()=>selectColor(i.letter,i.color,b);k.appendChild(b);});}
+        function initGrid(){const g=document.getElementById('grid');g.style.gridTemplateColumns='repeat(6, 1fr)';gridLetters.forEach((row,ri)=>{row.forEach((l,ci)=>{const c=document.createElement('div');c.className='letter-cell';c.innerHTML=`<span class="letter-text">${l}</span>`;c.dataset.letter=l;c.dataset.row=ri;c.dataset.col=ci;c.onclick=()=>colorCell(c);g.appendChild(c);});});}
+        function selectColor(l,c,e){document.querySelectorAll('.color-box').forEach(b=>b.classList.remove('selected'));e.classList.add('selected');selectedColor=c;selectedLetter=l;}
+        function colorCell(c){if(!selectedColor||!selectedLetter){alert('Please select a color first! 🎨');return;}const cL=c.dataset.letter,cId=`${c.dataset.row}-${c.dataset.col}`;if(cL===selectedLetter){c.style.background=selectedColor;c.style.borderColor=selectedColor;coloredCells.add(cId);playSound('correct');if(coloredCells.size===36)setTimeout(()=>showSuccess(),500);}else{c.style.animation='shake 0.5s';setTimeout(()=>c.style.animation='',500);playSound('wrong');}}
+        function playSound(t){const a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);if(t==='correct'){o.frequency.value=800;g.gain.setValueAtTime(0.3,a.currentTime);g.gain.exponentialRampToValueAtTime(0.01,a.currentTime+0.1);}else{o.frequency.value=200;g.gain.setValueAtTime(0.3,a.currentTime);g.gain.exponentialRampToValueAtTime(0.01,a.currentTime+0.2);}o.start(a.currentTime);o.stop(a.currentTime+0.2);}
+        function showSuccess(){document.getElementById('successMessage').classList.add('show');}
+        function closeSuccess(){document.getElementById('successMessage').classList.remove('show');resetGame();}
+        function resetGame(){coloredCells.clear();document.querySelectorAll('.letter-cell').forEach(c=>{c.style.background='white';c.style.borderColor='transparent';});document.querySelectorAll('.color-box').forEach(b=>b.classList.remove('selected'));selectedColor=null;selectedLetter=null;document.getElementById('successMessage').classList.remove('show');}
+        function goHome(){window.location.href='../grade-1-english-index.html';}
+        function goPrev(){window.location.href='letter-coloring-game-p-t.html';}
+        initColorKey();initGrid();
+    </script>
+</body>
+</html>

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter Coloring Game (a-e)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 900px;
+            justify-content: space-between;
+        }
+
+        .nav-btn {
+            background: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            font-family: 'Comic Sans MS', cursive;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .home-btn {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .next-btn {
+            background: #51cf66;
+            color: white;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .instruction-box {
+            background: #ffd43b;
+            border: 4px solid #333;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .instruction-box::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-right: 20px solid #333;
+        }
+
+        .instruction-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .color-key {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .color-box {
+            width: 80px;
+            height: 80px;
+            border: 3px solid #333;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .color-box:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .color-box.selected {
+            border: 5px solid #000;
+            box-shadow: 0 0 0 3px #ffd43b;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 3px;
+            margin: 0 auto;
+            max-width: 600px;
+            background: #333;
+            padding: 3px;
+            border-radius: 10px;
+        }
+
+        .letter-cell {
+            background: white;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .letter-cell:hover {
+            /* Don't transform the cell itself */
+        }
+
+        .letter-cell:hover::before {
+            /* Scale only the letter */
+            transform: scale(1.3);
+        }
+
+        /* Alternative approach - wrap letter in span */
+        .letter-text {
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+
+        .letter-cell:hover .letter-text {
+            transform: scale(1.3);
+        }
+
+        .success-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: white;
+            padding: 40px 60px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            text-align: center;
+            z-index: 1000;
+            transition: transform 0.3s;
+        }
+
+        .success-message.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .success-message h2 {
+            font-size: 48px;
+            color: #51cf66;
+            margin-bottom: 20px;
+        }
+
+        .success-message p {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .reset-btn {
+            background: #fab005;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            font-family: 'Comic Sans MS', cursive;
+        }
+
+        .reset-btn:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .instruction-text {
+                font-size: 18px;
+            }
+
+            .color-box {
+                width: 60px;
+                height: 60px;
+                font-size: 30px;
+            }
+
+            .letter-cell {
+                font-size: 28px;
+            }
+
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-buttons">
+        <button class="nav-btn home-btn" onclick="goHome()">🏠 Home</button>
+        <button class="nav-btn next-btn" onclick="goNext()">Next (f-j) →</button>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1 style="color: #667eea; font-size: 42px;">🎨 Letter Coloring Game</h1>
+            <p style="font-size: 24px; color: #666; margin-top: 10px;">Letters: a, b, c, d, e</p>
+        </div>
+
+        <div class="instruction-box">
+            <p class="instruction-text">Activity: I colour the letters as shown.</p>
+        </div>
+
+        <div class="color-key" id="colorKey">
+            <!-- Colors will be added by JavaScript -->
+        </div>
+
+        <div class="grid-container" id="grid">
+            <!-- Grid will be generated by JavaScript -->
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="reset-btn" onclick="resetGame()">🔄 Reset Game</button>
+        </div>
+    </div>
+
+    <div class="success-message" id="successMessage">
+        <h2>🎉 Great Job!</h2>
+        <p>You colored all the letters correctly!</p>
+        <button class="reset-btn" onclick="closeSuccess()">Play Again</button>
+        <button class="next-btn" onclick="goNext()" style="margin-left: 10px;">Next Level →</button>
+    </div>
+
+    <script>
+        // Game configuration for letters a-e
+        const colors = [
+            { letter: 'a', color: '#ff6b6b' },  // Red
+            { letter: 'b', color: '#4ecdc4' },  // Cyan
+            { letter: 'c', color: '#ffe66d' },  // Yellow
+            { letter: 'd', color: '#95e1d3' },  // Light green
+            { letter: 'e', color: '#c7b3e5' }   // Purple
+        ];
+
+        // Grid layout (5x5)
+        const gridLetters = [
+            ['b', 'd', 'c', 'e', 'a'],
+            ['c', 'a', 'b', 'a', 'd'],
+            ['e', 'b', 'e', 'd', 'c'],
+            ['c', 'd', 'a', 'd', 'b'],
+            ['a', 'e', 'c', 'b', 'e']
+        ];
+
+        let selectedColor = null;
+        let selectedLetter = null;
+        let coloredCells = new Set();
+
+        // Initialize color key
+        function initColorKey() {
+            const colorKey = document.getElementById('colorKey');
+            colors.forEach(item => {
+                const box = document.createElement('div');
+                box.className = 'color-box';
+                box.style.background = item.color;
+                box.textContent = item.letter;
+                box.onclick = () => selectColor(item.letter, item.color, box);
+                colorKey.appendChild(box);
+            });
+        }
+
+        // Initialize grid
+        function initGrid() {
+            const grid = document.getElementById('grid');
+            gridLetters.forEach((row, rowIndex) => {
+                row.forEach((letter, colIndex) => {
+                    const cell = document.createElement('div');
+                    cell.className = 'letter-cell';
+                    // Wrap letter in span for hover effect
+                    cell.innerHTML = `<span class="letter-text">${letter}</span>`;
+                    cell.dataset.letter = letter;
+                    cell.dataset.row = rowIndex;
+                    cell.dataset.col = colIndex;
+                    cell.onclick = () => colorCell(cell);
+                    grid.appendChild(cell);
+                });
+            });
+        }
+
+        function selectColor(letter, color, element) {
+            // Remove selection from all boxes
+            document.querySelectorAll('.color-box').forEach(box => {
+                box.classList.remove('selected');
+            });
+            
+            // Select current box
+            element.classList.add('selected');
+            selectedColor = color;
+            selectedLetter = letter;
+        }
+
+        function colorCell(cell) {
+            if (!selectedColor || !selectedLetter) {
+                alert('Please select a color first! 🎨');
+                return;
+            }
+
+            const cellLetter = cell.dataset.letter;
+            const cellId = `${cell.dataset.row}-${cell.dataset.col}`;
+
+            // Check if correct letter
+            if (cellLetter === selectedLetter) {
+                cell.style.background = selectedColor;
+                cell.style.borderColor = selectedColor;
+                coloredCells.add(cellId);
+                
+                // Play success sound (optional)
+                playSound('correct');
+                
+                // Check if all cells are colored
+                if (coloredCells.size === 25) {
+                    setTimeout(() => {
+                        showSuccess();
+                    }, 500);
+                }
+            } else {
+                // Wrong letter - shake animation
+                cell.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    cell.style.animation = '';
+                }, 500);
+                playSound('wrong');
+            }
+        }
+
+        function playSound(type) {
+            // Create audio context for sound effects
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            if (type === 'correct') {
+                oscillator.frequency.value = 800;
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+            } else {
+                oscillator.frequency.value = 200;
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+            }
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.2);
+        }
+
+        function showSuccess() {
+            document.getElementById('successMessage').classList.add('show');
+        }
+
+        function closeSuccess() {
+            document.getElementById('successMessage').classList.remove('show');
+            resetGame();
+        }
+
+        function resetGame() {
+            coloredCells.clear();
+            document.querySelectorAll('.letter-cell').forEach(cell => {
+                cell.style.background = 'white';
+                cell.style.borderColor = 'transparent';
+            });
+            document.querySelectorAll('.color-box').forEach(box => {
+                box.classList.remove('selected');
+            });
+            selectedColor = null;
+            selectedLetter = null;
+            document.getElementById('successMessage').classList.remove('show');
+        }
+
+        function goHome() {
+            window.location.href = '../grade-1-english-index.html';
+        }
+
+        function goNext() {
+            window.location.href = 'letter-coloring-game-f-j.html';
+        }
+
+        // Add shake animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-10px); }
+                75% { transform: translateX(10px); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize game
+        initColorKey();
+        initGrid();
+    </script>
+</body>
+</html>
