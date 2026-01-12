@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter Matching Game (f-j)</title>
+    <style>
+        * {margin:0;padding:0;box-sizing:border-box;}
+        body {font-family:'Comic Sans MS',cursive;background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);min-height:100vh;padding:20px;display:flex;flex-direction:column;align-items:center;}
+        .nav-buttons {display:flex;gap:15px;margin-bottom:20px;width:100%;max-width:1000px;justify-content:space-between;}
+        .nav-btn {background:white;border:none;padding:15px 30px;border-radius:50px;font-size:18px;font-weight:bold;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.2);transition:all 0.3s;}
+        .nav-btn:hover {transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,0.3);}
+        .home-btn {background:#ff6b6b;color:white;}
+        .next-btn {background:#51cf66;color:white;}
+        .prev-btn {background:#fab005;color:white;}
+        .container {background:white;padding:40px;border-radius:30px;box-shadow:0 10px 40px rgba(0,0,0,0.3);max-width:1000px;width:100%;}
+        h1 {color:#f5576c;font-size:42px;text-align:center;margin-bottom:10px;}
+        .subtitle {font-size:24px;color:#666;text-align:center;}
+        .instruction-box {background:#ffd43b;border:4px solid #333;border-radius:15px;padding:20px;margin:30px 0;position:relative;}
+        .instruction-box::before {content:'';position:absolute;left:-20px;top:50%;transform:translateY(-50%);border-top:15px solid transparent;border-bottom:15px solid transparent;border-right:20px solid #333;}
+        .instruction-text {font-size:24px;font-weight:bold;color:#333;text-align:center;}
+        .game-area {display:flex;flex-direction:column;gap:40px;margin:30px 0;}
+        .eggs-section,.chickens-section {display:flex;justify-content:center;gap:20px;flex-wrap:wrap;}
+        .egg {width:120px;height:150px;background:linear-gradient(135deg,#ffa500 0%,#ff8c00 100%);border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:bold;color:#333;cursor:grab;box-shadow:0 5px 15px rgba(0,0,0,0.2);transition:all 0.3s;user-select:none;}
+        .egg:active {cursor:grabbing;}
+        .egg:hover {transform:translateY(-5px) scale(1.05);box-shadow:0 8px 20px rgba(0,0,0,0.3);}
+        .egg.dragging {opacity:0.5;}
+        .egg.matched {opacity:0.3;cursor:not-allowed;pointer-events:none;}
+        .chicken-container {display:flex;flex-direction:column;align-items:center;position:relative;}
+        .chicken {width:120px;height:120px;background:#f5f5dc;border-radius:50% 50% 45% 45%;position:relative;display:flex;align-items:center;justify-content:center;box-shadow:0 5px 15px rgba(0,0,0,0.2);}
+        .chicken::before {content:'';position:absolute;top:-30px;right:10px;width:40px;height:40px;background:#f5f5dc;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.2);}
+        .chicken::after {content:'';position:absolute;top:-40px;right:15px;width:30px;height:20px;background:#ff4444;border-radius:50% 50% 0 0;}
+        .platform {width:120px;height:40px;background:#ffd700;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:bold;color:#333;margin-top:-10px;box-shadow:0 3px 10px rgba(0,0,0,0.2);}
+        .drop-zone {position:absolute;top:0;left:0;width:120px;height:120px;border-radius:50% 50% 45% 45%;display:flex;align-items:center;justify-content:center;transition:all 0.3s;}
+        .drop-zone.drag-over {background:rgba(81,207,102,0.3);transform:scale(1.1);}
+        .drop-zone.correct {background:rgba(81,207,102,0.5);}
+        .dropped-egg {width:80px;height:100px;background:linear-gradient(135deg,#ffa500 0%,#ff8c00 100%);border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:bold;color:#333;box-shadow:0 3px 10px rgba(0,0,0,0.2);animation:dropIn 0.3s;}
+        @keyframes dropIn {0%{transform:translateY(-100px) scale(0);opacity:0;}50%{transform:translateY(10px) scale(1.1);}100%{transform:translateY(0) scale(1);opacity:1;}}
+        .success-message {position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);background:white;padding:40px 60px;border-radius:30px;box-shadow:0 20px 60px rgba(0,0,0,0.5);text-align:center;z-index:1000;transition:transform 0.3s;}
+        .success-message.show {transform:translate(-50%,-50%) scale(1);}
+        .success-message h2 {font-size:48px;color:#51cf66;margin-bottom:20px;}
+        .success-message p {font-size:24px;color:#333;margin-bottom:20px;}
+        .reset-btn {background:#fab005;color:white;border:none;padding:15px 40px;border-radius:50px;font-size:20px;font-weight:bold;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.2);transition:all 0.3s;margin-top:20px;}
+        @keyframes shake {0%,100%{transform:translateX(0);}25%{transform:translateX(-10px);}75%{transform:translateX(10px);}}
+        .shake {animation:shake 0.5s;}
+    </style>
+</head>
+<body>
+    <div class="nav-buttons">
+        <button class="nav-btn prev-btn" onclick="goPrev()">← Previous (a-e)</button>
+        <button class="nav-btn home-btn" onclick="goHome()">🏠 Home</button>
+        <button class="nav-btn next-btn" onclick="goNext()">Next (k-o) →</button>
+    </div>
+    <div class="container">
+        <h1>🥚 Letter Matching Game</h1>
+        <p class="subtitle">Match lowercase with uppercase: f, g, h, i, j</p>
+        <div class="instruction-box"><p class="instruction-text">Activity 8: I match the small and capital letters.</p></div>
+        <div class="game-area">
+            <div class="eggs-section" id="eggsSection"></div>
+            <div class="chickens-section" id="chickensSection"></div>
+        </div>
+        <div style="text-align:center;margin-top:20px;"><button class="reset-btn" onclick="resetGame()">🔄 Reset</button></div>
+    </div>
+    <div class="success-message" id="successMessage">
+        <h2>🎉 Excellent!</h2>
+        <p>You matched all letters correctly!</p>
+        <button class="reset-btn" onclick="closeSuccess()">Play Again</button>
+        <button class="nav-btn next-btn" onclick="goNext()" style="margin-left:10px;">Next Level →</button>
+    </div>
+    <script>
+        const letters=['f','g','h','i','j'];
+        let matches={},draggedElement=null;
+        function shuffle(a){const n=[...a];for(let i=n.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[n[i],n[j]]=[n[j],n[i]];}return n;}
+        function initGame(){const es=document.getElementById('eggsSection'),cs=document.getElementById('chickensSection');shuffle(letters).forEach(l=>{const e=document.createElement('div');e.className='egg';e.textContent=l;e.draggable=true;e.dataset.letter=l;e.addEventListener('dragstart',handleDragStart);e.addEventListener('dragend',handleDragEnd);es.appendChild(e);});shuffle(letters.map(l=>l.toUpperCase())).forEach(l=>{const c=document.createElement('div');c.className='chicken-container';const ch=document.createElement('div');ch.className='chicken';const dz=document.createElement('div');dz.className='drop-zone';dz.dataset.target=l.toLowerCase();dz.addEventListener('dragover',handleDragOver);dz.addEventListener('dragleave',handleDragLeave);dz.addEventListener('drop',handleDrop);const p=document.createElement('div');p.className='platform';p.textContent=l;ch.appendChild(dz);c.appendChild(ch);c.appendChild(p);cs.appendChild(c);});}
+        function handleDragStart(e){draggedElement=e.target;e.target.classList.add('dragging');e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',e.target.dataset.letter);}
+        function handleDragEnd(e){e.target.classList.remove('dragging');}
+        function handleDragOver(e){e.preventDefault();e.dataTransfer.dropEffect='move';e.currentTarget.classList.add('drag-over');}
+        function handleDragLeave(e){e.currentTarget.classList.remove('drag-over');}
+        function handleDrop(e){e.preventDefault();e.currentTarget.classList.remove('drag-over');const dl=e.dataTransfer.getData('text/plain'),tl=e.currentTarget.dataset.target;if(dl===tl){playSound('correct');const de=document.createElement('div');de.className='dropped-egg';de.textContent=dl;e.currentTarget.appendChild(de);e.currentTarget.classList.add('correct');draggedElement.classList.add('matched');matches[dl]=true;if(Object.keys(matches).length===letters.length)setTimeout(()=>showSuccess(),500);}else{playSound('wrong');const p=e.currentTarget.closest('.chicken-container').querySelector('.platform');p.classList.add('shake');setTimeout(()=>p.classList.remove('shake'),500);}}
+        function playSound(t){const a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);if(t==='correct'){o.frequency.value=800;g.gain.setValueAtTime(0.3,a.currentTime);g.gain.exponentialRampToValueAtTime(0.01,a.currentTime+0.1);}else{o.frequency.value=200;g.gain.setValueAtTime(0.3,a.currentTime);g.gain.exponentialRampToValueAtTime(0.01,a.currentTime+0.2);}o.start(a.currentTime);o.stop(a.currentTime+0.2);}
+        function showSuccess(){document.getElementById('successMessage').classList.add('show');}
+        function closeSuccess(){document.getElementById('successMessage').classList.remove('show');resetGame();}
+        function resetGame(){matches={};document.getElementById('eggsSection').innerHTML='';document.getElementById('chickensSection').innerHTML='';document.getElementById('successMessage').classList.remove('show');initGame();}
+        function goHome(){window.location.href='../grade-1-english-index.html';}
+        function goPrev(){window.location.href='letter-matching-game-a-e.html';}
+        function goNext(){window.location.href='letter-matching-game-k-o.html';}
+        initGame();
+    </script>
+</body>
+</html>
