@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uppercase Letter Catcher</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .game-container {
+            text-align: center;
+            max-width: 800px;
+            width: 95%;
+        }
+
+        .header {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+        }
+
+        .mission {
+            font-size: 1.8em;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: inline-block;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .letter-selector {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 20px;
+            margin: 20px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .letter-selector-title {
+            font-size: 1.3em;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .letter-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(45px, 1fr));
+            gap: 8px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .letter-btn {
+            width: 45px;
+            height: 45px;
+            font-size: 1.4em;
+            font-weight: bold;
+            border: 3px solid #667eea;
+            border-radius: 10px;
+            background: white;
+            color: #667eea;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Century Gothic', Futura, sans-serif;
+        }
+
+        .letter-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .letter-btn.active {
+            background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
+            color: white;
+            border-color: #40c057;
+            transform: scale(1.15);
+        }
+
+        .letter-btn.completed {
+            background: linear-gradient(135deg, #ffd43b 0%, #fab005 100%);
+            color: white;
+            border-color: #fab005;
+        }
+
+        .letter-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .game-canvas-wrapper {
+            position: relative;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        #game-canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .score-panel {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .score-box {
+            background: white;
+            padding: 15px 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            min-width: 120px;
+        }
+
+        .score-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .score-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
+            color: white;
+            font-size: 1.5em;
+            padding: 20px 50px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .home-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            animation: none;
+        }
+
+        .success-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 40px 60px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            z-index: 10000;
+            display: none;
+            animation: popIn 0.5s ease;
+        }
+
+        .success-message::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: -1;
+        }
+
+        .success-title {
+            font-size: 2.5em;
+            color: #51cf66;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .success-subtitle {
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 30px;
+        }
+
+        .success-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .success-btn {
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.3em;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        .continue-btn {
+            background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
+            color: white;
+        }
+
+        .choose-btn {
+            background: linear-gradient(135deg, #ffd43b 0%, #fab005 100%);
+            color: white;
+        }
+
+        .success-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes popIn {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8em; }
+            .mission { font-size: 1.3em; padding: 10px 20px; }
+            .score-value { font-size: 1.5em; }
+            .btn { padding: 12px 25px; font-size: 1em; }
+            .start-btn { font-size: 1.2em; padding: 15px 35px; }
+            .letter-buttons { grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)); gap: 6px; }
+            .letter-btn { width: 40px; height: 40px; font-size: 1.2em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1>🎮 UPPERCASE Letter Catcher 🎮</h1>
+            <div class="mission" id="mission">Choose a letter to start!</div>
+        </div>
+
+        <div class="letter-selector">
+            <div class="letter-selector-title">✨ Choose a Letter to Catch! ✨</div>
+            <div class="letter-buttons" id="letter-buttons"></div>
+        </div>
+
+        <div class="score-panel">
+            <div class="score-box">
+                <div class="score-label">Total Score</div>
+                <div class="score-value" id="score">0</div>
+            </div>
+            <div class="score-box">
+                <div class="score-label">Collected</div>
+                <div class="score-value" id="collected">0 / 30</div>
+            </div>
+            <div class="score-box">
+                <div class="score-label">Missed</div>
+                <div class="score-value" id="missed">0</div>
+            </div>
+        </div>
+
+        <div class="game-canvas-wrapper">
+            <canvas id="game-canvas" width="600" height="700"></canvas>
+        </div>
+
+        <div class="controls">
+            <button class="btn start-btn" id="start-btn" onclick="startGame()">▶️ Start Game</button>
+            <button class="btn home-btn" onclick="goHome()">🏠 Home</button>
+        </div>
+    </div>
+
+    <div class="success-message" id="success-message">
+        <div class="success-title">🎉 Letter '<span id="completed-letter">A</span>' Complete! 🎉</div>
+        <div class="success-subtitle">+30 Bonus Points!</div>
+        <div class="success-buttons">
+            <button class="success-btn continue-btn" onclick="continueToNextLetter()">
+                ➡️ Continue to Letter '<span id="next-letter-btn">B</span>'
+            </button>
+            <button class="success-btn choose-btn" onclick="chooseAnotherLetter()">
+                🔤 Choose Another Letter
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('game-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Game state
+        let gameRunning = false;
+        let score = 0;
+        let collected = 0;
+        let missed = 0;
+        let targetLetter = '';
+        const targetCount = 30;
+        const allLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+        let completedLetters = new Set();
+        
+        // Vivid smartie colors
+        const smartieColors = [
+            { fill: '#FF1493', stroke: '#C71585' },
+            { fill: '#FFCC00', stroke: '#FF9900' },
+            { fill: '#00DD00', stroke: '#00AA00' },
+            { fill: '#FF0000', stroke: '#CC0000' },
+            { fill: '#0080FF', stroke: '#0066CC' },
+            { fill: '#9400D3', stroke: '#7700BB' },
+            { fill: '#FF6600', stroke: '#FF4500' },
+            { fill: '#FF69B4', stroke: '#FF1493' },
+            { fill: '#00FFFF', stroke: '#00CCCC' },
+            { fill: '#FFDD00', stroke: '#FFAA00' },
+            { fill: '#FF00FF', stroke: '#CC00CC' },
+            { fill: '#00FF7F', stroke: '#00DD66' }
+        ];
+        
+        let player = {
+            x: canvas.width / 2 - 40,
+            y: canvas.height - 100,
+            width: 80,
+            height: 80,
+            speed: 12
+        };
+
+        let fallingLetters = [];
+        let particles = [];
+        let letterSpeed = 1.5;
+        let spawnRate = 120;
+        let frameCount = 0;
+        let isDragging = false;
+        let keys = { left: false, right: false };
+
+        // Generate letter buttons
+        function generateLetterButtons() {
+            const buttonContainer = document.getElementById('letter-buttons');
+            allLetters.forEach(letter => {
+                const btn = document.createElement('button');
+                btn.className = 'letter-btn';
+                btn.textContent = letter;
+                btn.id = `letter-btn-${letter}`;
+                btn.onclick = () => selectLetter(letter);
+                buttonContainer.appendChild(btn);
+            });
+            updateLetterButtons();
+        }
+
+        function selectLetter(letter) {
+            if (gameRunning) {
+                return;
+            }
+            targetLetter = letter;
+            collected = 0;
+            missed = 0;
+            updateMission();
+            updateScore();
+            updateLetterButtons();
+        }
+
+        function updateLetterButtons() {
+            allLetters.forEach(letter => {
+                const btn = document.getElementById(`letter-btn-${letter}`);
+                if (btn) {
+                    btn.classList.remove('active', 'completed');
+                    if (letter === targetLetter) btn.classList.add('active');
+                    if (completedLetters.has(letter)) btn.classList.add('completed');
+                    btn.disabled = gameRunning;
+                }
+            });
+        }
+
+        function updateMission() {
+            if (targetLetter) {
+                document.getElementById('mission').textContent = `Collect 30 '${targetLetter}' letters!`;
+            } else {
+                document.getElementById('mission').textContent = 'Choose a letter to start!';
+            }
+        }
+
+        function startGame() {
+            if (!targetLetter) {
+                alert('Please choose a letter first!');
+                return;
+            }
+            
+            gameRunning = true;
+            collected = 0;
+            missed = 0;
+            fallingLetters = [];
+            particles = [];
+            frameCount = 0;
+            letterSpeed = 1.5;
+            spawnRate = 120;
+            
+            updateMission();
+            updateLetterButtons();
+            document.getElementById('start-btn').disabled = true;
+            updateScore();
+            gameLoop();
+        }
+
+        function stopGame() {
+            gameRunning = false;
+            document.getElementById('start-btn').disabled = false;
+            updateLetterButtons();
+        }
+
+        function goHome() {
+            window.location.href = '../grade-1-english-index.html';
+        }
+
+        function spawnLetter() {
+            const isTarget = Math.random() < 0.3;
+            const letter = isTarget ? targetLetter : allLetters[Math.floor(Math.random() * allLetters.length)];
+            const colorIndex = Math.floor(Math.random() * smartieColors.length);
+            
+            fallingLetters.push({
+                x: Math.random() * (canvas.width - 60),
+                y: -60,
+                letter: letter,
+                isTarget: isTarget,
+                color: smartieColors[colorIndex],
+                size: 50,
+                speed: letterSpeed + Math.random() * 2
+            });
+        }
+
+        function updateLetters() {
+            for (let i = fallingLetters.length - 1; i >= 0; i--) {
+                const letter = fallingLetters[i];
+                letter.y += letter.speed;
+
+                // Collision detection
+                if (letter.y + letter.size > player.y &&
+                    letter.y < player.y + player.height &&
+                    letter.x + letter.size > player.x &&
+                    letter.x < player.x + player.width) {
+                    
+                    if (letter.isTarget) {
+                        score += 10;
+                        collected++;
+                        createParticles(letter.x, letter.y, letter.color.fill);
+                    } else {
+                        score = Math.max(0, score - 5);
+                        missed++;
+                        createParticles(letter.x, letter.y, '#999999');
+                    }
+                    fallingLetters.splice(i, 1);
+                    updateScore();
+                    continue;
+                }
+
+                // Letter fell off screen
+                if (letter.y > canvas.height) {
+                    if (letter.isTarget) {
+                        missed++;
+                        updateScore();
+                    }
+                    fallingLetters.splice(i, 1);
+                }
+            }
+
+            // Increase difficulty over time
+            if (frameCount % 600 === 0) {
+                letterSpeed = Math.min(4, letterSpeed + 0.3);
+                spawnRate = Math.max(60, spawnRate - 5);
+            }
+        }
+
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('collected').textContent = `${collected} / ${targetCount}`;
+            document.getElementById('missed').textContent = missed;
+
+            // Check if collected 30 letters
+            if (collected >= targetCount) {
+                letterComplete();
+            }
+
+            // Check if missed too many
+            if (missed >= 15) {
+                gameOver();
+            }
+        }
+
+        function letterComplete() {
+            console.log('=== LETTER COMPLETE TRIGGERED ===');
+            console.log('Collected:', collected, 'Target:', targetCount);
+            
+            stopGame();
+            completedLetters.add(targetLetter);
+            score += 30; // Bonus points
+            
+            // Update display WITHOUT checking conditions again (prevent infinite loop)
+            document.getElementById('score').textContent = score;
+            document.getElementById('collected').textContent = `${collected} / ${targetCount}`;
+            document.getElementById('missed').textContent = missed;
+            
+            // Update popup with current and next letter
+            document.getElementById('completed-letter').textContent = targetLetter;
+            const currentIndex = allLetters.indexOf(targetLetter);
+            const nextLetter = currentIndex < allLetters.length - 1 ? allLetters[currentIndex + 1] : 'A';
+            document.getElementById('next-letter-btn').textContent = nextLetter;
+            
+            console.log('Current letter:', targetLetter, 'Next letter:', nextLetter);
+            
+            // Show success message popup
+            const successMsg = document.getElementById('success-message');
+            console.log('Success message element:', successMsg);
+            successMsg.style.display = 'block';
+            console.log('Display set to block');
+            
+            // Create falling golden stars celebration
+            createStarCelebration();
+            console.log('Stars created');
+            
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(`Letter ${targetLetter} complete! Well done!`);
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function continueToNextLetter() {
+            // Hide popup
+            document.getElementById('success-message').style.display = 'none';
+            celebrationStars = []; // Clear stars
+            
+            // Move to next letter
+            const currentIndex = allLetters.indexOf(targetLetter);
+            if (currentIndex < allLetters.length - 1) {
+                targetLetter = allLetters[currentIndex + 1];
+            } else {
+                targetLetter = 'A'; // Loop back to A
+            }
+            
+            // Reset and update
+            collected = 0;
+            missed = 0;
+            fallingLetters = [];
+            particles = [];
+            
+            updateMission();
+            updateScore();
+            updateLetterButtons();
+            
+            // Clear canvas
+            ctx.fillStyle = '#e3f2fd';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Auto-start the game with new letter
+            startGame();
+        }
+
+        function chooseAnotherLetter() {
+            // Hide popup
+            document.getElementById('success-message').style.display = 'none';
+            celebrationStars = []; // Clear stars
+            resetForNewLetter();
+        }
+
+        // Falling stars celebration
+        let celebrationStars = [];
+        let starsAnimating = false;
+
+        function createStarCelebration() {
+            celebrationStars = []; // Clear any previous stars
+            
+            // Create 60 falling stars
+            for (let i = 0; i < 60; i++) {
+                celebrationStars.push({
+                    x: Math.random() * canvas.width,
+                    y: -Math.random() * 200 - 50, // Start above canvas
+                    speed: 3 + Math.random() * 4,
+                    size: 20 + Math.random() * 20,
+                    rotation: Math.random() * 360,
+                    rotationSpeed: (Math.random() - 0.5) * 15,
+                    opacity: 1,
+                    color: ['#FFD700', '#FFA500', '#FFFF00', '#FFE55C'][Math.floor(Math.random() * 4)]
+                });
+            }
+            
+            if (!starsAnimating) {
+                starsAnimating = true;
+                animateStars();
+            }
+        }
+
+        function animateStars() {
+            if (celebrationStars.length === 0) {
+                starsAnimating = false;
+                return;
+            }
+
+            // Clear canvas with background color
+            ctx.fillStyle = '#e3f2fd';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Update and draw stars
+            for (let i = celebrationStars.length - 1; i >= 0; i--) {
+                const star = celebrationStars[i];
+                star.y += star.speed;
+                star.rotation += star.rotationSpeed;
+
+                // Remove stars that fall completely off screen
+                if (star.y - star.size > canvas.height + 100) {
+                    celebrationStars.splice(i, 1);
+                    continue;
+                }
+
+                // Draw star
+                ctx.save();
+                ctx.translate(star.x, star.y);
+                ctx.rotate((star.rotation * Math.PI) / 180);
+                ctx.globalAlpha = star.opacity;
+                
+                // Draw a 5-pointed star
+                ctx.fillStyle = star.color;
+                ctx.beginPath();
+                for (let j = 0; j < 5; j++) {
+                    const angle = (j * 4 * Math.PI) / 5 - Math.PI / 2;
+                    const x = Math.cos(angle) * star.size;
+                    const y = Math.sin(angle) * star.size;
+                    if (j === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.closePath();
+                ctx.fill();
+                
+                // Add sparkle effect with white stroke
+                ctx.strokeStyle = '#FFFFFF';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+                
+                ctx.restore();
+            }
+
+            // Continue animation
+            requestAnimationFrame(animateStars);
+        }
+
+        function resetForNewLetter() {
+            // Clear the current letter selection
+            targetLetter = '';
+            collected = 0;
+            missed = 0;
+            fallingLetters = [];
+            particles = [];
+            
+            updateMission();
+            updateScore();
+            updateLetterButtons();
+            
+            // Clear canvas
+            ctx.fillStyle = '#e3f2fd';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function gameOver() {
+            stopGame();
+            alert(`Game Over! Final Score: ${score}\nYou can choose a new letter to play again!`);
+            resetForNewLetter();
+        }
+
+        function drawPlayer() {
+            // Draw the rim (top of basket)
+            ctx.strokeStyle = '#fab005';
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.moveTo(player.x, player.y);
+            ctx.lineTo(player.x + player.width, player.y);
+            ctx.stroke();
+
+            // Draw basket body
+            ctx.fillStyle = '#ffd43b';
+            ctx.strokeStyle = '#fab005';
+            ctx.lineWidth = 4;
+            
+            ctx.beginPath();
+            ctx.moveTo(player.x, player.y);
+            ctx.lineTo(player.x + 10, player.y + player.height);
+            ctx.lineTo(player.x + player.width - 10, player.y + player.height);
+            ctx.lineTo(player.x + player.width, player.y);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            // Draw basketball net mesh
+            ctx.strokeStyle = '#ff8c00';
+            ctx.lineWidth = 2;
+            
+            const netLines = 5;
+            for (let i = 1; i < netLines; i++) {
+                const xTop = player.x + (player.width / netLines) * i;
+                const xBottom = player.x + 10 + ((player.width - 20) / netLines) * i;
+                ctx.beginPath();
+                ctx.moveTo(xTop, player.y);
+                ctx.lineTo(xBottom, player.y + player.height);
+                ctx.stroke();
+            }
+            
+            const horizontalLines = 4;
+            for (let i = 1; i < horizontalLines; i++) {
+                const y = player.y + (player.height / horizontalLines) * i;
+                const leftX = player.x + (10 / horizontalLines) * i;
+                const rightX = player.x + player.width - (10 / horizontalLines) * i;
+                ctx.beginPath();
+                ctx.moveTo(leftX, y);
+                ctx.lineTo(rightX, y);
+                ctx.stroke();
+            }
+
+            // Draw smiley
+            ctx.font = '40px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('😊', player.x + player.width / 2, player.y + player.height / 2);
+        }
+
+        function drawLetters() {
+            fallingLetters.forEach(letter => {
+                ctx.fillStyle = letter.color.fill;
+                ctx.strokeStyle = letter.color.stroke;
+                ctx.lineWidth = 3;
+                
+                ctx.beginPath();
+                ctx.arc(letter.x + letter.size / 2, letter.y + letter.size / 2, letter.size / 2, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = 'black';
+                ctx.font = 'bold 35px "Century Gothic", Futura, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(letter.letter, letter.x + letter.size / 2, letter.y + letter.size / 2);
+            });
+        }
+
+        function createParticles(x, y, color) {
+            for (let i = 0; i < 10; i++) {
+                particles.push({
+                    x: x, y: y,
+                    vx: (Math.random() - 0.5) * 8,
+                    vy: (Math.random() - 0.5) * 8,
+                    life: 30,
+                    color: color
+                });
+            }
+        }
+
+        function updateParticles() {
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life--;
+                if (p.life <= 0) particles.splice(i, 1);
+            }
+        }
+
+        function drawParticles() {
+            particles.forEach(p => {
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = p.life / 30;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            ctx.globalAlpha = 1;
+        }
+
+        function gameLoop() {
+            if (!gameRunning) return;
+
+            ctx.fillStyle = '#e3f2fd';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            if (keys.left) player.x = Math.max(0, player.x - player.speed);
+            if (keys.right) player.x = Math.min(canvas.width - player.width, player.x + player.speed);
+
+            frameCount++;
+            if (frameCount % spawnRate === 0) spawnLetter();
+
+            updateLetters();
+            updateParticles();
+            drawLetters();
+            drawParticles();
+            drawPlayer();
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Event listeners
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') keys.left = true;
+            if (e.key === 'ArrowRight') keys.right = true;
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'ArrowLeft') keys.left = false;
+            if (e.key === 'ArrowRight') keys.right = false;
+        });
+
+        canvas.addEventListener('touchstart', (e) => { e.preventDefault(); isDragging = true; });
+        canvas.addEventListener('touchmove', (e) => {
+            if (!isDragging || !gameRunning) return;
+            e.preventDefault();
+            const rect = canvas.getBoundingClientRect();
+            const touchX = e.touches[0].clientX - rect.left;
+            player.x = Math.max(0, Math.min(canvas.width - player.width, touchX * (canvas.width / rect.width) - player.width / 2));
+        });
+        canvas.addEventListener('touchend', () => { isDragging = false; });
+
+        canvas.addEventListener('mousedown', () => { isDragging = true; });
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isDragging || !gameRunning) return;
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            player.x = Math.max(0, Math.min(canvas.width - player.width, mouseX * (canvas.width / rect.width) - player.width / 2));
+        });
+        canvas.addEventListener('mouseup', () => { isDragging = false; });
+        canvas.addEventListener('mouseleave', () => { isDragging = false; });
+
+        function resizeCanvas() {
+            const maxWidth = Math.min(600, window.innerWidth - 40);
+            canvas.style.width = maxWidth + 'px';
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        generateLetterButtons();
+        
+        // Initial canvas setup
+        ctx.fillStyle = '#e3f2fd';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    </script>
+</body>
+</html>
