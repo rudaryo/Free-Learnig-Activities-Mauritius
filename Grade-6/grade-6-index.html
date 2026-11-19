@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 6 - Learning Activities</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            background: white;
+            color: #667eea;
+            padding: 20px 45px;
+            border-radius: 60px;
+            border: none;
+            font-weight: 800;
+            font-size: 26px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            background: #667eea;
+            color: white;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            text-align: center;
+            background: white;
+            border-radius: 30px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin-top: 60px;
+        }
+
+        .icon {
+            font-size: 5em;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: #636e72;
+            margin-bottom: 35px;
+        }
+
+        .subjects {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .subject-card {
+            position: relative;
+            display: block;
+            border-radius: 22px;
+            padding: 35px 20px;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        a.subject-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .subject-icon {
+            font-size: 3.5em;
+            margin-bottom: 12px;
+        }
+
+        .subject-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .subject-info {
+            font-size: 1em;
+            opacity: 0.95;
+        }
+
+        .math    { background: linear-gradient(135deg, #4facfe 0%, #0984e3 100%); }
+        .english { background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%); }
+        .french  { background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%); }
+        .science { background: linear-gradient(135deg, #55efc4 0%, #00b894 100%); }
+        .hg      { background: linear-gradient(135deg, #2f9e44 0%, #1f6f78 100%); }
+
+        .subject-card.coming-soon {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .soon-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.35);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .new-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #ffd43b;
+            color: #2d3436;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        @media (max-width: 900px) {
+            .subjects {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .container {
+                padding: 35px 20px;
+            }
+
+            .subjects {
+                grid-template-columns: 1fr;
+            }
+
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-button">
+        <span>🏠</span>
+        <span>Back</span>
+    </a>
+
+    <div class="container">
+        <div class="icon">🎓</div>
+        <h1>Grade 6</h1>
+        <p class="subtitle">Preparing for Success • Ages 10-11 • Choose your subject</p>
+
+        <div class="subjects">
+            <div class="subject-card math coming-soon">
+                <span class="soon-badge">Coming Soon</span>
+                <div class="subject-icon">🔢</div>
+                <div class="subject-name">Mathematics</div>
+                <div class="subject-info">Activities on the way</div>
+            </div>
+
+            <div class="subject-card english coming-soon">
+                <span class="soon-badge">Coming Soon</span>
+                <div class="subject-icon">📖</div>
+                <div class="subject-name">English</div>
+                <div class="subject-info">Activities on the way</div>
+            </div>
+
+            <div class="subject-card french coming-soon">
+                <span class="soon-badge">Coming Soon</span>
+                <div class="subject-icon">🇫🇷</div>
+                <div class="subject-name">French</div>
+                <div class="subject-info">Activities on the way</div>
+            </div>
+
+            <div class="subject-card science coming-soon">
+                <span class="soon-badge">Coming Soon</span>
+                <div class="subject-icon">🔬</div>
+                <div class="subject-name">Science</div>
+                <div class="subject-info">Activities on the way</div>
+            </div>
+
+            <a href="History-Geography/hg-grade6-index.html" class="subject-card hg">
+                <span class="new-badge">NEW</span>
+                <div class="subject-icon">🌍</div>
+                <div class="subject-name">History &amp; Geography</div>
+                <div class="subject-info">Learning games</div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
