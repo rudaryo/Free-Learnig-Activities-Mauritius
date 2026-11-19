@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 6 - History and Geography Learning Center</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            background: white;
+            color: #667eea;
+            padding: 20px 45px;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 26px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            background: #667eea;
+            color: white;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 80px auto 0;
+            background: white;
+            border-radius: 30px;
+            padding: 45px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .head { text-align: center; margin-bottom: 25px; }
+        .head .icon { font-size: 4.5em; }
+        h1 { font-size: 2.8em; color: #667eea; margin: 8px 0; }
+        .subtitle { font-size: 1.2em; color: #636e72; }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0 10px;
+            font-size: 0.95em;
+            color: #2d3436;
+        }
+        .key { display: inline-flex; align-items: center; gap: 6px; }
+        .dot { width: 16px; height: 16px; border-radius: 50%; display: inline-block; }
+        .mix {
+            background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+            color: white; text-decoration: none; padding: 12px 22px; border-radius: 40px;
+            font-weight: bold; box-shadow: 0 6px 16px rgba(0,0,0,.2);
+        }
+        .mix:hover { transform: translateY(-2px); }
+
+        .unit { margin-top: 35px; }
+        .unit h2 {
+            font-size: 1.55em; color: #2d3436; display: flex; align-items: center; gap: 10px;
+            flex-wrap: wrap; padding-bottom: 10px; border-bottom: 3px solid #eef0f6; margin-bottom: 18px;
+        }
+        .unit-icon { font-size: 1.2em; }
+        .subj { font-size: 0.55em; color: white; padding: 5px 12px; border-radius: 20px; }
+        .subj.geo { background: #1f6f78; }
+        .subj.his { background: #b5541f; }
+
+        .topics {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 20px;
+        }
+
+        .topic-card {
+            border-radius: 22px;
+            padding: 22px 20px;
+            color: white;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .topic-card:hover { transform: translateY(-6px); box-shadow: 0 14px 30px rgba(0,0,0,.28); }
+        .topic-card.geo { background: linear-gradient(135deg, #38d9a9 0%, #1f6f78 100%); }
+        .topic-card.his { background: linear-gradient(135deg, #ffa94d 0%, #b5541f 100%); }
+
+        .topic-top { display: flex; align-items: center; justify-content: space-between; }
+        .topic-icon { font-size: 2.6em; }
+        .topic-no { background: rgba(255,255,255,.3); padding: 5px 12px; border-radius: 20px; font-size: 0.85em; font-weight: bold; }
+        .topic-name { font-size: 1.3em; font-weight: bold; margin: 12px 0 16px; line-height: 1.3; flex: 1; }
+
+        .acts { display: flex; flex-wrap: wrap; gap: 8px; }
+        .act {
+            text-decoration: none; font-weight: bold; font-size: 0.92em;
+            padding: 10px 14px; border-radius: 30px; box-shadow: 0 3px 8px rgba(0,0,0,.2);
+            transition: transform .15s;
+        }
+        .act:hover { transform: scale(1.06); }
+        .act.quiz { background: white; color: #5f3dc4; }
+        .act.game { background: #ffd43b; color: #2d3436; }
+        .act.dlc  { background: #7048e8; color: white; }
+
+        .teacher {
+            margin-top: 40px; background: #f1f3f9; border-radius: 20px; padding: 20px 22px;
+            display: flex; align-items: center; gap: 15px; flex-wrap: wrap;
+        }
+        .teacher .t { flex: 1; min-width: 240px; color: #2d3436; }
+        .teacher .t b { font-size: 1.15em; }
+        .teacher .t div { color: #636e72; font-size: .95em; margin-top: 4px; }
+        .teacher a {
+            background: #495057; color: white; text-decoration: none; padding: 12px 20px;
+            border-radius: 30px; font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            .container { padding: 30px 18px; margin-top: 60px; }
+            .back-button { top: 10px; left: 10px; padding: 10px 20px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <a href="../grade-6-index.html" class="back-button">
+        <span>🏠</span>
+        <span>Back</span>
+    </a>
+
+    <div class="container">
+        <div class="head">
+            <div class="icon">🌍</div>
+            <h1>History &amp; Geography</h1>
+            <p class="subtitle">Grade 6 • Choose a topic</p>
+        </div>
+
+        <div class="toolbar">
+            <span class="key"><span class="dot" style="background:#1f6f78"></span> Geography</span>
+            <span class="key"><span class="dot" style="background:#b5541f"></span> History</span>
+            <span class="key">📝 Quiz</span>
+            <span class="key">🎮 <span style="background:#ffd43b;padding:2px 8px;border-radius:10px">Game</span></span>
+            <span class="key">✏️ <span style="background:#7048e8;color:#fff;padding:2px 8px;border-radius:10px">Challenge</span></span>
+            <a class="mix" href="quizzes/HG_Grade6_All_Topics.html">🎯 All quizzes &amp; mixed revision</a>
+        </div>
+
+            <section class="unit">
+                <h2><span class="unit-icon">🏘️</span> Unit 1: Land Use <span class="subj geo">Geography</span></h2>
+                <div class="topics">
+                <div class="topic-card geo">
+                    <div class="topic-top"><span class="topic-icon">🗺️</span><span class="topic-no">Unit 1 · Topic 1</span></div>
+                    <div class="topic-name">What is Land Use?</div>
+                    <div class="acts"><a class="act quiz" href="quizzes/G6-1_1_topic_1_what_is_land_use.html">📝 Quiz</a><a class="act game" href="games/Land_Use_Colour_by_Key.html">🎨 Colour by Key</a><a class="act game" href="games/Land_Use_Find_the_Evidence.html">🔍 Find the Evidence</a><a class="act game" href="games/Land_Use_Grid_Map.html">🗺️ Grid Map</a><a class="act dlc" href="games/Land_Use_Change_Before_After.html">✏️ Before &amp; After</a></div>
+                </div>
+                <div class="topic-card geo">
+                    <div class="topic-top"><span class="topic-icon">🌾</span><span class="topic-no">Unit 1 · Topic 2</span></div>
+                    <div class="topic-name">Agricultural Land Use</div>
+                    <div class="acts"><a class="act quiz" href="quizzes/G6-1_2_topic_2_agricultural_land_use.html">📝 Quiz</a></div>
+                </div>
+                <div class="topic-card geo">
+                    <div class="topic-top"><span class="topic-icon">🏨</span><span class="topic-no">Unit 1 · Topic 3</span></div>
+                    <div class="topic-name">Land Use for Tourism</div>
+                    <div class="acts"><a class="act quiz" href="quizzes/G6-1_3_topic_3_land_use_for_tourism.html">📝 Quiz</a></div>
+                </div>
+                <div class="topic-card geo">
+                    <div class="topic-top"><span class="topic-icon">♻️</span><span class="topic-no">Unit 1 · Topic 4</span></div>
+                    <div class="topic-name">Land Use and Environmental Concerns</div>
+                    <div class="acts"><a class="act quiz" href="quizzes/G6-1_4_topic_4_land_use_and_environmental_con.html">📝 Quiz</a></div>
+                </div>
+                </div>
+            </section>
+            <section class="unit">
+                <h2><span class="unit-icon">👥</span> Unit 2: People on the Island in the Past <span class="subj his">History</span></h2>
+                <div class="topics">
+                <div class="topic-card his">
+                    <div class="topic-top"><span class="topic-icon">⛵</span><span class="topic-no">Unit 2 · Topic 1</span></div>
+                    <div class="topic-name">Settlers, Free Workers &amp; Slaves</div>
+                    <div class="acts"><a class="act quiz" href="quizzes/G6-2_1_settlers_free_workers_slaves.html">📝 Quiz</a></div>
+                </div>
+                <div class="topic-card his">
+                    <div class="topic-top"><span class="topic-icon">⛓️</span><span class="topic-no">Unit 2 · Topic 2</span></div>
+                    <div class="topic-name">The Quartiers &amp; the Abolition of Slavery</div>
+                    <div class="acts"><a class="act quiz" href="quizzes/G6-2_2_the_quartiers_the_abolition_of_slavery.html">📝 Quiz</a></div>
+                </div>
+                <div class="topic-card his">
+                    <div class="topic-top"><span class="topic-icon">🚢</span><span class="topic-no">Unit 2 · Topic 3</span></div>
+                    <div class="topic-name">The Arrival of the Indians &amp; Chinese</div>
+                    <div class="acts"><a class="act quiz" href="quizzes/G6-2_3_the_arrival_of_the_indians_chinese.html">📝 Quiz</a></div>
+                </div>
+                <div class="topic-card his">
+                    <div class="topic-top"><span class="topic-icon">🏛️</span><span class="topic-no">Unit 2 · Topic 4</span></div>
+                    <div class="topic-name">Life of the People on the Island</div>
+                    <div class="acts"><a class="act quiz" href="quizzes/G6-2_4_life_of_the_people_on_the_island.html">📝 Quiz</a></div>
+                </div>
+                </div>
+            </section>
+            <section class="unit">
+                <h2><span class="unit-icon">🌀</span> Unit 3: Natural Hazards <span class="subj geo">Geography</span></h2>
+                <div class="topics">
+                <div class="topic-card geo">
+                    <div class="topic-top"><span class="topic-icon">🌀</span><span class="topic-no">Unit 3 · Topic 1</span></div>
+                    <div class="topic-name">Natural Hazards &amp; Tropical Cyclones</div>
+                    <div class="acts"><a class="act quiz" href="quizzes/G6-3_1_natural_hazards_tropical_cyclones.html">📝 Quiz</a></div>
+                </div>
+                <div class="topic-card geo">
+                    <div class="topic-top"><span class="topic-icon">🌋</span><span class="topic-no">Unit 3 · Topic 2</span></div>
+                    <div class="topic-name">Torrential Rain, Flash Floods, Volcanoes, Earthquakes &amp; Tsunamis</div>
+                    <div class="acts"><a class="act quiz" href="quizzes/G6-3_2_torrential_rain_flash_floods_volcanoes.html">📝 Quiz</a></div>
+                </div>
+                </div>
+            </section>
+            <section class="unit">
+                <h2><span class="unit-icon">🇲🇺</span> Unit 4: Celebrating Independence <span class="subj his">History</span></h2>
+                <div class="topics">
+                <div class="topic-card his">
+                    <div class="topic-top"><span class="topic-icon">⭐</span><span class="topic-no">Unit 4 · Topic 1</span></div>
+                    <div class="topic-name">Star &amp; Key of the Indian Ocean &amp; Independence</div>
+                    <div class="acts"><a class="act quiz" href="quizzes/G6-4_1_star_key_of_the_indian_ocean_independe.html">📝 Quiz</a></div>
+                </div>
+                <div class="topic-card his">
+                    <div class="topic-top"><span class="topic-icon">🇲🇺</span><span class="topic-no">Unit 4 · Topic 2</span></div>
+                    <div class="topic-name">National Symbols &amp; Rodrigues Island</div>
+                    <div class="acts"><a class="act quiz" href="quizzes/G6-4_2_national_symbols_rodrigues_island.html">📝 Quiz</a></div>
+                </div>
+                </div>
+            </section>
+            <section class="unit">
+                <h2><span class="unit-icon">🏛️</span> Unit 5: Our Heritage <span class="subj his">History</span></h2>
+                <div class="topics">
+                <div class="topic-card his">
+                    <div class="topic-top"><span class="topic-icon">🗿</span><span class="topic-no">Unit 5 · Topic 1</span></div>
+                    <div class="topic-name">Places of Historical Interest</div>
+                    <div class="acts"><a class="act quiz" href="quizzes/G6-5_1_places_of_historical_interest.html">📝 Quiz</a></div>
+                </div>
+                <div class="topic-card his">
+                    <div class="topic-top"><span class="topic-icon">🎭</span><span class="topic-no">Unit 5 · Topic 2</span></div>
+                    <div class="topic-name">Our Cultural Heritage &amp; Preserving It</div>
+                    <div class="acts"><a class="act quiz" href="quizzes/G6-5_2_our_cultural_heritage_preserving_it.html">📝 Quiz</a></div>
+                </div>
+                </div>
+            </section>
+
+        <div class="teacher">
+            <span style="font-size:2.2em">👩‍🏫</span>
+            <div class="t"><b>Teacher's Corner</b><div>Unit 1 Land Use: teaching activities, ELC/DLC evaluation and worksheets</div></div>
+            <a href="teacher/Grade6_Unit1_LandUse_Teaching_Proposal.html">📘 Open guide</a>
+        </div>
+    </div>
+</body>
+</html>
