@@ -51,62 +51,128 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1000px;
+            width: 100%;
             text-align: center;
             background: white;
             border-radius: 30px;
-            padding: 60px 40px;
+            padding: 50px 40px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin-top: 60px;
         }
 
         .icon {
-            font-size: 6em;
-            margin-bottom: 20px;
+            font-size: 5em;
+            margin-bottom: 10px;
         }
 
         h1 {
             font-size: 3em;
             color: #667eea;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .subtitle {
             font-size: 1.3em;
             color: #636e72;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
-        .message {
-            font-size: 1.2em;
-            color: #2d3436;
-            line-height: 1.8;
-            margin-bottom: 30px;
+        .subjects {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
         }
 
-        .coming-soon-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+        .subject-card {
+            position: relative;
+            display: block;
+            border-radius: 22px;
+            padding: 35px 20px;
             color: white;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-size: 1.3em;
+            text-decoration: none;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        a.subject-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .subject-icon {
+            font-size: 3.5em;
+            margin-bottom: 12px;
+        }
+
+        .subject-name {
+            font-size: 1.5em;
             font-weight: bold;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 6px;
+        }
+
+        .subject-info {
+            font-size: 1em;
+            opacity: 0.95;
+        }
+
+        .math    { background: linear-gradient(135deg, #4facfe 0%, #0984e3 100%); }
+        .english { background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%); }
+        .french  { background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%); }
+        .science { background: linear-gradient(135deg, #55efc4 0%, #00b894 100%); }
+        .hg      { background: linear-gradient(135deg, #2f9e44 0%, #1f6f78 100%); }
+
+        .subject-card.coming-soon {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .soon-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.35);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .new-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #ffd43b;
+            color: #2d3436;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.08); }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
+            .subjects {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
             h1 {
                 font-size: 2em;
             }
 
             .container {
-                padding: 40px 30px;
+                padding: 35px 20px;
+            }
+
+            .subjects {
+                grid-template-columns: 1fr;
             }
 
             .back-button {
@@ -125,14 +191,46 @@
     </a>
 
     <div class="container">
-        <div class="icon">🚧</div>
+        <div class="icon">🎓</div>
         <h1>Grade 6</h1>
-        <p class="subtitle">Preparing for Success • Ages 10-11</p>
-        <p class="message">
-            Exciting interactive activities for Grade 6 are currently being developed! 
-            Our team is working hard to create engaging learning experiences in Mathematics, English, French, History & Geography, and Science.
-        </p>
-        <div class="coming-soon-badge">Coming Soon!</div>
+        <p class="subtitle">Preparing for Success • Ages 10-11 • Choose your subject</p>
+
+        <div class="subjects">
+            <div class="subject-card math coming-soon">
+                <span class="soon-badge">Coming Soon</span>
+                <div class="subject-icon">🔢</div>
+                <div class="subject-name">Mathematics</div>
+                <div class="subject-info">Activities on the way</div>
+            </div>
+
+            <div class="subject-card english coming-soon">
+                <span class="soon-badge">Coming Soon</span>
+                <div class="subject-icon">📖</div>
+                <div class="subject-name">English</div>
+                <div class="subject-info">Activities on the way</div>
+            </div>
+
+            <div class="subject-card french coming-soon">
+                <span class="soon-badge">Coming Soon</span>
+                <div class="subject-icon">🇫🇷</div>
+                <div class="subject-name">French</div>
+                <div class="subject-info">Activities on the way</div>
+            </div>
+
+            <div class="subject-card science coming-soon">
+                <span class="soon-badge">Coming Soon</span>
+                <div class="subject-icon">🔬</div>
+                <div class="subject-name">Science</div>
+                <div class="subject-info">Activities on the way</div>
+            </div>
+
+            <a href="History-Geography/hg-grade6-index.html" class="subject-card hg">
+                <span class="new-badge">NEW</span>
+                <div class="subject-icon">🌍</div>
+                <div class="subject-name">History &amp; Geography</div>
+                <div class="subject-info">Quizzes &amp; learning games</div>
+            </a>
+        </div>
     </div>
 </body>
 </html>
