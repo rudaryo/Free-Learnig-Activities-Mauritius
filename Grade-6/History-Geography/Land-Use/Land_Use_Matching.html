@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Land Use Matching</title>
+<style>
+:root{--acc:#1f6f78;--ink:#1d2330;--line:#d8dde6;--ok:#2b8a3e;--bad:#c92a2a;--fs:1}
+*{box-sizing:border-box}
+body{margin:0;background:#f5f3ee;color:var(--ink);font-family:"Segoe UI",Verdana,Arial,sans-serif;font-size:calc(16px*var(--fs));-webkit-user-select:none;user-select:none;padding-top:80px}
+@media(min-width:1300px){body{padding-top:0}}
+.wrap{max-width:1000px;margin:0 auto;padding:14px}
+header{background:var(--acc);color:#fff;border-radius:12px;padding:10px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+header .t{flex:1}header small{opacity:.85;font-size:.8rem}header h1{margin:0;font-size:1.45rem}
+.hb{font:inherit;font-weight:bold;background:#fff;color:var(--acc);border:none;border-radius:8px;padding:7px 11px;cursor:pointer}
+.name{display:flex;gap:8px;align-items:center;justify-content:center;margin:8px 0}
+.name input{font:inherit;padding:6px 10px;border:2px solid var(--line);border-radius:8px;-webkit-user-select:text;user-select:text}
+.task{background:#fffbe6;border:1px solid #ecd97a;border-radius:9px;padding:8px 12px;margin:8px 0;display:flex;align-items:center;gap:8px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+.board{position:relative;display:grid;grid-template-columns:minmax(0,.8fr) minmax(50px,.45fr) minmax(0,1.4fr);row-gap:12px}
+.colh{font-weight:bold;color:var(--acc);text-align:center;padding-bottom:4px;border-bottom:3px solid #e6f2f3}
+.item{position:relative;border:3px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;cursor:pointer;display:flex;align-items:center;min-height:58px;line-height:1.3;touch-action:none}
+.a{grid-column:1;font-weight:bold;padding-right:26px}
+.b{grid-column:3;padding-left:26px;gap:6px}
+.item .dotp{position:absolute;top:50%;width:18px;height:18px;margin-top:-9px;border-radius:50%;background:#fff;border:3px solid var(--acc)}
+.a .dotp{right:-11px}.b .dotp{left:-11px}
+.item.sel{border-color:var(--acc);background:#e6f2f3;box-shadow:0 0 0 3px #b2e0e4}
+.item.linked .dotp{background:var(--lc,var(--acc));border-color:var(--lc,var(--acc))}
+.item.linked:not(.ok):not(.bad){border-color:var(--lc,var(--line))}
+.a .sw{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--sw);margin-right:7px;flex:none}
+.item.ok{border-color:var(--ok);background:#ebfbee}.item.bad{border-color:var(--bad);background:#fff5f5}
+.say{font:inherit;font-size:.85rem;border:1px solid #ecd97a;background:#fffbe6;border-radius:7px;padding:2px 6px;cursor:pointer;margin-left:auto;flex:none}
+svg#lines{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.bar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0 4px}
+.act{font:inherit;padding:9px 15px;border-radius:9px;border:2px solid var(--line);background:#fff;cursor:pointer}
+.act.primary{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:bold}
+.res{text-align:center;font-weight:bold;min-height:1.5em;margin-top:8px}
+.big{font-size:1.8rem;color:var(--acc)}
+.hg-back{position:fixed;top:14px;left:14px;z-index:99999;display:flex;align-items:center;gap:8px;background:#fff;color:#FF6B9D;padding:12px 26px;border-radius:40px;font:800 20px "Arial Rounded MT Bold","Helvetica Rounded",Arial,sans-serif;text-decoration:none;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.hg-back:hover{background:linear-gradient(135deg,#FF6B9D,#C06C84);color:#fff}
+@media(max-width:600px){.hg-back{top:8px;left:8px;padding:8px 16px;font-size:15px}body{padding-top:60px}header small{display:none}header h1{font-size:1.15rem}header .hb{padding:5px 8px;font-size:.85rem}
+ .card{padding:8px}.item{padding:7px 8px;font-size:.85rem;min-height:50px}.a{padding-right:16px}.b{padding-left:16px}.board{grid-template-columns:minmax(0,.95fr) 44px minmax(0,1.15fr)}.a{font-size:.8rem;padding-right:12px;overflow-wrap:break-word}.a .sw{display:none}.b{font-size:.8rem;padding-left:12px}.item .dotp{width:14px;height:14px;margin-top:-7px}.a .dotp{right:-9px}.b .dotp{left:-9px}.say{display:none}}
+@media(max-height:520px){body{padding-top:8px}.hg-back{top:6px;left:6px;padding:6px 14px;font-size:14px}header{padding:6px 12px 6px 120px}header small{display:none}header h1{font-size:1.1rem}.name{margin:4px 0}.task{padding:5px 10px;margin:5px 0;font-size:.9rem}.item{min-height:44px;padding:5px 10px}.board{row-gap:7px}}
+@media print{.hg-back,.bar,header .hb,.task,.say{display:none!important}body{padding:0;background:#fff}}
+</style>
+</head>
+<body>
+<a class="hg-back" href="../hg-grade6-index.html"><span>🏠</span><span>back</span></a>
+<div class="wrap">
+<header><div class="t"><small>Grade 6 · History &amp; Geography · Unit 1 Land Use</small><h1>Match the Land Use</h1></div>
+<button class="hb" onclick="fs(-1)">A−</button><button class="hb" onclick="fs(1)">A+</button><button class="hb" onclick="speak(HELP)">🔊 Help</button></header>
+<div class="name"><b>Name:</b> <input id="pname" placeholder="Write your name"></div>
+<div class="task">👉 <span>Match each land use in <b>column A</b> with its meaning in <b>column B</b>. <b>Tap</b> a land use, then <b>tap</b> its meaning (or drag from the dot). Tap a land use again to remove its line.</span></div>
+<div class="card">
+ <div class="board" id="board"></div>
+ <div class="res" id="res"></div>
+ <div class="bar">
+  <button class="act primary" onclick="check()">✔ Check</button>
+  <button class="act" onclick="tryAgain()">↻ Try again</button>
+  <button class="act" onclick="showAns()">👁 Show answers</button>
+  <button class="act" onclick="restart()">🔀 Restart</button>
+  <button class="act" onclick="window.print()">🖨 Print</button>
+ </div>
+</div>
+</div>
+<script>
+const PAIRS=[
+ ["Residential land use","Land use for building houses and flats."],
+ ["Agricultural land use","Land use for planting crops and rearing animals."],
+ ["Commercial land use","Land use for setting up shops, markets and shopping malls."],
+ ["Industrial land use","Land use for setting up industries and factories."],
+ ["Recreational land use","Land use for leisure, such as tourist hotels near the seaside, parks and sports grounds."],
+ ["Infrastructural land use","Land use for building roads, motorways, bridges, ports and airports."]
+];
+const COLS=["#e03131","#1971c2","#2f9e44","#f08c00","#9c36b5","#0c8599"];
+const HELP="Match each land use in column A with its meaning in column B. Tap a land use, then tap its meaning. A dotted line with an arrow joins them. Then tap Check.";
+let A,B,links={},sel=null,checked=false,shown=false;
+function speak(s){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(s);u.lang="en-GB";u.rate=.85;speechSynthesis.speak(u);}catch(e){}}
+let F=1;try{F=+localStorage.getItem("hg_fs")||1}catch(e){}
+function fs(d){F=Math.min(1.4,Math.max(.85,F+d*.1));document.documentElement.style.setProperty("--fs",F);try{localStorage.setItem("hg_fs",F)}catch(e){}setTimeout(drawLines,50)}
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function restart(){A=shuffle(PAIRS.map((p,i)=>i));B=shuffle(PAIRS.map((p,i)=>i));links={};sel=null;checked=false;shown=false;build();}
+function build(){
+ const bd=document.getElementById("board");
+ let h=`<div class="colh" style="grid-column:1;grid-row:1">Column A</div><div class="colh" style="grid-column:3;grid-row:1">Column B</div>`;
+ A.forEach((p,r)=>h+=`<div class="item a" id="a${p}" data-a="${p}" style="grid-row:${r+2};--sw:${COLS[r]}"><span class="sw"></span>${r+1}. ${PAIRS[p][0]}<span class="dotp"></span></div>`);
+ B.forEach((p,r)=>h+=`<div class="item b" id="b${p}" data-b="${p}" style="grid-row:${r+2}"><span class="dotp"></span><span>${"abcdef"[r]}) ${PAIRS[p][1]}</span><button class="say" data-say="${p}">🔊</button></div>`);
+ h+=`<svg id="lines"><defs>${[...COLS,"#1f6f78"].map((c,k)=>`<marker id="ar-${k}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="${c}"/></marker>`).join("")}</defs><g id="lg"></g><path id="drag" fill="none" stroke="#1f6f78" stroke-width="3" stroke-dasharray="7 6" marker-end="url(#ar-6)" d=""/></svg>`;
+ bd.innerHTML=h;document.getElementById("res").innerHTML="";refresh();
+}
+function pt(el,side){const bd=document.getElementById("board").getBoundingClientRect(),r=el.querySelector(".dotp").getBoundingClientRect();return [r.left+r.width/2-bd.left,r.top+r.height/2-bd.top];}
+function curve(p,q){const mx=(p[0]+q[0])/2;return `M${p[0]},${p[1]} C${mx},${p[1]} ${mx},${q[1]} ${q[0]},${q[1]}`;}
+function drawLines(){const g=document.getElementById("lg");if(!g)return;let s="";
+ const all=shown?PAIRS.map((x,i)=>[i,i]):Object.entries(links).map(([a,b])=>[+a,+b]);
+ all.forEach(([a,b])=>{const p=pt(document.getElementById("a"+a)),q=pt(document.getElementById("b"+b));const ci=A.indexOf(a),c=COLS[ci],k=ci;
+  if(checked&&!shown){const mx=(p[0]+q[0])/2,my=(p[1]+q[1])/2;s+=`<g><circle cx="${mx}" cy="${my}" r="11" fill="${a===b?"#2b8a3e":"#c92a2a"}" stroke="#fff" stroke-width="2"/><text x="${mx}" y="${my+5}" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">${a===b?"✓":"✗"}</text></g>`;}
+  s+=`<path d="${curve([p[0]+6,p[1]],[q[0]-9,q[1]])}" fill="none" stroke="${c}" stroke-width="3.5" stroke-dasharray="7 6" stroke-linecap="round" marker-end="url(#ar-${k})"/>`;});
+ g.innerHTML=s.replace(/(<g>.*?<\/g>)/g,"")+(s.match(/<g>.*?<\/g>/g)||[]).join("");}
+function refresh(){
+ document.querySelectorAll(".item").forEach(e=>e.classList.remove("sel","linked","ok","bad"));
+ if(sel!==null)document.getElementById("a"+sel).classList.add("sel");
+ document.querySelectorAll(".item").forEach(e=>{e.style.removeProperty("--lc");});
+ Object.entries(links).forEach(([a,b])=>{const ea=document.getElementById("a"+a),eb=document.getElementById("b"+b);ea.classList.add("linked");eb.classList.add("linked");const c=COLS[A.indexOf(+a)];ea.style.setProperty("--lc",c);eb.style.setProperty("--lc",c);
+  if(checked){ea.classList.add(+a===+b?"ok":"bad");eb.classList.add(+a===+b?"ok":"bad");}});
+ drawLines();}
+function link(a,b){if(shown)return;for(const k in links)if(links[k]===b)delete links[k];links[a]=b;sel=null;checked=false;refresh();
+ if(Object.keys(links).length===PAIRS.length)document.getElementById("res").innerHTML="All joined! Tap <b>Check</b>.";}
+// pointer handling: tap-tap and drag
+let drag=null;
+document.addEventListener("pointerdown",e=>{const say=e.target.closest(".say");if(say){speak(PAIRS[+say.dataset.say][1]);return;}
+ const a=e.target.closest(".item.a");if(!a||shown)return;drag={a:+a.dataset.a,x:e.clientX,y:e.clientY,moved:false};});
+document.addEventListener("pointermove",e=>{if(!drag)return;if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>8)drag.moved=true;if(!drag.moved)return;
+ const bd=document.getElementById("board").getBoundingClientRect();const dg=document.getElementById("drag"),ci=A.indexOf(drag.a);dg.setAttribute("stroke",COLS[ci]);dg.setAttribute("marker-end",`url(#ar-${ci})`);dg.setAttribute("d",curve(pt(document.getElementById("a"+drag.a)),[e.clientX-bd.left,e.clientY-bd.top]));});
+document.addEventListener("pointerup",e=>{
+ if(drag&&drag.moved){document.getElementById("drag").setAttribute("d","");const el=document.elementFromPoint(e.clientX,e.clientY);const b=el&&el.closest(".item.b");if(b)link(drag.a,+b.dataset.b);drag=null;return;}
+ if(drag){const a=drag.a;drag=null;if(links[a]!==undefined&&sel===null){delete links[a];checked=false;refresh();return;}sel=sel===a?null:a;refresh();speak(PAIRS[a][0]);return;}
+ const b=e.target.closest(".item.b");if(b&&!e.target.closest(".say")&&sel!==null)link(sel,+b.dataset.b);});
+function check(){if(shown)return;const n=Object.keys(links).length;if(!n){document.getElementById("res").textContent="Join the boxes first.";return;}
+ checked=true;refresh();const sc=Object.entries(links).filter(([a,b])=>+a===+b).length;
+ const nm=document.getElementById("pname").value.trim().replace(/[<>&]/g,"");
+ document.getElementById("res").innerHTML=`${nm?nm+": ":""}Marks: <span class="big">${sc} / ${PAIRS.length}</span> &nbsp; ${sc===PAIRS.length?"Excellent! 🌟":sc>=3?"Good work! Tap Try again to fix the red lines.":"Keep trying! Tap Try again."}`;
+ speak(`You scored ${sc} out of ${PAIRS.length}.`);}
+function tryAgain(){shown=false;for(const k in links)if(+k!==links[k])delete links[k];checked=false;sel=null;document.getElementById("res").innerHTML="";refresh();}
+function showAns(){shown=true;checked=false;sel=null;refresh();document.querySelectorAll(".item").forEach(e=>e.classList.add("linked"));Object.keys(links).forEach(k=>delete links[k]);PAIRS.forEach((x,i)=>links[i]=i);refresh();shown=true;document.getElementById("res").innerHTML="👁 These are the correct answers. Tap <b>Restart</b> to play again.";}
+window.addEventListener("resize",drawLines);
+restart();
+</script>
+</body>
+</html>
