@@ -1,573 +1,613 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TCBV2GCV');</script>
+    <!-- End Google Tag Manager -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grade 5 - History & Geography Learning Center</title>
+    <title>Grade 5 - History &amp; Geography Learning Center</title>
+    <meta name="description" content="Grade 5 History and Geography games for primary pupils in Mauritius: Planet Earth, volcanoes, relief, the Mascarene Islands, Mauritian history and more.">
+    <meta name="theme-color" content="#0E7C86">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --ink: #1E2A4A;
+            --ink-soft: #4A5675;
+            --fre: #0E7C86;
+            --fre-dark: #09575E;
+            --fre-light: #D9F2F4;
+            --font: 'Fredoka', 'Baloo 2', 'Arial Rounded MT Bold', 'Trebuchet MS', Arial, sans-serif;
         }
 
         body {
-            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: var(--font);
+            color: var(--ink);
+            background: linear-gradient(to bottom, #7FD3F7 0%, #B8E9FB 55%, #E8F9FF 100%);
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 20px 16px 200px;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        .back-button {
-            position: fixed;
-            top: 25px;
-            left: 25px;
-            background: white;
-            color: #667eea;
-            padding: 20px 45px;
-            border-radius: 60px;
-            border: none;
-            font-weight: 800;
-            font-size: 26px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+        /* ---------- Background scene ---------- */
+        .scene { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+        .sun {
+            position: absolute; top: 36px; right: 6%;
+            width: 110px; height: 110px; border-radius: 50%;
+            background: radial-gradient(circle, #FFE45C 0%, #FFB627 100%);
+            box-shadow: 0 0 60px 20px rgba(255, 214, 70, .55);
+            animation: sunPulse 5s ease-in-out infinite;
+        }
+        @keyframes sunPulse { 50% { transform: scale(1.06); } }
+        .cloud {
+            position: absolute; left: -180px;
+            background: #fff; border-radius: 100px; opacity: .9;
+            animation: drift linear infinite;
+        }
+        .cloud::before, .cloud::after { content: ''; position: absolute; background: #fff; border-radius: 50%; }
+        .cloud-1 { width: 110px; height: 38px; top: 90px;  animation-duration: 60s; }
+        .cloud-2 { width: 140px; height: 46px; top: 170px; animation-duration: 80s; animation-delay: -30s; }
+        .cloud-3 { width: 90px;  height: 32px; top: 260px; animation-duration: 70s; animation-delay: -50s; }
+        .cloud::before { width: 50%; height: 140%; top: -60%; left: 15%; }
+        .cloud::after  { width: 40%; height: 110%; top: -40%; right: 15%; }
+        @keyframes drift { to { transform: translateX(calc(100vw + 360px)); } }
+        .bird { position: absolute; left: -40px; font-size: 22px; animation: drift linear infinite; }
+        .bird-1 { top: 13%; animation-duration: 40s; }
+        .bird-2 { top: 20%; animation-duration: 48s; animation-delay: -20s; }
+        .island { position: absolute; bottom: 0; left: 0; width: 100%; height: 220px; }
+        .island svg { width: 100%; height: 100%; display: block; }
+        .wave { animation: waveMove 6s ease-in-out infinite; }
+        @keyframes waveMove { 50% { transform: translateX(-30px); } }
+        .palm-sway { animation: sway 4s ease-in-out infinite; }
+        @keyframes sway { 50% { transform: rotate(2deg); } }
+
+        /* ---------- Layout ---------- */
+        .container { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+
+        .topbar { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+        .topbar .spacer { flex: 1; }
+        .nav-btn, .icon-btn {
+            font-family: var(--font); font-weight: 600; color: var(--ink);
+            background: #fff; border: none; border-radius: 999px; cursor: pointer;
+            text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+            box-shadow: 0 5px 0 rgba(30, 42, 74, .18); transition: transform .15s;
+        }
+        .nav-btn { font-size: 1.2rem; padding: 9px 20px 9px 16px; }
+        .nav-btn.g1 { background: #3D8BF2; color: #fff; box-shadow: 0 5px 0 #1F5FBF; }
+        .icon-btn { font-size: 1rem; padding: 8px 16px; }
+        .nav-btn:hover, .icon-btn:hover { transform: translateY(-2px); }
+        .nav-btn:active, .icon-btn:active { transform: translateY(3px); box-shadow: none; }
+
+        /* ---------- Hero ---------- */
+        .hero {
+            display: flex; align-items: center; gap: 24px;
+            background: #fff; border-radius: 32px; padding: 22px 32px;
+            border-bottom: 10px solid var(--fre);
+            box-shadow: 0 18px 40px rgba(30, 42, 74, .12);
+        }
+        .dodo { flex: 0 0 140px; }
+        .dodo svg { width: 140px; height: auto; display: block; }
+        .wing { transform-origin: 62px 98px; animation: wave 1.6s ease-in-out infinite; }
+        @keyframes wave { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(-28deg); } }
+        .dodo-body { animation: hop 3s ease-in-out infinite; }
+        @keyframes hop { 0%,70%,100% { transform: translateY(0); } 80% { transform: translateY(-8px); } 90% { transform: translateY(0); } }
+        .hero-text { flex: 1; }
+        .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+        .badge { display: inline-flex; align-items: center; gap: 6px; font-size: .95rem; font-weight: 600; padding: 4px 14px; border-radius: 999px; color: #fff; }
+        .badge.grade { background: #3D8BF2; }
+        .badge.subj { background: var(--fre); }
+        h1 { font-size: 2.8rem; line-height: 1.1; margin: 8px 0 12px; }
+        .bubble {
+            display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap;
+            background: #FFF6D6; border: 3px solid #FFD95A; border-radius: 20px;
+            padding: 10px 16px; font-size: 1.3rem; font-weight: 500;
+        }
+        .read-btn {
+            font-family: var(--font); font-size: 1rem; font-weight: 600;
+            background: #2FA3C2; color: #fff; border: none; border-radius: 999px;
+            padding: 8px 16px; cursor: pointer; box-shadow: 0 4px 0 #1F7A93;
+        }
+        .read-btn:active { transform: translateY(3px); box-shadow: none; }
+        .read-btn.speaking { background: #E2574C; box-shadow: 0 4px 0 #A83A31; }
+
+        .section-title { text-align: center; font-size: 1.6rem; margin: 34px 0 18px; }
+        .section-title span { background: #fff; padding: 6px 22px; border-radius: 999px; box-shadow: 0 4px 0 rgba(30, 42, 74, .1); }
+
+        /* ---------- Theme chips ---------- */
+        .themes { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+        .theme {
+            --tc: #999; --tc-dark: #666;
+            display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px;
+            background: var(--tc); color: #fff; border-radius: 22px; padding: 14px 8px 12px;
+            box-shadow: 0 7px 0 var(--tc-dark); text-decoration: none;
+            font-family: var(--font); transition: transform .2s, box-shadow .2s;
+        }
+        a.theme:hover { transform: translateY(-5px); box-shadow: 0 12px 0 var(--tc-dark); }
+        a.theme:active { transform: translateY(4px); box-shadow: 0 3px 0 var(--tc-dark); }
+        .theme .te {
+            width: 58px; height: 58px; border-radius: 50%; background: #fff;
+            display: grid; place-items: center; font-size: 2rem; box-shadow: 0 4px 0 rgba(0,0,0,.12);
+        }
+        .theme b { font-size: 1.1rem; font-weight: 600; line-height: 1.1; }
+        .theme small { font-size: .85rem; font-weight: 600; background: #fff; color: var(--tc-dark); padding: 2px 10px; border-radius: 999px; }
+        .theme.locked { filter: saturate(.5); opacity: .7; }
+        .theme.locked small { background: rgba(255,255,255,.3); color: #fff; }
+        .t1 { --tc: #7B3FC4; --tc-dark: #572A8F; }
+        .t2 { --tc: #E0731F; --tc-dark: #A84F0F; }
+        .t3 { --tc: #2F7BD6; --tc-dark: #1F5699; }
+        .t4 { --tc: #D63A3A; --tc-dark: #A12424; }
+        .t5 { --tc: #2E9E4F; --tc-dark: #1E6E36; }
+        .t6 { --tc: #0E7C86; --tc-dark: #09575E; }
+
+        /* ---------- Section panels ---------- */
+        .panel {
+            --sc: #7B3FC4; --sc-dark: #572A8F; --sl: #F0E6FF;
+            margin-top: 36px; background: #fff; border-radius: 30px; overflow: hidden;
+            box-shadow: 0 18px 40px rgba(30, 42, 74, .12); scroll-margin-top: 16px;
+        }
+        .panel.t1 { --sc: #7B3FC4; --sc-dark: #572A8F; --sl: #F0E6FF; }
+        .panel.t2 { --sc: #E0731F; --sc-dark: #A84F0F; --sl: #FFEBD9; }
+        .panel.t3 { --sc: #2F7BD6; --sc-dark: #1F5699; --sl: #E1EEFC; }
+        .panel.t4 { --sc: #D63A3A; --sc-dark: #A12424; --sl: #FFE3E3; }
+        .panel.t5 { --sc: #2E9E4F; --sc-dark: #1E6E36; --sl: #E3F6E8; }
+        .panel.t6 { --sc: #0E7C86; --sc-dark: #09575E; --sl: #D9F2F4; }
+        .theme b { min-height: 2.2em; display: flex; align-items: center; }
+        .panel-head { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; background: var(--sc); color: #fff; padding: 18px 26px; }
+        .panel-head .pe { width: 58px; height: 58px; border-radius: 50%; background: #fff; display: grid; place-items: center; font-size: 2rem; flex: none; }
+        .panel-head h2 { font-size: 1.8rem; line-height: 1.1; }
+        .panel-head h2 small { display: block; font-size: 1rem; font-weight: 500; opacity: .92; }
+        .panel-head .say-btn { margin-left: auto; }
+        .panel-body { padding: 22px; }
+
+        /* ---------- Game cards with live preview ---------- */
+        .games { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
+        .game {
+            position: relative; display: flex; flex-direction: column;
+            background: #fff; border: 4px solid var(--sc); border-radius: 26px; overflow: hidden;
+            box-shadow: 0 8px 0 var(--sc-dark); transition: transform .2s, box-shadow .2s;
+        }
+        .game:hover { transform: translateY(-6px) rotate(-.6deg); box-shadow: 0 14px 0 var(--sc-dark); }
+        .game:active { transform: translateY(5px); box-shadow: 0 3px 0 var(--sc-dark); }
+
+        /* The preview: the game's first page, shrunk to fit the card */
+        .preview {
+            position: relative; width: 100%; aspect-ratio: 16 / 10; overflow: hidden;
+            background: var(--sl); border-bottom: 4px solid var(--sc);
+        }
+        .preview .ph {
+            position: absolute; inset: 0; display: grid; place-items: center;
+            font-size: 4.5rem; animation: bob 2.4s ease-in-out infinite;
+        }
+        @keyframes bob { 50% { transform: translateY(-6px); } }
+        .preview iframe, .preview img.thumb {
+            position: absolute; top: 0; left: 0; border: 0; background: #fff;
+            opacity: 0; transition: opacity .5s;
+        }
+        .preview iframe { width: 1280px; height: 800px; transform-origin: 0 0; transform: scale(var(--s, .25)); pointer-events: none; }
+        .preview img.thumb { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+        .preview .ready { opacity: 1; }
+        .preview::after {          /* soft shine so it looks like a little screen */
+            content: ''; position: absolute; inset: 0; pointer-events: none;
+            background: linear-gradient(160deg, rgba(255,255,255,.25) 0%, rgba(255,255,255,0) 35%);
+        }
+        .play-dot {
+            position: absolute; z-index: 1; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(.8);
+            width: 74px; height: 74px; border-radius: 50%; background: rgba(255,255,255,.92);
+            display: grid; place-items: center; font-size: 2rem; color: var(--sc);
+            box-shadow: 0 6px 18px rgba(0,0,0,.25); opacity: 0; transition: opacity .2s, transform .2s;
+        }
+        .game:hover .play-dot, .game:focus-within .play-dot { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+        .tag-new, .tag-done {
+            position: absolute; z-index: 1; top: 10px; right: 10px; font-size: .85rem; font-weight: 700;
+            padding: 3px 11px; border-radius: 999px; color: #fff; box-shadow: 0 3px 0 rgba(0,0,0,.15);
+        }
+        .tag-new { background: #E2264D; animation: pulse 1.8s ease-in-out infinite; }
+        .tag-done { background: #2E9E4F; }
+        @keyframes pulse { 50% { transform: scale(1.1); } }
+
+        .g-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+        .g-title { display: flex; align-items: center; gap: 8px; font-size: 1.35rem; font-weight: 600; line-height: 1.15; }
+        .g-title .gi { font-size: 1.5rem; }
+        .g-level { font-size: .95rem; color: var(--ink-soft); line-height: 1.3; }
+        .g-foot { margin-top: auto; padding-top: 8px; display: flex; align-items: center; gap: 10px; }
+        .g-play {
+            background: var(--sc); color: #fff; font-weight: 600; font-size: 1.1rem;
+            padding: 7px 22px; border-radius: 999px; box-shadow: 0 4px 0 var(--sc-dark);
         }
 
-        .back-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-            background: #667eea;
-            color: white;
+        .card-link { position: absolute; inset: 0; z-index: 2; border-radius: 22px; }
+        .card-link:focus-visible { outline: 5px solid var(--ink); outline-offset: 4px; }
+        .say-btn {
+            position: relative; z-index: 3;
+            font-family: var(--font); font-size: 1.2rem; line-height: 1;
+            width: 46px; height: 46px; border-radius: 50%; border: 3px solid var(--sc);
+            background: #fff; cursor: pointer; box-shadow: 0 4px 0 var(--sc-dark);
+        }
+        .panel-head .say-btn { border-color: #fff; }
+        .say-btn:active { transform: translateY(3px); box-shadow: none; }
+        .say-btn.speaking { background: var(--sl); }
+
+        .nav-btn:focus-visible, .icon-btn:focus-visible, .read-btn:focus-visible, .say-btn:focus-visible, .theme:focus-visible {
+            outline: 5px solid var(--ink); outline-offset: 4px;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        footer {
+            margin-top: 44px; text-align: center;
+            background: rgba(255, 255, 255, .85); border-radius: 24px; padding: 18px;
+            color: var(--ink-soft); font-size: 1rem;
+        }
+        footer strong { color: var(--ink); }
+        .reset-btn { font-family: var(--font); background: none; border: none; color: #1F7A93; text-decoration: underline; cursor: pointer; font-size: .95rem; margin-top: 6px; }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 720px) {
+            body { padding: 12px 12px 160px; }
+            .nav-btn { font-size: 1rem; padding: 8px 14px 8px 12px; }
+            .hero { flex-direction: column; text-align: center; padding: 18px; }
+            .badges { justify-content: center; }
+            .dodo { flex-basis: auto; }
+            .dodo svg { width: 110px; }
+            h1 { font-size: 2rem; }
+            .bubble { font-size: 1.1rem; justify-content: center; }
+            .sun { width: 70px; height: 70px; top: 16px; right: 16px; }
+            .island { height: 150px; }
+            .themes { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .panel-head { padding: 14px 16px; }
+            .panel-head h2 { font-size: 1.4rem; }
+            .panel-body { padding: 14px; }
+            .games { grid-template-columns: 1fr; gap: 18px; }
         }
 
-        header {
-            text-align: center;
-            color: white;
-            margin-bottom: 50px;
-        }
-
-        h1 {
-            font-size: 3.5em;
-            margin-bottom: 10px;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .subtitle {
-            font-size: 1.5em;
-            opacity: 0.9;
-        }
-
-        .chapters-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .chapter-card {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .chapter-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .chapter-icon {
-            font-size: 4em;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .chapter-title {
-            font-size: 1.8em;
-            color: #667eea;
-            text-align: center;
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
-
-        .chapter-description {
-            color: #636e72;
-            text-align: center;
-            font-size: 1.1em;
-            margin-bottom: 20px;
-        }
-
-        .activities-section {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            margin-bottom: 40px;
-        }
-
-        .section-title {
-            font-size: 2.5em;
-            color: #667eea;
-            margin-bottom: 30px;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .activities-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .activity-card {
-            background: white;
-            border: 3px solid #2d3436;
-            border-radius: 15px;
-            padding: 25px;
-            text-align: center;
-            transition: all 0.3s;
-            cursor: pointer;
-            text-decoration: none;
-            color: #2d3436;
-            display: block;
-        }
-
-        .activity-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            border-color: #000;
-        }
-
-        .activity-icon {
-            font-size: 3em;
-            margin-bottom: 10px;
-        }
-
-        .activity-title {
-            font-size: 1.3em;
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: #2d3436;
-        }
-
-        .activity-level {
-            font-size: 0.9em;
-            color: #636e72;
-        }
-
-        .new-badge {
-            display: inline-block;
-            background: #2d3436;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.75em;
-            font-weight: bold;
-            margin-left: 8px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .coming-soon {
-            opacity: 0.6;
-            cursor: not-allowed;
-            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
-        }
-
-        .coming-soon:hover {
-            transform: none;
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5em;
-            }
-
-            .chapters-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .activities-grid {
-                grid-template-columns: 1fr;
-            }
-
-            body {
-                padding: 20px 10px;
-            }
-
-            .back-button {
-                top: 10px;
-                left: 10px;
-                padding: 10px 20px;
-                font-size: 14px;
-            }
-
-            .activities-section {
-                padding: 25px 20px;
-            }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+            .cloud, .bird { display: none; }
         }
     </style>
 </head>
 <body>
-    <button class="back-button" onclick="window.location.href='../grade-5-index.html'">
-        <span>🏠</span>
-        <span>Home</span>
-    </button>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TCBV2GCV"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Background: Mauritian sky, lagoon, Le Morne and palm trees -->
+    <div class="scene" aria-hidden="true">
+        <div class="sun"></div>
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+        <div class="bird bird-1">🕊️</div>
+        <div class="bird bird-2">🕊️</div>
+        <div class="island">
+            <svg viewBox="0 0 1440 220" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 120 Q120 80 240 110 T480 105 L480 160 L0 160 Z" fill="#6CBF84" opacity=".55"/>
+                <path d="M880 150 L930 140 L965 70 L985 52 L1050 48 L1080 58 L1120 95 L1170 125 L1240 140 L1300 150 Z" fill="#3E8E5A"/>
+                <path d="M965 70 L985 52 L1050 48 L1080 58 L1060 70 L1000 72 Z" fill="#57A872"/>
+                <rect x="0" y="140" width="1440" height="80" fill="#1FA9C9"/>
+                <rect x="0" y="150" width="1440" height="70" fill="#38C6D9"/>
+                <g class="wave">
+                    <path d="M-40 158 Q0 150 40 158 T120 158 T200 158 T280 158 T360 158 T440 158 T520 158 T600 158 T680 158 T760 158 T840 158 T920 158 T1000 158 T1080 158 T1160 158 T1240 158 T1320 158 T1400 158 T1480 158" fill="none" stroke="#fff" stroke-width="3" opacity=".7"/>
+                </g>
+                <path d="M0 190 Q360 170 720 185 T1440 180 L1440 220 L0 220 Z" fill="#F7DFA3"/>
+                <g class="palm-sway" style="transform-origin:150px 200px">
+                    <path d="M150 200 Q140 150 165 100" stroke="#8B5A2B" stroke-width="10" fill="none" stroke-linecap="round"/>
+                    <path d="M165 100 Q130 80 100 100 Q135 90 165 100 Q150 65 120 55 Q160 65 165 100 Q190 65 225 70 Q190 80 165 100 Q205 95 225 120 Q190 100 165 100 Z" fill="#2E9E4F"/>
+                </g>
+                <g class="palm-sway" style="transform-origin:1340px 200px; animation-delay:-2s">
+                    <path d="M1340 200 Q1350 150 1325 105" stroke="#8B5A2B" stroke-width="10" fill="none" stroke-linecap="round"/>
+                    <path d="M1325 105 Q1290 85 1260 105 Q1295 95 1325 105 Q1310 70 1280 60 Q1320 70 1325 105 Q1350 70 1385 75 Q1350 85 1325 105 Q1365 100 1385 125 Q1350 105 1325 105 Z" fill="#2E9E4F"/>
+                </g>
+                <g transform="translate(620 140)">
+                    <path d="M0 12 L50 12 L42 22 L8 22 Z" fill="#E2574C"/>
+                    <path d="M25 12 L25 -18 L45 8 Z" fill="#fff"/>
+                </g>
+            </svg>
+        </div>
+    </div>
 
     <div class="container">
-        <header>
-            <h1>🌍 History & Geography Learning Center</h1>
-            <p class="subtitle">Grade 5 - Interactive Learning Activities</p>
+        <div class="topbar">
+            <a href="../grade-5-index.html" class="nav-btn g1" aria-label="Back to Grade 5"><span>◀</span><span>Grade 5</span></a>
+            <a href="../../index.html" class="nav-btn" aria-label="Home page"><span>🏠</span><span>Home</span></a>
+            <span class="spacer"></span>
+            <button class="icon-btn" id="soundBtn" aria-pressed="true">🔔 Sound on</button>
+        </div>
+
+        <header class="hero">
+            <div class="dodo" aria-hidden="true">
+                <svg viewBox="0 0 160 170" xmlns="http://www.w3.org/2000/svg">
+                    <g class="dodo-body">
+                        <path d="M68 140 L64 160 M64 160 L54 164 M64 160 L72 165" stroke="#F2A93B" stroke-width="6" stroke-linecap="round"/>
+                        <path d="M96 140 L100 160 M100 160 L90 165 M100 160 L110 164" stroke="#F2A93B" stroke-width="6" stroke-linecap="round"/>
+                        <path d="M122 100 Q150 85 146 108 Q156 104 150 124 Q134 120 122 112 Z" fill="#fff" stroke="#D9DEE8" stroke-width="2"/>
+                        <ellipse cx="84" cy="108" rx="46" ry="40" fill="#8FA4C2"/>
+                        <ellipse cx="78" cy="118" rx="28" ry="24" fill="#B7C6DB"/>
+                        <path d="M60 86 Q52 60 62 40 Q74 26 92 32 Q102 40 96 58 Q90 72 96 86 Z" fill="#8FA4C2"/>
+                        <path d="M66 42 Q34 40 22 56 Q18 66 30 66 Q32 58 42 58 Q56 58 68 56 Z" fill="#F5C64A"/>
+                        <path d="M22 56 Q18 66 30 66 Q26 60 28 56 Z" fill="#E09A1E"/>
+                        <path d="M44 52 Q56 50 66 50" stroke="#C98A14" stroke-width="2" fill="none"/>
+                        <circle cx="78" cy="44" r="9" fill="#fff"/>
+                        <circle cx="80" cy="45" r="5" fill="#1E2A4A"/>
+                        <circle cx="82" cy="43" r="1.8" fill="#fff"/>
+                        <circle cx="86" cy="58" r="5" fill="#F7A1B0" opacity=".7"/>
+                        <path class="wing" d="M62 98 Q34 70 30 52 Q48 62 58 74 Q60 64 66 60 Q70 80 72 98 Z" fill="#6F86A8"/>
+                    </g>
+                </svg>
+            </div>
+            <div class="hero-text">
+                <div class="badges">
+                    <span class="badge grade">🚀 Grade 5</span>
+                    <span class="badge subj">🌍 HIST &amp; GEO</span>
+                </div>
+                <h1>History &amp; Geography</h1>
+                <div class="bubble">
+                    <span>Pick a topic, then choose a game!</span>
+                    <button class="read-btn" id="readBtn" aria-label="Read this page out loud">🔊 Listen</button>
+                </div>
+            </div>
         </header>
 
-        <div class="chapters-grid">
-            <div class="chapter-card" onclick="scrollToSection('planet-earth')">
-                <div class="chapter-icon">🌍</div>
-                <div class="chapter-title">Planet Earth</div>
-                <div class="chapter-description">Explore our amazing planet</div>
-            </div>
+        <h2 class="section-title"><span>📘 Topics from your book</span></h2>
+        <nav class="themes" id="themes" aria-label="Topics"></nav>
 
-            <div class="chapter-card" onclick="scrollToSection('volcanoes')">
-                <div class="chapter-icon">🌋</div>
-                <div class="chapter-title">Volcanoes</div>
-                <div class="chapter-description">Volcanoes in our region</div>
-            </div>
+        <div id="panels"></div>
 
-            <div class="chapter-card" onclick="scrollToSection('mauritius-relief')">
-                <div class="chapter-icon">⛰️</div>
-                <div class="chapter-title">Relief of Mauritius</div>
-                <div class="chapter-description">Main relief features of Mauritius</div>
-            </div>
-
-            <div class="chapter-card" onclick="scrollToSection('rodrigues-relief')">
-                <div class="chapter-icon">🏔️</div>
-                <div class="chapter-title">Relief of Rodrigues</div>
-                <div class="chapter-description">Main relief features of Rodrigues</div>
-            </div>
-
-            <div class="chapter-card" onclick="scrollToSection('environment')">
-                <div class="chapter-icon">♻️</div>
-                <div class="chapter-title">Environment</div>
-                <div class="chapter-description">Environmental problems</div>
-            </div>
-
-            <div class="chapter-card" onclick="scrollToSection('indian-ocean')">
-                <div class="chapter-icon">🌊</div>
-                <div class="chapter-title">Indian Ocean</div>
-                <div class="chapter-description">Indian Ocean in the past</div>
-            </div>
-
-            <div class="chapter-card" onclick="scrollToSection('centuries')">
-                <div class="chapter-icon">📅</div>
-                <div class="chapter-title">Understanding Centuries</div>
-                <div class="chapter-description">Learn about time periods</div>
-            </div>
-
-            <div class="chapter-card" onclick="scrollToSection('mascarene')">
-                <div class="chapter-icon">🏝️</div>
-                <div class="chapter-title">Mascarene Islands</div>
-                <div class="chapter-description">Discover the Mascarene Islands</div>
-            </div>
-
-            <div class="chapter-card" onclick="scrollToSection('rodrigues-island')">
-                <div class="chapter-icon">🏖️</div>
-                <div class="chapter-title">Rodrigues Island</div>
-                <div class="chapter-description">Learn about Rodrigues</div>
-            </div>
-
-            <div class="chapter-card" onclick="scrollToSection('dutch')">
-                <div class="chapter-icon">🇳🇱</div>
-                <div class="chapter-title">Dutch Settlement</div>
-                <div class="chapter-description">Dutch settlement in Mauritius</div>
-            </div>
-
-            <div class="chapter-card" onclick="scrollToSection('french')">
-                <div class="chapter-icon">🇫🇷</div>
-                <div class="chapter-title">French Period</div>
-                <div class="chapter-description">The French in Ile de France</div>
-            </div>
-
-            <div class="chapter-card" onclick="scrollToSection('conquest')">
-                <div class="chapter-icon">⚔️</div>
-                <div class="chapter-title">The Conquest</div>
-                <div class="chapter-description">Conquest of Ile de France</div>
-            </div>
-
-            <div class="chapter-card" onclick="scrollToSection('british')">
-                <div class="chapter-icon">🇬🇧</div>
-                <div class="chapter-title">British Colony</div>
-                <div class="chapter-description">Mauritius as a British Colony</div>
-            </div>
-
-            <div class="chapter-card" onclick="scrollToSection('temperature')">
-                <div class="chapter-icon">🌡️</div>
-                <div class="chapter-title">Temperature</div>
-                <div class="chapter-description">Understanding temperature</div>
-            </div>
-
-            <div class="chapter-card" onclick="scrollToSection('rainfall')">
-                <div class="chapter-icon">🌧️</div>
-                <div class="chapter-title">Rainfall</div>
-                <div class="chapter-description">Learn about rainfall patterns</div>
-            </div>
-
-            <div class="chapter-card" onclick="scrollToSection('port-louis')">
-                <div class="chapter-icon">🏙️</div>
-                <div class="chapter-title">Port Louis Today</div>
-                <div class="chapter-description">Explore our capital city</div>
-            </div>
-        </div>
-
-        <!-- PLANET EARTH SECTION -->
-        <div class="activities-section" id="planet-earth">
-            <h2 class="section-title">🌍 Planet Earth</h2>
-            <div class="activities-grid" id="planet-earth-grid"></div>
-            <script>
-                const planetEarthFiles = [];
-                const planetEarthGrid = document.getElementById("planet-earth-grid");
-                if (planetEarthFiles.length === 0) {
-                    planetEarthGrid.innerHTML = '<p style="text-align:center; color:#999; grid-column: 1/-1;">Activities coming soon!</p>';
-                } else {
-                    planetEarthFiles.forEach(item => {
-                        const card = document.createElement("a");
-                        card.href = `history and geography/${item.file}`;
-                        card.className = "activity-card";
-                        const title = item.title || item.file.replace(/[-_]/g, ' ').replace('.html','').replace(/\b\w/g, l => l.toUpperCase());
-                        card.innerHTML = `<div class="activity-icon">${item.icon}</div><div class="activity-title">${title}${item.badge ? `<span class="new-badge">${item.badge}</span>` : ''}</div><div class="activity-level">${item.level}</div>`;
-                        planetEarthGrid.appendChild(card);
-                    });
-                }
-            </script>
-        </div>
-
-        <!-- VOLCANOES SECTION -->
-        <div class="activities-section" id="volcanoes">
-            <h2 class="section-title">🌋 Volcanoes in our Region</h2>
-            <div class="activities-grid" id="volcanoes-grid"></div>
-            <script>
-                const volcanoesFiles = [
-                    {file:"volcano_parts_activity.html", icon:"🌋", level:"Drag & Drop Labeling | 7 Parts", title:"Label the volcano", badge:"NEW!"}
-                ];
-                const volcanoesGrid = document.getElementById("volcanoes-grid");
-                volcanoesFiles.forEach(item => {
-                    const card = document.createElement("a");
-                    card.href = `history and geography/${item.file}`;
-                    card.className = "activity-card";
-                    const title = item.title || item.file.replace(/[-_]/g, ' ').replace('.html','').replace(/\b\w/g, l => l.toUpperCase());
-                    card.innerHTML = `<div class="activity-icon">${item.icon}</div><div class="activity-title">${title}${item.badge ? `<span class="new-badge">${item.badge}</span>` : ''}</div><div class="activity-level">${item.level}</div>`;
-                    volcanoesGrid.appendChild(card);
-                });
-            </script>
-        </div>
-
-        <!-- MAURITIUS RELIEF SECTION -->
-        <div class="activities-section" id="mauritius-relief">
-            <h2 class="section-title">⛰️ Main Relief Features of Mauritius</h2>
-            <div class="activities-grid" id="mauritius-relief-grid"></div>
-            <script>
-                const mauritiusReliefFiles = [];
-                const mauritiusReliefGrid = document.getElementById("mauritius-relief-grid");
-                if (mauritiusReliefFiles.length === 0) {
-                    mauritiusReliefGrid.innerHTML = '<p style="text-align:center; color:#999; grid-column: 1/-1;">Activities coming soon!</p>';
-                }
-            </script>
-        </div>
-
-        <!-- RODRIGUES RELIEF SECTION -->
-        <div class="activities-section" id="rodrigues-relief">
-            <h2 class="section-title">🏔️ Main Relief Features of Rodrigues</h2>
-            <div class="activities-grid" id="rodrigues-relief-grid"></div>
-            <script>
-                const rodriguesReliefFiles = [];
-                const rodriguesReliefGrid = document.getElementById("rodrigues-relief-grid");
-                if (rodriguesReliefFiles.length === 0) {
-                    rodriguesReliefGrid.innerHTML = '<p style="text-align:center; color:#999; grid-column: 1/-1;">Activities coming soon!</p>';
-                }
-            </script>
-        </div>
-
-        <!-- ENVIRONMENT SECTION -->
-        <div class="activities-section" id="environment">
-            <h2 class="section-title">♻️ Environmental Problems</h2>
-            <div class="activities-grid" id="environment-grid"></div>
-            <script>
-                const environmentFiles = [];
-                const environmentGrid = document.getElementById("environment-grid");
-                if (environmentFiles.length === 0) {
-                    environmentGrid.innerHTML = '<p style="text-align:center; color:#999; grid-column: 1/-1;">Activities coming soon!</p>';
-                }
-            </script>
-        </div>
-
-        <!-- INDIAN OCEAN SECTION -->
-        <div class="activities-section" id="indian-ocean">
-            <h2 class="section-title">🌊 Indian Ocean in the Past</h2>
-            <div class="activities-grid" id="indian-ocean-grid"></div>
-            <script>
-                const indianOceanFiles = [];
-                const indianOceanGrid = document.getElementById("indian-ocean-grid");
-                if (indianOceanFiles.length === 0) {
-                    indianOceanGrid.innerHTML = '<p style="text-align:center; color:#999; grid-column: 1/-1;">Activities coming soon!</p>';
-                }
-            </script>
-        </div>
-
-        <!-- CENTURIES SECTION -->
-        <div class="activities-section" id="centuries">
-            <h2 class="section-title">📅 Understanding Centuries</h2>
-            <div class="activities-grid" id="centuries-grid"></div>
-            <script>
-                const centuriesFiles = [];
-                const centuriesGrid = document.getElementById("centuries-grid");
-                if (centuriesFiles.length === 0) {
-                    centuriesGrid.innerHTML = '<p style="text-align:center; color:#999; grid-column: 1/-1;">Activities coming soon!</p>';
-                }
-            </script>
-        </div>
-
-        <!-- MASCARENE ISLANDS SECTION -->
-        <div class="activities-section" id="mascarene">
-            <h2 class="section-title">🏝️ The Mascarene Islands</h2>
-            <div class="activities-grid" id="mascarene-grid"></div>
-            <script>
-                const mascareneFiles = [];
-                const mascareneGrid = document.getElementById("mascarene-grid");
-                if (mascareneFiles.length === 0) {
-                    mascareneGrid.innerHTML = '<p style="text-align:center; color:#999; grid-column: 1/-1;">Activities coming soon!</p>';
-                }
-            </script>
-        </div>
-
-        <!-- RODRIGUES ISLAND SECTION -->
-        <div class="activities-section" id="rodrigues-island">
-            <h2 class="section-title">🏖️ Rodrigues Island</h2>
-            <div class="activities-grid" id="rodrigues-island-grid"></div>
-            <script>
-                const rodriguesIslandFiles = [];
-                const rodriguesIslandGrid = document.getElementById("rodrigues-island-grid");
-                if (rodriguesIslandFiles.length === 0) {
-                    rodriguesIslandGrid.innerHTML = '<p style="text-align:center; color:#999; grid-column: 1/-1;">Activities coming soon!</p>';
-                }
-            </script>
-        </div>
-
-        <!-- DUTCH SETTLEMENT SECTION -->
-        <div class="activities-section" id="dutch">
-            <h2 class="section-title">🇳🇱 Dutch Settlement in Mauritius</h2>
-            <div class="activities-grid" id="dutch-grid"></div>
-            <script>
-                const dutchFiles = [];
-                const dutchGrid = document.getElementById("dutch-grid");
-                if (dutchFiles.length === 0) {
-                    dutchGrid.innerHTML = '<p style="text-align:center; color:#999; grid-column: 1/-1;">Activities coming soon!</p>';
-                }
-            </script>
-        </div>
-
-        <!-- FRENCH PERIOD SECTION -->
-        <div class="activities-section" id="french">
-            <h2 class="section-title">🇫🇷 The French in Ile de France</h2>
-            <div class="activities-grid" id="french-grid"></div>
-            <script>
-                const frenchFiles = [];
-                const frenchGrid = document.getElementById("french-grid");
-                if (frenchFiles.length === 0) {
-                    frenchGrid.innerHTML = '<p style="text-align:center; color:#999; grid-column: 1/-1;">Activities coming soon!</p>';
-                }
-            </script>
-        </div>
-
-        <!-- CONQUEST SECTION -->
-        <div class="activities-section" id="conquest">
-            <h2 class="section-title">⚔️ The Conquest of Ile de France</h2>
-            <div class="activities-grid" id="conquest-grid"></div>
-            <script>
-                const conquestFiles = [];
-                const conquestGrid = document.getElementById("conquest-grid");
-                if (conquestFiles.length === 0) {
-                    conquestGrid.innerHTML = '<p style="text-align:center; color:#999; grid-column: 1/-1;">Activities coming soon!</p>';
-                }
-            </script>
-        </div>
-
-        <!-- BRITISH COLONY SECTION -->
-        <div class="activities-section" id="british">
-            <h2 class="section-title">🇬🇧 Mauritius: A British Colony</h2>
-            <div class="activities-grid" id="british-grid"></div>
-            <script>
-                const britishFiles = [];
-                const britishGrid = document.getElementById("british-grid");
-                if (britishFiles.length === 0) {
-                    britishGrid.innerHTML = '<p style="text-align:center; color:#999; grid-column: 1/-1;">Activities coming soon!</p>';
-                }
-            </script>
-        </div>
-
-        <!-- TEMPERATURE SECTION -->
-        <div class="activities-section" id="temperature">
-            <h2 class="section-title">🌡️ Temperature</h2>
-            <div class="activities-grid" id="temperature-grid"></div>
-            <script>
-                const temperatureFiles = [];
-                const temperatureGrid = document.getElementById("temperature-grid");
-                if (temperatureFiles.length === 0) {
-                    temperatureGrid.innerHTML = '<p style="text-align:center; color:#999; grid-column: 1/-1;">Activities coming soon!</p>';
-                }
-            </script>
-        </div>
-
-        <!-- RAINFALL SECTION -->
-        <div class="activities-section" id="rainfall">
-            <h2 class="section-title">🌧️ Rainfall</h2>
-            <div class="activities-grid" id="rainfall-grid"></div>
-            <script>
-                const rainfallFiles = [];
-                const rainfallGrid = document.getElementById("rainfall-grid");
-                if (rainfallFiles.length === 0) {
-                    rainfallGrid.innerHTML = '<p style="text-align:center; color:#999; grid-column: 1/-1;">Activities coming soon!</p>';
-                }
-            </script>
-        </div>
-
-        <!-- PORT LOUIS TODAY SECTION -->
-        <div class="activities-section" id="port-louis">
-            <h2 class="section-title">🏙️ Port Louis Today</h2>
-            <div class="activities-grid" id="port-louis-grid"></div>
-            <script>
-                const portLouisFiles = [];
-                const portLouisGrid = document.getElementById("port-louis-grid");
-                if (portLouisFiles.length === 0) {
-                    portLouisGrid.innerHTML = '<p style="text-align:center; color:#999; grid-column: 1/-1;">Activities coming soon!</p>';
-                }
-            </script>
-        </div>
-
+        <footer>
+            <p><strong>© <span id="year">2026</span> Ramsamy Pierre Rudaryo</strong></p>
+            <p>Interactive Learning Platform - Making Learning Fun for Every Child</p>
+            <button class="reset-btn" id="resetBtn">↺ Start again (clear my ✓ ticks)</button>
+        </footer>
     </div>
 
     <script>
-        function scrollToSection(sectionId) {
-            const element = document.getElementById(sectionId);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+    // ================================================================
+    //  THE TOPICS AND GAMES ON THIS PAGE
+    //  To add a game, put a line in the "games" list of its topic:
+    //    { file, icon, title, level, badge, say }
+    //  A topic with games gets its own section with picture cards.
+    //  A topic with no games shows "Coming soon".
+    //  Optional: add  thumb:"picture.png"  to show a picture instead of the live preview.
+    // ================================================================
+    const FOLDER = "history and geography/";
+    const TOPICS = [
+        { id: "planet-earth",     icon: "🌍", title: "Planet Earth",             sub: "Explore our amazing planet",          games: [] },
+        { id: "volcanoes",        icon: "🌋", title: "Volcanoes",                sub: "Volcanoes in our region",             games: [
+            { file: "volcano_parts_activity.html", icon: "🌋", title: "Label the Volcano",
+              level: "Drag & Drop Labeling · 7 Parts", badge: "NEW!",
+              say: "Label the volcano. Drag each name to the right part of the volcano." }
+        ] },
+        { id: "mauritius-relief", icon: "⛰️", title: "Relief of Mauritius",      sub: "Main relief features of Mauritius",   games: [] },
+        { id: "rodrigues-relief", icon: "🏔️", title: "Relief of Rodrigues",      sub: "Main relief features of Rodrigues",   games: [] },
+        { id: "environment",      icon: "♻️", title: "Environment",              sub: "Environmental problems",              games: [] },
+        { id: "indian-ocean",     icon: "🌊", title: "Indian Ocean",             sub: "The Indian Ocean in the past",        games: [] },
+        { id: "centuries",        icon: "📅", title: "Understanding Centuries",  sub: "Learn about time periods",            games: [] },
+        { id: "mascarene",        icon: "🏝️", title: "Mascarene Islands",        sub: "Discover the Mascarene Islands",      games: [] },
+        { id: "rodrigues-island", icon: "🏖️", title: "Rodrigues Island",         sub: "Learn about Rodrigues",               games: [] },
+        { id: "dutch",            icon: "⛵", title: "Dutch Settlement",         sub: "The Dutch in Mauritius",              games: [] },
+        { id: "french",           icon: "🏰", title: "French Period",            sub: "The French in Ile de France",         games: [] },
+        { id: "conquest",         icon: "⚔️", title: "The Conquest",             sub: "The conquest of Ile de France",       games: [] },
+        { id: "british",          icon: "👑", title: "British Colony",           sub: "Mauritius as a British colony",       games: [] },
+        { id: "temperature",      icon: "🌡️", title: "Temperature",              sub: "Understanding temperature",           games: [] },
+        { id: "rainfall",         icon: "🌧️", title: "Rainfall",                 sub: "Learn about rainfall patterns",       games: [] },
+        { id: "port-louis",       icon: "🏙️", title: "Port Louis Today",         sub: "Explore our capital city",            games: [] }
+    ];
+
+    (function () {
+        function store(key, val) {
+            try { if (val === undefined) return localStorage.getItem(key); localStorage.setItem(key, val); }
+            catch (e) { return null; }
         }
+        function esc(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+        document.getElementById('year').textContent = new Date().getFullYear();
+        store('ilp-last-grade', '5');
+
+        // ---------- Played games (✓ ticks on this device) ----------
+        var PLAYED_KEY = 'ilp-g5-hg-played';
+        var played = {};
+        try { played = JSON.parse(store(PLAYED_KEY) || '{}') || {}; } catch (e) { played = {}; }
+
+        // ---------- Build the topic cards and the game sections ----------
+        var themes = document.getElementById('themes'), panels = document.getElementById('panels');
+        TOPICS.forEach(function (t, i) {
+            var colour = 't' + ((i % 6) + 1), has = t.games.length > 0;
+            var chip = document.createElement(has ? 'a' : 'div');
+            chip.className = 'theme ' + colour + (has ? ' jump' : ' locked');
+            if (has) chip.href = '#' + t.id;
+            chip.innerHTML = '<span class="te">' + t.icon + '</span><b>' + esc(t.title) + '</b><small id="cnt-' + t.id + '">' + (has ? '' : '🔒 Coming soon') + '</small>';
+            themes.appendChild(chip);
+            if (!has) return;
+
+            var panel = document.createElement('section');
+            panel.className = 'panel ' + colour; panel.id = t.id;
+            panel.innerHTML =
+                '<div class="panel-head"><span class="pe">' + t.icon + '</span>' +
+                '<h2>' + esc(t.title) + '<small>' + esc(t.sub) + '</small></h2>' +
+                '<button class="say-btn" data-say="' + esc(t.title + '. ' + t.sub) + '" aria-label="Listen">🔊</button></div>' +
+                '<div class="panel-body"><div class="games"></div></div>';
+            var grid = panel.querySelector('.games');
+            t.games.forEach(function (g) {
+                var href = encodeURI(FOLDER + g.file);
+                var card = document.createElement('div');
+                card.className = 'game';
+                card.dataset.file = g.file;
+                card.dataset.badge = g.badge || '';
+                var pic = g.thumb
+                    ? '<img class="thumb" src="' + esc(g.thumb) + '" alt="" loading="lazy">'
+                    : '<iframe data-src="' + href + '" tabindex="-1" aria-hidden="true" title="" scrolling="no"></iframe>';
+                card.innerHTML =
+                    '<a class="card-link" href="' + href + '" aria-label="' + esc(g.title + '. ' + g.level) + '"></a>' +
+                    '<span class="tag"></span>' +
+                    '<div class="preview"><div class="ph">' + g.icon + '</div>' + pic + '<div class="play-dot">▶</div></div>' +
+                    '<div class="g-body">' +
+                        '<div class="g-title"><span class="gi">' + g.icon + '</span><span>' + esc(g.title) + '</span></div>' +
+                        '<div class="g-level">' + esc(g.level) + '</div>' +
+                        '<div class="g-foot"><span class="g-play">Play ▶</span>' +
+                        '<button class="say-btn" data-say="' + esc(g.say || g.title) + '" aria-label="Listen: ' + esc(g.title) + '">🔊</button></div>' +
+                    '</div>';
+                grid.appendChild(card);
+            });
+            panels.appendChild(panel);
+        });
+
+        // ---------- Live previews: load each game small, only when the card is on screen ----------
+        function fit(preview) {
+            var f = preview.querySelector('iframe');
+            if (f) f.style.setProperty('--s', preview.clientWidth / 1280);
+        }
+        var previews = document.querySelectorAll('.preview');
+        if ('ResizeObserver' in window) {
+            var ro = new ResizeObserver(function (entries) { entries.forEach(function (e) { fit(e.target); }); });
+            previews.forEach(function (p) { ro.observe(p); });
+        } else {
+            window.addEventListener('resize', function () { previews.forEach(fit); });
+        }
+        function loadPreview(p) {
+            fit(p);
+            var f = p.querySelector('iframe'), img = p.querySelector('img.thumb');
+            if (img) { img.onload = function () { img.classList.add('ready'); }; if (img.complete) img.classList.add('ready'); return; }
+            if (!f || f.src) return;
+            f.addEventListener('load', function () {
+                // keep the mini game quiet and still
+                try {
+                    var w = f.contentWindow;
+                    if (w.speechSynthesis) { w.speechSynthesis.cancel(); w.speechSynthesis.speak = function () {}; }
+                } catch (e) {}
+                f.classList.add('ready');
+            });
+            f.src = f.dataset.src;
+        }
+        if ('IntersectionObserver' in window) {
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) { if (e.isIntersecting) { loadPreview(e.target); io.unobserve(e.target); } });
+            }, { rootMargin: '200px' });
+            previews.forEach(function (p) { io.observe(p); });
+        } else {
+            previews.forEach(loadPreview);
+        }
+
+        // ---------- Ticks and counts ----------
+        function paint() {
+            document.querySelectorAll('.game').forEach(function (c) {
+                var tag = c.querySelector('.tag');
+                if (played[c.dataset.file]) { tag.className = 'tag tag-done'; tag.textContent = '✓ Played'; }
+                else if (c.dataset.badge) { tag.className = 'tag tag-new'; tag.textContent = c.dataset.badge; }
+                else { tag.className = 'tag'; tag.textContent = ''; }
+            });
+            TOPICS.forEach(function (t) {
+                if (!t.games.length) return;
+                var done = t.games.filter(function (g) { return played[g.file]; }).length, n = t.games.length;
+                document.getElementById('cnt-' + t.id).textContent = done ? '⭐ ' + done + ' / ' + n : '▶ ' + n + (n > 1 ? ' games' : ' game');
+            });
+        }
+        paint();
+        document.getElementById('resetBtn').addEventListener('click', function () {
+            played = {}; store(PLAYED_KEY, '{}'); paint();
+        });
+
+        // ---------- Sound ----------
+        var soundOn = store('ilp-sound') !== 'off';
+        var soundBtn = document.getElementById('soundBtn');
+        var audioCtx = null;
+        function paintSound() {
+            soundBtn.textContent = soundOn ? '🔔 Sound on' : '🔕 Sound off';
+            soundBtn.setAttribute('aria-pressed', soundOn ? 'true' : 'false');
+        }
+        paintSound();
+        soundBtn.addEventListener('click', function () {
+            soundOn = !soundOn; store('ilp-sound', soundOn ? 'on' : 'off'); paintSound();
+            if (soundOn) pop();
+        });
+        function pop() {
+            if (!soundOn) return;
+            try {
+                audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+                var o = audioCtx.createOscillator(), g = audioCtx.createGain(), t = audioCtx.currentTime;
+                o.type = 'sine';
+                o.frequency.setValueAtTime(520, t);
+                o.frequency.exponentialRampToValueAtTime(1100, t + 0.12);
+                g.gain.setValueAtTime(0.25, t);
+                g.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+                o.connect(g); g.connect(audioCtx.destination);
+                o.start(t); o.stop(t + 0.2);
+            } catch (e) {}
+        }
+
+        // ---------- Clicks ----------
+        function go(e, href) {
+            if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
+            if (!soundOn) return;
+            e.preventDefault(); pop();
+            setTimeout(function () { window.location.href = href; }, 160);
+        }
+        document.querySelectorAll('.card-link').forEach(function (a) {
+            a.addEventListener('click', function (e) {
+                played[a.parentNode.dataset.file] = 1; store(PLAYED_KEY, JSON.stringify(played));
+                go(e, a.href);
+            });
+        });
+        document.querySelectorAll('.nav-btn').forEach(function (a) {
+            a.addEventListener('click', function (e) { go(e, a.href); });
+        });
+        document.querySelectorAll('.jump').forEach(function (a) {
+            a.addEventListener('click', function (e) {
+                e.preventDefault(); pop();
+                var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+                document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+            });
+        });
+
+        // ---------- Read aloud ----------
+        var readBtn = document.getElementById('readBtn');
+        var canSpeak = 'speechSynthesis' in window, active = null;
+        if (!canSpeak) document.querySelectorAll('.read-btn, .say-btn').forEach(function (b) { b.style.display = 'none'; });
+        function voice() {
+            var v = speechSynthesis.getVoices();
+            return v.filter(function (x) { return /^en-GB/i.test(x.lang); })[0] || v.filter(function (x) { return /^en/i.test(x.lang); })[0] || null;
+        }
+        function reset() {
+            if (!active) return;
+            active.classList.remove('speaking');
+            if (active === readBtn) readBtn.textContent = '🔊 Listen';
+            active = null;
+        }
+        function say(text, btn) {
+            speechSynthesis.cancel(); reset();
+            var u = new SpeechSynthesisUtterance(text), v = voice();
+            if (v) u.voice = v;
+            u.lang = v ? v.lang : 'en-GB'; u.rate = 0.9; u.pitch = 1.1;
+            u.onend = u.onerror = reset;
+            active = btn; btn.classList.add('speaking');
+            if (btn === readBtn) readBtn.textContent = '⏹ Stop';
+            speechSynthesis.speak(u);
+        }
+        readBtn.addEventListener('click', function () {
+            if (readBtn.classList.contains('speaking')) { speechSynthesis.cancel(); reset(); return; }
+            var ready = TOPICS.filter(function (t) { return t.games.length; }).map(function (t) { return t.title; });
+            say("Welcome to Grade 5 History and Geography! Pick a topic, then choose a game. The little pictures show you each game. " +
+                (ready.length ? "Games are ready for: " + ready.join(", ") + ". " : "") + "More topics are coming soon.", readBtn);
+        });
+        document.querySelectorAll('.say-btn').forEach(function (b) {
+            b.addEventListener('click', function (e) {
+                e.preventDefault(); e.stopPropagation();
+                if (b.classList.contains('speaking')) { speechSynthesis.cancel(); reset(); return; }
+                say(b.dataset.say, b);
+            });
+        });
+    })();
     </script>
 </body>
 </html>
