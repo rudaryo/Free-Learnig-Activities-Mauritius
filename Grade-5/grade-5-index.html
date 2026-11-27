@@ -9,166 +9,249 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-TCBV2GCV');</script>
 <!-- End Google Tag Manager -->
 
-
-
-    
-    
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grade 5 - Learning Activities</title>
+    <meta name="description" content="Fun Grade 5 learning activities: History &amp; Geography games and quizzes.">
+    <meta name="theme-color" content="#3D8BF2">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --ink: #1E2A4A;
+            --ink-soft: #4A5675;
+            --grade: #3D8BF2;
+            --grade-dark: #1F5FBF;
+            --font: 'Fredoka', 'Baloo 2', 'Arial Rounded MT Bold', 'Trebuchet MS', Arial, sans-serif;
         }
 
         body {
-            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: var(--font);
+            color: var(--ink);
+            background: linear-gradient(to bottom, #7FD3F7 0%, #B8E9FB 55%, #E8F9FF 100%);
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 20px 16px 200px;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        .back-button {
-            position: fixed;
-            top: 25px;
-            left: 25px;
-            background: white;
-            color: #667eea;
-            padding: 20px 45px;
-            border-radius: 60px;
-            border: none;
-            font-weight: 800;
-            font-size: 26px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            text-decoration: none;
-            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
+        /* ---------- Background scene ---------- */
+        .scene { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+        .sun {
+            position: absolute; top: 36px; right: 6%;
+            width: 110px; height: 110px; border-radius: 50%;
+            background: radial-gradient(circle, #FFE45C 0%, #FFB627 100%);
+            box-shadow: 0 0 60px 20px rgba(255, 214, 70, .55);
+            animation: sunPulse 5s ease-in-out infinite;
+        }
+        @keyframes sunPulse { 50% { transform: scale(1.06); } }
+        .cloud {
+            position: absolute; left: -180px;
+            background: #fff; border-radius: 100px; opacity: .9;
+            animation: drift linear infinite;
+        }
+        .cloud::before, .cloud::after { content: ''; position: absolute; background: #fff; border-radius: 50%; }
+        .cloud-1 { width: 110px; height: 38px; top: 90px;  animation-duration: 60s; }
+        .cloud-2 { width: 140px; height: 46px; top: 170px; animation-duration: 80s; animation-delay: -30s; }
+        .cloud-3 { width: 90px;  height: 32px; top: 260px; animation-duration: 70s; animation-delay: -50s; }
+        .cloud::before { width: 50%; height: 140%; top: -60%; left: 15%; }
+        .cloud::after  { width: 40%; height: 110%; top: -40%; right: 15%; }
+        @keyframes drift { to { transform: translateX(calc(100vw + 360px)); } }
+        .bird { position: absolute; left: -40px; font-size: 22px; animation: drift linear infinite; }
+        .bird-1 { top: 13%; animation-duration: 40s; }
+        .bird-2 { top: 20%; animation-duration: 48s; animation-delay: -20s; }
+        .island { position: absolute; bottom: 0; left: 0; width: 100%; height: 220px; }
+        .island svg { width: 100%; height: 100%; display: block; }
+        .wave { animation: waveMove 6s ease-in-out infinite; }
+        @keyframes waveMove { 50% { transform: translateX(-30px); } }
+        .palm-sway { animation: sway 4s ease-in-out infinite; }
+        @keyframes sway { 50% { transform: rotate(2deg); } }
+
+        /* ---------- Layout ---------- */
+        .container { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+
+        .topbar { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 16px; }
+        .home-btn, .icon-btn {
+            font-family: var(--font); font-weight: 600; color: var(--ink);
+            background: #fff; border: none; border-radius: 999px; cursor: pointer;
+            text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+            box-shadow: 0 5px 0 rgba(30, 42, 74, .18);
+            transition: transform .15s;
+        }
+        .home-btn { font-size: 1.35rem; padding: 10px 24px 10px 18px; }
+        .home-btn span:first-child { font-size: 1.6rem; }
+        .icon-btn { font-size: 1rem; padding: 8px 16px; }
+        .home-btn:hover, .icon-btn:hover { transform: translateY(-2px); }
+        .home-btn:active, .icon-btn:active { transform: translateY(3px); box-shadow: none; }
+
+        /* ---------- Hero ---------- */
+        .hero {
+            display: flex; align-items: center; gap: 24px;
+            background: #fff; border-radius: 32px; padding: 22px 32px;
+            border-bottom: 10px solid var(--grade);
+            box-shadow: 0 18px 40px rgba(30, 42, 74, .12);
+        }
+        .dodo { flex: 0 0 140px; }
+        .dodo svg { width: 140px; height: auto; display: block; }
+        .wing { transform-origin: 62px 98px; animation: wave 1.6s ease-in-out infinite; }
+        @keyframes wave { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(-28deg); } }
+        .dodo-body { animation: hop 3s ease-in-out infinite; }
+        @keyframes hop { 0%,70%,100% { transform: translateY(0); } 80% { transform: translateY(-8px); } 90% { transform: translateY(0); } }
+
+        .hero-text { flex: 1; }
+        .grade-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--grade); color: #fff;
+            font-size: 1rem; font-weight: 600; padding: 4px 14px; border-radius: 999px;
+        }
+        h1 { font-size: 2.8rem; line-height: 1.1; margin: 8px 0 12px; }
+        .bubble {
+            display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap;
+            background: #FFF6D6; border: 3px solid #FFD95A; border-radius: 20px;
+            padding: 10px 16px; font-size: 1.35rem; font-weight: 500;
+        }
+        .read-btn {
+            font-family: var(--font); font-size: 1rem; font-weight: 600;
+            background: #2FA3C2; color: #fff; border: none; border-radius: 999px;
+            padding: 8px 16px; cursor: pointer; box-shadow: 0 4px 0 #1F7A93;
+        }
+        .read-btn:active { transform: translateY(3px); box-shadow: none; }
+        .read-btn.speaking { background: #E2574C; box-shadow: 0 4px 0 #A83A31; }
+
+        /* ---------- Subject cards ---------- */
+        .section-title { text-align: center; font-size: 1.6rem; margin: 34px 0 20px; }
+        .section-title span { background: #fff; padding: 6px 22px; border-radius: 999px; box-shadow: 0 4px 0 rgba(30, 42, 74, .1); }
+
+        .subjects { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 26px; }
+        .subjects.single { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
+        .new-badge {
+            position: absolute; top: 16px; left: 16px; z-index: 2;
+            background: #E2264D; color: #fff; font-weight: 700; font-size: 1rem;
+            padding: 4px 14px; border-radius: 999px; box-shadow: 0 3px 0 rgba(0,0,0,.2);
+            animation: pulse 1.8s ease-in-out infinite;
+        }
+        @keyframes pulse { 50% { transform: scale(1.08); } }
+        .count { }
+
+        .subject {
+            --sc: #999; --sc-dark: #666; --sc-light: #eee;
+            position: relative; display: flex; flex-direction: column; align-items: center; text-align: center;
+            background: #fff; border-radius: 30px; overflow: hidden;
+            box-shadow: 0 10px 0 var(--sc-dark), 0 18px 30px rgba(0, 0, 0, .15);
+            transition: transform .2s, box-shadow .2s;
+        }
+        .subject:hover { transform: translateY(-8px) rotate(-1deg); box-shadow: 0 18px 0 var(--sc-dark), 0 26px 36px rgba(0, 0, 0, .18); }
+        .subject:active { transform: translateY(6px); box-shadow: 0 4px 0 var(--sc-dark); }
+        .s-maths { --sc: #D63A3A; --sc-dark: #A12424; --sc-light: #FFE3E3; }
+        .s-eng   { --sc: #1F5FBF; --sc-dark: #15438A; --sc-light: #E0ECFF; }
+        .s-fre   { --sc: #7B3FC4; --sc-dark: #572A8F; --sc-light: #F0E6FF; }
+        .s-sci   { --sc: #1E8A45; --sc-dark: #146131; --sc-light: #DDF5E6; }
+        .s-hg    { --sc: #0E7C86; --sc-dark: #09575E; --sc-light: #D9F2F4; }
+        .s-books { --sc: #E0731F; --sc-dark: #A84F0F; --sc-light: #FFE9D6; }
+
+        /* ---------- Coming soon ---------- */
+        .soon-title { text-align: center; font-size: 1.3rem; margin: 40px 0 16px; color: var(--ink-soft); }
+        .soon-title span { background: rgba(255,255,255,.85); padding: 5px 18px; border-radius: 999px; }
+        .soon-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+        .soon {
+            display: flex; align-items: center; gap: 12px;
+            background: rgba(255, 255, 255, .8); border: 3px dashed #A9B6CC; border-radius: 22px;
+            padding: 12px 16px; color: var(--ink-soft);
+        }
+        .soon .mini { font-size: 2rem; filter: grayscale(.6); opacity: .8; }
+        .soon .tag { margin: 0; border: 2px solid var(--sc); font-size: .85rem; padding: 1px 10px; opacity: .8; }
+        .soon b { display: block; color: var(--ink); font-size: 1.1rem; }
+        .soon small { font-size: .9rem; }
+
+        .subject-top {
+            width: 100%; background: var(--sc); padding: 26px 20px 20px; position: relative;
+        }
+        .subject-top::after {
+            content: ''; position: absolute; top: -40px; right: -40px;
+            width: 130px; height: 130px; border-radius: 50%; background: rgba(255, 255, 255, .15);
+        }
+        .subject-emoji {
+            width: 110px; height: 110px; margin: 0 auto; border-radius: 50%;
+            background: #fff; display: grid; place-items: center; font-size: 4rem;
+            box-shadow: 0 6px 0 rgba(0, 0, 0, .15);
+            animation: bob 3s ease-in-out infinite;
+        }
+        .s-eng .subject-emoji { animation-delay: .5s; }
+        .s-fre .subject-emoji { animation-delay: 1s; }
+        @keyframes bob { 50% { transform: translateY(-6px); } }
+        .subject:hover .subject-emoji { animation: wiggle .5s ease-in-out; }
+        @keyframes wiggle { 25% { transform: rotate(-10deg) scale(1.1); } 75% { transform: rotate(10deg) scale(1.1); } }
+
+        .tag {
+            display: inline-block; margin-top: 14px;
+            background: #fff; color: var(--sc); font-weight: 700; letter-spacing: 1px;
+            font-size: 1.05rem; padding: 3px 16px; border-radius: 12px;
         }
 
-        .back-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-            background: #667eea;
-            color: white;
+        .subject-body { padding: 18px 22px 24px; display: flex; flex-direction: column; align-items: center; gap: 10px; flex: 1; width: 100%; }
+        .subject-title { font-size: 2rem; font-weight: 700; color: var(--sc); line-height: 1.1; }
+        .subject-desc { font-size: 1.15rem; color: var(--ink-soft); }
+        .count {
+            background: var(--sc-light); color: var(--sc-dark);
+            font-weight: 600; font-size: 1rem; padding: 5px 16px; border-radius: 999px;
+        }
+        .go {
+            margin-top: auto; padding-top: 6px; width: 100%;
+            display: flex; gap: 10px; justify-content: center; align-items: center;
+        }
+        .go-btn {
+            background: var(--sc); color: #fff; font-weight: 700; font-size: 1.3rem;
+            padding: 10px 28px; border-radius: 999px; box-shadow: 0 5px 0 var(--sc-dark);
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        /* whole card is clickable through the main link */
+        .card-link { position: absolute; inset: 0; z-index: 1; border-radius: 30px; }
+        .card-link:focus-visible { outline: 5px solid var(--ink); outline-offset: 4px; }
+        .say-btn {
+            position: relative; z-index: 2;
+            font-family: var(--font); font-size: 1.3rem; line-height: 1;
+            width: 50px; height: 50px; border-radius: 50%; border: 3px solid var(--sc);
+            background: #fff; cursor: pointer; box-shadow: 0 4px 0 var(--sc-dark);
+        }
+        .say-btn:active { transform: translateY(3px); box-shadow: none; }
+        .say-btn.speaking { background: var(--sc-light); }
+
+        .home-btn:focus-visible, .icon-btn:focus-visible, .read-btn:focus-visible, .say-btn:focus-visible {
+            outline: 5px solid var(--ink); outline-offset: 4px;
         }
 
-        header {
-            text-align: center;
-            color: white;
-            margin-bottom: 50px;
+        footer {
+            margin-top: 44px; text-align: center;
+            background: rgba(255, 255, 255, .85); border-radius: 24px; padding: 18px;
+            color: var(--ink-soft); font-size: 1rem;
+        }
+        footer strong { color: var(--ink); }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 720px) {
+            body { padding: 12px 12px 160px; }
+            .home-btn { font-size: 1.15rem; padding: 8px 18px 8px 14px; }
+            .hero { flex-direction: column; text-align: center; padding: 18px; }
+            .dodo { flex-basis: auto; }
+            .dodo svg { width: 110px; }
+            h1 { font-size: 2rem; }
+            .bubble { font-size: 1.15rem; justify-content: center; }
+            .sun { width: 70px; height: 70px; top: 16px; right: 16px; }
+            .island { height: 150px; }
+            .subjects { gap: 20px; }
+            .subject-emoji { width: 90px; height: 90px; font-size: 3.2rem; }
+            .subject-title { font-size: 1.7rem; }
         }
 
-        h1 {
-            font-size: 3.5em;
-            margin-bottom: 10px;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .subtitle {
-            font-size: 1.5em;
-            opacity: 0.9;
-        }
-
-        .subjects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .subject-card {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .subject-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .subject-icon {
-            font-size: 5em;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .subject-title {
-            font-size: 2em;
-            color: #667eea;
-            text-align: center;
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
-
-        .subject-description {
-            color: #636e72;
-            text-align: center;
-            font-size: 1.1em;
-            margin-bottom: 15px;
-        }
-
-        .activity-count {
-            background: #667eea;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            text-align: center;
-            font-size: 1em;
-            font-weight: bold;
-        }
-
-        .coming-soon {
-            background: #95a5a6;
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-
-        .coming-soon:hover {
-            transform: none;
-        }
-
-        .coming-soon .activity-count {
-            background: #7f8c8d;
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5em;
-            }
-
-            .subjects-grid {
-                grid-template-columns: 1fr;
-            }
-
-            body {
-                padding: 20px 10px;
-            }
-
-            .back-button {
-                top: 10px;
-                left: 10px;
-                padding: 10px 20px;
-                font-size: 14px;
-            }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+            .cloud, .bird { display: none; }
         }
     </style>
 </head>
@@ -178,64 +261,207 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-
-
-    
-    
-    
-    <a href="../index.html" class="back-button">
-        <span>🏠</span>
-        <span>Back</span>
-    </a>
-
-    <div class="container">
-        <header>
-            <h1>📚 Grade 5</h1>
-            <p class="subtitle">Advancing Excellence • Ages 9-10</p>
-        </header>
-
-        <div class="subjects-grid">
-            <!-- Mathematics - Coming Soon -->
-            <div class="subject-card coming-soon">
-                <div class="subject-icon">🔢</div>
-                <div class="subject-title">Mathematics</div>
-                <div class="subject-description">Advanced Numbers and Problem Solving</div>
-                <div class="activity-count">Coming Soon!</div>
-            </div>
-
-            <!-- English - Coming Soon -->
-            <div class="subject-card coming-soon">
-                <div class="subject-icon">📚</div>
-                <div class="subject-title">English</div>
-                <div class="subject-description">Reading, Writing, and Literature</div>
-                <div class="activity-count">Coming Soon!</div>
-            </div>
-
-            <!-- French - Coming Soon -->
-            <div class="subject-card coming-soon">
-                <div class="subject-icon">🇫🇷</div>
-                <div class="subject-title">French</div>
-                <div class="subject-description">French Language and Culture</div>
-                <div class="activity-count">Coming Soon!</div>
-            </div>
-
-            <!-- History & Geography - Available -->
-            <a href="History-Geography/grade-5-his-geo-index.html" class="subject-card">
-                <div class="subject-icon">🗺️</div>
-                <div class="subject-title">History & Geography</div>
-                <div class="subject-description">Explore Mauritius and World History</div>
-                <div class="activity-count">15 Topics | 1 Activity</div>
-            </a>
-
-            <!-- Science - Coming Soon -->
-            <div class="subject-card coming-soon">
-                <div class="subject-icon">🔬</div>
-                <div class="subject-title">Science</div>
-                <div class="subject-description">Discover the Wonders of Science</div>
-                <div class="activity-count">Coming Soon!</div>
-            </div>
+    <!-- Background: Mauritian sky, lagoon, Le Morne and palm trees -->
+    <div class="scene" aria-hidden="true">
+        <div class="sun"></div>
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+        <div class="bird bird-1">🕊️</div>
+        <div class="bird bird-2">🕊️</div>
+        <div class="island">
+            <svg viewBox="0 0 1440 220" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 120 Q120 80 240 110 T480 105 L480 160 L0 160 Z" fill="#6CBF84" opacity=".55"/>
+                <path d="M880 150 L930 140 L965 70 L985 52 L1050 48 L1080 58 L1120 95 L1170 125 L1240 140 L1300 150 Z" fill="#3E8E5A"/>
+                <path d="M965 70 L985 52 L1050 48 L1080 58 L1060 70 L1000 72 Z" fill="#57A872"/>
+                <rect x="0" y="140" width="1440" height="80" fill="#1FA9C9"/>
+                <rect x="0" y="150" width="1440" height="70" fill="#38C6D9"/>
+                <g class="wave">
+                    <path d="M-40 158 Q0 150 40 158 T120 158 T200 158 T280 158 T360 158 T440 158 T520 158 T600 158 T680 158 T760 158 T840 158 T920 158 T1000 158 T1080 158 T1160 158 T1240 158 T1320 158 T1400 158 T1480 158" fill="none" stroke="#fff" stroke-width="3" opacity=".7"/>
+                </g>
+                <path d="M0 190 Q360 170 720 185 T1440 180 L1440 220 L0 220 Z" fill="#F7DFA3"/>
+                <g class="palm-sway" style="transform-origin:150px 200px">
+                    <path d="M150 200 Q140 150 165 100" stroke="#8B5A2B" stroke-width="10" fill="none" stroke-linecap="round"/>
+                    <path d="M165 100 Q130 80 100 100 Q135 90 165 100 Q150 65 120 55 Q160 65 165 100 Q190 65 225 70 Q190 80 165 100 Q205 95 225 120 Q190 100 165 100 Z" fill="#2E9E4F"/>
+                </g>
+                <g class="palm-sway" style="transform-origin:1340px 200px; animation-delay:-2s">
+                    <path d="M1340 200 Q1350 150 1325 105" stroke="#8B5A2B" stroke-width="10" fill="none" stroke-linecap="round"/>
+                    <path d="M1325 105 Q1290 85 1260 105 Q1295 95 1325 105 Q1310 70 1280 60 Q1320 70 1325 105 Q1350 70 1385 75 Q1350 85 1325 105 Q1365 100 1385 125 Q1350 105 1325 105 Z" fill="#2E9E4F"/>
+                </g>
+                <g transform="translate(620 140)">
+                    <path d="M0 12 L50 12 L42 22 L8 22 Z" fill="#E2574C"/>
+                    <path d="M25 12 L25 -18 L45 8 Z" fill="#fff"/>
+                </g>
+            </svg>
         </div>
     </div>
+
+    <div class="container">
+        <div class="topbar">
+            <a href="../index.html" class="home-btn" aria-label="Back to the home page"><span>🏠</span><span>Home</span></a>
+            <button class="icon-btn" id="soundBtn" aria-pressed="true">🔔 Sound on</button>
+        </div>
+
+        <header class="hero">
+            <div class="dodo" aria-hidden="true">
+                <svg viewBox="0 0 160 170" xmlns="http://www.w3.org/2000/svg">
+                    <g class="dodo-body">
+                        <path d="M68 140 L64 160 M64 160 L54 164 M64 160 L72 165" stroke="#F2A93B" stroke-width="6" stroke-linecap="round"/>
+                        <path d="M96 140 L100 160 M100 160 L90 165 M100 160 L110 164" stroke="#F2A93B" stroke-width="6" stroke-linecap="round"/>
+                        <path d="M122 100 Q150 85 146 108 Q156 104 150 124 Q134 120 122 112 Z" fill="#fff" stroke="#D9DEE8" stroke-width="2"/>
+                        <ellipse cx="84" cy="108" rx="46" ry="40" fill="#8FA4C2"/>
+                        <ellipse cx="78" cy="118" rx="28" ry="24" fill="#B7C6DB"/>
+                        <path d="M60 86 Q52 60 62 40 Q74 26 92 32 Q102 40 96 58 Q90 72 96 86 Z" fill="#8FA4C2"/>
+                        <path d="M66 42 Q34 40 22 56 Q18 66 30 66 Q32 58 42 58 Q56 58 68 56 Z" fill="#F5C64A"/>
+                        <path d="M22 56 Q18 66 30 66 Q26 60 28 56 Z" fill="#E09A1E"/>
+                        <path d="M44 52 Q56 50 66 50" stroke="#C98A14" stroke-width="2" fill="none"/>
+                        <circle cx="78" cy="44" r="9" fill="#fff"/>
+                        <circle cx="80" cy="45" r="5" fill="#1E2A4A"/>
+                        <circle cx="82" cy="43" r="1.8" fill="#fff"/>
+                        <circle cx="86" cy="58" r="5" fill="#F7A1B0" opacity=".7"/>
+                        <path class="wing" d="M62 98 Q34 70 30 52 Q48 62 58 74 Q60 64 66 60 Q70 80 72 98 Z" fill="#6F86A8"/>
+                    </g>
+                </svg>
+            </div>
+            <div class="hero-text">
+                <span class="grade-badge">🚀 Advancing Excellence · Ages 9–10</span>
+                <h1>Grade 5</h1>
+                <div class="bubble">
+                    <span>What do you want to learn today?</span>
+                    <button class="read-btn" id="readBtn" aria-label="Read this page out loud">🔊 Listen</button>
+                </div>
+            </div>
+        </header>
+
+        <h2 class="section-title"><span>Choose a subject</span></h2>
+
+        <main class="subjects single">
+            <!-- History & Geography -->
+            <div class="subject s-hg">
+                <a href="History-Geography/grade-5-his-geo-index.html" class="card-link" aria-label="History and Geography: Explore Mauritius and world history"></a>
+                <div class="subject-top">
+                    <div class="subject-emoji">🌍</div>
+                    <span class="tag">HIST &amp; GEO</span>
+                </div>
+                <div class="subject-body">
+                    <div class="subject-title">History &amp; Geography</div>
+                    <div class="subject-desc">Explore Mauritius and world history</div>
+                    <div class="count">⭐ 15 Topics · 1 Activity</div>
+                    <div class="go">
+                        <span class="go-btn">Let's explore ▶</span>
+                        <button class="say-btn" data-lang="en" data-say="History and Geography. Explore Mauritius and world history" aria-label="Listen: History and Geography">🔊</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <h2 class="soon-title"><span>🔒 Coming soon</span></h2>
+        <div class="soon-grid">
+            <div class="soon s-maths"><span class="mini">🔢</span><div><span class="tag">MATHS</span><b>Mathematics</b><small>Numbers and problem solving</small></div></div>
+            <div class="soon s-eng"><span class="mini">🔤</span><div><span class="tag">ENG</span><b>English</b><small>Reading, writing and literature</small></div></div>
+            <div class="soon s-fre" lang="fr"><span class="mini">💬</span><div><span class="tag">FRE</span><b>Français</b><small>Langue et culture françaises</small></div></div>
+            <div class="soon s-sci"><span class="mini">🔬</span><div><span class="tag">SCI</span><b>Science</b><small>Discover the wonders of science</small></div></div>
+        </div>
+
+        <footer>
+            <p><strong>© <span id="year">2026</span> Ramsamy Pierre Rudaryo</strong></p>
+            <p>Interactive Learning Platform - Making Learning Fun for Every Child</p>
+        </footer>
+    </div>
+
+    <script>
+    (function () {
+        function store(key, val) {
+            try { if (val === undefined) return localStorage.getItem(key); localStorage.setItem(key, val); }
+            catch (e) { return null; }
+        }
+        document.getElementById('year').textContent = new Date().getFullYear();
+        store('ilp-last-grade', '5');
+
+        // ---------- Sound (shared setting with the home page) ----------
+        var soundOn = store('ilp-sound') !== 'off';
+        var soundBtn = document.getElementById('soundBtn');
+        var audioCtx = null;
+        function paintSoundBtn() {
+            soundBtn.textContent = soundOn ? '🔔 Sound on' : '🔕 Sound off';
+            soundBtn.setAttribute('aria-pressed', soundOn ? 'true' : 'false');
+        }
+        paintSoundBtn();
+        soundBtn.addEventListener('click', function () {
+            soundOn = !soundOn; store('ilp-sound', soundOn ? 'on' : 'off'); paintSoundBtn();
+            if (soundOn) pop();
+        });
+        function pop() {
+            if (!soundOn) return;
+            try {
+                audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+                var o = audioCtx.createOscillator(), g = audioCtx.createGain(), t = audioCtx.currentTime;
+                o.type = 'sine';
+                o.frequency.setValueAtTime(520, t);
+                o.frequency.exponentialRampToValueAtTime(1100, t + 0.12);
+                g.gain.setValueAtTime(0.25, t);
+                g.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+                o.connect(g); g.connect(audioCtx.destination);
+                o.start(t); o.stop(t + 0.2);
+            } catch (e) {}
+        }
+
+        // ---------- Read aloud ----------
+        var canSpeak = 'speechSynthesis' in window;
+        var activeBtn = null;
+        function pickVoice(lang) {
+            var voices = speechSynthesis.getVoices();
+            var exact = lang === 'fr' ? /^fr-FR/i : /^en-GB/i;
+            var loose = lang === 'fr' ? /^fr/i : /^en/i;
+            return voices.filter(function (v) { return exact.test(v.lang); })[0]
+                || voices.filter(function (v) { return loose.test(v.lang); })[0] || null;
+        }
+        function reset() {
+            if (!activeBtn) return;
+            activeBtn.classList.remove('speaking');
+            if (activeBtn.id === 'readBtn') activeBtn.textContent = '🔊 Listen';
+            activeBtn = null;
+        }
+        function say(text, lang, btn) {
+            speechSynthesis.cancel(); reset();
+            var u = new SpeechSynthesisUtterance(text);
+            var v = pickVoice(lang); if (v) u.voice = v;
+            u.lang = v ? v.lang : (lang === 'fr' ? 'fr-FR' : 'en-GB');
+            u.rate = 0.9; u.pitch = 1.1;
+            u.onend = u.onerror = reset;
+            activeBtn = btn; btn.classList.add('speaking');
+            if (btn.id === 'readBtn') btn.textContent = '⏹ Stop';
+            speechSynthesis.speak(u);
+        }
+
+        var readBtn = document.getElementById('readBtn');
+        if (!canSpeak) {
+            readBtn.style.display = 'none';
+            document.querySelectorAll('.say-btn').forEach(function (b) { b.style.display = 'none'; });
+        }
+        readBtn.addEventListener('click', function () {
+            if (readBtn.classList.contains('speaking')) { speechSynthesis.cancel(); reset(); return; }
+            say('Hello! This is Grade 5. History and Geography is ready for you. Tap the card to explore Mauritius and world history! Maths, English, French and Science are coming soon.', 'en', readBtn);
+        });
+        document.querySelectorAll('.say-btn').forEach(function (b) {
+            b.addEventListener('click', function (e) {
+                e.preventDefault(); e.stopPropagation();
+                if (b.classList.contains('speaking')) { speechSynthesis.cancel(); reset(); return; }
+                say(b.getAttribute('data-say'), b.getAttribute('data-lang'), b);
+            });
+        });
+
+        // ---------- Card clicks: pop, then go ----------
+        function go(e, href) {
+            if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
+            if (!soundOn) return;
+            e.preventDefault(); pop();
+            setTimeout(function () { window.location.href = href; }, 160);
+        }
+        document.querySelectorAll('.card-link, .home-btn').forEach(function (a) {
+            a.addEventListener('click', function (e) { go(e, a.href); });
+        });
+    })();
+    </script>
 </body>
 </html>
-
