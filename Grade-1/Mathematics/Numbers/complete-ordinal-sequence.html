@@ -9,350 +9,314 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-TCBV2GCV');</script>
 <!-- End Google Tag Manager -->
 
-
-
-    
-    
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ordinal Numbers</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥇</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --ink: #1E2A4A;
+            --wood: #8B5A2B;          /* wooden buttons and tiles */
+            --wood-dark: #5E3A17;
+            --wood-light: #E0A85C;    /* light wooden edge */
+            --frame: #C98B4B;         /* board frame */
+            --board: #2F7D6D;         /* chalkboard green */
+            --board-dark: #23604F;
+            --chalk: #FFFDF2;
+            --font: 'Fredoka', 'Baloo 2', 'Arial Rounded MT Bold', 'Comic Sans MS', sans-serif;
+            /* a colour for each number, like the letters on the alphabet board */
+            --n1: #FF5A5F; --n2: #FF9F1C; --n3: #FFD23F; --n4: #5BD36B;
+            --n5: #3FA9F5; --n6: #B07CFF; --n7: #FF6FB5; --n8: #2FD9C4;
         }
 
         body {
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            background: linear-gradient(to bottom, #4A90E2 0%, #67B26F 100%);
+            font-family: var(--font);
+            color: var(--ink);
+            background: linear-gradient(160deg, #C7F0EA 0%, #A9E3E6 55%, #9ED3EC 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 8px 14px 24px;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
+        /* ---------- Decoration row (fruit, flowers, hearts) ---------- */
+        .deco { max-width: 900px; margin: 0 auto 4px; display: flex; justify-content: space-around; font-size: 1.7rem; }
+        .deco span { animation: bob 3s ease-in-out infinite; }
+        .deco span:nth-child(2n) { animation-delay: -1.5s; }
+        @keyframes bob { 50% { transform: translateY(-4px); } }
 
-        h1 {
-            text-align: center;
-            color: white;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 3px 3px 0px rgba(0,0,0,0.2);
+        /* ---------- Top bar ---------- */
+        .topbar { max-width: 900px; margin: 0 auto 10px; display: flex; align-items: center; }
+        .nav-btn, .big-btn, .speaker-button {
+            font-family: var(--font); font-weight: 600; color: var(--chalk);
+            background: linear-gradient(180deg, #A06A35 0%, var(--wood) 100%);
+            border: 3px solid var(--wood-light); cursor: pointer; text-decoration: none;
+            box-shadow: 0 5px 0 var(--wood-dark), 0 8px 14px rgba(0,0,0,.25);
+            text-shadow: 0 2px 0 rgba(0,0,0,.35); transition: transform .15s;
         }
+        .nav-btn { display: inline-flex; align-items: center; gap: 8px; font-size: 1.15rem; padding: 7px 18px 7px 14px; border-radius: 14px; }
+        .nav-btn:hover, .big-btn:hover { transform: translateY(-2px); }
+        .nav-btn:active, .big-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--wood-dark); }
 
-        .instructions {
-            text-align: center;
-            font-size: 1.3em;
-            color: white;
-            margin-bottom: 30px;
-            font-weight: bold;
-        }
-
-        .score-board {
-            background: #2C3E50;
-            color: white;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            font-size: 1.5em;
-            margin-bottom: 30px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-
-        .score {
-            font-size: 2em;
-            color: #F1C40F;
-            font-weight: bold;
-        }
-
-        .game-section {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            margin-bottom: 30px;
-        }
-
-        .question-number {
-            font-size: 1.5em;
-            color: #2C3E50;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-
-        .sequence-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .ordinal-box {
-            background: #3498DB;
-            color: white;
-            padding: 25px 35px;
-            border-radius: 15px;
-            font-size: 2em;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            min-width: 120px;
-            text-align: center;
-        }
-
-        .empty-box {
-            background: white;
-            color: #E74C3C;
-            border: 4px dashed #E74C3C;
-            transition: all 0.3s;
-            min-height: 90px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* ---------- Wooden frame + chalkboard ---------- */
+        .frame {
+            max-width: 900px; margin: 0 auto; padding: 16px; border-radius: 22px;
+            background:
+                repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 3px, transparent 3px 11px),
+                linear-gradient(180deg, #DDA463 0%, var(--frame) 50%, #B97A3C 100%);
+            box-shadow: 0 10px 0 #8E5A27, 0 18px 34px rgba(30,42,74,.3), inset 0 2px 0 rgba(255,255,255,.35);
             position: relative;
         }
-
-        .empty-box.drag-over {
-            background: #FCF3CF;
-            transform: scale(1.05);
-            border-color: #F39C12;
+        .container {
+            border-radius: 12px; padding: 18px 22px 20px; position: relative; overflow: hidden;
+            background:
+                radial-gradient(ellipse at 20% 15%, rgba(255,255,255,.10), transparent 55%),
+                radial-gradient(ellipse at 85% 90%, rgba(255,255,255,.06), transparent 50%),
+                linear-gradient(160deg, #3A8E7C 0%, var(--board) 45%, var(--board-dark) 100%);
+            box-shadow: inset 0 0 0 3px rgba(0,0,0,.18), inset 0 6px 18px rgba(0,0,0,.35);
+            color: var(--chalk);
         }
-
-        .empty-box.filled {
-            background: #3498DB;
-            border: 4px solid #2980B9;
-            color: white;
+        /* chalk tray under the board */
+        .tray {
+            max-width: 900px; height: 18px; margin: 0 auto; border-radius: 0 0 12px 12px;
+            background: linear-gradient(180deg, #B97A3C, #8E5A27);
+            box-shadow: 0 6px 12px rgba(0,0,0,.25); position: relative; top: -2px;
         }
+        .tray::before { content: ''; position: absolute; left: 14%; top: 4px; width: 46px; height: 8px; border-radius: 4px; background: #FFFDF2; box-shadow: 70px 0 0 #FFD9E8, 130px 0 0 #D9F2FF; }
 
-        .empty-box.correct {
-            background: #2ECC71;
-            border: 4px solid #27AE60;
-            color: white;
-            animation: celebrate 0.5s;
+        /* ---------- Wooden name plaque with colourful letters ---------- */
+        .head { display: flex; justify-content: center; }
+        .plaque {
+            display: inline-block; padding: 6px 26px 8px; border-radius: 16px;
+            background: linear-gradient(180deg, #9A6233 0%, #7A4A22 100%);
+            border: 4px solid var(--wood-light);
+            box-shadow: 0 6px 0 var(--wood-dark), 0 10px 18px rgba(0,0,0,.3);
         }
+        h1 { font-size: clamp(1.5rem, 4.6vw, 2.3rem); line-height: 1.1; font-weight: 700; letter-spacing: 1px; }
+        h1 .ch { display: inline-block; -webkit-text-stroke: 1px rgba(0,0,0,.25); text-shadow: 0 3px 0 rgba(0,0,0,.35); }
+        .subtitle { color: #E6FFF6; font-size: clamp(1rem, 3vw, 1.2rem); margin-top: 8px; text-align: center; opacity: .9; }
 
-        .empty-box.wrong {
-            background: #E74C3C;
-            border: 4px solid #C0392B;
-            color: white;
-            animation: shake 0.5s;
+        /* ---------- Score plaques ---------- */
+        .status { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0 8px; }
+        .pill {
+            border-radius: 14px; padding: 5px 6px; text-align: center;
+            background: linear-gradient(180deg, #A06A35, var(--wood)); border: 3px solid var(--wood-light);
+            box-shadow: 0 4px 0 var(--wood-dark);
         }
+        .pill .label { font-size: .95rem; color: #FFE9C9; font-weight: 500; }
+        .pill .value { font-size: clamp(1.4rem, 4.2vw, 1.9rem); font-weight: 700; color: #FFD23F; line-height: 1.1; text-shadow: 0 2px 0 rgba(0,0,0,.35); }
 
-        @keyframes celebrate {
-            0%, 100% { transform: scale(1); }
-            25% { transform: scale(1.1) rotate(-5deg); }
-            75% { transform: scale(1.1) rotate(5deg); }
+        /* ---------- Level progress, drawn in chalk ---------- */
+        .level-box {
+            display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+            border: 2px dashed rgba(255,255,255,.45); border-radius: 14px; padding: 8px 14px; margin-bottom: 10px;
+            background: rgba(255,255,255,.06);
         }
+        .level-name { font-weight: 600; font-size: 1.1rem; color: var(--chalk); }
+        .bar { flex: 1; min-width: 140px; height: 16px; background: rgba(0,0,0,.25); border-radius: 999px; overflow: hidden; border: 2px solid rgba(255,255,255,.5); }
+        .bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #FFE45C, #FFB627); border-radius: 999px; transition: width .5s; }
+        .level-count { font-weight: 600; color: #FFE45C; font-size: 1rem; }
 
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
+        /* ---------- Question ---------- */
+        .question {
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            font-size: clamp(1.3rem, 4vw, 1.8rem); font-weight: 600; color: var(--chalk);
         }
+        .speaker-button { width: 52px; height: 52px; border-radius: 14px; font-size: 1.5rem; flex: none; }
+        .speaker-button:hover { transform: scale(1.06); }
+        .speaker-button:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--wood-dark); }
+        .speaker-button.speaking { animation: ring 1s ease-in-out infinite; }
+        @keyframes ring { 50% { box-shadow: 0 0 0 9px rgba(255,228,92,.35), 0 5px 0 var(--wood-dark); } }
 
-        .options-title {
-            text-align: center;
-            font-size: 1.3em;
-            color: #2C3E50;
-            margin-bottom: 20px;
-            font-weight: bold;
+        /* ---------- The big number: chalk box like on the alphabet board ---------- */
+        .number-wrap { display: flex; justify-content: center; margin: 10px 0 4px; }
+        .number-display {
+            --nc: var(--chalk);
+            width: clamp(130px, min(30vw, 24vh), 200px); height: clamp(130px, min(30vw, 24vh), 200px);
+            border-radius: 22px; display: grid; place-items: center;
+            font-size: clamp(4.5rem, min(16vw, 14vh), 7.5rem); font-weight: 700; line-height: 1;
+            color: var(--nc); background: rgba(255,255,255,.08);
+            border: 4px dashed rgba(255,255,255,.55);
+            -webkit-text-stroke: 3px rgba(0,0,0,.35); paint-order: stroke fill;
+            text-shadow: 0 5px 0 rgba(0,0,0,.35);
+            transition: border-color .3s, background .3s;
         }
+        .number-display.pop { animation: pop .6s ease-out; }
+        @keyframes pop { 0% { transform: scale(.6) rotate(-6deg); } 60% { transform: scale(1.12) rotate(3deg); } 100% { transform: scale(1); } }
+        .number-display.wrong { border-color: #FF8A8A; background: rgba(255,90,95,.18); }
+        [data-n="1"] { --nc: var(--n1); } [data-n="2"] { --nc: var(--n2); } [data-n="3"] { --nc: var(--n3); } [data-n="4"] { --nc: var(--n4); }
+        [data-n="5"] { --nc: var(--n5); } [data-n="6"] { --nc: var(--n6); } [data-n="7"] { --nc: var(--n7); } [data-n="8"] { --nc: var(--n8); }
 
-        .options-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
+        .feedback { text-align: center; font-size: clamp(1.4rem, 5vw, 2rem); font-weight: 700; min-height: 1.5em; margin: 8px 0 0; text-shadow: 0 2px 0 rgba(0,0,0,.3); }
+        .feedback.correct { color: #9BF5B0; }
+        .feedback.wrong { color: #FFB3B3; }
+        .feedback.info { color: #FFE45C; font-size: clamp(1.2rem, 4vw, 1.6rem); }
+        .stars { text-align: center; font-size: clamp(1.6rem, 5vw, 2.2rem); min-height: 1.2em; }
 
+        /* ---------- Wooden number tiles ---------- */
+        .options { display: grid; gap: 14px; margin: 8px auto 4px; justify-content: center; }
+        .options.level-1 { grid-template-columns: repeat(3, minmax(90px, 130px)); }
+        .options.level-2 { grid-template-columns: repeat(5, minmax(80px, 120px)); }
+        .options.level-3 { grid-template-columns: repeat(4, minmax(80px, 130px)); }
         .option-btn {
-            background: #ECF0F1;
-            border: 4px solid #BDC3C7;
-            padding: 20px 30px;
-            font-size: 1.5em;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: bold;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            color: #2C3E50;
+            font-family: var(--font); font-size: clamp(2.4rem, 7vw, 3.4rem); font-weight: 700; line-height: 1;
+            aspect-ratio: 1 / 1; border-radius: 16px; cursor: pointer;
+            color: var(--nc, var(--chalk)); -webkit-text-stroke: 2px rgba(0,0,0,.35); paint-order: stroke fill;
+            text-shadow: 0 4px 0 rgba(0,0,0,.4);
+            background:
+                repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 2px, transparent 2px 9px),
+                linear-gradient(180deg, #9A6233 0%, #7A4A22 100%);
+            border: 4px solid var(--wood-light);
+            box-shadow: 0 7px 0 var(--wood-dark), 0 10px 16px rgba(0,0,0,.3), inset 0 2px 0 rgba(255,255,255,.2);
+            transition: transform .15s, box-shadow .15s;
         }
+        .option-btn:hover:not(:disabled) { transform: translateY(-4px); box-shadow: 0 11px 0 var(--wood-dark), 0 14px 20px rgba(0,0,0,.3); }
+        .option-btn:active:not(:disabled) { transform: translateY(5px); box-shadow: 0 2px 0 var(--wood-dark); }
+        .option-btn:disabled { cursor: default; }
+        .options.locked .option-btn:not(.correct):not(.wrong) { opacity: .5; }
+        .option-btn.correct { border-color: #FFE45C; box-shadow: 0 0 0 5px rgba(255,228,92,.6), 0 0 22px 6px rgba(255,228,92,.55), 0 7px 0 var(--wood-dark); animation: celebrate .6s ease; }
+        .option-btn.wrong { border-color: #FF5A5F; box-shadow: 0 0 0 5px rgba(255,90,95,.55), 0 7px 0 var(--wood-dark); animation: shake .5s ease; }
+        @keyframes celebrate { 25% { transform: scale(1.15) rotate(-8deg); } 75% { transform: scale(1.15) rotate(8deg); } }
+        @keyframes shake { 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+        .option-btn:focus-visible, .nav-btn:focus-visible, .speaker-button:focus-visible, .big-btn:focus-visible { outline: 4px solid #FFE45C; outline-offset: 3px; }
 
-        .option-btn:hover {
-            background: #D5DBDB;
-            transform: scale(1.1);
-            border-color: #95A5A6;
-        }
+        /* ---------- Wooden buttons under the tiles ---------- */
+        .button-container { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
+        .big-btn { font-size: clamp(1.1rem, 3vw, 1.35rem); border-radius: 14px; padding: 10px 26px; }
+        .next-btn, .again-btn { color: #5E3A17; text-shadow: none; background: linear-gradient(180deg, #FFD54F, #FFB300); border-color: #FFF3C4; box-shadow: 0 5px 0 #C68400, 0 8px 14px rgba(0,0,0,.25); }
+        .hidden { display: none !important; }
 
-        .option-btn.selected {
-            background: #3498DB;
-            border-color: #2980B9;
-            color: white;
-        }
-
-        .option-btn.used {
-            opacity: 0.3;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-
-        .check-btn {
-            background: #2ECC71;
-            color: white;
-            border: none;
-            padding: 20px 50px;
-            font-size: 1.5em;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            transition: all 0.3s;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            display: block;
-            margin: 0 auto;
-        }
-
-        .check-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-        }
-
-        .check-btn:disabled {
-            background: #95A5A6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .controls {
-            text-align: center;
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            background: #3498DB;
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.3em;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            transition: all 0.3s;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-        }
-
-        .btn-home {
-            background: #9B59B6 !important;
-            color: white !important;
-        }
-
-        .feedback {
-            text-align: center;
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-top: 20px;
-            min-height: 40px;
-        }
-
-        .feedback.correct {
-            color: #2ECC71;
-        }
-
-        .feedback.wrong {
-            color: #E74C3C;
-        }
-
-        .celebration {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 5em;
-            animation: pop 0.5s;
-            pointer-events: none;
-            z-index: 1000;
-        }
-
-        @keyframes pop {
-            0% { transform: translate(-50%, -50%) scale(0); }
-            50% { transform: translate(-50%, -50%) scale(1.3); }
-            100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
-        }
+        /* ---------- Dodo helper under the board (tall screens) ---------- */
+        .helper { max-width: 900px; margin: 16px auto 0; display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .helper svg { width: 70px; height: auto; flex: none; }
+        .bubble { position: relative; background: #fff; border-radius: 18px; padding: 10px 18px; font-size: 1.15rem; font-weight: 500; box-shadow: 0 4px 10px rgba(0,0,0,.12); }
+        .bubble::before { content: ''; position: absolute; left: -10px; top: 50%; margin-top: -10px; border: 10px solid transparent; border-right-color: #fff; border-left: 0; }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 1.8em;
-            }
-
-            .instructions {
-                font-size: 1.1em;
-            }
-
-            .game-section {
-                padding: 25px 15px;
-            }
-
-            .ordinal-box {
-                padding: 18px 25px;
-                font-size: 1.5em;
-                min-width: 90px;
-            }
-
-            .empty-box {
-                min-height: 70px;
-            }
-
-            .option-btn {
-                padding: 15px 20px;
-                font-size: 1.2em;
-            }
-
-            .check-btn {
-                padding: 15px 35px;
-                font-size: 1.2em;
-            }
-
-            .btn {
-                padding: 12px 25px;
-                font-size: 1.1em;
-            }
+            .options.level-1, .options.level-2, .options.level-3 { grid-template-columns: repeat(3, minmax(70px, 1fr)); }
+            .frame { padding: 10px; }
+            .container { padding: 14px 12px 16px; }
+            .plaque { padding: 5px 14px 7px; }
+            .deco { font-size: 1.3rem; }
+            .button-container { flex-direction: column; align-items: center; }
+            .big-btn { width: 100%; max-width: 320px; }
+        }
+        @media (max-width: 420px) { .status .label { font-size: .8rem; } }
+        @media (max-height: 940px) and (min-width: 769px) { .helper { display: none; } }
+        @media (max-height: 820px) and (min-width: 769px) {
+            body { padding-top: 4px; }
+            .deco { font-size: 1.3rem; margin-bottom: 0; }
+            .topbar { margin-bottom: 6px; }
+            .nav-btn { font-size: 1rem; padding: 5px 14px 5px 10px; }
+            .frame { padding: 12px; }
+            .container { padding: 12px 22px 14px; }
+            h1 { font-size: 1.6rem; }
+            .plaque { padding: 4px 20px 6px; }
+            .subtitle { font-size: 1rem; margin-top: 4px; }
+            .status { margin: 8px 0 6px; }
+            .pill { padding: 2px 6px; display: flex; align-items: baseline; justify-content: center; gap: 8px; }
+            .pill .value { font-size: 1.4rem; }
+            .level-box { padding: 5px 14px; margin-bottom: 6px; }
+            .speaker-button { width: 44px; height: 44px; font-size: 1.25rem; }
+            .number-wrap { margin: 6px 0 2px; }
+            .feedback { margin: 4px 0 0; }
+            .options.level-1 { grid-template-columns: repeat(3, minmax(90px, 104px)); }
+            .options.level-2 { grid-template-columns: repeat(5, minmax(80px, 100px)); }
+            .options.level-3 { grid-template-columns: repeat(4, minmax(80px, 100px)); }
+            .button-container { margin-top: 8px; }
+            .big-btn { padding: 6px 22px; }
+            .stars { min-height: 1em; font-size: 1.5rem; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
         }
 
-        @media (max-width: 480px) {
-            .sequence-container {
-                gap: 10px;
-            }
+        /* ---------- Find-every game additions ---------- */
+        .ask { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 4px; }
+        .ask .question { font-size: clamp(1.4rem, 4.4vw, 2rem); }
+        .number-display.small {
+            width: clamp(96px, min(22vw, 17vh), 140px); height: clamp(96px, min(22vw, 17vh), 140px);
+            font-size: clamp(3.6rem, min(12vw, 10vh), 5.6rem); border-radius: 18px;
+        }
+        /* tiles: every number in chalk-cream, so children read the numeral (no colour hint) */
+        .options.ten { grid-template-columns: repeat(5, minmax(70px, 108px)); gap: 12px; }
+        .options.ten .option-btn { font-size: clamp(2rem, 5.6vw, 2.8rem); color: var(--chalk); }
+        .option-btn.found { border-color: #FFE45C; box-shadow: 0 0 0 4px rgba(255,228,92,.6), 0 0 18px 4px rgba(255,228,92,.5), 0 7px 0 var(--wood-dark); color: #FFE45C; animation: celebrate .5s ease; }
+        .option-btn.found::after { content: '✔'; position: absolute; top: 2px; right: 6px; font-size: 1rem; color: #9BF5B0; -webkit-text-stroke: 0; text-shadow: none; }
+        .option-btn.reveal { border-color: #9BF5B0; box-shadow: 0 0 0 4px rgba(155,245,176,.55), 0 7px 0 var(--wood-dark); color: #9BF5B0; }
+        .option-btn { position: relative; }
+        .options.locked .option-btn.reveal, .options.locked .option-btn.found { opacity: 1 !important; filter: none !important; }
+        .left-count { text-align: center; color: #E6FFF6; font-size: 1.05rem; min-height: 1.4em; }
+        .left-count b { color: #FFE45C; }
 
-            .ordinal-box {
-                padding: 15px 20px;
-                font-size: 1.2em;
-                min-width: 75px;
-            }
+        /* tracker: each number 1-10 needs 2 stars */
+        .tracker { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; flex: 1; }
+        .chip { min-width: 40px; padding: 2px 6px; border-radius: 10px; text-align: center; border: 2px solid rgba(255,255,255,.4); background: rgba(0,0,0,.15); font-weight: 600; line-height: 1.1; }
+        .chip .d { display: block; font-size: .7rem; letter-spacing: 1px; color: rgba(255,255,255,.45); }
+        .chip.half .d { color: #FFE45C; }
+        .chip.done { border-color: #FFE45C; background: rgba(255,228,92,.18); }
+        .chip.done .d { color: #FFE45C; }
+        .chip.now { border-color: #9BF5B0; box-shadow: 0 0 0 3px rgba(155,245,176,.35); }
 
-            .empty-box {
-                min-height: 60px;
-            }
+        .summary { text-align: center; color: var(--chalk); font-size: clamp(1.1rem, 3.5vw, 1.4rem); line-height: 1.7; margin: 6px 0; }
+        .summary b { color: #FFE45C; }
 
-            .option-btn {
-                padding: 12px 18px;
-                font-size: 1.1em;
-            }
+        @media (max-width: 768px) {
+            .options.ten { grid-template-columns: repeat(5, minmax(48px, 1fr)); gap: 8px; }
+            .options.ten .option-btn { font-size: 1.8rem; border-width: 3px; border-radius: 12px; }
+            .chip { min-width: 30px; font-size: .9rem; }
+        }
+        @media (max-height: 820px) and (min-width: 769px) {
+            .options.ten { grid-template-columns: repeat(5, minmax(70px, 88px)); gap: 10px; }
+            .number-display.small { width: 100px; height: 100px; font-size: 4rem; }
+            .chip { font-size: .9rem; min-width: 34px; }
+        }
+
+        /* ---------- Ordinal sequence additions ---------- */
+        .stars { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; flex: 1; font-size: 1.3rem; line-height: 1; }
+        .stars span { color: rgba(255,255,255,.3); transition: transform .3s; }
+        .stars span.on { color: #FFE45C; text-shadow: 0 0 8px rgba(255,228,92,.6); }
+        .stars span.miss { color: #FF9C9C; }
+        .stars span.now { transform: scale(1.35); color: #9BF5B0; }
+
+        .race { display: grid; grid-template-columns: repeat(5, minmax(70px, 120px)); gap: 12px; justify-content: center; margin: 6px auto 0; position: relative; }
+        .lane { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+        .runner { font-size: clamp(2.2rem, min(7vw, 7vh), 3.2rem); line-height: 1; filter: drop-shadow(0 3px 0 rgba(0,0,0,.25)); }
+        .slot { width: 100%; height: clamp(62px, 10vh, 86px); border-radius: 14px; display: flex; align-items: center; justify-content: center;
+                font-size: clamp(1.7rem, 4.8vw, 2.3rem); font-weight: 700; color: var(--chalk); position: relative; }
+        .slot.given { background: linear-gradient(180deg, var(--wood-light), var(--frame)); border: 4px solid var(--wood); box-shadow: 0 5px 0 var(--wood-dark); color: #4A2A0C; }
+        .slot.blank { border: 4px dashed rgba(255,253,242,.7); background: rgba(0,0,0,.12); cursor: pointer; transition: transform .15s, background .2s; }
+        .slot.blank.active { border-color: #FFE45C; background: rgba(255,228,92,.15); box-shadow: 0 0 0 4px rgba(255,228,92,.35); animation: pulse 1.4s ease-in-out infinite; }
+        .slot.blank.filled { border-style: solid; background: rgba(63,169,245,.35); border-color: #9AD3FF; }
+        .slot.blank.good { border-style: solid; border-color: #9BF5B0; background: rgba(91,211,107,.4); animation: celebrate .5s ease; }
+        .slot.blank.bad { border-style: solid; border-color: #FF8A8A; background: rgba(255,90,95,.4); animation: shake .45s; }
+        .slot.blank.show { border-style: solid; border-color: #9BF5B0; background: rgba(91,211,107,.25); color: #9BF5B0; }
+        @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+        .finish { text-align: center; color: #E6FFF6; font-size: .95rem; margin-top: -2px; letter-spacing: 1px; }
+
+        .options.ord { grid-template-columns: repeat(5, minmax(64px, 110px)); gap: 12px; }
+        .options.ord .option-btn { aspect-ratio: auto; height: clamp(62px, 10vh, 84px); font-size: clamp(1.6rem, 4.6vw, 2.2rem); color: var(--chalk); }
+        .options.ord .option-btn.used { opacity: .3; }
+        .options-label { text-align: center; color: #E6FFF6; font-size: 1.05rem; }
+        .summary { text-align: center; color: var(--chalk); font-size: clamp(1.1rem, 3.5vw, 1.4rem); line-height: 1.7; margin: 6px 0; }
+        .summary b { color: #FFE45C; }
+        .ask { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
+        .ask .question { font-size: clamp(1.2rem, 3.8vw, 1.7rem); }
+
+        @media (max-width: 768px) {
+            .race, .options.ord { grid-template-columns: repeat(5, minmax(50px, 1fr)); gap: 7px; }
+            .slot { height: 60px; font-size: 1.5rem; border-width: 3px; }
+            .options.ord .option-btn { height: 58px; font-size: 1.45rem; border-width: 3px; }
+            .runner { font-size: 2.1rem; }
+            .stars { font-size: 1rem; gap: 3px; }
+        }
+        @media (max-height: 820px) and (min-width: 769px) {
+            .slot { height: 62px; } .options.ord .option-btn { height: 60px; } .runner { font-size: 2.3rem; }
         }
     </style>
 </head>
@@ -362,308 +326,300 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
+    <div class="deco" aria-hidden="true"><span>🍎</span><span>🌸</span><span>💗</span><span>⭐</span><span>🌼</span><span>❤️</span><span>🌸</span><span>💙</span><span>🍎</span></div>
 
+    <div class="topbar">
+        <a class="nav-btn" href="../grade-1-math-index.html" aria-label="Back to Maths"><span>◀</span><span>Maths</span></a>
+    </div>
 
-    
-    
-    
+    <div class="frame">
     <div class="container">
-        <h1>📝 Ordinal Numbers</h1>
-        <div class="instructions">Click a number, then click the empty box to fill it!</div>
-        
-        <div class="score-board">
-            <div>Score: <span class="score" id="score">0</span> / <span id="total">0</span></div>
+        <div class="head"><div class="plaque"><h1 id="title">Ordinal Numbers</h1></div></div>
+        <div class="subtitle">Who came 1st, 2nd, 3rd? Fill in the missing places!</div>
+
+        <div class="status">
+            <div class="pill"><div class="label">Question</div><div class="value"><span id="qnum">1</span> / <span id="qtotal">15</span></div></div>
+            <div class="pill"><div class="label">⭐ Score</div><div class="value" id="score">0</div></div>
+            <div class="pill"><div class="label">🎯 First try</div><div class="value" id="first">0</div></div>
         </div>
 
-        <div class="game-section">
-            <div class="question-number" id="questionNumber">Question 1 of 15</div>
-            
-            <div class="sequence-container" id="sequenceContainer"></div>
+        <div class="level-box"><div class="stars" id="stars" aria-hidden="true"></div></div>
 
-            <div class="options-title">Click on the correct answer:</div>
-            <div class="options-container" id="optionsContainer"></div>
+        <div class="game-area" id="game-area">
+            <div id="play">
+                <div class="ask">
+                    <div class="question" id="question">Fill in the missing place</div>
+                    <button class="speaker-button" id="speaker" onclick="sayTask()" aria-label="Listen">🔊</button>
+                </div>
+                <div class="race" id="race"></div>
+                <div class="feedback" id="feedback" aria-live="polite"></div>
+                <div class="options ord" id="options"></div>
+            </div>
+            <div class="summary hidden" id="summary"></div>
 
-            <button class="check-btn" id="checkBtn" onclick="checkAnswer()" disabled>Check Answer</button>
-            
-            <div class="feedback" id="feedback"></div>
+            <div class="button-container">
+                <button class="big-btn retry-btn hidden" id="check-btn">✔ Check</button>
+                <button class="big-btn next-btn hidden" id="next-btn">Next ➜</button>
+                <button class="big-btn again-btn hidden" id="again-btn">🎮 Play Again</button>
+            </div>
         </div>
+    </div>
+    </div>
+    <div class="tray" aria-hidden="true"></div>
 
-        <div class="controls">
-            <button class="btn" onclick="nextQuestion()">Next Question ➡️</button>
-            <button class="btn btn-home" onclick="window.location.href='../grade-1-math-index.html'">🏠 Home</button>
-        </div>
+    <div class="helper" aria-hidden="true">
+        <svg viewBox="0 0 160 170" xmlns="http://www.w3.org/2000/svg">
+            <path d="M68 140 L64 160 M64 160 L54 164 M64 160 L72 165" stroke="#F2A93B" stroke-width="6" stroke-linecap="round"/>
+            <path d="M96 140 L100 160 M100 160 L90 165 M100 160 L110 164" stroke="#F2A93B" stroke-width="6" stroke-linecap="round"/>
+            <path d="M122 100 Q150 85 146 108 Q156 104 150 124 Q134 120 122 112 Z" fill="#fff" stroke="#D9DEE8" stroke-width="2"/>
+            <ellipse cx="84" cy="108" rx="46" ry="40" fill="#8FA4C2"/>
+            <ellipse cx="78" cy="118" rx="28" ry="24" fill="#B7C6DB"/>
+            <path d="M60 86 Q52 60 62 40 Q74 26 92 32 Q102 40 96 58 Q90 72 96 86 Z" fill="#8FA4C2"/>
+            <path d="M66 42 Q34 40 22 56 Q18 66 30 66 Q32 58 42 58 Q56 58 68 56 Z" fill="#F5C64A"/>
+            <circle cx="78" cy="44" r="9" fill="#fff"/><circle cx="80" cy="45" r="5" fill="#1E2A4A"/><circle cx="82" cy="43" r="1.8" fill="#fff"/>
+            <circle cx="86" cy="58" r="5" fill="#F7A1B0" opacity=".7"/>
+            <path d="M62 98 Q34 70 30 52 Q48 62 58 74 Q60 64 66 60 Q70 80 72 98 Z" fill="#6F86A8"/>
+        </svg>
+        <div class="bubble">Tap the <b>yellow box</b>, then tap the right word: <b>1st, 2nd, 3rd…</b></div>
     </div>
 
     <script>
-        let score = 0;
-        let currentQuestion = 0;
-        let selectedAnswer = null;
-        let correctAnswers = {};
-        let userAnswers = {};
-        let selectedButton = null;
+        (function () {
+            const t = document.getElementById('title'), cols = ['#FF5A5F','#FF9F1C','#FFD23F','#5BD36B','#3FA9F5','#B07CFF','#FF6FB5','#2FD9C4'];
+            let k = 0;
+            t.innerHTML = t.textContent.split('').map(c => c === ' ' ? ' ' : `<span class="ch" style="color:${cols[k++ % cols.length]}">${c}</span>`).join('');
+        })();
 
-        const ordinals = ['1st', '2nd', '3rd', '4th', '5th'];
-        
-        // All possible questions with missing positions
-        const questions = [
-            // Pattern (a): missing 3rd
-            {sequence: ['1st', '2nd', null, '4th', '5th'], answers: {2: '3rd'}},
-            // Pattern (b): missing 5th
-            {sequence: ['1st', '2nd', '3rd', '4th', null], answers: {4: '5th'}},
-            // Pattern (c): missing 2nd
-            {sequence: ['1st', null, '3rd', '4th', '5th'], answers: {1: '2nd'}},
-            // Additional variations with single blank
-            {sequence: [null, '2nd', '3rd', '4th', '5th'], answers: {0: '1st'}},
-            {sequence: ['1st', '2nd', '3rd', null, '5th'], answers: {3: '4th'}},
-            // Variations with multiple blanks
-            {sequence: ['1st', null, '3rd', null, '5th'], answers: {1: '2nd', 3: '4th'}},
-            {sequence: [null, '2nd', null, '4th', '5th'], answers: {0: '1st', 2: '3rd'}},
-            {sequence: ['1st', '2nd', null, '4th', null], answers: {2: '3rd', 4: '5th'}},
-            {sequence: [null, null, '3rd', '4th', '5th'], answers: {0: '1st', 1: '2nd'}},
-            {sequence: ['1st', '2nd', '3rd', null, null], answers: {3: '4th', 4: '5th'}},
-            // More complex patterns
-            {sequence: [null, '2nd', '3rd', null, '5th'], answers: {0: '1st', 3: '4th'}},
-            {sequence: ['1st', null, null, '4th', '5th'], answers: {1: '2nd', 2: '3rd'}},
-            {sequence: ['1st', '2nd', null, null, '5th'], answers: {2: '3rd', 3: '4th'}},
-            {sequence: [null, '2nd', '3rd', '4th', null], answers: {0: '1st', 4: '5th'}},
-            {sequence: ['1st', null, '3rd', '4th', null], answers: {1: '2nd', 4: '5th'}}
-        ];
+        // ================= Settings =================
+        const ORD   = ['1st', '2nd', '3rd', '4th', '5th'];
+        const SAY   = ['first', 'second', 'third', 'fourth', 'fifth'];
+        const ANIMALS = ['🐰', '🐢', '🦊', '🐸', '🐻', '🐱', '🐶', '🐵', '🐼', '🐷'];
+        // the same 15 puzzles as before: positions (0-4) that are empty
+        const PUZZLES = [[2],[4],[1],[0],[3],[1,3],[0,2],[2,4],[0,1],[3,4],[0,3],[1,2],[2,3],[0,4],[1,4]];
 
-        function speak(text) {
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.rate = 0.9;
-                utterance.pitch = 1.2;
-                utterance.volume = 1;
-                speechSynthesis.speak(utterance);
-            }
+        const PAUSE_AFTER_PRAISE = 900;
+        const MIN_AFTER_CORRECT  = 2200;
+
+        let order = [], q = 0, score = 0, first = 0, attempt = 0, blanks = [], answers = {}, active = null, locked = false, results = [];
+        let waitTimer = null, speechToken = 0;
+
+        const $ = id => document.getElementById(id);
+        const race = $('race'), options = $('options'), feedback = $('feedback'), speakerBtn = $('speaker');
+        const checkBtn = $('check-btn'), nextBtn = $('next-btn'), againBtn = $('again-btn');
+        const praise = ["Great!", "Wonderful!", "Excellent!", "Amazing!", "Perfect!", "Fantastic!", "Super!", "Brilliant!"];
+
+        // ================= Sounds =================
+        let audioContext = null;
+        function initAudio() {
+            try { if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                  if (audioContext.state === 'suspended') audioContext.resume(); } catch (e) {}
+        }
+        function tone(notes, type, vol, len) {
+            initAudio(); if (!audioContext) return;
+            const now = audioContext.currentTime, o = audioContext.createOscillator(), g = audioContext.createGain();
+            o.connect(g); g.connect(audioContext.destination); o.type = type;
+            notes.forEach(([f, t]) => o.frequency.setValueAtTime(f, now + t));
+            g.gain.setValueAtTime(vol, now); g.gain.exponentialRampToValueAtTime(0.01, now + len);
+            o.start(now); o.stop(now + len);
+        }
+        const playPlace = () => tone([[659.25, 0], [880, .08]], 'triangle', .2, .2);
+        const playSuccessSound = () => { tone([[523.25, 0], [659.25, .1], [783.99, .2]], 'sine', .3, .4);
+                                         tone([[659.25, 0], [783.99, .1], [1046.5, .2]], 'triangle', .15, .4); };
+        const playOopsSound = () => tone([[392.00, 0], [349.23, .15]], 'sine', .2, .3);
+
+        // ================= Speech =================
+        const canSpeak = 'speechSynthesis' in window;
+        function englishVoice() {
+            if (!canSpeak) return null;
+            const v = speechSynthesis.getVoices();
+            return v.find(x => /^en-GB/i.test(x.lang)) || v.find(x => /^en/i.test(x.lang)) || null;
+        }
+        if (canSpeak) speechSynthesis.onvoiceschanged = () => {};
+        function clean(text) { return text.replace(/[^\w\s!?.,'-]/g, '').replace(/\s+/g, ' ').trim(); }
+        function speak(text, done, pause = 0, rate = 0.9) {
+            const token = ++speechToken;
+            let finished = false;
+            const finish = () => {
+                if (finished || token !== speechToken) return;
+                finished = true; speakerBtn.classList.remove('speaking');
+                if (done) waitTimer = setTimeout(done, pause);
+            };
+            const words = clean(text).split(' ').length;
+            const backup = 1200 + words * 520 / rate;
+            if (!canSpeak) { if (done) waitTimer = setTimeout(done, backup + pause); return; }
+            speechSynthesis.cancel();                 // never let messages pile up
+            const u = new SpeechSynthesisUtterance(clean(text));
+            const v = englishVoice(); if (v) u.voice = v;
+            u.lang = v ? v.lang : 'en-GB'; u.rate = rate; u.pitch = 1.1; u.volume = 1;
+            u.onend = finish; u.onerror = finish;
+            waitTimer = setTimeout(finish, backup);
+            try { speechSynthesis.speak(u); } catch (e) { finish(); }
+        }
+        function stopAll() { clearTimeout(waitTimer); speechToken++; if (canSpeak) speechSynthesis.cancel(); speakerBtn.classList.remove('speaking'); }
+
+        function sayTask() {
+            if (locked) return;
+            initAudio(); speakerBtn.classList.add('speaking');
+            speak(blanks.length === 1 ? 'Which place is missing?' : 'Which places are missing? Tap a yellow box, then tap the answer.', null, 0, 0.88);
+        }
+
+        // ================= Game =================
+        function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+        function buildStars() { $('stars').innerHTML = PUZZLES.map((_, i) => `<span id="st${i}">★</span>`).join(''); }
+        function updateStars() {
+            PUZZLES.forEach((_, i) => $('st' + i).className = results[i] === 1 ? 'on' : results[i] === 0 ? 'miss' : (i === q && !locked ? 'now' : ''));
+            $('qnum').textContent = Math.min(q + 1, PUZZLES.length); $('qtotal').textContent = PUZZLES.length;
+            $('score').textContent = score; $('first').textContent = first;
         }
 
         function loadQuestion() {
-            if (currentQuestion >= questions.length) {
-                showFinalScore();
+            stopAll();
+            locked = false; attempt = 0; answers = {};
+            blanks = order[q].slice();
+            const animals = shuffle(ANIMALS.slice()).slice(0, 5);
+            race.innerHTML = '';
+            for (let i = 0; i < 5; i++) {
+                const lane = document.createElement('div'); lane.className = 'lane';
+                const slot = document.createElement('div');
+                slot.id = 'slot' + i;
+                if (blanks.includes(i)) {
+                    slot.className = 'slot blank'; slot.textContent = '?';
+                    slot.setAttribute('role', 'button'); slot.setAttribute('aria-label', 'Empty place');
+                    slot.addEventListener('click', () => { initAudio(); tapSlot(i); });
+                } else { slot.className = 'slot given'; slot.textContent = ORD[i]; }
+                lane.innerHTML = `<div class="runner">${animals[i]}</div>`;
+                lane.appendChild(slot); race.appendChild(lane);
+            }
+            options.innerHTML = '';
+            ORD.forEach((o, i) => {
+                const b = document.createElement('button');
+                b.className = 'option-btn'; b.textContent = o; b.dataset.i = i;
+                b.addEventListener('click', () => { initAudio(); tapOption(i); });
+                options.appendChild(b);
+            });
+            $('question').textContent = blanks.length === 1 ? 'Fill in the missing place' : `Fill in the ${blanks.length} missing places`;
+            feedback.textContent = ''; feedback.className = 'feedback';
+            checkBtn.classList.add('hidden'); nextBtn.classList.add('hidden');
+            setActive(blanks[0]);
+            updateStars();
+            waitTimer = setTimeout(sayTask, 500);
+        }
+
+        function setActive(i) {
+            active = i;
+            blanks.forEach(b => $('slot' + b).classList.toggle('active', b === i && !locked));
+        }
+        function refreshOptions() {
+            const used = Object.values(answers);
+            options.querySelectorAll('.option-btn').forEach(b => b.classList.toggle('used', used.includes(+b.dataset.i)));
+        }
+
+        function tapSlot(i) {
+            if (locked) return;
+            if (answers[i] !== undefined) {           // tap a filled box to empty it
+                delete answers[i];
+                const s = $('slot' + i); s.textContent = '?'; s.classList.remove('filled', 'bad');
+                refreshOptions(); checkBtn.classList.add('hidden');
+            }
+            setActive(i);
+        }
+
+        function tapOption(k) {
+            if (locked || active === null) return;
+            // a word already placed in another box moves here
+            Object.keys(answers).forEach(s => { if (answers[s] === k) { delete answers[s]; const el = $('slot' + s); el.textContent = '?'; el.classList.remove('filled', 'bad'); } });
+            answers[active] = k;
+            const s = $('slot' + active); s.textContent = ORD[k]; s.classList.remove('bad'); s.classList.add('filled');
+            playPlace(); refreshOptions();
+            speak(SAY[k], null, 0, 0.9);
+            const empty = blanks.find(b => answers[b] === undefined);
+            setActive(empty === undefined ? null : empty);
+            if (empty === undefined) {
+                if (blanks.length === 1) check();                    // one box: check straight away
+                else checkBtn.classList.remove('hidden');
+            }
+        }
+
+        function check() {
+            if (locked) return;
+            attempt++;
+            const wrong = blanks.filter(b => answers[b] !== b);
+            checkBtn.classList.add('hidden');
+
+            if (wrong.length === 0) {
+                locked = true; setActive(null);
+                blanks.forEach(b => { const s = $('slot' + b); s.classList.remove('filled'); s.classList.add('good'); });
+                score++; if (attempt === 1) first++;
+                results[q] = 1; updateStars();
+                options.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+                const msg = praise[Math.floor(Math.random() * praise.length)];
+                feedback.textContent = `✓ ${msg}`; feedback.className = 'feedback correct';
+                playSuccessSound();
+                const said = blanks.map(b => SAY[b]).join(' and ');
+                const started = Date.now();
+                // ding -> "Third! Excellent!" -> pause -> next question
+                setTimeout(() => speak(`${said}! ${msg}`, () => {
+                    waitTimer = setTimeout(goNext, Math.max(0, MIN_AFTER_CORRECT - (Date.now() - started)));
+                }, PAUSE_AFTER_PRAISE), 450);
                 return;
             }
 
-            selectedAnswer = null;
-            selectedButton = null;
-            userAnswers = {};
-            hasAnswered = false;
-            document.getElementById('feedback').textContent = '';
-            document.getElementById('feedback').className = 'feedback';
-            document.getElementById('checkBtn').disabled = true;
-            
-            const question = questions[currentQuestion];
-            correctAnswers = question.answers;
+            playOopsSound();
+            wrong.forEach(b => { const s = $('slot' + b); s.classList.remove('filled'); s.classList.add('bad'); });
+            blanks.filter(b => !wrong.includes(b)).forEach(b => { const s = $('slot' + b); s.classList.remove('filled'); s.classList.add('good'); });
 
-            // Update question number
-            document.getElementById('questionNumber').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
-
-            // Build sequence
-            const sequenceContainer = document.getElementById('sequenceContainer');
-            sequenceContainer.innerHTML = '';
-
-            question.sequence.forEach((item, index) => {
-                const box = document.createElement('div');
-                box.className = item === null ? 'ordinal-box empty-box' : 'ordinal-box';
-                box.textContent = item === null ? '____' : item;
-                
-                if (item === null) {
-                    box.id = `empty-${index}`;
-                    box.setAttribute('data-index', index);
-                    box.onclick = () => fillBox(index, box);
-                }
-                
-                sequenceContainer.appendChild(box);
-            });
-
-            // Create options (all ordinals)
-            const optionsContainer = document.getElementById('optionsContainer');
-            optionsContainer.innerHTML = '';
-
-            // Shuffle ordinals for display
-            const shuffledOrdinals = [...ordinals].sort(() => Math.random() - 0.5);
-
-            shuffledOrdinals.forEach(ordinal => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.textContent = ordinal;
-                btn.onclick = () => selectOption(ordinal, btn);
-                optionsContainer.appendChild(btn);
-            });
-
-            const emptyCount = Object.keys(correctAnswers).length;
-            speak(`Question ${currentQuestion + 1}. Fill in the ${emptyCount === 1 ? 'missing ordinal number' : emptyCount + ' missing ordinal numbers'}. First click a number, then click where it goes.`);
-        }
-
-        function selectOption(ordinal, button) {
-            if (hasAnswered) return;
-            
-            // Deselect previous selection
-            if (selectedButton) {
-                selectedButton.classList.remove('selected');
-            }
-
-            // Select current option
-            button.classList.add('selected');
-            selectedAnswer = ordinal;
-            selectedButton = button;
-
-            speak(ordinal);
-            
-            // For single blank questions, enable check button immediately
-            if (Object.keys(correctAnswers).length === 1) {
-                const emptyIndex = Object.keys(correctAnswers)[0];
-                const box = document.getElementById(`empty-${emptyIndex}`);
-                box.textContent = ordinal;
-                box.classList.add('filled');
-                userAnswers[emptyIndex] = ordinal;
-                document.getElementById('checkBtn').disabled = false;
-            }
-        }
-
-        function fillBox(index, box) {
-            if (!selectedAnswer) {
-                speak('Please select a number first');
-                return;
-            }
-
-            if (box.classList.contains('filled')) {
-                // Allow replacing
-                const oldAnswer = userAnswers[index];
-                if (oldAnswer) {
-                    // Re-enable the old answer button
-                    document.querySelectorAll('.option-btn').forEach(btn => {
-                        if (btn.textContent === oldAnswer) {
-                            btn.classList.remove('used');
-                        }
-                    });
-                }
-            }
-
-            // Fill the box
-            box.textContent = selectedAnswer;
-            box.classList.add('filled');
-            userAnswers[index] = selectedAnswer;
-
-            // Mark the option as used
-            if (selectedButton) {
-                selectedButton.classList.add('used');
-                selectedButton.classList.remove('selected');
-            }
-
-            selectedAnswer = null;
-            selectedButton = null;
-
-            // Check if all blanks are filled
-            const totalBlanks = Object.keys(correctAnswers).length;
-            const filledBlanks = Object.keys(userAnswers).length;
-
-            if (filledBlanks === totalBlanks) {
-                document.getElementById('checkBtn').disabled = false;
-            }
-        }
-
-        function checkAnswer() {
-            if (hasAnswered) return;
-            hasAnswered = true;
-            
-            let allCorrect = true;
-            let correctCount = 0;
-
-            // Check each answer
-            Object.keys(correctAnswers).forEach(index => {
-                const box = document.getElementById(`empty-${index}`);
-                const correctAnswer = correctAnswers[index];
-                const userAnswer = userAnswers[index];
-
-                if (userAnswer === correctAnswer) {
-                    box.classList.remove('filled');
-                    box.classList.add('correct');
-                    correctCount++;
-                } else {
-                    box.classList.remove('filled');
-                    box.classList.add('wrong');
-                    allCorrect = false;
-                    
-                    // Show correct answer after a delay
-                    setTimeout(() => {
-                        box.textContent = correctAnswer;
-                        box.classList.remove('wrong');
-                        box.classList.add('correct');
-                    }, 1500);
-                }
-            });
-
-            const feedback = document.getElementById('feedback');
-            const totalBlanks = Object.keys(correctAnswers).length;
-
-            if (allCorrect) {
-                score++;
-                document.getElementById('score').textContent = score;
-                feedback.textContent = '✓ Perfect! All correct!';
-                feedback.className = 'feedback correct';
-                speak('Perfect! All correct!');
-                showCelebration('🎉');
+            if (attempt === 1) {
+                // first mistake: the wrong words go back, try once more
+                feedback.textContent = '✗ Not quite! Look at the order and try again.'; feedback.className = 'feedback wrong';
+                speak('Not quite. Say them in order, first, second, third, and try again!', null);
+                setTimeout(() => {
+                    if (locked) return;
+                    wrong.forEach(b => { delete answers[b]; const s = $('slot' + b); s.textContent = '?'; s.classList.remove('bad'); });
+                    blanks.filter(b => !wrong.includes(b)).forEach(b => { $('slot' + b).classList.remove('good'); $('slot' + b).classList.add('filled'); });
+                    refreshOptions(); setActive(wrong[0]);
+                }, 1300);
             } else {
-                feedback.textContent = `You got ${correctCount} out of ${totalBlanks} correct`;
-                feedback.className = 'feedback wrong';
-                speak(`You got ${correctCount} out of ${totalBlanks} correct`);
+                // second mistake: show the right answers
+                locked = true; setActive(null);
+                results[q] = 0; updateStars();
+                options.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+                setTimeout(() => wrong.forEach(b => { const s = $('slot' + b); s.classList.remove('bad'); s.classList.add('show'); s.textContent = ORD[b]; }), 900);
+                const said = wrong.map(b => SAY[b]).join(' and ');
+                feedback.textContent = 'Here is the answer 👀'; feedback.className = 'feedback info';
+                speak(`The answer is ${said}.`, () => nextBtn.classList.remove('hidden'), 300);
             }
-
-            document.getElementById('total').textContent = currentQuestion + 1;
-            document.getElementById('checkBtn').disabled = true;
-
-            // Disable all option buttons
-            document.querySelectorAll('.option-btn').forEach(btn => {
-                btn.classList.add('used');
-            });
         }
 
-        function nextQuestion() {
-            currentQuestion++;
+        function goNext() {
+            q++;
+            if (q >= order.length) endGame(); else loadQuestion();
+        }
+
+        function endGame() {
+            stopAll(); locked = true;
+            $('play').classList.add('hidden'); nextBtn.classList.add('hidden'); checkBtn.classList.add('hidden');
+            const pct = Math.round(score / PUZZLES.length * 100);
+            $('summary').innerHTML = `🏆 <b>Well done!</b> 🏆<br>You got <b>${score}</b> out of <b>${PUZZLES.length}</b> (${pct}%)<br>Right first time: <b>${first}</b>`;
+            $('summary').classList.remove('hidden'); againBtn.classList.remove('hidden');
+            updateStars(); playSuccessSound();
+            speak(`Well done! You got ${score} out of ${PUZZLES.length}!`, null);
+        }
+
+        function startGame() {
+            stopAll();
+            // easy puzzles (one missing) first, then two missing - each part shuffled
+            order = [...shuffle(PUZZLES.filter(p => p.length === 1)), ...shuffle(PUZZLES.filter(p => p.length === 2))];
+            q = 0; score = 0; first = 0; results = [];
+            $('summary').classList.add('hidden'); againBtn.classList.add('hidden'); $('play').classList.remove('hidden');
             loadQuestion();
         }
 
-        function showFinalScore() {
-            const gameSection = document.querySelector('.game-section');
-            const percentage = Math.round((score / questions.length) * 100);
-            
-            gameSection.innerHTML = `
-                <div style="text-align: center; padding: 40px;">
-                    <div style="font-size: 4em; margin-bottom: 20px;">🎊</div>
-                    <h2 style="font-size: 2.5em; color: #2C3E50; margin-bottom: 20px;">Game Complete!</h2>
-                    <div style="font-size: 2em; color: #3498DB; margin-bottom: 20px;">
-                        Final Score: <span style="color: #F1C40F; font-weight: bold;">${score}</span> / ${questions.length}
-                    </div>
-                    <div style="font-size: 1.8em; color: #2ECC71; font-weight: bold;">
-                        ${percentage}% Correct!
-                    </div>
-                    <button class="btn" onclick="location.reload()" style="margin-top: 30px; font-size: 1.3em;">
-                        🔄 Play Again
-                    </button>
-                </div>
-            `;
-
-            speak(`Game complete! You scored ${score} out of ${questions.length}. That's ${percentage} percent!`);
-            
-            if (percentage === 100) {
-                showCelebration('🏆');
-            } else if (percentage >= 80) {
-                showCelebration('⭐');
-            }
-        }
-
-        function showCelebration(emoji) {
-            const celebration = document.createElement('div');
-            celebration.className = 'celebration';
-            celebration.textContent = emoji;
-            document.body.appendChild(celebration);
-            setTimeout(() => celebration.remove(), 500);
-        }
-
-        // Initialize
-        loadQuestion();
+        checkBtn.addEventListener('click', () => { initAudio(); check(); });
+        nextBtn.addEventListener('click', () => { stopAll(); goNext(); });
+        againBtn.addEventListener('click', startGame);
+        buildStars();
+        startGame();
     </script>
 </body>
 </html>
