@@ -238,18 +238,23 @@ function chanter(){if(chant){chant=false;speechSynthesis.cancel();$("chantBtn").
  suite();}
 // ---------- QUIZ ----------
 let qL="",qOpts=[],qOk=0,qN=0,streak=0,qBloque=false;const QTOT=10;
-function startQuiz(){qOk=0;qN=0;streak=0;majQ();question();}
+function startQuiz(){clearTimeout(qSuite);qOk=0;qN=0;streak=0;majQ();question();}
 function majQ(){$("qOk").textContent=qOk;$("qStreak").textContent=streak;$("qProg").style.width=(qN/QTOT*100)+"%";}
 function question(){qBloque=false;qErr=false;qL=ALPHA[Math.floor(Math.random()*26)];qOpts=melange([qL,...melange(ALPHA.filter(x=>x!==qL)).slice(0,2)]);dessinerOpts();
  lulu(null,`Question ${qN+1} sur ${QTOT} : écoute bien !`);setTimeout(direQ,350);}
 function dessinerOpts(){$("opts").innerHTML=qOpts.map(l=>`<div class="tileW" data-l="${l}" onclick="repondre('${l}',this)">${Lspan(l)}</div>`).join("");}
 function direQ(){dire(qL);}
-let qErr=false;
+let qErr=false,qSuite=null;
+// la voix parle d'abord, puis on attend 2,5 secondes avant la question suivante
+function apresParole(texte){let fait=false;const go=()=>{if(fait)return;fait=true;clearTimeout(secours);
+  qSuite=setTimeout(()=>{if(modeCur!=="quiz")return;qN>=QTOT?finQuiz():question();},2500);};
+ const secours=setTimeout(go,7000); // au cas où la voix ne signale pas la fin
+ dire(texte,go);}
 function repondre(l,el){if(qBloque||el.classList.contains("no"))return;
  if(l===qL){qBloque=true;qN++;if(!qErr){qOk++;streak++;}el.classList.add("ok");sOk();
   const b=qErr?"Voilà !":BRAVO[Math.floor(Math.random()*BRAVO.length)];
   lulu("hop",`${b} C'est ${aff(qL)} comme ${MOTS[qL][0]} ${MOTS[qL][1]}`+(!qErr&&streak>=3?` 🔥 ${streak} de suite !`:""));
-  dire(b+" "+qL+", comme "+MOTS[qL][0]);majQ();setTimeout(()=>qN>=QTOT?finQuiz():question(),1900);}
+  majQ();apresParole(b+" "+qL+", comme "+MOTS[qL][0]);}
  else{qErr=true;streak=0;el.classList.add("no");sNon();lulu("sad","Oups ! Écoute encore et essaie une autre lettre. 💪");majQ();setTimeout(direQ,700);}}
 function finQuiz(){const s=qOk>=9?3:qOk>=6?2:1;sGagne();confettis();lulu("hop","Quiz terminé !");dire("Bravo ! Tu as "+qOk+" bonnes réponses sur "+QTOT+".");
  $("wstars").innerHTML="★".repeat(s)+"<i>"+"★".repeat(3-s)+"</i>";$("wtitle").textContent=s===3?"Champion !":"Bravo !";$("wtext").textContent=`Tu as ${qOk} bonnes réponses du premier coup sur ${QTOT}.`;$("win").style.display="flex";}
