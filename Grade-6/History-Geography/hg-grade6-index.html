@@ -8,577 +8,289 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-TCBV2GCV');</script>
     <!-- End Google Tag Manager -->
-    
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grade 6 - History and Geography Learning Center</title>
+    <meta name="description" content="Grade 6 History and Geography games and activities for primary pupils in Mauritius: Land Use, maps, pie charts and more.">
+    <meta name="theme-color" content="#0E7C86">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --ink: #1E2A4A;
+            --ink-soft: #4A5675;
+            --hg: #0E7C86;
+            --hg-dark: #09575E;
+            --hg-light: #D9F2F4;
+            --font: 'Fredoka', 'Baloo 2', 'Arial Rounded MT Bold', 'Trebuchet MS', Arial, sans-serif;
         }
 
         body {
-            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
-            background: linear-gradient(to bottom, #87CEEB 0%, #98D8E8 30%, #FFE5B4 60%, #90EE90 100%);
+            font-family: var(--font);
+            color: var(--ink);
+            background: linear-gradient(to bottom, #7FD3F7 0%, #B8E9FB 55%, #E8F9FF 100%);
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 20px 16px 200px;
             position: relative;
             overflow-x: hidden;
         }
 
-        /* Animated Background Scene */
-        .background-scene {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* Sun */
+        /* ---------- Background scene ---------- */
+        .scene { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
         .sun {
-            position: absolute;
-            top: 50px;
-            right: 100px;
-            width: 120px;
-            height: 120px;
-            background: radial-gradient(circle, #FFD700 0%, #FFA500 100%);
-            border-radius: 50%;
-            box-shadow: 0 0 60px rgba(255, 215, 0, 0.8);
-            animation: sunPulse 4s ease-in-out infinite;
+            position: absolute; top: 36px; right: 6%;
+            width: 110px; height: 110px; border-radius: 50%;
+            background: radial-gradient(circle, #FFE45C 0%, #FFB627 100%);
+            box-shadow: 0 0 60px 20px rgba(255, 214, 70, .55);
+            animation: sunPulse 5s ease-in-out infinite;
         }
-
-        @keyframes sunPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        /* Clouds */
+        @keyframes sunPulse { 50% { transform: scale(1.06); } }
         .cloud {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 100px;
-            animation: cloudFloat 35s linear infinite;
+            position: absolute; left: -180px;
+            background: #fff; border-radius: 100px; opacity: .9;
+            animation: drift linear infinite;
+        }
+        .cloud::before, .cloud::after { content: ''; position: absolute; background: #fff; border-radius: 50%; }
+        .cloud-1 { width: 110px; height: 38px; top: 90px;  animation-duration: 60s; }
+        .cloud-2 { width: 140px; height: 46px; top: 170px; animation-duration: 80s; animation-delay: -30s; }
+        .cloud-3 { width: 90px;  height: 32px; top: 260px; animation-duration: 70s; animation-delay: -50s; }
+        .cloud::before { width: 50%; height: 140%; top: -60%; left: 15%; }
+        .cloud::after  { width: 40%; height: 110%; top: -40%; right: 15%; }
+        @keyframes drift { to { transform: translateX(calc(100vw + 360px)); } }
+        .plane { position: absolute; left: -60px; top: 14%; font-size: 30px; animation: drift 45s linear infinite; }
+        .island { position: absolute; bottom: 0; left: 0; width: 100%; height: 220px; }
+        .island svg { width: 100%; height: 100%; display: block; }
+        .wave { animation: waveMove 6s ease-in-out infinite; }
+        @keyframes waveMove { 50% { transform: translateX(-30px); } }
+        .palm-sway { animation: sway 4s ease-in-out infinite; }
+        @keyframes sway { 50% { transform: rotate(2deg); } }
+
+        /* ---------- Layout ---------- */
+        .container { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+
+        .topbar { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+        .topbar .spacer { flex: 1; }
+        .nav-btn, .icon-btn {
+            font-family: var(--font); font-weight: 600; color: var(--ink);
+            background: #fff; border: none; border-radius: 999px; cursor: pointer;
+            text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+            box-shadow: 0 5px 0 rgba(30, 42, 74, .18); transition: transform .15s;
+        }
+        .nav-btn { font-size: 1.2rem; padding: 9px 20px 9px 16px; }
+        .nav-btn.g6 { background: #FF7A2F; color: #fff; box-shadow: 0 5px 0 #C9520F; }
+        .icon-btn { font-size: 1rem; padding: 8px 16px; }
+        .nav-btn:hover, .icon-btn:hover { transform: translateY(-2px); }
+        .nav-btn:active, .icon-btn:active { transform: translateY(3px); box-shadow: none; }
+
+        /* ---------- Hero ---------- */
+        .hero {
+            display: flex; align-items: center; gap: 24px;
+            background: #fff; border-radius: 32px; padding: 22px 32px;
+            border-bottom: 10px solid var(--hg);
+            box-shadow: 0 18px 40px rgba(30, 42, 74, .12);
+        }
+        .dodo { flex: 0 0 140px; }
+        .dodo svg { width: 140px; height: auto; display: block; }
+        .wing { transform-origin: 62px 98px; animation: wave 1.6s ease-in-out infinite; }
+        @keyframes wave { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(-28deg); } }
+        .dodo-body { animation: hop 3s ease-in-out infinite; }
+        @keyframes hop { 0%,70%,100% { transform: translateY(0); } 80% { transform: translateY(-8px); } 90% { transform: translateY(0); } }
+        .hero-text { flex: 1; }
+        .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+        .badge { display: inline-flex; align-items: center; gap: 6px; font-size: .95rem; font-weight: 600; padding: 4px 14px; border-radius: 999px; color: #fff; }
+        .badge.grade { background: #FF7A2F; }
+        .badge.subj { background: var(--hg); }
+        h1 { font-size: 2.6rem; line-height: 1.1; margin: 8px 0 12px; }
+        .bubble {
+            display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap;
+            background: #FFF6D6; border: 3px solid #FFD95A; border-radius: 20px;
+            padding: 10px 16px; font-size: 1.3rem; font-weight: 500;
+        }
+        .read-btn {
+            font-family: var(--font); font-size: 1rem; font-weight: 600;
+            background: #2FA3C2; color: #fff; border: none; border-radius: 999px;
+            padding: 8px 16px; cursor: pointer; box-shadow: 0 4px 0 #1F7A93;
+        }
+        .read-btn:active { transform: translateY(3px); box-shadow: none; }
+        .read-btn.speaking { background: #E2574C; box-shadow: 0 4px 0 #A83A31; }
+
+        .section-title { text-align: center; font-size: 1.6rem; margin: 34px 0 18px; }
+        .section-title span { background: #fff; padding: 6px 22px; border-radius: 999px; box-shadow: 0 4px 0 rgba(30, 42, 74, .1); }
+
+        /* ---------- Unit cards (colours from the book's contents page) ---------- */
+        .units { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+        .unit {
+            --uc: #999; --uc-dark: #666;
+            position: relative; display: flex; flex-direction: column; align-items: center; text-align: center;
+            background: var(--uc); color: #fff; border-radius: 24px; padding: 18px 12px 16px;
+            box-shadow: 0 8px 0 var(--uc-dark), 0 14px 24px rgba(0, 0, 0, .15);
+            text-decoration: none; border: none; font-family: var(--font); cursor: pointer;
+            transition: transform .2s, box-shadow .2s;
+        }
+        .unit:hover { transform: translateY(-6px); box-shadow: 0 14px 0 var(--uc-dark), 0 20px 28px rgba(0, 0, 0, .18); }
+        .unit:active { transform: translateY(5px); box-shadow: 0 3px 0 var(--uc-dark); }
+        .unit.locked { cursor: default; filter: saturate(.55); opacity: .75; }
+        .unit.locked:hover, .unit.locked:active { transform: none; box-shadow: 0 8px 0 var(--uc-dark), 0 14px 24px rgba(0, 0, 0, .15); }
+        .u1 { --uc: #2E9E4F; --uc-dark: #1E6E36; }
+        .u2 { --uc: #E2572B; --uc-dark: #A83C19; }
+        .u3 { --uc: #2F7BD6; --uc-dark: #1F5699; }
+        .u4 { --uc: #B4479E; --uc-dark: #82306F; }
+        .u5 { --uc: #D63A3A; --uc-dark: #A12424; }
+        .unit-num { font-size: .9rem; font-weight: 700; background: rgba(255, 255, 255, .25); padding: 2px 12px; border-radius: 999px; }
+        .unit-emoji {
+            width: 72px; height: 72px; margin: 10px 0 8px; border-radius: 50%; background: #fff;
+            display: grid; place-items: center; font-size: 2.4rem; box-shadow: 0 4px 0 rgba(0, 0, 0, .15);
+        }
+        .unit-title { font-size: 1.15rem; font-weight: 600; line-height: 1.15; }
+        .unit-sub { font-size: .85rem; opacity: .92; margin-top: 4px; line-height: 1.25; }
+        .unit-status {
+            margin-top: 10px; font-size: .9rem; font-weight: 600;
+            background: #fff; color: var(--uc-dark); padding: 3px 12px; border-radius: 999px;
+        }
+        .unit.locked .unit-status { background: rgba(255, 255, 255, .3); color: #fff; }
+
+        /* ---------- Unit panel ---------- */
+        .panel {
+            margin-top: 40px; background: #fff; border-radius: 30px; overflow: hidden;
+            box-shadow: 0 18px 40px rgba(30, 42, 74, .12);
+            scroll-margin-top: 16px;
+        }
+        .panel-head {
+            display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+            background: #2E9E4F; color: #fff; padding: 20px 26px;
+        }
+        .panel-head .pe { width: 62px; height: 62px; border-radius: 50%; background: #fff; display: grid; place-items: center; font-size: 2.1rem; flex: none; }
+        .panel-head h2 { font-size: 1.9rem; line-height: 1.1; }
+        .panel-head h2 small { display: block; font-size: 1rem; font-weight: 500; opacity: .92; }
+        .progress { margin-left: auto; min-width: 220px; }
+        .progress-text { font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
+        .bar { height: 14px; border-radius: 999px; background: rgba(255, 255, 255, .3); overflow: hidden; }
+        .bar span { display: block; height: 100%; width: 0; border-radius: 999px; background: #FFD95A; transition: width .6s; }
+        .panel-body { padding: 22px; }
+
+        /* ---------- Topics (accordion) ---------- */
+        .topic { border: 3px solid #E3EEE6; border-radius: 22px; margin-bottom: 18px; overflow: hidden; }
+        .topic-head {
+            width: 100%; display: flex; align-items: center; gap: 14px;
+            background: #F1FAF3; border: none; cursor: pointer; text-align: left;
+            padding: 14px 18px; font-family: var(--font); color: var(--ink);
+        }
+        .topic-head:hover { background: #E6F6EA; }
+        .topic-head:focus-visible { outline: 4px solid var(--ink); outline-offset: -4px; }
+        .tnum {
+            flex: none; width: 52px; height: 52px; border-radius: 16px;
+            background: #2E9E4F; color: #fff; display: grid; place-items: center;
+            font-size: 1.5rem; font-weight: 700; box-shadow: 0 4px 0 #1E6E36;
+        }
+        .topic.empty .tnum { background: #A9B6CC; box-shadow: 0 4px 0 #7D8AA3; }
+        .ttext { flex: 1; }
+        .ttext b { display: block; font-size: 1.35rem; font-weight: 600; }
+        .ttext small { font-size: .95rem; color: var(--ink-soft); }
+        .arrow { font-size: 1.5rem; color: #2E9E4F; transition: transform .25s; }
+        .topic.closed .arrow { transform: rotate(-90deg); }
+        .topic.closed .topic-body { display: none; }
+        .topic-body { padding: 6px 18px 20px; }
+        .soon-msg { text-align: center; padding: 14px; color: var(--ink-soft); font-size: 1.1rem; font-weight: 500; }
+
+        .sub-title { display: flex; align-items: center; gap: 10px; margin: 18px 0 12px; font-size: 1.2rem; font-weight: 600; }
+        .sub-title .sn { background: var(--sc); color: #fff; border-radius: 10px; padding: 2px 10px; font-size: .95rem; }
+        .sub-title::after { content: ''; flex: 1; height: 3px; border-radius: 3px; background: linear-gradient(90deg, var(--sc), transparent); opacity: .5; }
+
+        /* ---------- Activity cards ---------- */
+        .acts { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px; }
+        .act {
+            position: relative; display: flex; flex-direction: column; align-items: center; text-align: center;
+            text-decoration: none; color: var(--ink); background: #fff;
+            border: 3px solid var(--sc); border-radius: 22px; overflow: hidden;
+            box-shadow: 0 6px 0 var(--sc); transition: transform .18s, box-shadow .18s;
+        }
+        .act:hover { transform: translateY(-5px) rotate(-1deg); box-shadow: 0 11px 0 var(--sc); }
+        .act:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--sc); }
+        .act:focus-visible { outline: 4px solid var(--ink); outline-offset: 3px; }
+        .act-top { width: 100%; background: var(--sl); padding: 16px 10px 12px; }
+        .act-icon {
+            width: 66px; height: 66px; margin: 0 auto; border-radius: 50%; background: #fff;
+            display: grid; place-items: center; font-size: 2.2rem; box-shadow: 0 4px 0 rgba(0, 0, 0, .1);
+        }
+        .act:hover .act-icon { animation: wiggle .5s ease-in-out; }
+        @keyframes wiggle { 25% { transform: rotate(-10deg) scale(1.1); } 75% { transform: rotate(10deg) scale(1.1); } }
+        .act-body { padding: 10px 12px 14px; display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; width: 100%; }
+        .act-title { font-size: 1.15rem; font-weight: 600; line-height: 1.15; }
+        .act-level { font-size: .88rem; color: var(--ink-soft); line-height: 1.3; }
+        .act-play {
+            margin-top: auto; background: var(--sc); color: #fff; font-weight: 600; font-size: 1rem;
+            padding: 5px 18px; border-radius: 999px;
+        }
+        .tag-new, .tag-done {
+            position: absolute; top: 10px; right: 10px; font-size: .78rem; font-weight: 700;
+            padding: 2px 9px; border-radius: 999px; color: #fff;
+        }
+        .tag-new { background: #E2264D; animation: pulse 1.8s ease-in-out infinite; }
+        .tag-done { background: #2E9E4F; }
+        @keyframes pulse { 50% { transform: scale(1.1); } }
+
+        /* colours for each part of Topic 1 */
+        .c1 { --sc: #2E9E4F; --sl: #E3F6E8; }
+        .c2 { --sc: #8A6A3B; --sl: #F4EDE1; }
+        .c3 { --sc: #E0731F; --sl: #FFEBD9; }
+        .c4 { --sc: #2F7BD6; --sl: #E1EEFC; }
+        .c5 { --sc: #B4479E; --sl: #F7E3F2; }
+        .c6 { --sc: #0E7C86; --sl: #D9F2F4; }
+
+        .nav-btn:focus-visible, .icon-btn:focus-visible, .read-btn:focus-visible, .unit:focus-visible {
+            outline: 5px solid var(--ink); outline-offset: 4px;
         }
 
-        .cloud::before,
-        .cloud::after {
-            content: '';
-            position: absolute;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 100px;
+        footer {
+            margin-top: 44px; text-align: center;
+            background: rgba(255, 255, 255, .85); border-radius: 24px; padding: 18px;
+            color: var(--ink-soft); font-size: 1rem;
+        }
+        footer strong { color: var(--ink); }
+        .reset-btn { font-family: var(--font); background: none; border: none; color: #1F7A93; text-decoration: underline; cursor: pointer; font-size: .95rem; margin-top: 6px; }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 960px) {
+            .units { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 720px) {
+            body { padding: 12px 12px 160px; }
+            .nav-btn { font-size: 1rem; padding: 8px 14px 8px 12px; }
+            .hero { flex-direction: column; text-align: center; padding: 18px; }
+            .badges { justify-content: center; }
+            .dodo { flex-basis: auto; }
+            .dodo svg { width: 110px; }
+            h1 { font-size: 1.9rem; }
+            .bubble { font-size: 1.1rem; justify-content: center; }
+            .sun { width: 70px; height: 70px; top: 16px; right: 16px; }
+            .island { height: 150px; }
+            .units { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .unit-emoji { width: 58px; height: 58px; font-size: 2rem; }
+            .panel-head { padding: 16px; }
+            .panel-head h2 { font-size: 1.5rem; }
+            .progress { margin-left: 0; width: 100%; }
+            .panel-body { padding: 12px; }
+            .topic-head { padding: 12px; gap: 10px; }
+            .tnum { width: 44px; height: 44px; font-size: 1.25rem; }
+            .ttext b { font-size: 1.1rem; }
+            .topic-body { padding: 4px 10px 14px; }
+            .acts { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .act-icon { width: 54px; height: 54px; font-size: 1.8rem; }
+            .act-title { font-size: 1rem; }
+            .act-level { font-size: .8rem; }
         }
 
-        .cloud-1 {
-            width: 100px;
-            height: 40px;
-            top: 80px;
-            left: -150px;
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+            .cloud, .plane { display: none; }
         }
-
-        .cloud-1::before { width: 50px; height: 50px; top: -25px; left: 15px; }
-        .cloud-1::after { width: 60px; height: 35px; top: -20px; right: 15px; }
-
-        .cloud-2 {
-            width: 120px;
-            height: 45px;
-            top: 150px;
-            left: -200px;
-            animation-duration: 40s;
-            animation-delay: 5s;
-        }
-
-        .cloud-2::before { width: 55px; height: 55px; top: -28px; left: 20px; }
-        .cloud-2::after { width: 65px; height: 40px; top: -22px; right: 20px; }
-
-        @keyframes cloudFloat {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(100vw + 200px)); }
-        }
-
-        /* Airplanes */
-        .airplane {
-            position: absolute;
-            font-size: 2.5em;
-            animation: airplaneFly 30s linear infinite;
-            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
-        }
-
-        .airplane-1 {
-            top: 12%;
-            left: -100px;
-            animation-delay: 0s;
-        }
-
-        .airplane-2 {
-            top: 22%;
-            left: -150px;
-            animation-delay: 15s;
-            font-size: 2em;
-        }
-
-        @keyframes airplaneFly {
-            0% { transform: translateX(0) rotate(0deg); }
-            100% { transform: translateX(calc(100vw + 150px)) rotate(5deg); }
-        }
-
-        /* Cars */
-        .car {
-            position: absolute;
-            font-size: 2em;
-            bottom: 15%;
-            animation: carDrive 25s linear infinite;
-            filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.2));
-        }
-
-        .car-1 {
-            left: -80px;
-            animation-delay: 0s;
-        }
-
-        .car-2 {
-            left: -120px;
-            animation-delay: 12s;
-        }
-
-        @keyframes carDrive {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(100vw + 100px)); }
-        }
-
-        /* Floating Shapes */
-        .floating-shape {
-            position: absolute;
-            font-size: 2.5em;
-            animation: floatShape 15s ease-in-out infinite;
-            opacity: 0.7;
-        }
-
-        .shape-1 { top: 25%; left: 10%; animation-delay: 0s; }
-        .shape-2 { top: 35%; right: 15%; animation-delay: 2s; }
-        .shape-3 { top: 50%; left: 15%; animation-delay: 4s; }
-        .shape-4 { top: 60%; right: 20%; animation-delay: 6s; }
-        .shape-5 { top: 15%; right: 30%; animation-delay: 1s; }
-        .shape-6 { top: 45%; left: 25%; animation-delay: 3s; }
-
-        @keyframes floatShape {
-            0%, 100% { 
-                transform: translateY(0) rotate(0deg);
-                opacity: 0.7;
-            }
-            25% { 
-                transform: translateY(-30px) rotate(90deg);
-                opacity: 0.9;
-            }
-            50% { 
-                transform: translateY(-50px) rotate(180deg);
-                opacity: 0.6;
-            }
-            75% { 
-                transform: translateY(-30px) rotate(270deg);
-                opacity: 0.8;
-            }
-        }
-
-        /* Math Symbols */
-        .math-symbol {
-            position: absolute;
-            font-size: 2em;
-            font-weight: bold;
-            animation: symbolFloat 10s ease-in-out infinite;
-            opacity: 0.6;
-        }
-
-        .symbol-1 { top: 20%; left: 8%; color: #FF6B9D; animation-delay: 0s; }
-        .symbol-2 { top: 40%; right: 12%; color: #6C5B7B; animation-delay: 2s; }
-        .symbol-3 { top: 55%; left: 12%; color: #FF9F1C; animation-delay: 4s; }
-        .symbol-4 { top: 30%; right: 25%; color: #2EC4B6; animation-delay: 1s; }
-        .symbol-5 { top: 65%; right: 8%; color: #E71D36; animation-delay: 3s; }
-        .symbol-6 { top: 18%; left: 35%; color: #011627; animation-delay: 5s; }
-
-        @keyframes symbolFloat {
-            0%, 100% { 
-                transform: translateY(0) scale(1);
-                opacity: 0.6;
-            }
-            50% { 
-                transform: translateY(-25px) scale(1.2);
-                opacity: 0.9;
-            }
-        }
-
-        /* Colorful Numbers */
-        .number-decoration {
-            position: absolute;
-            font-size: 3em;
-            font-weight: bold;
-            animation: numberBounce 8s ease-in-out infinite;
-            opacity: 0.5;
-        }
-
-        .num-1 { top: 28%; left: 5%; color: #FF1744; animation-delay: 0s; }
-        .num-2 { top: 48%; right: 10%; color: #2979FF; animation-delay: 1s; }
-        .num-3 { top: 70%; left: 18%; color: #00E676; animation-delay: 2s; }
-        .num-4 { top: 22%; right: 35%; color: #FF9100; animation-delay: 3s; }
-        .num-5 { top: 58%; left: 30%; color: #AA00FF; animation-delay: 4s; }
-
-        @keyframes numberBounce {
-            0%, 100% { 
-                transform: translateY(0) rotate(0deg);
-                opacity: 0.5;
-            }
-            50% { 
-                transform: translateY(-20px) rotate(15deg);
-                opacity: 0.8;
-            }
-        }
-
-        /* Balloons */
-        .balloon {
-            position: absolute;
-            font-size: 2.5em;
-            animation: balloonFloat 12s ease-in-out infinite;
-        }
-
-        .balloon-1 { bottom: -50px; left: 10%; animation-delay: 0s; }
-        .balloon-2 { bottom: -80px; left: 30%; animation-delay: 3s; }
-        .balloon-3 { bottom: -100px; right: 20%; animation-delay: 6s; }
-
-        @keyframes balloonFloat {
-            0% { 
-                transform: translateY(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% { 
-                transform: translateY(-120vh);
-                opacity: 0;
-            }
-        }
-
-        /* Rainbow */
-        .rainbow {
-            position: absolute;
-            top: 80px;
-            left: 20%;
-            width: 200px;
-            height: 100px;
-            border-radius: 200px 200px 0 0;
-            border: 8px solid transparent;
-            border-top-color: #FF0000;
-            animation: rainbowGlow 3s ease-in-out infinite;
-            opacity: 0.6;
-        }
-
-        .rainbow::before {
-            content: '';
-            position: absolute;
-            top: -8px;
-            left: -8px;
-            right: -8px;
-            height: 100px;
-            border-radius: 200px 200px 0 0;
-            border: 8px solid transparent;
-            border-top-color: #FFA500;
-        }
-
-        @keyframes rainbowGlow {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 0.8; }
-        }
-
-        /* Stars/Sparkles */
-        .sparkle {
-            position: absolute;
-            font-size: 1.5em;
-            animation: sparkleAnim 2s ease-in-out infinite;
-        }
-
-        .sparkle-1 { top: 100px; left: 15%; animation-delay: 0s; }
-        .sparkle-2 { top: 180px; right: 18%; animation-delay: 0.7s; }
-        .sparkle-3 { top: 250px; left: 35%; animation-delay: 1.4s; }
-        .sparkle-4 { top: 120px; right: 25%; animation-delay: 0.3s; }
-
-        @keyframes sparkleAnim {
-            0%, 100% { 
-                opacity: 0.3;
-                transform: scale(1) rotate(0deg);
-            }
-            50% { 
-                opacity: 1;
-                transform: scale(1.3) rotate(180deg);
-            }
-        }
-
-        .back-button {
-            position: fixed;
-            top: 25px;
-            left: 25px;
-            background: white;
-            color: #FF6B9D;
-            padding: 20px 45px;
-            border-radius: 60px;
-            border: none;
-            font-weight: 800;
-            font-size: 26px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
-        }
-
-        .back-button:hover {
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(135deg, #FF6B9D 0%, #C06C84 100%);
-            color: white;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        header {
-            text-align: center;
-            color: white;
-            margin-bottom: 50px;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
-        }
-
-        h1 {
-            font-size: 3.5em;
-            margin-bottom: 10px;
-            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
-        }
-
-        .subtitle {
-            font-size: 1.5em;
-            opacity: 0.95;
-            background: rgba(255, 255, 255, 0.25);
-            padding: 12px 30px;
-            border-radius: 20px;
-            display: inline-block;
-            backdrop-filter: blur(10px);
-        }
-
-        .chapters-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .chapter-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            border: 3px solid transparent;
-        }
-
-        .chapter-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-            border-color: #FF6B9D;
-        }
-
-        .chapter-icon {
-            font-size: 4em;
-            text-align: center;
-            margin-bottom: 15px;
-            animation: iconBounce 2s ease-in-out infinite;
-        }
-
-        @keyframes iconBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        .chapter-card:hover .chapter-icon {
-            animation: iconSpin 0.6s ease-in-out;
-        }
-
-        @keyframes iconSpin {
-            0% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.15); }
-            100% { transform: rotate(360deg) scale(1); }
-        }
-
-        .chapter-title {
-            font-size: 1.8em;
-            background: linear-gradient(135deg, #FF6B9D 0%, #C06C84 50%, #6C5B7B 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-align: center;
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
-
-        .chapter-description {
-            color: #636e72;
-            text-align: center;
-            font-size: 1.1em;
-            margin-bottom: 20px;
-        }
-
-        .activities-section {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            margin-bottom: 40px;
-            backdrop-filter: blur(10px);
-        }
-
-        .section-title {
-            font-size: 2.5em;
-            background: linear-gradient(135deg, #FF6B9D 0%, #C06C84 50%, #6C5B7B 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 30px;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .activities-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .activity-card {
-            background: white;
-            border: 3px solid #2d3436;
-            border-radius: 15px;
-            padding: 25px;
-            text-align: center;
-            transition: all 0.3s;
-            cursor: pointer;
-            text-decoration: none;
-            color: #2d3436;
-            display: block;
-        }
-
-        .activity-card:hover {
-            transform: scale(1.05) rotate(2deg);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            border-color: #FF6B9D;
-        }
-
-        .activity-icon {
-            font-size: 3em;
-            margin-bottom: 10px;
-        }
-
-        .activity-title {
-            font-size: 1.3em;
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: #2d3436;
-        }
-
-        .activity-level {
-            font-size: 0.9em;
-            color: #636e72;
-        }
-
-        .new-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #FF6B9D 0%, #C06C84 100%);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.75em;
-            font-weight: bold;
-            margin-left: 8px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .coming-soon {
-            opacity: 0.7;
-            cursor: not-allowed;
-            background: linear-gradient(135deg, rgba(149, 165, 166, 0.8) 0%, rgba(127, 140, 141, 0.8) 100%);
-        }
-
-        .coming-soon:hover {
-            transform: none;
-            border-color: transparent;
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5em;
-            }
-
-            .chapters-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .activities-grid {
-                grid-template-columns: 1fr;
-            }
-
-            body {
-                padding: 20px 10px;
-            }
-
-            .back-button {
-                top: 10px;
-                left: 10px;
-                padding: 12px 25px;
-                font-size: 18px;
-            }
-
-            .activities-section {
-                padding: 25px 20px;
-            }
-
-            .sun {
-                width: 80px;
-                height: 80px;
-                top: 30px;
-                right: 30px;
-            }
-
-            .airplane {
-                font-size: 2em;
-            }
-
-            .car {
-                font-size: 1.5em;
-            }
-
-            .floating-shape {
-                font-size: 2em;
-            }
-        }
-        header { padding-top: 70px; }
     </style>
 </head>
 <body>
@@ -586,203 +298,352 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TCBV2GCV"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    
-    <!-- Animated Background Scene -->
-    <div class="background-scene">
-        <!-- Sun -->
-        <div class="sun"></div>
 
-        <!-- Clouds -->
+    <!-- Background: Mauritian sky, lagoon, Le Morne and palm trees -->
+    <div class="scene" aria-hidden="true">
+        <div class="sun"></div>
         <div class="cloud cloud-1"></div>
         <div class="cloud cloud-2"></div>
-
-        <!-- Airplanes -->
-        <div class="airplane airplane-1">✈️</div>
-        <div class="airplane airplane-2">🛩️</div>
-
-        <!-- Cars -->
-        <div class="car car-1">🚌</div>
-        <div class="car car-2">🚜</div>
-
-        <!-- Floating Shapes -->
-        <div class="floating-shape shape-1">🌍</div>
-        <div class="floating-shape shape-2">🧭</div>
-        <div class="floating-shape shape-3">🏝️</div>
-        <div class="floating-shape shape-4">⛵</div>
-        <div class="floating-shape shape-5">🌋</div>
-        <div class="floating-shape shape-6">🗺️</div>
-
-        <!-- Symbols -->
-        <div class="math-symbol symbol-1">N</div>
-        <div class="math-symbol symbol-2">S</div>
-        <div class="math-symbol symbol-3">E</div>
-        <div class="math-symbol symbol-4">W</div>
-        <div class="math-symbol symbol-5">🌴</div>
-        <div class="math-symbol symbol-6">?</div>
-
-        <!-- Balloons -->
-        <div class="balloon balloon-1">🎈</div>
-        <div class="balloon balloon-2">🎈</div>
-        <div class="balloon balloon-3">🎈</div>
-
-        <!-- Rainbow -->
-        <div class="rainbow"></div>
-
-        <!-- Sparkles -->
-        <div class="sparkle sparkle-1">✨</div>
-        <div class="sparkle sparkle-2">⭐</div>
-        <div class="sparkle sparkle-3">✨</div>
-        <div class="sparkle sparkle-4">⭐</div>
+        <div class="cloud cloud-3"></div>
+        <div class="plane">✈️</div>
+        <div class="island">
+            <svg viewBox="0 0 1440 220" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 120 Q120 80 240 110 T480 105 L480 160 L0 160 Z" fill="#6CBF84" opacity=".55"/>
+                <path d="M880 150 L930 140 L965 70 L985 52 L1050 48 L1080 58 L1120 95 L1170 125 L1240 140 L1300 150 Z" fill="#3E8E5A"/>
+                <path d="M965 70 L985 52 L1050 48 L1080 58 L1060 70 L1000 72 Z" fill="#57A872"/>
+                <rect x="0" y="140" width="1440" height="80" fill="#1FA9C9"/>
+                <rect x="0" y="150" width="1440" height="70" fill="#38C6D9"/>
+                <g class="wave">
+                    <path d="M-40 158 Q0 150 40 158 T120 158 T200 158 T280 158 T360 158 T440 158 T520 158 T600 158 T680 158 T760 158 T840 158 T920 158 T1000 158 T1080 158 T1160 158 T1240 158 T1320 158 T1400 158 T1480 158" fill="none" stroke="#fff" stroke-width="3" opacity=".7"/>
+                </g>
+                <path d="M0 190 Q360 170 720 185 T1440 180 L1440 220 L0 220 Z" fill="#F7DFA3"/>
+                <g class="palm-sway" style="transform-origin:150px 200px">
+                    <path d="M150 200 Q140 150 165 100" stroke="#8B5A2B" stroke-width="10" fill="none" stroke-linecap="round"/>
+                    <path d="M165 100 Q130 80 100 100 Q135 90 165 100 Q150 65 120 55 Q160 65 165 100 Q190 65 225 70 Q190 80 165 100 Q205 95 225 120 Q190 100 165 100 Z" fill="#2E9E4F"/>
+                </g>
+                <g class="palm-sway" style="transform-origin:1340px 200px; animation-delay:-2s">
+                    <path d="M1340 200 Q1350 150 1325 105" stroke="#8B5A2B" stroke-width="10" fill="none" stroke-linecap="round"/>
+                    <path d="M1325 105 Q1290 85 1260 105 Q1295 95 1325 105 Q1310 70 1280 60 Q1320 70 1325 105 Q1350 70 1385 75 Q1350 85 1325 105 Q1365 100 1385 125 Q1350 105 1325 105 Z" fill="#2E9E4F"/>
+                </g>
+                <g transform="translate(620 140)">
+                    <path d="M0 12 L50 12 L42 22 L8 22 Z" fill="#E2574C"/>
+                    <path d="M25 12 L25 -18 L45 8 Z" fill="#fff"/>
+                </g>
+            </svg>
+        </div>
     </div>
 
-    <button class="back-button" onclick="window.location.href='../grade-6-index.html'">
-        <span>🏠</span>
-        <span>back</span>
-    </button>
-
     <div class="container">
-        <header>
-            <h1>🌍 History and Geography Learning Center</h1>
-            <p class="subtitle">Grade 6 • Fun Interactive Learning Activities</p>
+        <div class="topbar">
+            <a href="../grade-6-index.html" class="nav-btn g6" aria-label="Back to Grade 6"><span>◀</span><span>Grade 6</span></a>
+            <a href="../../index.html" class="nav-btn" aria-label="Home page"><span>🏠</span><span>Home</span></a>
+            <span class="spacer"></span>
+            <button class="icon-btn" id="soundBtn" aria-pressed="true">🔔 Sound on</button>
+        </div>
+
+        <header class="hero">
+            <div class="dodo" aria-hidden="true">
+                <svg viewBox="0 0 160 170" xmlns="http://www.w3.org/2000/svg">
+                    <g class="dodo-body">
+                        <path d="M68 140 L64 160 M64 160 L54 164 M64 160 L72 165" stroke="#F2A93B" stroke-width="6" stroke-linecap="round"/>
+                        <path d="M96 140 L100 160 M100 160 L90 165 M100 160 L110 164" stroke="#F2A93B" stroke-width="6" stroke-linecap="round"/>
+                        <path d="M122 100 Q150 85 146 108 Q156 104 150 124 Q134 120 122 112 Z" fill="#fff" stroke="#D9DEE8" stroke-width="2"/>
+                        <ellipse cx="84" cy="108" rx="46" ry="40" fill="#8FA4C2"/>
+                        <ellipse cx="78" cy="118" rx="28" ry="24" fill="#B7C6DB"/>
+                        <path d="M60 86 Q52 60 62 40 Q74 26 92 32 Q102 40 96 58 Q90 72 96 86 Z" fill="#8FA4C2"/>
+                        <path d="M66 42 Q34 40 22 56 Q18 66 30 66 Q32 58 42 58 Q56 58 68 56 Z" fill="#F5C64A"/>
+                        <path d="M22 56 Q18 66 30 66 Q26 60 28 56 Z" fill="#E09A1E"/>
+                        <path d="M44 52 Q56 50 66 50" stroke="#C98A14" stroke-width="2" fill="none"/>
+                        <circle cx="78" cy="44" r="9" fill="#fff"/>
+                        <circle cx="80" cy="45" r="5" fill="#1E2A4A"/>
+                        <circle cx="82" cy="43" r="1.8" fill="#fff"/>
+                        <circle cx="86" cy="58" r="5" fill="#F7A1B0" opacity=".7"/>
+                        <path class="wing" d="M62 98 Q34 70 30 52 Q48 62 58 74 Q60 64 66 60 Q70 80 72 98 Z" fill="#6F86A8"/>
+                    </g>
+                </svg>
+            </div>
+            <div class="hero-text">
+                <div class="badges">
+                    <span class="badge grade">🏆 Grade 6</span>
+                    <span class="badge subj">🌍 HIST &amp; GEO</span>
+                </div>
+                <h1>History &amp; Geography</h1>
+                <div class="bubble">
+                    <span>Pick a unit, then choose a game!</span>
+                    <button class="read-btn" id="readBtn" aria-label="Read this page out loud">🔊 Listen</button>
+                </div>
+            </div>
         </header>
 
-        <div class="chapters-grid">
-            <div class="chapter-card" onclick="scrollToSection('landuse')">
-                <div class="chapter-icon">🏘️</div>
-                <div class="chapter-title">Land Use</div>
-                <div class="chapter-description">Unit 1 • How people use the land</div>
+        <h2 class="section-title"><span>📘 Units from your book</span></h2>
+
+        <nav class="units" aria-label="Units">
+            <a href="#landuse" class="unit u1" id="unit1">
+                <span class="unit-num">Unit 1</span>
+                <span class="unit-emoji">🏘️</span>
+                <span class="unit-title">Land Use</span>
+                <span class="unit-sub">How people use the land</span>
+                <span class="unit-status" id="unit1Status">▶ Play</span>
+            </a>
+            <div class="unit u2 locked" aria-disabled="true">
+                <span class="unit-num">Unit 2</span>
+                <span class="unit-emoji">⛵</span>
+                <span class="unit-title">People on the Island in the Past</span>
+                <span class="unit-sub">Settlers, Slaves &amp; Immigrants</span>
+                <span class="unit-status">🔒 Coming soon</span>
             </div>
-
-            <div class="chapter-card coming-soon">
-                <div class="chapter-icon">⛵</div>
-                <div class="chapter-title">People on the Island in the Past</div>
-                <div class="chapter-description">Unit 2 • Settlers, Slaves &amp; Immigrants</div>
+            <div class="unit u3 locked" aria-disabled="true">
+                <span class="unit-num">Unit 3</span>
+                <span class="unit-emoji">🌀</span>
+                <span class="unit-title">Natural Hazards</span>
+                <span class="unit-sub">Cyclones, floods, volcanoes and more</span>
+                <span class="unit-status">🔒 Coming soon</span>
             </div>
-
-            <div class="chapter-card coming-soon">
-                <div class="chapter-icon">🌀</div>
-                <div class="chapter-title">Natural Hazards</div>
-                <div class="chapter-description">Unit 3 • Cyclones, floods, volcanoes and more</div>
+            <div class="unit u4 locked" aria-disabled="true">
+                <span class="unit-num">Unit 4</span>
+                <span class="unit-emoji">🎉</span>
+                <span class="unit-title">Celebrating Independence</span>
+                <span class="unit-sub">Our country, symbols and Rodrigues</span>
+                <span class="unit-status">🔒 Coming soon</span>
             </div>
-
-            <div class="chapter-card coming-soon">
-                <div class="chapter-icon">🇲🇺</div>
-                <div class="chapter-title">Celebrating Independence</div>
-                <div class="chapter-description">Unit 4 • Our country, symbols and Rodrigues</div>
+            <div class="unit u5 locked" aria-disabled="true">
+                <span class="unit-num">Unit 5</span>
+                <span class="unit-emoji">🏛️</span>
+                <span class="unit-title">Our Heritage</span>
+                <span class="unit-sub">Historical places and culture</span>
+                <span class="unit-status">🔒 Coming soon</span>
             </div>
+        </nav>
 
-            <div class="chapter-card coming-soon">
-                <div class="chapter-icon">🏛️</div>
-                <div class="chapter-title">Our Heritage</div>
-                <div class="chapter-description">Unit 5 • Historical places and culture</div>
+        <!-- ====== UNIT 1: LAND USE ====== -->
+        <section class="panel" id="landuse">
+            <div class="panel-head">
+                <span class="pe">🏘️</span>
+                <h2>Unit 1 · Land Use<small>How people use the land</small></h2>
+                <div class="progress">
+                    <div class="progress-text" id="progressText">⭐ You have played 0 games</div>
+                    <div class="bar"><span id="progressBar"></span></div>
+                </div>
             </div>
-        </div>
+            <div class="panel-body" id="landuse-topics"></div>
+        </section>
 
-        <!-- ====== DYNAMIC LAND USE SECTION START ====== -->
-        <style>
-            .topic-block{margin-bottom:26px;border-radius:22px;background:rgba(255,255,255,.55);box-shadow:0 6px 18px rgba(0,0,0,.08);overflow:hidden}
-            .topic-head{width:100%;display:flex;align-items:center;gap:14px;border:none;cursor:pointer;text-align:left;padding:16px 22px;font:inherit;color:#fff;background:linear-gradient(135deg,#FF6B9D 0%,#C06C84 50%,#6C5B7B 100%)}
-            .topic-head .tn{flex:none;background:#fff;color:#C06C84;font-weight:800;border-radius:14px;padding:6px 12px;font-size:1rem;white-space:nowrap}
-            .topic-head .tt{flex:1;font-size:1.45em;font-weight:bold;line-height:1.2}
-            .topic-head .tt small{display:block;font-size:.6em;font-weight:normal;opacity:.9}
-            .topic-head .ar{font-size:1.4em;transition:transform .25s}
-            .topic-block.closed .ar{transform:rotate(-90deg)}
-            .topic-block.closed .topic-body{display:none}
-            .topic-body{padding:18px 20px 22px}
-            .sub-title{display:flex;align-items:center;gap:10px;margin:18px 0 12px;font-size:1.15em;font-weight:bold;color:#6C5B7B}
-            .sub-title:first-child{margin-top:0}
-            .sub-title .sn{background:#6C5B7B;color:#fff;border-radius:10px;padding:3px 10px;font-size:.85em}
-            .sub-title::after{content:"";flex:1;height:3px;border-radius:3px;background:linear-gradient(90deg,#C06C84,transparent)}
-            .soon{text-align:center;padding:18px;color:#6C5B7B;font-weight:bold;font-size:1.05em}
-            @media(max-width:600px){.topic-head{padding:12px 14px;gap:10px}.topic-head .tt{font-size:1.1em}.topic-body{padding:12px}}
-        </style>
-        <div class="activities-section" id="landuse">
-            <h2 class="section-title">🏘️ Land Use Activities</h2>
-            <div id="landuse-topics"></div>
-
-            <script>
-                // Unit 1 Land Use, as in the MIE book: 4 topics, Topic 1 in sections 1.1 to 1.6
-                const landuseTopics = [
-                    {n:1, title:"What is Land Use?", page:"p. 9", subs:[
-                        {n:"1.1", title:"What is land use?", files:[
-                            {file:"Land_Use_Colour_by_Key.html", icon:"🎨", level:"Colour each place by its land use", title:"Colour by Key", badge:"NEW!"},
-                            {file:"Land_Use_Find_the_Evidence.html", icon:"🔍", level:"Drag & Drop | 3 Pictures", title:"Find the Evidence", badge:"NEW!"},
-                            {file:"Land_Use_Matching.html", icon:"🔗", level:"Match column A to column B | 6 Pairs", title:"Match the Land Use", badge:"NEW!"},
-                            {file:"Land_Use_Word_Builder.html", icon:"🔤", level:"Jumbled letters, then write it | 2 Parts", title:"Word Builder", badge:"NEW!"},
-                            {file:"Land_Use_Picture_Quiz.html", icon:"🖼️", level:"Picture MCQ | 3 Sets, 18 Pictures", title:"Picture Quiz", badge:"NEW!"},
-                            {file:"Land_Use_Memory_Game.html", icon:"🃏", level:"Match pictures and land uses | 3 Rounds", title:"Memory Game", badge:"NEW!"},
-                            {file:"Land_Use_Why_Here.html", icon:"📍", level:"One land use per page | 8 Pages", title:"Why Here?", badge:"NEW!"}
-                        ]},
-                        {n:"1.2", title:"Wasteland", files:[
-                            {file:"Land_Use_Wasteland_Detective.html", icon:"🏚️", level:"Wasteland: problems &amp; solutions | 4 Pages", title:"Wasteland Detective", badge:"NEW!"}
-                        ]},
-                        {n:"1.3", title:"Land use in the Phoenix area", files:[
-                            {file:"Land_Use_Phoenix_Map.html", icon:"🗺️", level:"Line map | 9 Answers", title:"Phoenix Land Use Map", badge:"NEW!"}
-                        ]},
-                        {n:"1.4", title:"Changes in land use", files:[
-                            {file:"Land_Use_Ebene_Then_and_Now.html", icon:"🏙️", level:"Before & after slider | 2 Pages", title:"Changes in Land Use: Ebène", badge:"NEW!"},
-                            {file:"Land_Use_Change_Before_After.html", icon:"✏️", level:"Land was needed to build... | 4 Pages", title:"Before & After", badge:"NEW!"}
-                        ]},
-                        {n:"1.5", title:"Case study: Land use in Mauritius", files:[
-                            {file:"Land_Use_Pie_Chart.html", icon:"🥧", level:"Graph 1 | Part A table + Part B questions", title:"Land Use in Mauritius: Pie Chart", badge:"NEW!"}
-                        ]},
-                        {n:"1.6", title:"Case study: Reading a grid map", files:[
-                            {file:"Land_Use_Grid_Map.html", icon:"🗺️", level:"Grid Map | 16 Questions", title:"Grid Map", badge:"NEW!"},
-                            {file:"Land_Use_Grid_Map_Activity2.html", icon:"🧭", level:"Activity 1.6 | Diagram 1 | 3 Questions", title:"Grid Map: Activity 2", badge:"NEW!"}
-                        ]}
-                    ]},
-                    {n:2, title:"Agricultural Land Use", page:"p. 16", subs:[]},
-                    {n:3, title:"Land Use for Tourism Purposes", page:"p. 30", subs:[]},
-                    {n:4, title:"Land Use and Environmental Concerns", page:"p. 38", subs:[]}
-                ];
-
-                const topicsBox = document.getElementById("landuse-topics");
-                function makeCard(item){
-                    const card = document.createElement("a");
-                    card.href = `Land-Use/${item.file}`;
-                    card.className = "activity-card";
-                    card.innerHTML = `
-                        <div class="activity-icon">${item.icon}</div>
-                        <div class="activity-title">${item.title}${item.badge ? `<span class="new-badge">${item.badge}</span>` : ''}</div>
-                        <div class="activity-level">${item.level}</div>
-                    `;
-                    return card;
-                }
-                landuseTopics.forEach(t => {
-                    const count = t.subs.reduce((a, s) => a + s.files.length, 0);
-                    const block = document.createElement("div");
-                    block.className = "topic-block" + (count ? "" : " closed");
-                    block.id = "landuse-topic" + t.n;
-                    block.innerHTML = `<button class="topic-head" type="button"><span class="tn">Topic ${t.n}</span><span class="tt">${t.title}<small>${count ? count + " activit" + (count > 1 ? "ies" : "y") : "Activities coming soon"} · book ${t.page}</small></span><span class="ar">▾</span></button><div class="topic-body"></div>`;
-                    block.querySelector(".topic-head").onclick = () => block.classList.toggle("closed");
-                    const body = block.querySelector(".topic-body");
-                    if(!count){ body.innerHTML = '<div class="soon">🚧 Activities for this topic are coming soon.</div>'; }
-                    t.subs.forEach(s => {
-                        if(!s.files.length) return;
-                        const h = document.createElement("div");
-                        h.className = "sub-title";
-                        h.innerHTML = `<span class="sn">${s.n}</span><span>${s.title}</span>`;
-                        body.appendChild(h);
-                        const grid = document.createElement("div");
-                        grid.className = "activities-grid";
-                        s.files.forEach(f => grid.appendChild(makeCard(f)));
-                        body.appendChild(grid);
-                    });
-                    topicsBox.appendChild(block);
-                });
-            </script>
-        </div>
-        <!-- ====== DYNAMIC LAND USE SECTION END ====== -->
-
+        <footer>
+            <p><strong>© <span id="year">2026</span> Ramsamy Pierre Rudaryo</strong></p>
+            <p>Interactive Learning Platform - Making Learning Fun for Every Child</p>
+            <button class="reset-btn" id="resetBtn">↺ Start again (clear my ✓ ticks)</button>
+        </footer>
     </div>
 
     <script>
-        function scrollToSection(sectionId) {
-            const element = document.getElementById(sectionId);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+    // ================================================================
+    //  Unit 1 Land Use, as in the MIE book: 4 topics, Topic 1 in parts 1.1 to 1.6
+    //  To add a game: add a line { file, icon, level, title, badge } in the right part.
+    //  Files live in the Land-Use folder.
+    // ================================================================
+    const landuseTopics = [
+        {n:1, title:"What is Land Use?", page:"p. 9", subs:[
+            {n:"1.1", title:"What is land use?", files:[
+                {file:"Land_Use_Colour_by_Key.html", icon:"🎨", level:"Colour each place by its land use", title:"Colour by Key", badge:"NEW!"},
+                {file:"Land_Use_Find_the_Evidence.html", icon:"🔍", level:"Drag & Drop | 3 Pictures", title:"Find the Evidence", badge:"NEW!"},
+                {file:"Land_Use_Matching.html", icon:"🔗", level:"Match column A to column B | 6 Pairs", title:"Match the Land Use", badge:"NEW!"},
+                {file:"Land_Use_Word_Builder.html", icon:"🔤", level:"Jumbled letters, then write it | 2 Parts", title:"Word Builder", badge:"NEW!"},
+                {file:"Land_Use_Picture_Quiz.html", icon:"🖼️", level:"Picture MCQ | 3 Sets, 18 Pictures", title:"Picture Quiz", badge:"NEW!"},
+                {file:"Land_Use_Memory_Game.html", icon:"🃏", level:"Match pictures and land uses | 3 Rounds", title:"Memory Game", badge:"NEW!"},
+                {file:"Land_Use_Why_Here.html", icon:"📍", level:"One land use per page | 8 Pages", title:"Why Here?", badge:"NEW!"}
+            ]},
+            {n:"1.2", title:"Wasteland", files:[
+                {file:"Land_Use_Wasteland_Detective.html", icon:"🏚️", level:"Wasteland: problems & solutions | 4 Pages", title:"Wasteland Detective", badge:"NEW!"}
+            ]},
+            {n:"1.3", title:"Land use in the Phoenix area", files:[
+                {file:"Land_Use_Phoenix_Map.html", icon:"🗺️", level:"Line map | 9 Answers", title:"Phoenix Land Use Map", badge:"NEW!"}
+            ]},
+            {n:"1.4", title:"Changes in land use", files:[
+                {file:"Land_Use_Ebene_Then_and_Now.html", icon:"🏙️", level:"Before & after slider | 2 Pages", title:"Changes in Land Use: Ebène", badge:"NEW!"},
+                {file:"Land_Use_Change_Before_After.html", icon:"✏️", level:"Land was needed to build... | 4 Pages", title:"Before & After", badge:"NEW!"}
+            ]},
+            {n:"1.5", title:"Case study: Land use in Mauritius", files:[
+                {file:"Land_Use_Pie_Chart.html", icon:"🥧", level:"Graph 1 | Part A table + Part B questions", title:"Land Use in Mauritius: Pie Chart", badge:"NEW!"}
+            ]},
+            {n:"1.6", title:"Case study: Reading a grid map", files:[
+                {file:"Land_Use_Grid_Map.html", icon:"🗺️", level:"Grid Map | 16 Questions", title:"Grid Map", badge:"NEW!"},
+                {file:"Land_Use_Grid_Map_Activity2.html", icon:"🧭", level:"Activity 1.6 | Diagram 1 | 3 Questions", title:"Grid Map: Activity 2", badge:"NEW!"}
+            ]}
+        ]},
+        {n:2, title:"Agricultural Land Use", page:"p. 16", subs:[]},
+        {n:3, title:"Land Use for Tourism Purposes", page:"p. 30", subs:[]},
+        {n:4, title:"Land Use and Environmental Concerns", page:"p. 38", subs:[]}
+    ];
+
+    (function () {
+        function store(key, val) {
+            try { if (val === undefined) return localStorage.getItem(key); localStorage.setItem(key, val); }
+            catch (e) { return null; }
         }
+        document.getElementById('year').textContent = new Date().getFullYear();
+        store('ilp-last-grade', '6');
+
+        // ---------- Played games (✓ ticks, kept on this device) ----------
+        var PLAYED_KEY = 'ilp-g6-hg-played';
+        var played = {};
+        try { played = JSON.parse(store(PLAYED_KEY) || '{}') || {}; } catch (e) { played = {}; }
+        function savePlayed() { store(PLAYED_KEY, JSON.stringify(played)); }
+
+        // ---------- Build topics and cards ----------
+        var box = document.getElementById('landuse-topics');
+        var total = 0;
+        function esc(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+
+        landuseTopics.forEach(function (t) {
+            var count = t.subs.reduce(function (a, s) { return a + s.files.length; }, 0);
+            total += count;
+            var block = document.createElement('div');
+            block.className = 'topic' + (count ? '' : ' closed empty');
+            block.id = 'landuse-topic' + t.n;
+            block.innerHTML =
+                '<button class="topic-head" type="button" aria-expanded="' + (count ? 'true' : 'false') + '">' +
+                    '<span class="tnum">' + t.n + '</span>' +
+                    '<span class="ttext"><b>Topic ' + t.n + ': ' + esc(t.title) + '</b>' +
+                    '<small>' + (count ? '🎮 ' + count + ' game' + (count > 1 ? 's' : '') : '🚧 Games coming soon') + ' · 📖 book ' + t.page + '</small></span>' +
+                    '<span class="arrow">▾</span>' +
+                '</button><div class="topic-body"></div>';
+            var head = block.querySelector('.topic-head');
+            head.addEventListener('click', function () {
+                block.classList.toggle('closed');
+                head.setAttribute('aria-expanded', block.classList.contains('closed') ? 'false' : 'true');
+            });
+            var body = block.querySelector('.topic-body');
+            if (!count) body.innerHTML = '<div class="soon-msg">🚧 Games for this topic are coming soon.</div>';
+
+            t.subs.forEach(function (s, i) {
+                if (!s.files.length) return;
+                var colour = 'c' + ((i % 6) + 1);
+                var h = document.createElement('div');
+                h.className = 'sub-title ' + colour;
+                h.innerHTML = '<span class="sn">' + s.n + '</span><span>' + esc(s.title) + '</span>';
+                body.appendChild(h);
+                var grid = document.createElement('div');
+                grid.className = 'acts';
+                s.files.forEach(function (f) {
+                    var a = document.createElement('a');
+                    a.href = 'Land-Use/' + f.file;
+                    a.className = 'act ' + colour;
+                    a.dataset.file = f.file;
+                    a.innerHTML =
+                        '<span class="tag"></span>' +
+                        '<div class="act-top"><div class="act-icon">' + f.icon + '</div></div>' +
+                        '<div class="act-body">' +
+                            '<div class="act-title">' + esc(f.title) + '</div>' +
+                            '<div class="act-level">' + esc(f.level) + '</div>' +
+                            '<span class="act-play">Play ▶</span>' +
+                        '</div>';
+                    a.setAttribute('aria-label', f.title + '. ' + f.level);
+                    a._badge = f.badge;
+                    grid.appendChild(a);
+                });
+                body.appendChild(grid);
+            });
+            box.appendChild(block);
+        });
+
+        function paintTicks() {
+            var done = 0;
+            document.querySelectorAll('.act').forEach(function (a) {
+                var tag = a.querySelector('.tag');
+                if (played[a.dataset.file]) {
+                    done++; tag.className = 'tag tag-done'; tag.textContent = '✓ Played';
+                } else if (a._badge) {
+                    tag.className = 'tag tag-new'; tag.textContent = a._badge;
+                } else {
+                    tag.className = 'tag'; tag.textContent = '';
+                }
+            });
+            var txt = done === 0 ? '⭐ ' + total + ' games to play!'
+                    : done === total ? '🏆 Well done! You played all ' + total + ' games!'
+                    : '⭐ You have played ' + done + ' of ' + total + ' games';
+            document.getElementById('progressText').textContent = txt;
+            document.getElementById('progressBar').style.width = (total ? Math.round(done / total * 100) : 0) + '%';
+            document.getElementById('unit1Status').textContent = done ? '⭐ ' + done + ' / ' + total : '▶ ' + total + ' games';
+        }
+        paintTicks();
+
+        document.getElementById('resetBtn').addEventListener('click', function () {
+            played = {}; savePlayed(); paintTicks();
+        });
+
+        // ---------- Sound ----------
+        var soundOn = store('ilp-sound') !== 'off';
+        var soundBtn = document.getElementById('soundBtn');
+        var audioCtx = null;
+        function paintSoundBtn() {
+            soundBtn.textContent = soundOn ? '🔔 Sound on' : '🔕 Sound off';
+            soundBtn.setAttribute('aria-pressed', soundOn ? 'true' : 'false');
+        }
+        paintSoundBtn();
+        soundBtn.addEventListener('click', function () {
+            soundOn = !soundOn; store('ilp-sound', soundOn ? 'on' : 'off'); paintSoundBtn();
+            if (soundOn) pop();
+        });
+        function pop() {
+            if (!soundOn) return;
+            try {
+                audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+                var o = audioCtx.createOscillator(), g = audioCtx.createGain(), t = audioCtx.currentTime;
+                o.type = 'sine';
+                o.frequency.setValueAtTime(520, t);
+                o.frequency.exponentialRampToValueAtTime(1100, t + 0.12);
+                g.gain.setValueAtTime(0.25, t);
+                g.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+                o.connect(g); g.connect(audioCtx.destination);
+                o.start(t); o.stop(t + 0.2);
+            } catch (e) {}
+        }
+
+        // ---------- Clicks: pop, tick, then go ----------
+        function go(e, href) {
+            if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
+            if (!soundOn) return;
+            e.preventDefault(); pop();
+            setTimeout(function () { window.location.href = href; }, 160);
+        }
+        document.querySelectorAll('.act').forEach(function (a) {
+            a.addEventListener('click', function (e) {
+                played[a.dataset.file] = 1; savePlayed();
+                go(e, a.href);
+            });
+        });
+        document.querySelectorAll('.nav-btn').forEach(function (a) {
+            a.addEventListener('click', function (e) { go(e, a.href); });
+        });
+        document.getElementById('unit1').addEventListener('click', function (e) {
+            e.preventDefault(); pop();
+            var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+            document.getElementById('landuse').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        });
+
+        // ---------- Read aloud ----------
+        var readBtn = document.getElementById('readBtn');
+        if (!('speechSynthesis' in window)) readBtn.style.display = 'none';
+        function pickVoice() {
+            var v = speechSynthesis.getVoices();
+            return v.filter(function (x) { return /^en-GB/i.test(x.lang); })[0] || v.filter(function (x) { return /^en/i.test(x.lang); })[0] || null;
+        }
+        function done() { readBtn.classList.remove('speaking'); readBtn.textContent = '🔊 Listen'; }
+        readBtn.addEventListener('click', function () {
+            if (readBtn.classList.contains('speaking')) { speechSynthesis.cancel(); done(); return; }
+            speechSynthesis.cancel();
+            var u = new SpeechSynthesisUtterance(
+                'Welcome to Grade 6 History and Geography! ' +
+                'Unit 1, Land Use, is ready. It has ' + total + ' games. ' +
+                'Tap a game to play. When you have played a game, it gets a green tick. ' +
+                'Units 2 to 5 are coming soon.');
+            var v = pickVoice(); if (v) u.voice = v;
+            u.lang = v ? v.lang : 'en-GB'; u.rate = 0.9; u.pitch = 1.1;
+            u.onend = u.onerror = done;
+            readBtn.classList.add('speaking'); readBtn.textContent = '⏹ Stop';
+            speechSynthesis.speak(u);
+        });
+    })();
     </script>
 </body>
 </html>
