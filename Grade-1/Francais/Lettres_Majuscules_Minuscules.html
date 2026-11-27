@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TCBV2GCV');</script>
+<!-- End Google Tag Manager -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Les Lettres : majuscules et minuscules</title>
+<style>
+:root{--gold:#ffc83d}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:radial-gradient(circle at 20% 10%,#c9f1fb,#9fd8e8 60%,#8ccbe0);font-family:"Comic Sans MS","Chalkboard SE","Segoe UI Rounded","Arial Rounded MT Bold",Arial,sans-serif;color:#2b3a42;min-height:100vh;display:flex;justify-content:center;padding:8px;user-select:none;-webkit-user-select:none;touch-action:manipulation;overflow-x:hidden}
+@media(max-width:1180px){body{padding-top:58px}}
+.back-button{position:fixed;top:10px;left:10px;z-index:900;display:flex;align-items:center;gap:6px;background:#fff;color:#FF6B9D;padding:8px 18px;border-radius:40px;font:800 16px "Arial Rounded MT Bold","Helvetica Rounded",Arial,sans-serif;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.2);border:3px solid #FF6B9D}
+.back-button:hover{background:#FF6B9D;color:#fff}
+.scene{position:relative;width:min(1000px,100%);background:linear-gradient(#bfeee8,#9fdcd3);border-radius:22px;padding:clamp(30px,6vw,56px) clamp(8px,2vw,22px) 0;box-shadow:0 12px 34px rgba(0,0,0,.22);overflow:hidden}
+.deco{position:absolute;top:6px;left:0;right:0;display:flex;justify-content:space-around;font-size:clamp(1.1rem,3.4vw,2rem);pointer-events:none}
+.deco span{display:inline-block;animation:bob 2.6s ease-in-out infinite}
+.deco span:nth-child(2n){animation-delay:.6s}.deco span:nth-child(3n){animation-delay:1.1s}
+.frame{background:linear-gradient(#e3a85d,#b7793c);border-radius:14px;padding:clamp(8px,1.6vw,16px);box-shadow:inset 0 3px 0 rgba(255,255,255,.35),0 6px 0 #7a4a1e}
+.board{background:radial-gradient(ellipse at 30% 20%,#47a191,#2f7a6c 55%,#1d5248);border-radius:8px;padding:clamp(10px,2vw,20px);position:relative;min-height:clamp(320px,50vw,470px)}
+.ledge{height:clamp(12px,2vw,18px);margin:0 -6px;background:linear-gradient(#d99a52,#9c6229);border-radius:6px;box-shadow:0 4px 0 #6b3f17}
+.sign{margin:0 auto clamp(8px,1.6vw,14px);width:fit-content;background:linear-gradient(#a8692f,#7a4a1e);border:5px solid #e3a85d;border-radius:20px;padding:clamp(4px,1vw,10px) clamp(12px,3vw,28px);box-shadow:0 6px 0 #5c3412;text-align:center}
+.rainbow{font-size:clamp(1.3rem,5vw,2.6rem);font-weight:900;letter-spacing:1px;line-height:1.05}
+.rainbow span{display:inline-block;-webkit-text-stroke:2px #fff;paint-order:stroke fill;text-shadow:0 4px 0 rgba(0,0,0,.25);animation:wave 2.4s ease-in-out infinite}
+.levels{display:flex;gap:clamp(6px,1.4vw,12px);justify-content:center;flex-wrap:wrap;margin-bottom:clamp(10px,2vw,16px)}
+.lv{font:inherit;font-weight:900;color:#fff;font-size:clamp(.85rem,2.4vw,1.1rem);border:4px solid #e3a85d;border-radius:14px;padding:clamp(5px,1vw,8px) clamp(10px,2vw,18px);cursor:pointer;background:linear-gradient(#a8692f,#6f421a);box-shadow:0 5px 0 #4d2c0f;line-height:1.15}
+.lv small{display:block;font-size:.75em;font-weight:bold;opacity:.9}
+.lv .st{color:var(--gold);letter-spacing:1px}.lv .st i{font-style:normal;color:rgba(255,255,255,.35)}
+.lv.on{background:linear-gradient(#ffcf4d,#f59f00);color:#5c3412;border-color:#fff}
+.lv.on .st i{color:rgba(92,52,18,.3)}
+/* rangée des majuscules avec une case dessous */
+.pairs{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:clamp(5px,1.6vw,16px);max-width:min(900px,calc(var(--n) * 135px));margin:0 auto}
+@media(max-width:560px){.pairs{grid-template-columns:repeat(var(--nm),1fr)}}
+.col{display:flex;flex-direction:column;align-items:center;gap:clamp(4px,1vw,8px)}
+.tileW{width:100%;aspect-ratio:1;border-radius:clamp(8px,1.4vw,14px);background:linear-gradient(145deg,#a46d3a,#6b4420);box-shadow:inset 0 0 0 clamp(2px,.4vw,4px) #e9b46a,inset 0 0 0 clamp(4px,.8vw,7px) #5a3412,0 4px 0 #3e230b;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.arrow{color:#fff;font-size:clamp(.9rem,2.4vw,1.3rem);opacity:.75;line-height:1}
+.slot{width:100%;aspect-ratio:1;border-radius:50%;border:4px dashed rgba(255,255,255,.55);background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;position:relative;transition:transform .15s}
+.slot::after{content:"?";color:rgba(255,255,255,.35);font-weight:900;font-size:clamp(1rem,4vw,2.2rem)}
+.slot.full{border:4px solid #8ce99a;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.35),rgba(140,233,154,.25));animation:pop .5s}
+.slot.full::after{content:""}
+.slot.hover{border-color:#ffe066;background:rgba(255,224,102,.25);transform:scale(1.1);box-shadow:0 0 18px #ffe066}
+.slot.bad{animation:shake .5s;border-color:#ff8787}
+.L{font-weight:900;line-height:1;-webkit-text-stroke:clamp(1.5px,.35vw,3px) #1b1b1b;paint-order:stroke fill;text-shadow:0 clamp(2px,.4vw,4px) 0 #1b1b1b;color:#fff;pointer-events:none}
+.tileW,.slot{container-type:inline-size}
+.tileW .L{font-size:58cqw}
+.slot .L{font-size:52cqw}
+.slot::after{font-size:40cqw!important}
+.tray{margin-top:clamp(12px,2.4vw,20px);min-height:clamp(76px,14vw,120px);background:rgba(0,0,0,.22);border-top:4px solid #f3e3b3;border-radius:0 0 8px 8px;display:flex;flex-wrap:wrap;gap:clamp(8px,1.6vw,18px);align-items:center;justify-content:center;padding:10px}
+.bub{width:clamp(52px,10vw,88px);height:clamp(52px,10vw,88px);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.5),rgba(255,255,255,.12));box-shadow:0 4px 10px rgba(0,0,0,.25);animation:float 2.4s ease-in-out infinite}
+.bub:nth-child(2n){animation-delay:.4s}.bub:nth-child(3n){animation-delay:.9s}
+.bub .L{font-size:clamp(1.6rem,6vw,3.2rem)}
+.bub.sel{box-shadow:0 0 0 4px #ffe066,0 0 22px #ffe066;animation:none;transform:scale(1.12)}
+.bub.drag{position:fixed;z-index:999;pointer-events:none;transform:scale(1.2) rotate(-8deg);animation:none}
+.bub.back{animation:shake .5s}
+.score{display:flex;justify-content:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.pill{background:rgba(255,255,255,.9);border-radius:20px;padding:5px 14px;font-weight:900;font-size:clamp(.85rem,2.4vw,1.1rem)}
+.pill.g{color:#2b8a3e}.pill.s{color:#e67700}
+.helper{display:flex;align-items:flex-end;gap:8px;justify-content:center;margin-top:8px;min-height:60px}
+.owl{width:clamp(64px,11vw,96px);flex:none;transform-origin:bottom center}
+.owl.hop{animation:hop .6s ease}.owl.sad{animation:wobble .6s ease}
+.owl .lid{transform-origin:center;transform:scaleY(0);transform-box:fill-box}
+.owl.blink .lid{transform:scaleY(1)}
+.bubble{position:relative;background:#fff;border-radius:18px;padding:10px 14px;font-weight:bold;font-size:clamp(.9rem,2.6vw,1.15rem);max-width:min(440px,64vw);box-shadow:0 4px 0 rgba(0,0,0,.15);margin-bottom:clamp(20px,4vw,40px)}
+.bubble .L{font-size:1.45em;-webkit-text-stroke:1px #1b1b1b;text-shadow:none;vertical-align:-.1em}
+.bubble::after{content:"";position:absolute;left:-12px;bottom:14px;border:8px solid transparent;border-right:14px solid #fff;border-left:0}
+.floor{background:repeating-linear-gradient(90deg,#e7b97a 0 70px,#dcaa68 70px 72px);margin:clamp(10px,2vw,18px) calc(-1*clamp(8px,2vw,22px)) 0;padding:10px clamp(10px,2vw,22px);display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-top:6px solid #c98a45}
+.wbtn{font:inherit;font-weight:bold;color:#fff;background:linear-gradient(#a8692f,#6f421a);border:3px solid #e3a85d;border-radius:12px;padding:7px 12px;cursor:pointer;font-size:clamp(.8rem,2.2vw,1rem);box-shadow:0 4px 0 #4d2c0f}
+.wbtn:active{transform:translateY(2px);box-shadow:0 2px 0 #4d2c0f}
+.sp{flex:1}
+.round{width:clamp(42px,7vw,54px);height:clamp(42px,7vw,54px);border-radius:50%;border:4px solid #fff;background:#ff9f1c;color:#fff;font-size:clamp(1.1rem,3vw,1.5rem);cursor:pointer;box-shadow:0 4px 0 #c46d00}
+.consigne{text-align:center;color:#244c57;padding:6px 6px 10px;font-size:clamp(.85rem,2.3vw,1rem)}
+.win{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:1000;padding:10px}
+.win .box{background:linear-gradient(#fffbe8,#fff);border:6px solid #e3a85d;border-radius:26px;padding:20px 24px;text-align:center;max-width:94vw;box-shadow:0 10px 40px rgba(0,0,0,.4);animation:pop .5s}
+.win .owl{width:110px}
+.win .stars{font-size:clamp(2.4rem,9vw,3.6rem);color:var(--gold);text-shadow:0 3px 0 #c98a00}
+.win .stars i{font-style:normal;color:#ddd;text-shadow:none}
+.win h3{margin:4px 0;font-size:clamp(1.4rem,5vw,2rem);color:#2f7a6c}
+.pbtn{font:inherit;font-weight:bold;font-size:1.05rem;border:none;border-radius:14px;padding:10px 18px;margin:6px;cursor:pointer;background:#34c759;color:#fff;box-shadow:0 4px 0 #1f8a3a}
+.pbtn.alt{background:#ff9f1c;box-shadow:0 4px 0 #c46d00}
+.conf{position:fixed;top:-24px;z-index:1001;pointer-events:none;animation:fall linear forwards;font-size:1.4rem}
+@keyframes fall{to{transform:translateY(112vh) rotate(720deg)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+@keyframes pop{0%{transform:scale(.8)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes wave{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-6px) rotate(-3deg)}75%{transform:translateY(3px) rotate(3deg)}}
+@keyframes hop{0%,100%{transform:translateY(0) scale(1)}30%{transform:translateY(-22px) scale(1.05,.95)}60%{transform:translateY(0) scale(1.08,.92)}}
+@keyframes wobble{0%,100%{transform:rotate(0)}25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TCBV2GCV"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<a href="grade-1-francais-index.html" class="back-button"><span>🏠</span><span>Back</span></a>
+
+<div class="scene">
+ <div class="deco"><span>🍎</span><span>🌼</span><span>💗</span><span>⭐</span><span>🌼</span><span>❤️</span><span>🌼</span><span>💙</span><span>🍎</span></div>
+ <div class="frame"><div class="board">
+  <div class="sign"><div class="rainbow" id="titre"></div></div>
+  <div class="levels" id="levels"></div>
+  <div class="score"><span class="pill g">✅ <span id="sOk">0</span> / <span id="sTot">6</span></span><span class="pill s">🎯 Manche <span id="sRound">1</span> / 3</span></div>
+  <div class="pairs" id="pairs"></div>
+  <div class="tray" id="tray"></div>
+ </div><div class="ledge"></div></div>
+ <div class="helper"><div class="owlSlot"></div><div class="bubble" id="bubble"></div></div>
+ <div class="floor">
+  <button class="wbtn" onclick="nouvelleManche()">🔄 Rejouer</button>
+  <span class="sp"></span>
+  <button class="round" onclick="toggleSon()" id="sonBtn" title="Son">🔊</button>
+ </div>
+ <div class="consigne">Fais glisser chaque <b>minuscule</b> sous sa <b>majuscule</b>. Tu peux aussi toucher la minuscule, puis la case.</div>
+</div>
+
+<div class="win" id="win"><div class="box"><div class="owlSlot"></div><div class="stars" id="wstars"></div><h3 id="wtitle">Bravo !</h3><p id="wtext"></p>
+ <button class="pbtn" id="wnext" onclick="suite()">Continuer ➜</button><button class="pbtn alt" onclick="$('win').style.display='none';debutNiveau()">🔄 Rejouer</button></div></div>
+
+<template id="owlTpl">
+<svg class="owl" viewBox="0 0 120 130" aria-hidden="true">
+ <ellipse cx="60" cy="124" rx="34" ry="5" fill="rgba(0,0,0,.2)"/>
+ <path d="M22 40 L30 14 L44 32 Z" fill="#8a5bd6"/><path d="M98 40 L90 14 L76 32 Z" fill="#8a5bd6"/>
+ <ellipse cx="60" cy="74" rx="42" ry="48" fill="#9b6be8"/><ellipse cx="60" cy="88" rx="27" ry="30" fill="#f3e6ff"/>
+ <path d="M44 84q4 4 8 0M56 92q4 4 8 0M68 84q4 4 8 0M50 102q4 4 8 0M62 102q4 4 8 0" stroke="#c7a8f5" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+ <ellipse cx="20" cy="80" rx="10" ry="22" fill="#7f4fd0" transform="rotate(15 20 80)"/><ellipse cx="100" cy="80" rx="10" ry="22" fill="#7f4fd0" transform="rotate(-15 100 80)"/>
+ <circle cx="42" cy="52" r="17" fill="#fff"/><circle cx="78" cy="52" r="17" fill="#fff"/>
+ <circle cx="44" cy="54" r="8" fill="#2b2b3a"/><circle cx="76" cy="54" r="8" fill="#2b2b3a"/>
+ <circle cx="47" cy="51" r="3" fill="#fff"/><circle cx="79" cy="51" r="3" fill="#fff"/>
+ <ellipse class="lid" cx="42" cy="52" rx="17" ry="17" fill="#9b6be8"/><ellipse class="lid" cx="78" cy="52" rx="17" ry="17" fill="#9b6be8"/>
+ <path d="M54 64 L60 74 L66 64 Z" fill="#ffb31a"/>
+ <circle cx="28" cy="68" r="5" fill="#ff8fb1" opacity=".7"/><circle cx="92" cy="68" r="5" fill="#ff8fb1" opacity=".7"/>
+ <path d="M44 120q-6 4-10 0M50 120q-2 5-6 3M76 120q6 4 10 0M70 120q2 5 6 3" stroke="#ffb31a" stroke-width="4" fill="none" stroke-linecap="round"/>
+ <path d="M30 22 l4 -10 l4 10" fill="#ffd43b"/>
+</svg>
+</template>
+
+<script>
+const COUL=["#ff595e","#ff924c","#ffca3a","#8ac926","#52a675","#1982c4","#4267ac","#6a4c93","#f15bb5","#00bbf9"];
+const ALPHA="ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+// niveau 1 : la minuscule ressemble à la majuscule ; niveau 2 : elle est différente ; niveau 3 : toutes, avec les pièges b d p q
+const NIV=[
+ {n:1,sub:"Elles se ressemblent",lettres:"C K O P S U V W X Z".split(" "),parManche:5},
+ {n:2,sub:"Elles sont différentes",lettres:"A B D E G H N Q R".split(" "),parManche:5},
+ {n:3,sub:"Toutes les lettres",lettres:ALPHA,parManche:6,pieges:true}
+];
+const MANCHES=3;
+const BRAVO=["Bravo !","Super !","Génial !","Bien joué !","Oui !","Excellent !"];
+const $=id=>document.getElementById(id);
+const coul=l=>COUL[ALPHA.indexOf(l.toUpperCase())%COUL.length];
+const Lsp=(t)=>`<span class="L" style="color:${coul(t)}">${t}</span>`;
+function melange(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+let niv=0,manche=0,cibles=[],place={},ordre=[],erreurs=0,erreursNiv=0,son=true,sel=null;
+let etoiles=[0,0,0];
+try{etoiles=JSON.parse(localStorage.getItem("maj_etoiles"))||etoiles;son=localStorage.getItem("alpha_son")!=="0";}catch(e){}
+// ---------- voix et sons ----------
+let voixFR=null;
+function chargerVoix(){try{const v=speechSynthesis.getVoices();voixFR=v.find(x=>/^fr(-|_)FR/i.test(x.lang))||v.find(x=>/^fr/i.test(x.lang))||null;}catch(e){}}
+try{chargerVoix();speechSynthesis.onvoiceschanged=chargerVoix;}catch(e){}
+function dire(t){if(!son)return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="fr-FR";if(voixFR)u.voice=voixFR;u.rate=.85;u.pitch=1.15;speechSynthesis.speak(u);}catch(e){}}
+let AC=null;
+function bip(notes,type="sine",dur=.12){if(!son)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();let t=AC.currentTime;
+ notes.forEach(f=>{const o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.22,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+dur+.02);t+=dur*.8;});}catch(e){}}
+const sPrend=()=>bip([520],"sine",.07),sOk=()=>bip([660,880,1175],"triangle",.11),sNon=()=>bip([300,220],"sawtooth",.15),sGagne=()=>bip([523,659,784,1047,784,1047],"triangle",.14);
+function toggleSon(){son=!son;try{localStorage.setItem("alpha_son",son?"1":"0")}catch(e){}$("sonBtn").textContent=son?"🔊":"🔇";if(!son)speechSynthesis.cancel();}
+// ---------- chouette ----------
+document.querySelectorAll(".owlSlot").forEach(s=>s.replaceWith($("owlTpl").content.cloneNode(true)));
+setInterval(()=>document.querySelectorAll(".owl").forEach(o=>{o.classList.add("blink");setTimeout(()=>o.classList.remove("blink"),160);}),3200);
+function lulu(cls,txt){document.querySelectorAll(".owl").forEach(o=>{o.classList.remove("hop","sad");void o.offsetWidth;if(cls)o.classList.add(cls);});if(txt!==undefined)$("bubble").innerHTML=txt;}
+$("titre").innerHTML=[..."Aa Bb Cc"].map((c,i)=>c===" "?"&nbsp;":`<span style="color:${COUL[i%10]};animation-delay:${i*.12}s">${c}</span>`).join("")+
+ `<div style="font-size:.5em;color:#ffe9a8;margin-top:4px;-webkit-text-stroke:0">Majuscules et minuscules</div>`;
+// ---------- niveaux ----------
+function boutons(){$("levels").innerHTML=NIV.map((v,i)=>`<button class="lv ${i===niv?"on":""}" onclick="choisir(${i})">Niveau ${v.n} <span class="st">${"★".repeat(etoiles[i])}<i>${"★".repeat(3-etoiles[i])}</i></span><small>${v.sub}</small></button>`).join("");}
+function choisir(i){niv=i;debutNiveau();}
+let restants=[];
+function debutNiveau(){manche=0;erreursNiv=0;restants=melange(NIV[niv].lettres);boutons();nouvelleManche(true);}
+function nouvelleManche(premier){
+ const v=NIV[niv];let k=v.parManche;
+ if(restants.length<k)restants=restants.concat(melange(v.lettres.filter(l=>!restants.includes(l))));
+ cibles=restants.splice(0,k);
+ // niveau 3 : on glisse les lettres pièges ensemble quand c'est possible
+ if(v.pieges&&manche===1){cibles=melange(["B","D","P","Q",...melange(ALPHA.filter(l=>!"BDPQ".includes(l))).slice(0,2)]);}
+ place={};erreurs=0;sel=null;ordre=melange(cibles);
+ $("sRound").textContent=manche+1;$("sTot").textContent=cibles.length;
+ dessiner();
+ const m=v.pieges&&manche===1?"Attention aux lettres jumelles <b>b, d, p, q</b> ! 👀":`Manche ${manche+1} : trouve la minuscule de chaque majuscule !`;
+ lulu("hop",m);dire(v.pieges&&manche===1?"Attention aux lettres jumelles : b, d, p, q !":"Trouve la minuscule de chaque majuscule.");
+}
+function dessiner(){
+ const n=cibles.length;$("pairs").style.setProperty("--n",n);$("pairs").style.setProperty("--nm",n);
+ $("pairs").innerHTML=cibles.map((L,i)=>`<div class="col"><div class="tileW" onclick="dire('${L}')">${Lsp(L)}</div><div class="arrow">⬇</div><div class="slot ${place[i]?"full":""}" data-i="${i}">${place[i]?Lsp(place[i]):""}</div></div>`).join("");
+ const libres=ordre.filter(L=>!Object.values(place).includes(L.toLowerCase()));
+ $("tray").innerHTML=libres.map(L=>`<div class="bub${sel===L?" sel":""}" data-l="${L}">${Lsp(L.toLowerCase())}</div>`).join("");
+ $("sOk").textContent=Object.keys(place).length;
+}
+// ---------- glisser-déposer + toucher ----------
+let drag=null,depart=null,bouge=false,source=null;
+document.addEventListener("pointerdown",e=>{
+ const b=e.target.closest(".bub");const s=e.target.closest(".slot");
+ if(b){depart={x:e.clientX,y:e.clientY};source={l:b.dataset.l,el:b};bouge=false;e.preventDefault();return;}
+ if(s&&sel&&!s.classList.contains("full")){essayer(sel,+s.dataset.i,null);sel=null;dessiner();}
+});
+document.addEventListener("pointermove",e=>{
+ if(!source)return;
+ if(!bouge&&Math.hypot(e.clientX-depart.x,e.clientY-depart.y)>8){bouge=true;sPrend();dire(source.l.toLowerCase());
+  drag=document.createElement("div");drag.className="bub drag";drag.innerHTML=Lsp(source.l.toLowerCase());document.body.appendChild(drag);source.el.style.visibility="hidden";}
+ if(bouge){const w=drag.offsetWidth;drag.style.left=e.clientX-w/2+"px";drag.style.top=e.clientY-w/2+"px";
+  document.querySelectorAll(".slot.hover").forEach(x=>x.classList.remove("hover"));const c=sous(e);if(c)c.classList.add("hover");}
+});
+document.addEventListener("pointerup",e=>{
+ if(!source)return;
+ if(bouge){const c=sous(e);drag.remove();drag=null;document.querySelectorAll(".slot.hover").forEach(x=>x.classList.remove("hover"));
+  if(c)essayer(source.l,+c.dataset.i,source.el);else source.el.style.visibility="";}
+ else{sel=sel===source.l?null:source.l;sPrend();dire(source.l.toLowerCase());if(sel)lulu(null,`Touche la case sous la majuscule de ${Lsp(sel.toLowerCase())}.`);dessiner();}
+ source=null;
+});
+function sous(e){const el=document.elementFromPoint(e.clientX,e.clientY);const c=el&&el.closest(".slot");return c&&!c.classList.contains("full")?c:null;}
+function essayer(L,i,el){
+ if(cibles[i]===L){place[i]=L.toLowerCase();sOk();dessiner();
+  const reste=cibles.length-Object.keys(place).length;
+  const b=BRAVO[Math.floor(Math.random()*BRAVO.length)];
+  lulu("hop",`${b} ${Lsp(L)} et ${Lsp(L.toLowerCase())}, c'est la même lettre !`);dire(b+" "+L+" majuscule, "+L.toLowerCase()+" minuscule.");
+  if(!reste)setTimeout(finManche,1600);}
+ else{erreurs++;erreursNiv++;sNon();
+  const slot=document.querySelector(`.slot[data-i="${i}"]`);if(slot){slot.classList.remove("bad");void slot.offsetWidth;slot.classList.add("bad");}
+  if(el){el.style.visibility="";el.classList.remove("back");void el.offsetWidth;el.classList.add("back");}
+  lulu("sad",`Oups ! ${Lsp(L.toLowerCase())} n'est pas la minuscule de ${Lsp(cibles[i])}. Essaie encore ! 💪`);dire("Oups ! Essaie encore.");}
+}
+function finManche(){
+ manche++;
+ if(manche<MANCHES){confettis(18);sGagne();lulu("hop","Manche réussie ! On continue… 🌟");dire("Manche réussie !");setTimeout(()=>nouvelleManche(),2200);return;}
+ const s=erreursNiv===0?3:erreursNiv<=3?2:1;etoiles[niv]=Math.max(etoiles[niv],s);try{localStorage.setItem("maj_etoiles",JSON.stringify(etoiles))}catch(e){}
+ confettis(46);sGagne();dire("Bravo ! Tu as réussi le niveau "+NIV[niv].n+" !");boutons();
+ setTimeout(()=>{$("wstars").innerHTML="★".repeat(s)+"<i>"+"★".repeat(3-s)+"</i>";$("wtitle").textContent=s===3?"Parfait !":"Bravo !";
+  $("wtext").textContent=erreursNiv?`Niveau ${NIV[niv].n} réussi ! Tu as corrigé ${erreursNiv} erreur${erreursNiv>1?"s":""}.`:`Niveau ${NIV[niv].n} réussi sans aucune erreur ! 🏆`;
+  $("wnext").textContent=niv<NIV.length-1?"Niveau suivant ➜":"Recommencer ➜";$("win").style.display="flex";lulu("hop");},1200);
+}
+function suite(){$("win").style.display="none";niv=niv<NIV.length-1?niv+1:0;debutNiveau();}
+function confettis(n){const e=["⭐","🌟","🎉","💖","🎈","🌈","🍎","🌼"];for(let i=0;i<n;i++){const d=document.createElement("div");d.className="conf";d.textContent=e[i%e.length];d.style.left=Math.random()*100+"vw";d.style.animationDuration=2+Math.random()*1.8+"s";d.style.animationDelay=Math.random()*.7+"s";document.body.appendChild(d);setTimeout(()=>d.remove(),5000);}}
+$("sonBtn").textContent=son?"🔊":"🔇";
+debutNiveau();
+</script>
+</body>
+</html>
