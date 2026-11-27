@@ -289,7 +289,7 @@
                 <div class="chapter-description">Learn the French alphabet and pronunciation</div>
             </div>
 
-            <div class="chapter-card coming-soon">
+            <div class="chapter-card" onclick="scrollToSection('lettres')">
                 <div class="chapter-icon">📝</div>
                 <div class="chapter-title">Les Lettres</div>
                 <div class="chapter-description">Practice French letters</div>
@@ -350,6 +350,32 @@
                     `;
 
                     grid.appendChild(card);
+                });
+            </script>
+        </div>
+
+        <!-- ====== LES LETTRES SECTION ====== -->
+        <div class="activities-section" id="lettres">
+            <h2 class="section-title">📝 Les Lettres Activities</h2>
+            <div class="activities-grid" id="lettres-grid"></div>
+
+            <script>
+                const lettresFiles = [
+                    {file:"Lettres_Majuscules_Minuscules.html", icon:"🔠", level:"Glisser-déposer | 3 niveaux avec Lulu la chouette", title:"Majuscules et Minuscules", badge:"NEW!"}
+                ];
+
+                const lettresGrid = document.getElementById("lettres-grid");
+
+                lettresFiles.forEach(item => {
+                    const card = document.createElement("a");
+                    card.href = item.file;
+                    card.className = "activity-card";
+                    card.innerHTML = `
+                        <div class="activity-icon">${item.icon}</div>
+                        <div class="activity-title">${item.title}${item.badge ? `<span class="new-badge">${item.badge}</span>` : ''}</div>
+                        <div class="activity-level">${item.level}</div>
+                    `;
+                    lettresGrid.appendChild(card);
                 });
             </script>
         </div>
