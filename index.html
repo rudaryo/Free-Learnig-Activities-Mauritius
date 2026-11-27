@@ -156,9 +156,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             content: ''; position: absolute; top: -40px; right: -40px;
             width: 130px; height: 130px; border-radius: 50%; background: rgba(255, 255, 255, .18);
         }
+        .card-link { position: absolute; inset: 0; z-index: 1; border-radius: 30px; }
+        .card-link:focus-visible { outline: 5px solid var(--ink); outline-offset: 4px; }
+        a.subj { position: relative; z-index: 2; text-decoration: none; cursor: pointer; transition: transform .15s; }
+        a.subj:hover { transform: translateY(-3px) scale(1.06); }
+        a.subj:active { transform: translateY(2px); box-shadow: none; }
+        a.subj:focus-visible { outline: 4px solid var(--ink); outline-offset: 3px; }
         .grade-card:hover { transform: translateY(-8px) rotate(-1deg); box-shadow: 0 18px 0 var(--c-dark), 0 26px 36px rgba(0, 0, 0, .2); }
         .grade-card:active { transform: translateY(6px); box-shadow: 0 4px 0 var(--c-dark); }
-        .grade-card:focus-visible, .icon-btn:focus-visible, .read-btn:focus-visible, .continue a:focus-visible, .link-btn:focus-visible {
+        .icon-btn:focus-visible, .read-btn:focus-visible, .continue a:focus-visible, .link-btn:focus-visible {
             outline: 5px solid var(--ink); outline-offset: 4px;
         }
 
@@ -202,6 +208,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         .s-fre   { --sc: #7B3FC4; }
         .s-sci   { --sc: #1E8A45; }
         .s-hg    { --sc: #0E7C86; }
+        .s-books { --sc: #E0731F; }
 
         .ribbon {
             position: absolute; top: 16px; left: -34px; transform: rotate(-35deg);
@@ -377,44 +384,48 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!--
             Each card's subjects are listed in its "subjects" row.
             To change them, add or remove a <span class="subj"> line.
+            To make a label open its subject page, change <span ...>...</span> into
+            <a href="Grade-X/Subject/page.html" ...>...</a> (see Grade 1 and Grade 6).
             MATHS: <span class="subj s-maths"><i>🔢</i>MATHS</span>
             ENG:   <span class="subj s-eng"><i>🔤</i>ENG</span>
             FRE:   <span class="subj s-fre"><i>💬</i>FRE</span>
             SCI:   <span class="subj s-sci"><i>🔬</i>SCI</span>
+            BOOKS: <span class="subj s-books"><i>📚</i>BOOKS</span>
             H&G:   <span class="subj s-hg"><i>🌍</i>HIST &amp; GEO</span>
         -->
         <main class="grades">
             <!-- Grade 1 -->
-            <a href="Grade-1/grade-1-index.html" class="grade-card g1" data-grade="1" aria-label="Grade 1, Foundation Skills, ages 5 to 6">
+            <div class="grade-card g1" data-grade="1">
+                <a href="Grade-1/grade-1-index.html" class="card-link" aria-label="Grade 1, Foundation Skills, ages 5 to 6"></a>
                 <div class="grade-emoji">🐣</div>
                 <div class="grade-number">1</div>
                 <div class="grade-title">Grade 1</div>
                 <div class="grade-desc">Foundation Skills</div>
                 <div class="grade-age">Ages 5–6</div>
                 <div class="subjects">
-                    <span class="subj s-maths" title="Mathematics"><i>🔢</i>MATHS</span>
-                    <span class="subj s-eng" title="English"><i>🔤</i>ENG</span>
-                    <span class="subj s-fre" title="French"><i>💬</i>FRE</span>
+                    <a href="Grade-1/Mathematics/grade-1-math-index.html" class="subj s-maths" title="Mathematics"><i>🔢</i>MATHS</a>
+                    <a href="Grade-1/English/grade-1-english-index.html" class="subj s-eng" title="English"><i>🔤</i>ENG</a>
+                    <a href="Grade-1/Francais/grade-1-francais-index.html" class="subj s-fre" title="French"><i>💬</i>FRE</a>
                 </div>
-            </a>
+            </div>
 
             <!-- Grade 4 -->
-            <a href="Grade-4/grade-4-index.html" class="grade-card g4" data-grade="4" aria-label="Grade 4, Exploring Ideas, ages 8 to 9">
+            <div class="grade-card g4" data-grade="4">
+                <a href="Grade-4/grade-4-index.html" class="card-link" aria-label="Grade 4, Exploring Ideas, ages 8 to 9"></a>
                 <div class="grade-emoji">🌱</div>
                 <div class="grade-number">4</div>
                 <div class="grade-title">Grade 4</div>
                 <div class="grade-desc">Exploring Ideas</div>
                 <div class="grade-age">Ages 8–9</div>
                 <div class="subjects">
-                    <span class="subj s-maths" title="Mathematics"><i>🔢</i>MATHS</span>
-                    <span class="subj s-eng" title="English"><i>🔤</i>ENG</span>
-                    <span class="subj s-fre" title="French"><i>💬</i>FRE</span>
-                    <span class="subj s-sci" title="Science"><i>🔬</i>SCI</span>
+                    <a href="Grade-4/English/grade-4-english-index.html" class="subj s-eng" title="English"><i>🔤</i>ENG</a>
+                    <a href="Grade-4/Book-Corner/book-corner-index.html" class="subj s-books" title="Book Corner"><i>📚</i>BOOKS</a>
                 </div>
-            </a>
+            </div>
 
             <!-- Grade 5 -->
-            <a href="Grade-5/grade-5-index.html" class="grade-card g5" data-grade="5" aria-label="Grade 5, Advancing Excellence, ages 9 to 10">
+            <div class="grade-card g5" data-grade="5">
+                <a href="Grade-5/grade-5-index.html" class="card-link" aria-label="Grade 5, Advancing Excellence, ages 9 to 10"></a>
                 <div class="grade-emoji">🚀</div>
                 <div class="grade-number">5</div>
                 <div class="grade-title">Grade 5</div>
@@ -426,10 +437,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <span class="subj s-fre" title="French"><i>💬</i>FRE</span>
                     <span class="subj s-sci" title="Science"><i>🔬</i>SCI</span>
                 </div>
-            </a>
+            </div>
 
             <!-- Grade 6 -->
-            <a href="Grade-6/grade-6-index.html" class="grade-card g6" data-grade="6" aria-label="Grade 6, Preparing for Success, ages 10 to 11. New: History and Geography">
+            <div class="grade-card g6" data-grade="6">
+                <a href="Grade-6/grade-6-index.html" class="card-link" aria-label="Grade 6, Preparing for Success, ages 10 to 11. New: History and Geography"></a>
                 <span class="ribbon">NEW!</span>
                 <div class="grade-emoji">🏆</div>
                 <div class="grade-number">6</div>
@@ -437,9 +449,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <div class="grade-desc">Preparing for Success</div>
                 <div class="grade-age">Ages 10–11</div>
                 <div class="subjects">
-                    <span class="subj s-hg" title="History & Geography"><i>🌍</i>HIST &amp; GEO</span>
+                    <a href="Grade-6/History-Geography/hg-grade6-index.html" class="subj s-hg" title="History & Geography"><i>🌍</i>HIST &amp; GEO</a>
                 </div>
-            </a>
+            </div>
         </main>
 
         <div class="soon-row" aria-label="Coming soon">
@@ -532,7 +544,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             say('Hello, friend! Welcome to the Interactive Learning Platform. ' +
                 'Pick your grade and start playing! ' +
                 'Grade 1 is yellow. Grade 4 is green. Grade 5 is blue. Grade 6 is orange. ' +
-                'At the bottom of each card you can see the subjects: MATHS, ENG for English, FRE for French, SCI for Science, and HIST and GEO for History and Geography.');
+                'At the bottom of each card you can see the subjects. Tap one to go straight to it: MATHS, ENG for English, FRE for French, SCI for Science, BOOKS for Book Corner, and HIST and GEO for History and Geography.');
         });
 
         // ---------- Remember last grade ----------
@@ -543,7 +555,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             if (card) {
                 document.getElementById('continueName').textContent = GRADE_NAMES[last];
                 var link = document.getElementById('continueLink');
-                link.href = card.getAttribute('href');
+                link.href = card.querySelector('.card-link').href;
                 box.style.setProperty('--c', GRADE_COLOURS[last]);
                 box.classList.add('show');
                 link.addEventListener('click', function (e) { go(e, link.href); });
@@ -559,9 +571,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             setTimeout(function () { window.location.href = href; }, 160);
         }
         document.querySelectorAll('.grade-card').forEach(function (card) {
-            card.addEventListener('click', function (e) {
-                store('ilp-last-grade', card.getAttribute('data-grade'));
-                go(e, card.href);
+            card.querySelectorAll('.card-link, a.subj').forEach(function (a) {
+                a.addEventListener('click', function (e) {
+                    store('ilp-last-grade', card.getAttribute('data-grade'));
+                    go(e, a.href);
+                });
             });
         });
 
