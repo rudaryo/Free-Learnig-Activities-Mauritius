@@ -9,412 +9,306 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-TCBV2GCV');</script>
 <!-- End Google Tag Manager -->
 
-
-
-    
-    
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Number Listening Activities - Levels 1-4</title>
+    <title>Number Listening - Levels 1-4</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👂</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --ink: #1E2A4A;
+            --wood: #8B5A2B;          /* wooden buttons and tiles */
+            --wood-dark: #5E3A17;
+            --wood-light: #E0A85C;    /* light wooden edge */
+            --frame: #C98B4B;         /* board frame */
+            --board: #2F7D6D;         /* chalkboard green */
+            --board-dark: #23604F;
+            --chalk: #FFFDF2;
+            --font: 'Fredoka', 'Baloo 2', 'Arial Rounded MT Bold', 'Comic Sans MS', sans-serif;
+            /* a colour for each number, like the letters on the alphabet board */
+            --n1: #FF5A5F; --n2: #FF9F1C; --n3: #FFD23F; --n4: #5BD36B;
+            --n5: #3FA9F5; --n6: #B07CFF; --n7: #FF6FB5; --n8: #2FD9C4;
         }
 
         body {
-            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: var(--font);
+            color: var(--ink);
+            background: linear-gradient(160deg, #C7F0EA 0%, #A9E3E6 55%, #9ED3EC 100%);
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 8px 14px 24px;
+            overflow-x: hidden;
         }
 
+        /* ---------- Decoration row (fruit, flowers, hearts) ---------- */
+        .deco { max-width: 900px; margin: 0 auto 4px; display: flex; justify-content: space-around; font-size: 1.7rem; }
+        .deco span { animation: bob 3s ease-in-out infinite; }
+        .deco span:nth-child(2n) { animation-delay: -1.5s; }
+        @keyframes bob { 50% { transform: translateY(-4px); } }
+
+        /* ---------- Top bar ---------- */
+        .topbar { max-width: 900px; margin: 0 auto 10px; display: flex; align-items: center; }
+        .nav-btn, .big-btn, .speaker-button {
+            font-family: var(--font); font-weight: 600; color: var(--chalk);
+            background: linear-gradient(180deg, #A06A35 0%, var(--wood) 100%);
+            border: 3px solid var(--wood-light); cursor: pointer; text-decoration: none;
+            box-shadow: 0 5px 0 var(--wood-dark), 0 8px 14px rgba(0,0,0,.25);
+            text-shadow: 0 2px 0 rgba(0,0,0,.35); transition: transform .15s;
+        }
+        .nav-btn { display: inline-flex; align-items: center; gap: 8px; font-size: 1.15rem; padding: 7px 18px 7px 14px; border-radius: 14px; }
+        .nav-btn:hover, .big-btn:hover { transform: translateY(-2px); }
+        .nav-btn:active, .big-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--wood-dark); }
+
+        /* ---------- Wooden frame + chalkboard ---------- */
+        .frame {
+            max-width: 900px; margin: 0 auto; padding: 16px; border-radius: 22px;
+            background:
+                repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 3px, transparent 3px 11px),
+                linear-gradient(180deg, #DDA463 0%, var(--frame) 50%, #B97A3C 100%);
+            box-shadow: 0 10px 0 #8E5A27, 0 18px 34px rgba(30,42,74,.3), inset 0 2px 0 rgba(255,255,255,.35);
+            position: relative;
+        }
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            border-radius: 12px; padding: 18px 22px 20px; position: relative; overflow: hidden;
+            background:
+                radial-gradient(ellipse at 20% 15%, rgba(255,255,255,.10), transparent 55%),
+                radial-gradient(ellipse at 85% 90%, rgba(255,255,255,.06), transparent 50%),
+                linear-gradient(160deg, #3A8E7C 0%, var(--board) 45%, var(--board-dark) 100%);
+            box-shadow: inset 0 0 0 3px rgba(0,0,0,.18), inset 0 6px 18px rgba(0,0,0,.35);
+            color: var(--chalk);
         }
+        /* chalk tray under the board */
+        .tray {
+            max-width: 900px; height: 18px; margin: 0 auto; border-radius: 0 0 12px 12px;
+            background: linear-gradient(180deg, #B97A3C, #8E5A27);
+            box-shadow: 0 6px 12px rgba(0,0,0,.25); position: relative; top: -2px;
+        }
+        .tray::before { content: ''; position: absolute; left: 14%; top: 4px; width: 46px; height: 8px; border-radius: 4px; background: #FFFDF2; box-shadow: 70px 0 0 #FFD9E8, 130px 0 0 #D9F2FF; }
 
-        .home-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: white;
-            color: #667eea;
-            padding: 12px 24px;
-            border-radius: 50px;
-            border: none;
-            cursor: pointer;
-            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
-            font-weight: 800;
-            font-size: 26px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        /* ---------- Wooden name plaque with colourful letters ---------- */
+        .head { display: flex; justify-content: center; }
+        .plaque {
+            display: inline-block; padding: 6px 26px 8px; border-radius: 16px;
+            background: linear-gradient(180deg, #9A6233 0%, #7A4A22 100%);
+            border: 4px solid var(--wood-light);
+            box-shadow: 0 6px 0 var(--wood-dark), 0 10px 18px rgba(0,0,0,.3);
         }
+        h1 { font-size: clamp(1.5rem, 4.6vw, 2.3rem); line-height: 1.1; font-weight: 700; letter-spacing: 1px; }
+        h1 .ch { display: inline-block; -webkit-text-stroke: 1px rgba(0,0,0,.25); text-shadow: 0 3px 0 rgba(0,0,0,.35); }
+        .subtitle { color: #E6FFF6; font-size: clamp(1rem, 3vw, 1.2rem); margin-top: 8px; text-align: center; opacity: .9; }
 
-        .home-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-            background: #667eea;
-            color: white;
+        /* ---------- Score plaques ---------- */
+        .status { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0 8px; }
+        .pill {
+            border-radius: 14px; padding: 5px 6px; text-align: center;
+            background: linear-gradient(180deg, #A06A35, var(--wood)); border: 3px solid var(--wood-light);
+            box-shadow: 0 4px 0 var(--wood-dark);
         }
+        .pill .label { font-size: .95rem; color: #FFE9C9; font-weight: 500; }
+        .pill .value { font-size: clamp(1.4rem, 4.2vw, 1.9rem); font-weight: 700; color: #FFD23F; line-height: 1.1; text-shadow: 0 2px 0 rgba(0,0,0,.35); }
 
-        .activity-card {
-            background: white;
-            border-radius: 24px;
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-            display: none;
+        /* ---------- Level progress, drawn in chalk ---------- */
+        .level-box {
+            display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+            border: 2px dashed rgba(255,255,255,.45); border-radius: 14px; padding: 8px 14px; margin-bottom: 10px;
+            background: rgba(255,255,255,.06);
         }
+        .level-name { font-weight: 600; font-size: 1.1rem; color: var(--chalk); }
+        .bar { flex: 1; min-width: 140px; height: 16px; background: rgba(0,0,0,.25); border-radius: 999px; overflow: hidden; border: 2px solid rgba(255,255,255,.5); }
+        .bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #FFE45C, #FFB627); border-radius: 999px; transition: width .5s; }
+        .level-count { font-weight: 600; color: #FFE45C; font-size: 1rem; }
 
-        .activity-card.active {
-            display: block;
+        /* ---------- Question ---------- */
+        .question {
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            font-size: clamp(1.3rem, 4vw, 1.8rem); font-weight: 600; color: var(--chalk);
         }
+        .speaker-button { width: 52px; height: 52px; border-radius: 14px; font-size: 1.5rem; flex: none; }
+        .speaker-button:hover { transform: scale(1.06); }
+        .speaker-button:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--wood-dark); }
+        .speaker-button.speaking { animation: ring 1s ease-in-out infinite; }
+        @keyframes ring { 50% { box-shadow: 0 0 0 9px rgba(255,228,92,.35), 0 5px 0 var(--wood-dark); } }
 
-        .level-badge {
-            display: inline-block;
-            background: #667eea;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 20px;
+        /* ---------- The big number: chalk box like on the alphabet board ---------- */
+        .number-wrap { display: flex; justify-content: center; margin: 10px 0 4px; }
+        .number-display {
+            --nc: var(--chalk);
+            width: clamp(130px, min(30vw, 24vh), 200px); height: clamp(130px, min(30vw, 24vh), 200px);
+            border-radius: 22px; display: grid; place-items: center;
+            font-size: clamp(4.5rem, min(16vw, 14vh), 7.5rem); font-weight: 700; line-height: 1;
+            color: var(--nc); background: rgba(255,255,255,.08);
+            border: 4px dashed rgba(255,255,255,.55);
+            -webkit-text-stroke: 3px rgba(0,0,0,.35); paint-order: stroke fill;
+            text-shadow: 0 5px 0 rgba(0,0,0,.35);
+            transition: border-color .3s, background .3s;
         }
+        .number-display.pop { animation: pop .6s ease-out; }
+        @keyframes pop { 0% { transform: scale(.6) rotate(-6deg); } 60% { transform: scale(1.12) rotate(3deg); } 100% { transform: scale(1); } }
+        .number-display.wrong { border-color: #FF8A8A; background: rgba(255,90,95,.18); }
+        [data-n="1"] { --nc: var(--n1); } [data-n="2"] { --nc: var(--n2); } [data-n="3"] { --nc: var(--n3); } [data-n="4"] { --nc: var(--n4); }
+        [data-n="5"] { --nc: var(--n5); } [data-n="6"] { --nc: var(--n6); } [data-n="7"] { --nc: var(--n7); } [data-n="8"] { --nc: var(--n8); }
 
-        .progress-container {
-            background: #e2e8f0;
-            border-radius: 12px;
-            padding: 15px 20px;
-            margin-bottom: 30px;
-        }
+        .feedback { text-align: center; font-size: clamp(1.4rem, 5vw, 2rem); font-weight: 700; min-height: 1.5em; margin: 8px 0 0; text-shadow: 0 2px 0 rgba(0,0,0,.3); }
+        .feedback.correct { color: #9BF5B0; }
+        .feedback.wrong { color: #FFB3B3; }
+        .feedback.info { color: #FFE45C; font-size: clamp(1.2rem, 4vw, 1.6rem); }
+        .stars { text-align: center; font-size: clamp(1.6rem, 5vw, 2.2rem); min-height: 1.2em; }
 
-        .progress-text {
-            font-size: 18px;
-            font-weight: 700;
-            color: #2d3748;
-            margin-bottom: 10px;
+        /* ---------- Wooden number tiles ---------- */
+        .options { display: grid; gap: 14px; margin: 8px auto 4px; justify-content: center; }
+        .options.level-1 { grid-template-columns: repeat(3, minmax(90px, 130px)); }
+        .options.level-2 { grid-template-columns: repeat(5, minmax(80px, 120px)); }
+        .options.level-3 { grid-template-columns: repeat(4, minmax(80px, 130px)); }
+        .option-btn {
+            font-family: var(--font); font-size: clamp(2.4rem, 7vw, 3.4rem); font-weight: 700; line-height: 1;
+            aspect-ratio: 1 / 1; border-radius: 16px; cursor: pointer;
+            color: var(--nc, var(--chalk)); -webkit-text-stroke: 2px rgba(0,0,0,.35); paint-order: stroke fill;
+            text-shadow: 0 4px 0 rgba(0,0,0,.4);
+            background:
+                repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 2px, transparent 2px 9px),
+                linear-gradient(180deg, #9A6233 0%, #7A4A22 100%);
+            border: 4px solid var(--wood-light);
+            box-shadow: 0 7px 0 var(--wood-dark), 0 10px 16px rgba(0,0,0,.3), inset 0 2px 0 rgba(255,255,255,.2);
+            transition: transform .15s, box-shadow .15s;
         }
+        .option-btn:hover:not(:disabled) { transform: translateY(-4px); box-shadow: 0 11px 0 var(--wood-dark), 0 14px 20px rgba(0,0,0,.3); }
+        .option-btn:active:not(:disabled) { transform: translateY(5px); box-shadow: 0 2px 0 var(--wood-dark); }
+        .option-btn:disabled { cursor: default; }
+        .options.locked .option-btn:not(.correct):not(.wrong) { opacity: .5; }
+        .option-btn.correct { border-color: #FFE45C; box-shadow: 0 0 0 5px rgba(255,228,92,.6), 0 0 22px 6px rgba(255,228,92,.55), 0 7px 0 var(--wood-dark); animation: celebrate .6s ease; }
+        .option-btn.wrong { border-color: #FF5A5F; box-shadow: 0 0 0 5px rgba(255,90,95,.55), 0 7px 0 var(--wood-dark); animation: shake .5s ease; }
+        @keyframes celebrate { 25% { transform: scale(1.15) rotate(-8deg); } 75% { transform: scale(1.15) rotate(8deg); } }
+        @keyframes shake { 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+        .option-btn:focus-visible, .nav-btn:focus-visible, .speaker-button:focus-visible, .big-btn:focus-visible { outline: 4px solid #FFE45C; outline-offset: 3px; }
 
-        .number-tracker {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
+        /* ---------- Wooden buttons under the tiles ---------- */
+        .button-container { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
+        .big-btn { font-size: clamp(1.1rem, 3vw, 1.35rem); border-radius: 14px; padding: 10px 26px; }
+        .next-btn, .again-btn { color: #5E3A17; text-shadow: none; background: linear-gradient(180deg, #FFD54F, #FFB300); border-color: #FFF3C4; box-shadow: 0 5px 0 #C68400, 0 8px 14px rgba(0,0,0,.25); }
+        .hidden { display: none !important; }
 
-        .tracker-item {
-            background: white;
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 700;
-            color: #4a5568;
-        }
-
-        .tracker-item.complete {
-            background: #c6f6d5;
-            color: #22543d;
-        }
-
-        .instruction {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 28px;
-            font-weight: 800;
-            color: #2d3748;
-            margin-bottom: 30px;
-        }
-
-        .speaker-icon {
-            font-size: 32px;
-        }
-
-        .audio-button {
-            background: linear-gradient(135deg, #7ed321 0%, #5fa319 100%);
-            border: none;
-            width: 180px;
-            height: 180px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 8px 20px rgba(126, 211, 33, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s, border-radius 0.3s;
-            margin-bottom: 15px;
-            position: relative;
-            border-radius: 16px;
-        }
-
-        .audio-button.round {
-            border-radius: 50%;
-        }
-
-        .audio-button:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 28px rgba(126, 211, 33, 0.4);
-        }
-
-        .audio-button:active {
-            transform: translateY(-2px);
-        }
-
-        .audio-icon {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .hand-emoji {
-            font-size: 60px;
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .play-icon {
-            width: 0;
-            height: 0;
-            border-left: 40px solid #e53e3e;
-            border-top: 25px solid transparent;
-            border-bottom: 25px solid transparent;
-            margin-left: 8px;
-        }
-
-        .circle-background {
-            background: white;
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .play-indicator {
-            text-align: center;
-            font-size: 16px;
-            font-weight: 600;
-            color: #718096;
-            margin-bottom: 20px;
-            min-height: 24px;
-        }
-
-        .number-options {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-            background: #f7fafc;
-            padding: 20px;
-            border-radius: 16px;
-        }
-
-        .activity-card[data-level="4"] .number-options {
-            display: grid;
-            grid-template-columns: repeat(5, 70px);
-            gap: 12px;
-            justify-content: center;
-        }
-
-        .number-button {
-            background: linear-gradient(135deg, #4299e1 0%, #2b6cb0 100%);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 70px;
-            height: 70px;
-            font-size: 32px;
-            font-weight: 800;
-            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .number-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px rgba(66, 153, 225, 0.4);
-        }
-
-        .number-button:active {
-            transform: translateY(-1px);
-        }
-
-        .number-button.selected {
-            background: linear-gradient(135deg, #f6ad55 0%, #ed8936 100%);
-            box-shadow: 0 6px 16px rgba(237, 137, 54, 0.4);
-        }
-
-        .submit-button {
-            background: linear-gradient(135deg, #7ed321 0%, #5fa319 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            padding: 16px 48px;
-            font-size: 24px;
-            font-weight: 800;
-            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
-            cursor: pointer;
-            box-shadow: 0 6px 16px rgba(126, 211, 33, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .submit-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(126, 211, 33, 0.4);
-        }
-
-        .submit-button:active {
-            transform: translateY(-1px);
-        }
-
-        .feedback-message {
-            padding: 20px 30px;
-            border-radius: 12px;
-            font-size: 22px;
-            font-weight: 700;
-            text-align: center;
-            margin-top: 20px;
-            display: none;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        .feedback-message.correct {
-            background: #c6f6d5;
-            color: #22543d;
-            border: 3px solid #48bb78;
-        }
-
-        .feedback-message.wrong {
-            background: #fed7d7;
-            color: #742a2a;
-            border: 3px solid #fc8181;
-        }
-
-        .feedback-message.show {
-            display: block;
-        }
-
-        .level-complete {
-            background: #bee3f8;
-            color: #2c5282;
-            border: 3px solid #4299e1;
-            padding: 30px;
-            border-radius: 16px;
-            text-align: center;
-            margin-top: 30px;
-            display: none;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        .level-complete.show {
-            display: block;
-        }
-
-        .level-complete h2 {
-            font-size: 32px;
-            margin-bottom: 15px;
-        }
-
-        .level-complete p {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-
-        .next-level-button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            padding: 16px 48px;
-            font-size: 24px;
-            font-weight: 800;
-            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
-            cursor: pointer;
-            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .next-level-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .completion-message {
-            background: #fef5e7;
-            border: 3px solid #f39c12;
-            padding: 40px;
-            border-radius: 16px;
-            text-align: center;
-            display: none;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        .completion-message.show {
-            display: block;
-        }
-
-        .completion-message h1 {
-            font-size: 48px;
-            color: #d68910;
-            margin-bottom: 20px;
-        }
-
-        .completion-message p {
-            font-size: 24px;
-            color: #7d6608;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        /* ---------- Dodo helper under the board (tall screens) ---------- */
+        .helper { max-width: 900px; margin: 16px auto 0; display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .helper svg { width: 70px; height: auto; flex: none; }
+        .bubble { position: relative; background: #fff; border-radius: 18px; padding: 10px 18px; font-size: 1.15rem; font-weight: 500; box-shadow: 0 4px 10px rgba(0,0,0,.12); }
+        .bubble::before { content: ''; position: absolute; left: -10px; top: 50%; margin-top: -10px; border: 10px solid transparent; border-right-color: #fff; border-left: 0; }
 
         @media (max-width: 768px) {
-            .activity-card {
-                padding: 24px;
-            }
+            .options.level-1, .options.level-2, .options.level-3 { grid-template-columns: repeat(3, minmax(70px, 1fr)); }
+            .frame { padding: 10px; }
+            .container { padding: 14px 12px 16px; }
+            .plaque { padding: 5px 14px 7px; }
+            .deco { font-size: 1.3rem; }
+            .button-container { flex-direction: column; align-items: center; }
+            .big-btn { width: 100%; max-width: 320px; }
+        }
+        @media (max-width: 420px) { .status .label { font-size: .8rem; } }
+        @media (max-height: 940px) and (min-width: 769px) { .helper { display: none; } }
+        @media (max-height: 820px) and (min-width: 769px) {
+            body { padding-top: 4px; }
+            .deco { font-size: 1.3rem; margin-bottom: 0; }
+            .topbar { margin-bottom: 6px; }
+            .nav-btn { font-size: 1rem; padding: 5px 14px 5px 10px; }
+            .frame { padding: 12px; }
+            .container { padding: 12px 22px 14px; }
+            h1 { font-size: 1.6rem; }
+            .plaque { padding: 4px 20px 6px; }
+            .subtitle { font-size: 1rem; margin-top: 4px; }
+            .status { margin: 8px 0 6px; }
+            .pill { padding: 2px 6px; display: flex; align-items: baseline; justify-content: center; gap: 8px; }
+            .pill .value { font-size: 1.4rem; }
+            .level-box { padding: 5px 14px; margin-bottom: 6px; }
+            .speaker-button { width: 44px; height: 44px; font-size: 1.25rem; }
+            .number-wrap { margin: 6px 0 2px; }
+            .feedback { margin: 4px 0 0; }
+            .options.level-1 { grid-template-columns: repeat(3, minmax(90px, 104px)); }
+            .options.level-2 { grid-template-columns: repeat(5, minmax(80px, 100px)); }
+            .options.level-3 { grid-template-columns: repeat(4, minmax(80px, 100px)); }
+            .button-container { margin-top: 8px; }
+            .big-btn { padding: 6px 22px; }
+            .stars { min-height: 1em; font-size: 1.5rem; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+        }
 
-            .instruction {
-                font-size: 22px;
-            }
+        /* ---------- Find-every game additions ---------- */
+        .ask { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 4px; }
+        .ask .question { font-size: clamp(1.4rem, 4.4vw, 2rem); }
+        .number-display.small {
+            width: clamp(96px, min(22vw, 17vh), 140px); height: clamp(96px, min(22vw, 17vh), 140px);
+            font-size: clamp(3.6rem, min(12vw, 10vh), 5.6rem); border-radius: 18px;
+        }
+        /* tiles: every number in chalk-cream, so children read the numeral (no colour hint) */
+        .options.ten { grid-template-columns: repeat(5, minmax(70px, 108px)); gap: 12px; }
+        .options.ten .option-btn { font-size: clamp(2rem, 5.6vw, 2.8rem); color: var(--chalk); }
+        .option-btn.found { border-color: #FFE45C; box-shadow: 0 0 0 4px rgba(255,228,92,.6), 0 0 18px 4px rgba(255,228,92,.5), 0 7px 0 var(--wood-dark); color: #FFE45C; animation: celebrate .5s ease; }
+        .option-btn.found::after { content: '✔'; position: absolute; top: 2px; right: 6px; font-size: 1rem; color: #9BF5B0; -webkit-text-stroke: 0; text-shadow: none; }
+        .option-btn.reveal { border-color: #9BF5B0; box-shadow: 0 0 0 4px rgba(155,245,176,.55), 0 7px 0 var(--wood-dark); color: #9BF5B0; }
+        .option-btn { position: relative; }
+        .options.locked .option-btn.reveal, .options.locked .option-btn.found { opacity: 1 !important; filter: none !important; }
+        .left-count { text-align: center; color: #E6FFF6; font-size: 1.05rem; min-height: 1.4em; }
+        .left-count b { color: #FFE45C; }
 
-            .number-button {
-                width: 60px;
-                height: 60px;
-                font-size: 28px;
-            }
+        /* tracker: each number 1-10 needs 2 stars */
+        .tracker { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; flex: 1; }
+        .chip { min-width: 40px; padding: 2px 6px; border-radius: 10px; text-align: center; border: 2px solid rgba(255,255,255,.4); background: rgba(0,0,0,.15); font-weight: 600; line-height: 1.1; }
+        .chip .d { display: block; font-size: .7rem; letter-spacing: 1px; color: rgba(255,255,255,.45); }
+        .chip.half .d { color: #FFE45C; }
+        .chip.done { border-color: #FFE45C; background: rgba(255,228,92,.18); }
+        .chip.done .d { color: #FFE45C; }
+        .chip.now { border-color: #9BF5B0; box-shadow: 0 0 0 3px rgba(155,245,176,.35); }
 
-            .activity-card[data-level="4"] .number-options {
-                grid-template-columns: repeat(5, 60px);
-            }
+        .summary { text-align: center; color: var(--chalk); font-size: clamp(1.1rem, 3.5vw, 1.4rem); line-height: 1.7; margin: 6px 0; }
+        .summary b { color: #FFE45C; }
 
-            .audio-button {
-                width: 150px;
-                height: 150px;
-            }
+        @media (max-width: 768px) {
+            .options.ten { grid-template-columns: repeat(5, minmax(48px, 1fr)); gap: 8px; }
+            .options.ten .option-btn { font-size: 1.8rem; border-width: 3px; border-radius: 12px; }
+            .chip { min-width: 30px; font-size: .9rem; }
+        }
+        @media (max-height: 820px) and (min-width: 769px) {
+            .options.ten { grid-template-columns: repeat(5, minmax(70px, 88px)); gap: 10px; }
+            .number-display.small { width: 100px; height: 100px; font-size: 4rem; }
+            .chip { font-size: .9rem; min-width: 34px; }
+        }
 
-            .feedback-message {
-                font-size: 18px;
-                padding: 16px 24px;
-            }
+        /* ---------- Listening additions ---------- */
+        .levels { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+        .lvl { font-family: inherit; font-weight: 600; font-size: 1rem; padding: 6px 14px; border-radius: 12px; cursor: pointer;
+               border: 3px solid var(--wood); background: linear-gradient(180deg, var(--wood-light), var(--frame)); color: #4A2A0C; box-shadow: 0 4px 0 var(--wood-dark); }
+        .lvl.on { background: linear-gradient(180deg, #FFE45C, #F5B82E); border-color: #B7791F; }
+        .lvl .ok { color: #1E7B35; }
+        .listen-row { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; }
+        .play-big { width: clamp(110px, min(24vw, 19vh), 150px); height: clamp(110px, min(24vw, 19vh), 150px); border-radius: 50%; cursor: pointer;
+                    border: 6px solid var(--wood); background: radial-gradient(circle at 35% 30%, #FFF6C8, #FFD23F 60%, #F5A623); box-shadow: 0 8px 0 var(--wood-dark), 0 0 0 0 rgba(255,228,92,.6);
+                    font-size: clamp(3rem, min(10vw, 8vh), 4.2rem); display: flex; align-items: center; justify-content: center; transition: transform .15s; font-family: inherit; }
+        .play-big:active { transform: translateY(4px); box-shadow: 0 4px 0 var(--wood-dark); }
+        .play-big.waiting { animation: glow 1.4s ease-in-out infinite; }
+        .play-big.talking { transform: scale(1.07); }
+        @keyframes glow { 0%,100% { box-shadow: 0 8px 0 var(--wood-dark), 0 0 0 0 rgba(255,228,92,.7); } 50% { box-shadow: 0 8px 0 var(--wood-dark), 0 0 0 16px rgba(255,228,92,0); } }
+        .hint { color: #E6FFF6; font-size: clamp(1.1rem, 3.6vw, 1.45rem); max-width: 260px; text-align: left; }
+        .hint b { color: #FFE45C; }
+        .options.ten { gap: 12px; }
+        .options.ten .option-btn { font-size: clamp(2rem, 5.6vw, 2.8rem); color: var(--chalk); }
+        .options.waiting .option-btn { opacity: .45; }
+        .option-btn.good { border-color: #9BF5B0; box-shadow: 0 0 0 4px rgba(155,245,176,.6), 0 7px 0 var(--wood-dark); color: #9BF5B0; animation: celebrate .5s ease; }
+        .option-btn.reveal { border-color: #9BF5B0; box-shadow: 0 0 0 4px rgba(155,245,176,.55), 0 7px 0 var(--wood-dark); color: #9BF5B0; opacity: 1 !important; }
+        .option-btn.nope { opacity: .35 !important; }
+        .tracker { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; flex: 1; }
+        .chip { min-width: 40px; padding: 2px 6px; border-radius: 10px; text-align: center; border: 2px solid rgba(255,255,255,.4); background: rgba(0,0,0,.15); font-weight: 600; line-height: 1.1; color: var(--chalk); }
+        .chip .d { display: block; font-size: .7rem; letter-spacing: 1px; color: rgba(255,255,255,.45); }
+        .chip.half .d { color: #FFE45C; }
+        .chip.done { border-color: #FFE45C; background: rgba(255,228,92,.18); }
+        .chip.done .d { color: #FFE45C; }
+        .summary b { color: #FFE45C; }
+        @media (max-width: 768px) {
+            .lvl { font-size: .85rem; padding: 5px 9px; }
+            .hint { max-width: 180px; font-size: 1.05rem; }
+            .options.ten { gap: 8px; }
         }
     </style>
 </head>
@@ -424,454 +318,268 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
+    <div class="deco" aria-hidden="true"><span>🍎</span><span>🌸</span><span>💗</span><span>⭐</span><span>🌼</span><span>❤️</span><span>🌸</span><span>💙</span><span>🍎</span></div>
 
+    <div class="topbar">
+        <a class="nav-btn" href="../grade-1-math-index.html" aria-label="Back to Maths"><span>◀</span><span>Maths</span></a>
+    </div>
 
-    
-    
-    
-    <button class="home-button" onclick="window.location.href='../grade-1-math-index.html'">
-        <span>🏠</span>
-        <span>Home</span>
-    </button>
-    
+    <div class="frame">
     <div class="container">
-        <!-- Level 1: Numbers 1-3 -->
-        <div class="activity-card active" data-level="1" data-numbers="1,2,3">
-            <div class="level-badge">LEVEL 1: Numbers 1-3</div>
-            
-            <div class="instruction">
-                <span class="speaker-icon" onclick="speakInstruction(this)" style="cursor: pointer;" title="Click to hear instructions">🔊</span>
-                <span>Press play. What number do you hear?</span>
-            </div>
-            
-            <button class="audio-button" onclick="playAudio(this)">
-                <div class="audio-icon">
-                    <span class="hand-emoji">✋</span>
-                    <div class="circle-background">
-                        <div class="play-icon"></div>
-                    </div>
+        <div class="head"><div class="plaque"><h1 id="title">Listen and Tap</h1></div></div>
+        <div class="subtitle">What number do you hear?</div>
+
+        <div class="levels" id="levels"></div>
+
+        <div class="level-box"><div class="tracker" id="tracker" aria-label="Hear each number two times"></div></div>
+
+        <div class="game-area" id="game-area">
+            <div id="play">
+                <div class="listen-row">
+                    <button class="play-big waiting" id="play-btn" aria-label="Listen to the number">🔊</button>
+                    <div class="hint" id="hint">Press <b>play</b> to hear a number!</div>
                 </div>
-            </button>
-
-            <div class="play-indicator">Click the button to hear a number</div>
-
-            <div class="number-options">
-                <button class="number-button" onclick="selectNumber(this)">1</button>
-                <button class="number-button" onclick="selectNumber(this)">2</button>
-                <button class="number-button" onclick="selectNumber(this)">3</button>
+                <div class="feedback" id="feedback" aria-live="polite"></div>
+                <div class="options ten waiting" id="options"></div>
             </div>
-
-            <button class="submit-button" onclick="submitAnswer(this)">Submit</button>
-            
-            <div class="feedback-message"></div>
-            
-            <div class="level-complete">
-                <h2>🎉 Level 1 Complete!</h2>
-                <p>Great job! You identified all numbers twice.</p>
-                <button class="next-level-button" onclick="nextLevel()">Go to Level 2</button>
+            <div class="summary hidden" id="summary"></div>
+            <div class="button-container">
+                <button class="big-btn next-btn hidden" id="next-level">Next Level ➜</button>
+                <button class="big-btn again-btn hidden" id="again-btn">🎮 Play Again</button>
             </div>
         </div>
+    </div>
+    </div>
+    <div class="tray" aria-hidden="true"></div>
 
-        <!-- Level 2: Numbers 1-5 -->
-        <div class="activity-card" data-level="2" data-numbers="1,2,3,4,5">
-            <div class="level-badge">LEVEL 2: Numbers 1-5</div>
-            
-            <div class="instruction">
-                <span class="speaker-icon" onclick="speakInstruction(this)" style="cursor: pointer;" title="Click to hear instructions">🔊</span>
-                <span>Press play. What number do you hear?</span>
-            </div>
-            
-            <button class="audio-button" onclick="playAudio(this)">
-                <div class="audio-icon">
-                    <span class="hand-emoji">✋</span>
-                    <div class="circle-background">
-                        <div class="play-icon"></div>
-                    </div>
-                </div>
-            </button>
-
-            <div class="play-indicator">Click the button to hear a number</div>
-
-            <div class="number-options">
-                <button class="number-button" onclick="selectNumber(this)">1</button>
-                <button class="number-button" onclick="selectNumber(this)">2</button>
-                <button class="number-button" onclick="selectNumber(this)">3</button>
-                <button class="number-button" onclick="selectNumber(this)">4</button>
-                <button class="number-button" onclick="selectNumber(this)">5</button>
-            </div>
-
-            <button class="submit-button" onclick="submitAnswer(this)">Submit</button>
-            
-            <div class="feedback-message"></div>
-            
-            <div class="level-complete">
-                <h2>🎉 Level 2 Complete!</h2>
-                <p>Excellent work! You identified all numbers twice.</p>
-                <button class="next-level-button" onclick="nextLevel()">Go to Level 3</button>
-            </div>
-        </div>
-
-        <!-- Level 3: Numbers 1-8 -->
-        <div class="activity-card" data-level="3" data-numbers="1,2,3,4,5,6,7,8">
-            <div class="level-badge">LEVEL 3: Numbers 1-8</div>
-            
-            <div class="instruction">
-                <span class="speaker-icon" onclick="speakInstruction(this)" style="cursor: pointer;" title="Click to hear instructions">🔊</span>
-                <span>Press play. What number do you hear?</span>
-            </div>
-            
-            <button class="audio-button" onclick="playAudio(this)">
-                <div class="audio-icon">
-                    <span class="hand-emoji">✋</span>
-                    <div class="circle-background">
-                        <div class="play-icon"></div>
-                    </div>
-                </div>
-            </button>
-
-            <div class="play-indicator">Click the button to hear a number</div>
-
-            <div class="number-options">
-                <button class="number-button" onclick="selectNumber(this)">1</button>
-                <button class="number-button" onclick="selectNumber(this)">2</button>
-                <button class="number-button" onclick="selectNumber(this)">3</button>
-                <button class="number-button" onclick="selectNumber(this)">4</button>
-                <button class="number-button" onclick="selectNumber(this)">5</button>
-                <button class="number-button" onclick="selectNumber(this)">6</button>
-                <button class="number-button" onclick="selectNumber(this)">7</button>
-                <button class="number-button" onclick="selectNumber(this)">8</button>
-            </div>
-
-            <button class="submit-button" onclick="submitAnswer(this)">Submit</button>
-            
-            <div class="feedback-message"></div>
-            
-            <div class="level-complete">
-                <h2>🎉 Level 3 Complete!</h2>
-                <p>Amazing! You identified all numbers twice.</p>
-                <button class="next-level-button" onclick="nextLevel()">Go to Level 4</button>
-            </div>
-        </div>
-
-        <!-- Level 4: Numbers 1-10 -->
-        <div class="activity-card" data-level="4" data-numbers="1,2,3,4,5,6,7,8,9,10">
-            <div class="level-badge">LEVEL 4: Numbers 1-10</div>
-            
-            <div class="instruction">
-                <span class="speaker-icon" onclick="speakInstruction(this)" style="cursor: pointer;" title="Click to hear instructions">🔊</span>
-                <span>Press play. What number do you hear?</span>
-            </div>
-            
-            <button class="audio-button" onclick="playAudio(this)">
-                <div class="audio-icon">
-                    <span class="hand-emoji">✋</span>
-                    <div class="circle-background">
-                        <div class="play-icon"></div>
-                    </div>
-                </div>
-            </button>
-
-            <div class="play-indicator">Click the button to hear a number</div>
-
-            <div class="number-options">
-                <button class="number-button" onclick="selectNumber(this)">1</button>
-                <button class="number-button" onclick="selectNumber(this)">2</button>
-                <button class="number-button" onclick="selectNumber(this)">3</button>
-                <button class="number-button" onclick="selectNumber(this)">4</button>
-                <button class="number-button" onclick="selectNumber(this)">5</button>
-                <button class="number-button" onclick="selectNumber(this)">6</button>
-                <button class="number-button" onclick="selectNumber(this)">7</button>
-                <button class="number-button" onclick="selectNumber(this)">8</button>
-                <button class="number-button" onclick="selectNumber(this)">9</button>
-                <button class="number-button" onclick="selectNumber(this)">10</button>
-            </div>
-
-            <button class="submit-button" onclick="submitAnswer(this)">Submit</button>
-            
-            <div class="feedback-message"></div>
-            
-            <div class="level-complete">
-                <h2>🎉 Level 4 Complete!</h2>
-                <p>You've mastered all the levels!</p>
-                <button class="next-level-button" onclick="showCompletion()">Finish</button>
-            </div>
-        </div>
-
-        <!-- Final Completion Message -->
-        <div class="completion-message">
-            <h1>🏆 Congratulations!</h1>
-            <p>You've completed all 4 levels and mastered numbers 1-10!</p>
-            <p style="margin-top: 20px; font-size: 20px;">🌟 Excellent work! 🌟</p>
-        </div>
+    <div class="helper" aria-hidden="true">
+        <svg viewBox="0 0 160 170" xmlns="http://www.w3.org/2000/svg">
+            <path d="M68 140 L64 160 M64 160 L54 164 M64 160 L72 165" stroke="#F2A93B" stroke-width="6" stroke-linecap="round"/>
+            <path d="M96 140 L100 160 M100 160 L90 165 M100 160 L110 164" stroke="#F2A93B" stroke-width="6" stroke-linecap="round"/>
+            <path d="M122 100 Q150 85 146 108 Q156 104 150 124 Q134 120 122 112 Z" fill="#fff" stroke="#D9DEE8" stroke-width="2"/>
+            <ellipse cx="84" cy="108" rx="46" ry="40" fill="#8FA4C2"/>
+            <ellipse cx="78" cy="118" rx="28" ry="24" fill="#B7C6DB"/>
+            <path d="M60 86 Q52 60 62 40 Q74 26 92 32 Q102 40 96 58 Q90 72 96 86 Z" fill="#8FA4C2"/>
+            <path d="M66 42 Q34 40 22 56 Q18 66 30 66 Q32 58 42 58 Q56 58 68 56 Z" fill="#F5C64A"/>
+            <circle cx="78" cy="44" r="9" fill="#fff"/><circle cx="80" cy="45" r="5" fill="#1E2A4A"/><circle cx="82" cy="43" r="1.8" fill="#fff"/>
+            <circle cx="86" cy="58" r="5" fill="#F7A1B0" opacity=".7"/>
+            <path d="M62 98 Q34 70 30 52 Q48 62 58 74 Q60 64 66 60 Q70 80 72 98 Z" fill="#6F86A8"/>
+        </svg>
+        <div class="bubble">Press the big <b>🔊</b> button and <b>listen</b>. Then tap the number you heard!</div>
     </div>
 
     <script>
-        function speakFeedback(message) {
-            window.speechSynthesis.cancel();
-            const cleanMessage = message.replace(/[^\w\s!?.,']/g, '');
-            const utterance = new SpeechSynthesisUtterance(cleanMessage);
-            utterance.rate = 0.9;
-            utterance.pitch = 1.1;
-            window.speechSynthesis.speak(utterance);
+        (function () {
+            const t = document.getElementById('title'), cols = ['#FF5A5F','#FF9F1C','#FFD23F','#5BD36B','#3FA9F5','#B07CFF','#FF6FB5','#2FD9C4'];
+            let k = 0;
+            t.innerHTML = t.textContent.split('').map(c => c === ' ' ? ' ' : `<span class="ch" style="color:${cols[k++ % cols.length]}">${c}</span>`).join('');
+        })();
+
+        // ================= Settings =================
+        const LEVELS = [3, 5, 8, 10];            // Level 1: 1-3, Level 2: 1-5, Level 3: 1-8, Level 4: 1-10
+        const TIMES_EACH = 2;                    // hear each number correctly 2 times
+        const WORDS = ['zero','one','two','three','four','five','six','seven','eight','nine','ten'];
+        const PAUSE_AFTER_PRAISE = 900;
+        const MIN_AFTER_CORRECT  = 2200;
+        const GAP_BEFORE_NUMBER  = 500;          // a little silence before the next number is said
+
+        let level = 0, maxN = 3, queue = [], count = {}, current = null, misses = 0, busy = false, heard = false;
+        let tries = 0, firstTry = 0, done = [false, false, false, false];
+        let waitTimer = null, speechToken = 0;
+
+        const $ = id => document.getElementById(id);
+        const playBtn = $('play-btn'), hint = $('hint'), options = $('options'), feedback = $('feedback');
+        const praise = ["Great job!", "Well done!", "Excellent!", "Perfect!", "Fantastic!", "Amazing!", "Superb!", "Brilliant!"];
+
+        // ================= Sounds =================
+        let audioContext = null;
+        function initAudio() {
+            try { if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                  if (audioContext.state === 'suspended') audioContext.resume(); } catch (e) {}
+        }
+        function tone(notes, type, vol, len) {
+            initAudio(); if (!audioContext) return;
+            const now = audioContext.currentTime, o = audioContext.createOscillator(), g = audioContext.createGain();
+            o.connect(g); g.connect(audioContext.destination); o.type = type;
+            notes.forEach(([f, t]) => o.frequency.setValueAtTime(f, now + t));
+            g.gain.setValueAtTime(vol, now); g.gain.exponentialRampToValueAtTime(0.01, now + len);
+            o.start(now); o.stop(now + len);
+        }
+        const playSuccessSound = () => { tone([[523.25, 0], [659.25, .1], [783.99, .2]], 'sine', .3, .4);
+                                         tone([[659.25, 0], [783.99, .1], [1046.5, .2]], 'triangle', .15, .4); };
+        const playOopsSound = () => tone([[392.00, 0], [349.23, .15]], 'sine', .2, .3);
+
+        // ================= Speech =================
+        const canSpeak = 'speechSynthesis' in window;
+        function englishVoice() {
+            if (!canSpeak) return null;
+            const v = speechSynthesis.getVoices();
+            return v.find(x => /^en-GB/i.test(x.lang)) || v.find(x => /^en/i.test(x.lang)) || null;
+        }
+        if (canSpeak) speechSynthesis.onvoiceschanged = () => {};
+        function clean(text) { return text.replace(/[^\w\s!?.,'-]/g, '').replace(/\s+/g, ' ').trim(); }
+        function speak(text, done, pause = 0, rate = 0.9) {
+            const token = ++speechToken;
+            let finished = false;
+            const finish = () => {
+                if (finished || token !== speechToken) return;
+                finished = true; playBtn.classList.remove('talking');
+                if (done) waitTimer = setTimeout(done, pause);
+            };
+            const words = clean(text).split(' ').length;
+            const backup = 1200 + words * 520 / rate;
+            if (!canSpeak) { if (done) waitTimer = setTimeout(done, backup + pause); return; }
+            speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(clean(text));
+            const v = englishVoice(); if (v) u.voice = v;
+            u.lang = v ? v.lang : 'en-GB'; u.rate = rate; u.pitch = 1.1; u.volume = 1;
+            u.onend = finish; u.onerror = finish;
+            waitTimer = setTimeout(finish, backup);
+            try { speechSynthesis.speak(u); } catch (e) { finish(); }
+        }
+        function stopAll() { clearTimeout(waitTimer); speechToken++; if (canSpeak) speechSynthesis.cancel(); playBtn.classList.remove('talking'); }
+
+        // say the hidden number (slowly), then let the child answer
+        function sayNumber() {
+            if (current === null) return;
+            playBtn.classList.remove('waiting'); playBtn.classList.add('talking');
+            hint.innerHTML = 'Listen…';
+            speak(WORDS[current], () => {
+                heard = true; busy = false;
+                options.classList.remove('waiting');
+                hint.innerHTML = 'Tap the number you <b>heard</b>! <br><small>(Press 🔊 to hear it again)</small>';
+            }, 0, 0.75);
         }
 
-        function speakInstruction(element) {
-            const instructionText = "Press play. What number do you hear?";
-            window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance(instructionText);
-            utterance.rate = 0.9;
-            utterance.pitch = 1.1;
-            utterance.volume = 1;
-            window.speechSynthesis.speak(utterance);
+        // ================= Levels & tracker =================
+        function buildLevels() {
+            $('levels').innerHTML = LEVELS.map((n, i) =>
+                `<button class="lvl${i === level ? ' on' : ''}" data-l="${i}">Level ${i + 1}: 1-${n}${done[i] ? ' <span class="ok">✔</span>' : ''}</button>`).join('');
+            $('levels').querySelectorAll('.lvl').forEach(b => b.addEventListener('click', () => { initAudio(); startLevel(+b.dataset.l); }));
         }
-
-        function initializeTracking(card) {
-            const numbers = card.dataset.numbers.split(',');
-            const tracking = {};
-            numbers.forEach(num => {
-                tracking[num] = 0;
-            });
-            
-            const queue = [];
-            numbers.forEach(num => {
-                queue.push(num);
-                queue.push(num);
-            });
-            
-            const shuffledQueue = shuffleWithoutConsecutive(queue);
-            
-            card.dataset.tracking = JSON.stringify(tracking);
-            card.dataset.queue = JSON.stringify(shuffledQueue);
-            card.dataset.queueIndex = '0';
+        function buildTracker() {
+            let h = '';
+            for (let i = 1; i <= maxN; i++) h += `<div class="chip" id="chip${i}">${i}<span class="d" id="dots${i}"></span></div>`;
+            $('tracker').innerHTML = h; updateTracker();
         }
-
-        function shuffleWithoutConsecutive(array) {
-            let shuffled = [...array];
-            let attempts = 0;
-            const maxAttempts = 100;
-            
-            while (attempts < maxAttempts) {
-                for (let i = shuffled.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-                }
-                
-                let hasConsecutive = false;
-                for (let i = 0; i < shuffled.length - 1; i++) {
-                    if (shuffled[i] === shuffled[i + 1]) {
-                        hasConsecutive = true;
-                        break;
-                    }
-                }
-                
-                if (!hasConsecutive) {
-                    return shuffled;
-                }
-                
-                attempts++;
+        function updateTracker() {
+            for (let i = 1; i <= maxN; i++) {
+                const n = count[i] || 0;
+                $('dots' + i).textContent = '★'.repeat(Math.min(n, TIMES_EACH)) + '☆'.repeat(Math.max(0, TIMES_EACH - n));
+                $('chip' + i).className = 'chip' + (n >= TIMES_EACH ? ' done' : n > 0 ? ' half' : '');
             }
-            
-            for (let i = 0; i < shuffled.length - 1; i++) {
-                if (shuffled[i] === shuffled[i + 1]) {
-                    for (let j = i + 2; j < shuffled.length; j++) {
-                        if (shuffled[j] !== shuffled[i] && shuffled[j] !== shuffled[i - 1]) {
-                            [shuffled[i + 1], shuffled[j]] = [shuffled[j], shuffled[i + 1]];
-                            break;
-                        }
-                    }
-                }
-            }
-            
-            return shuffled;
         }
 
-        document.querySelectorAll('.activity-card').forEach(card => {
-            initializeTracking(card);
+        function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+        // each number twice, never the same number twice in a row
+        function buildQueue() {
+            const bag = shuffle([].concat(...Array.from({ length: TIMES_EACH }, () => Array.from({ length: maxN }, (_, i) => i + 1))));
+            const q = [];
+            while (bag.length) {
+                let i = bag.findIndex(n => n !== q[q.length - 1]); if (i < 0) i = 0;
+                q.push(bag.splice(i, 1)[0]);
+            }
+            return q;
+        }
+
+        function buildTiles() {
+            options.innerHTML = '';
+            options.style.gridTemplateColumns = `repeat(${Math.min(maxN, 5)}, minmax(56px, 108px))`;
+            for (let i = 1; i <= maxN; i++) {
+                const b = document.createElement('button');
+                b.className = 'option-btn'; b.textContent = i; b.dataset.n = i;
+                b.addEventListener('click', () => { initAudio(); answer(i, b); });
+                options.appendChild(b);
+            }
+        }
+
+        function startLevel(l) {
+            stopAll();
+            level = l; maxN = LEVELS[l]; count = {}; queue = buildQueue(); misses = 0;
+            $('summary').classList.add('hidden'); $('next-level').classList.add('hidden'); $('again-btn').classList.add('hidden');
+            $('play').classList.remove('hidden');
+            buildLevels(); buildTracker(); buildTiles();
+            feedback.textContent = ''; feedback.className = 'feedback';
+            current = null; heard = false; busy = false;
+            options.classList.add('waiting');
+            playBtn.classList.add('waiting');
+            hint.innerHTML = 'Press <b>play</b> to hear a number!';
+        }
+
+        function newNumber(auto) {
+            current = queue.shift(); misses = 0; heard = false; busy = true;
+            options.classList.add('waiting');
+            options.querySelectorAll('.option-btn').forEach(b => { b.className = 'option-btn'; b.disabled = false; });
+            feedback.textContent = ''; feedback.className = 'feedback';
+            if (auto) waitTimer = setTimeout(sayNumber, GAP_BEFORE_NUMBER); else sayNumber();
+        }
+
+        playBtn.addEventListener('click', () => {
+            initAudio();
+            if (current === null) { if (queue.length) newNumber(false); return; }
+            if (heard) sayNumber();                        // hear it again
         });
 
-        function selectNumber(button) {
-            const siblings = button.parentElement.querySelectorAll('.number-button');
-            siblings.forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
-        }
-
-        function playAudio(button) {
-            const card = button.closest('.activity-card');
-            const playIndicator = card.querySelector('.play-indicator');
-            
-            if (card.dataset.correctAnswer && card.dataset.playCount) {
-                let playCount = parseInt(card.dataset.playCount);
-                playCount++;
-                card.dataset.playCount = playCount;
-                
-                const numberToPlay = card.dataset.correctAnswer;
-                const utterance = new SpeechSynthesisUtterance(numberToPlay);
-                utterance.rate = 0.8;
-                utterance.pitch = 1.1;
-                utterance.volume = 1;
-                window.speechSynthesis.speak(utterance);
-                
-                if (playCount === 1) {
-                    button.classList.add('round');
-                    playIndicator.textContent = `Click again to hear it once more`;
-                } else if (playCount >= 2) {
-                    button.classList.remove('round');
-                    playIndicator.textContent = `Now select your answer`;
-                }
-                
-                button.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    button.style.transform = 'scale(1)';
-                }, 200);
-                
-                return;
-            }
-            
-            const queue = JSON.parse(card.dataset.queue);
-            const queueIndex = parseInt(card.dataset.queueIndex);
-            
-            if (queueIndex >= queue.length) {
-                return;
-            }
-            
-            const nextNumber = queue[queueIndex];
-            card.dataset.correctAnswer = nextNumber;
-            card.dataset.playCount = '1';
-            
-            const utterance = new SpeechSynthesisUtterance(nextNumber);
-            utterance.rate = 0.8;
-            utterance.pitch = 1.1;
-            utterance.volume = 1;
-            window.speechSynthesis.speak(utterance);
-            
-            button.classList.add('round');
-            playIndicator.textContent = `Click again to hear it once more`;
-            
-            button.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                button.style.transform = 'scale(1)';
-            }, 200);
-        }
-
-        function checkLevelComplete(card) {
-            const tracking = JSON.parse(card.dataset.tracking);
-            return Object.values(tracking).every(count => count >= 2);
-        }
-
-        function submitAnswer(button) {
-            const card = button.closest('.activity-card');
-            const selectedButton = card.querySelector('.number-button.selected');
-            const feedbackDiv = card.querySelector('.feedback-message');
-            const playIndicator = card.querySelector('.play-indicator');
-            const levelComplete = card.querySelector('.level-complete');
-            const audioButton = card.querySelector('.audio-button');
-            
-            feedbackDiv.classList.remove('show', 'correct', 'wrong');
-            
-            if (!selectedButton) {
-                feedbackDiv.textContent = '⚠️ Please select a number first!';
-                feedbackDiv.classList.add('show', 'wrong');
+        function answer(n, btn) {
+            if (busy || !heard || current === null || btn.disabled) return;
+            tries++;
+            if (n === current) {
+                busy = true; heard = false;
+                count[n] = (count[n] || 0) + 1; if (misses === 0) firstTry++;
+                btn.classList.add('good'); options.classList.add('locked');
+                options.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+                updateTracker();
+                const msg = praise[Math.floor(Math.random() * praise.length)];
+                feedback.textContent = `✓ ${msg}`; feedback.className = 'feedback correct';
+                hint.innerHTML = '';
+                playSuccessSound();
+                const started = Date.now();
+                // ding -> "Seven! Well done!" -> pause -> next number is said by itself
+                setTimeout(() => speak(`${WORDS[n]}! ${msg}`, () => {
+                    waitTimer = setTimeout(() => {
+                        options.classList.remove('locked');
+                        if (!queue.length) levelDone(); else newNumber(true);
+                    }, Math.max(0, MIN_AFTER_CORRECT - (Date.now() - started)));
+                }, PAUSE_AFTER_PRAISE), 450);
                 return;
             }
 
-            if (!card.dataset.correctAnswer) {
-                feedbackDiv.textContent = '⚠️ Please play the audio first!';
-                feedbackDiv.classList.add('show', 'wrong');
-                return;
-            }
-
-            const correctAnswer = card.dataset.correctAnswer;
-            const userAnswer = selectedButton.textContent;
-            const tracking = JSON.parse(card.dataset.tracking);
-
-            if (correctAnswer === userAnswer) {
-                tracking[correctAnswer]++;
-                card.dataset.tracking = JSON.stringify(tracking);
-                
-                const queueIndex = parseInt(card.dataset.queueIndex);
-                card.dataset.queueIndex = (queueIndex + 1).toString();
-                
-                const correctMessages = [
-                    '🎉 Great job!',
-                    '⭐ Well done!',
-                    '🌟 Excellent!',
-                    '👏 Congrats!',
-                    '✨ Perfect!',
-                    '🎊 Fantastic!',
-                    '💫 Amazing!',
-                    '🏆 Superb!'
-                ];
-                const randomMessage = correctMessages[Math.floor(Math.random() * correctMessages.length)];
-                feedbackDiv.textContent = randomMessage;
-                feedbackDiv.classList.add('show', 'correct');
-                selectedButton.style.background = 'linear-gradient(135deg, #48bb78 0%, #38a169 100%)';
-                
-                if (checkLevelComplete(card)) {
-                    setTimeout(() => {
-                        feedbackDiv.classList.remove('show');
-                        levelComplete.classList.add('show');
-                    }, 1500);
-                } else {
-                    setTimeout(() => {
-                        resetQuestion(card);
-                    }, 2000);
-                }
+            misses++;
+            playOopsSound();
+            btn.classList.add('nope'); btn.disabled = true;
+            if (misses === 1) {
+                // tell them what they tapped, then say the number again
+                busy = true; heard = false; options.classList.add('waiting');
+                feedback.textContent = '✗ Not quite! Listen again.'; feedback.className = 'feedback wrong'; hint.innerHTML = 'Listen…';
+                setTimeout(() => speak(`That is ${WORDS[n]}. Listen again.`, sayNumber, 500), 350);
             } else {
-                const wrongMessages = [
-                    '😊 Oops! Try again!',
-                    '🔄 Not quite! Try again!',
-                    '💭 Think again!',
-                    '🎯 Try once more!',
-                    '🤔 Almost! Try again!'
-                ];
-                const randomMessage = wrongMessages[Math.floor(Math.random() * wrongMessages.length)];
-                feedbackDiv.textContent = randomMessage;
-                feedbackDiv.classList.add('show', 'wrong');
-                selectedButton.style.background = 'linear-gradient(135deg, #fc8181 0%, #f56565 100%)';
-                
-                setTimeout(() => {
-                    resetQuestion(card);
-                }, 2000);
+                // second miss: show the answer, and this number comes back later
+                busy = true; heard = false;
+                options.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+                const right = options.querySelector(`[data-n="${current}"]`); right.classList.add('reveal');
+                feedback.textContent = `It was ${current} 👀`; feedback.className = 'feedback info'; hint.innerHTML = '';
+                queue.splice(Math.min(2, queue.length), 0, current);
+                setTimeout(() => speak(`It was ${WORDS[current]}. Let's try another one.`, () => newNumber(true), 900), 350);
             }
         }
 
-        function resetQuestion(card) {
-            const feedbackDiv = card.querySelector('.feedback-message');
-            const selectedButton = card.querySelector('.number-button.selected');
-            const playIndicator = card.querySelector('.play-indicator');
-            const audioButton = card.querySelector('.audio-button');
-            
-            feedbackDiv.classList.remove('show');
-            if (selectedButton) {
-                selectedButton.classList.remove('selected');
-                selectedButton.style.background = '';
-            }
-            card.dataset.correctAnswer = '';
-            card.dataset.playCount = '0';
-            audioButton.classList.remove('round');
-            playIndicator.textContent = 'Click the button to hear a number';
+        function levelDone() {
+            stopAll(); current = null; done[level] = true; buildLevels();
+            $('play').classList.add('hidden');
+            const last = level === LEVELS.length - 1;
+            $('summary').innerHTML = last
+                ? `🏆 <b>Congratulations!</b> 🏆<br>You finished all 4 levels and can hear numbers 1 to 10!<br>Right first time: <b>${firstTry}</b> out of <b>${tries}</b> tries`
+                : `🎉 <b>Level ${level + 1} complete!</b> 🎉<br>You heard every number from 1 to ${maxN} two times!`;
+            $('summary').classList.remove('hidden');
+            (last ? $('again-btn') : $('next-level')).classList.remove('hidden');
+            playSuccessSound();
+            speak(last ? 'Congratulations! You finished all four levels!' : `Level ${level + 1} complete! Well done!`, null);
         }
 
-        function nextLevel() {
-            const currentCard = document.querySelector('.activity-card.active');
-            const currentLevel = parseInt(currentCard.dataset.level);
-            const nextCard = document.querySelector(`.activity-card[data-level="${currentLevel + 1}"]`);
-            
-            if (nextCard) {
-                currentCard.classList.remove('active');
-                nextCard.classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
+        $('next-level').addEventListener('click', () => { initAudio(); startLevel(level + 1); });
+        $('again-btn').addEventListener('click', () => { initAudio(); tries = 0; firstTry = 0; done = [false, false, false, false]; startLevel(0); });
 
-        function showCompletion() {
-            const currentCard = document.querySelector('.activity-card.active');
-            const completionMessage = document.querySelector('.completion-message');
-            
-            currentCard.classList.remove('active');
-            completionMessage.classList.add('show');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        startLevel(0);
     </script>
 </body>
 </html>
