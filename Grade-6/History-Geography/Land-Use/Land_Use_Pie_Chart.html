@@ -7,7 +7,7 @@
 <style>
 :root{--acc:#1f6f78;--ink:#1d2330;--line:#d8dde6;--ok:#2b8a3e;--bad:#c92a2a;--fs:1}
 *{box-sizing:border-box}
-body{margin:0;background:#f5f3ee;color:var(--ink);font-family:"Segoe UI",Verdana,Arial,sans-serif;font-size:calc(16px*var(--fs));padding-top:80px}
+body{margin:0;background:#f5f3ee;color:var(--ink);font-family:"Segoe UI",Verdana,Arial,sans-serif;font-size:clamp(13px,calc(16px*var(--fs)),23px);padding-top:80px}
 @media(min-width:1300px){body{padding-top:0}}
 .wrap{max-width:1250px;margin:0 auto;padding:14px}
 header{background:var(--acc);color:#fff;border-radius:12px;padding:10px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -128,7 +128,7 @@ const B=[
 const CLUEW=["Built up areas","Roads","Abandoned lands","Agriculture","Reservoirs","Forests","Abandoned lands"];
 let cur=0;
 function speak(s){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(s);u.lang="en-GB";u.rate=.85;speechSynthesis.speak(u);}catch(e){}}
-let F=1;try{F=+localStorage.getItem("hg_fs")||1}catch(e){}
+let F=1;try{F=parseFloat(localStorage.getItem("hg_fs"));if(!(F>=.85&&F<=1.4)){F=1;localStorage.removeItem("hg_fs");}}catch(e){F=1}
 document.documentElement.style.setProperty("--fs",F);
 function fs(d){F=Math.min(1.4,Math.max(.85,F+d*.1));document.documentElement.style.setProperty("--fs",F);try{localStorage.setItem("hg_fs",F)}catch(e){}}
 const $=id=>document.getElementById(id);
