@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -11,10 +11,10 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Français Learning Center - Grade 1</title>
-    <meta name="description" content="Jeux de français pour la Grade 1 : l'alphabet, les lettres, majuscules et minuscules, voyelles et consonnes.">
-    <meta name="theme-color" content="#7B3FC4">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💬</text></svg>">
+    <title>Grade 5 - History &amp; Geography Learning Center</title>
+    <meta name="description" content="Grade 5 History and Geography games for primary pupils in Mauritius: Planet Earth, volcanoes, relief, the Mascarene Islands, Mauritian history and more.">
+    <meta name="theme-color" content="#0E7C86">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,9 +26,9 @@
         :root {
             --ink: #1E2A4A;
             --ink-soft: #4A5675;
-            --fre: #7B3FC4;
-            --fre-dark: #572A8F;
-            --fre-light: #F0E6FF;
+            --fre: #0E7C86;
+            --fre-dark: #09575E;
+            --fre-light: #D9F2F4;
             --font: 'Fredoka', 'Baloo 2', 'Arial Rounded MT Bold', 'Trebuchet MS', Arial, sans-serif;
         }
 
@@ -86,7 +86,7 @@
             box-shadow: 0 5px 0 rgba(30, 42, 74, .18); transition: transform .15s;
         }
         .nav-btn { font-size: 1.2rem; padding: 9px 20px 9px 16px; }
-        .nav-btn.g1 { background: #FFC83D; color: #3B2A00; box-shadow: 0 5px 0 #D99A00; }
+        .nav-btn.g1 { background: #3D8BF2; color: #fff; box-shadow: 0 5px 0 #1F5FBF; }
         .icon-btn { font-size: 1rem; padding: 8px 16px; }
         .nav-btn:hover, .icon-btn:hover { transform: translateY(-2px); }
         .nav-btn:active, .icon-btn:active { transform: translateY(3px); box-shadow: none; }
@@ -107,7 +107,7 @@
         .hero-text { flex: 1; }
         .badges { display: flex; gap: 8px; flex-wrap: wrap; }
         .badge { display: inline-flex; align-items: center; gap: 6px; font-size: .95rem; font-weight: 600; padding: 4px 14px; border-radius: 999px; color: #fff; }
-        .badge.grade { background: #FFC83D; color: #3B2A00; }
+        .badge.grade { background: #3D8BF2; }
         .badge.subj { background: var(--fre); }
         h1 { font-size: 2.8rem; line-height: 1.1; margin: 8px 0 12px; }
         .bubble {
@@ -127,7 +127,7 @@
         .section-title span { background: #fff; padding: 6px 22px; border-radius: 999px; box-shadow: 0 4px 0 rgba(30, 42, 74, .1); }
 
         /* ---------- Theme chips ---------- */
-        .themes { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+        .themes { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
         .theme {
             --tc: #999; --tc-dark: #666;
             display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px;
@@ -158,7 +158,13 @@
             margin-top: 36px; background: #fff; border-radius: 30px; overflow: hidden;
             box-shadow: 0 18px 40px rgba(30, 42, 74, .12); scroll-margin-top: 16px;
         }
-        .panel.p2 { --sc: #E0731F; --sc-dark: #A84F0F; --sl: #FFEBD9; }
+        .panel.t1 { --sc: #7B3FC4; --sc-dark: #572A8F; --sl: #F0E6FF; }
+        .panel.t2 { --sc: #E0731F; --sc-dark: #A84F0F; --sl: #FFEBD9; }
+        .panel.t3 { --sc: #2F7BD6; --sc-dark: #1F5699; --sl: #E1EEFC; }
+        .panel.t4 { --sc: #D63A3A; --sc-dark: #A12424; --sl: #FFE3E3; }
+        .panel.t5 { --sc: #2E9E4F; --sc-dark: #1E6E36; --sl: #E3F6E8; }
+        .panel.t6 { --sc: #0E7C86; --sc-dark: #09575E; --sl: #D9F2F4; }
+        .theme b { min-height: 2.2em; display: flex; align-items: center; }
         .panel-head { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; background: var(--sc); color: #fff; padding: 18px 26px; }
         .panel-head .pe { width: 58px; height: 58px; border-radius: 50%; background: #fff; display: grid; place-items: center; font-size: 2rem; flex: none; }
         .panel-head h2 { font-size: 1.8rem; line-height: 1.1; }
@@ -248,7 +254,6 @@
         .reset-btn { font-family: var(--font); background: none; border: none; color: #1F7A93; text-decoration: underline; cursor: pointer; font-size: .95rem; margin-top: 6px; }
 
         /* ---------- Responsive ---------- */
-        @media (max-width: 900px) { .themes { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 720px) {
             body { padding: 12px 12px 160px; }
             .nav-btn { font-size: 1rem; padding: 8px 14px 8px 12px; }
@@ -316,10 +321,10 @@
 
     <div class="container">
         <div class="topbar">
-            <a href="../grade-1-index.html" class="nav-btn g1" aria-label="Retour à la Grade 1"><span>◀</span><span>Grade 1</span></a>
-            <a href="../../index.html" class="nav-btn" aria-label="Accueil"><span>🏠</span><span>Home</span></a>
+            <a href="../grade-5-index.html" class="nav-btn g1" aria-label="Back to Grade 5"><span>◀</span><span>Grade 5</span></a>
+            <a href="../../index.html" class="nav-btn" aria-label="Home page"><span>🏠</span><span>Home</span></a>
             <span class="spacer"></span>
-            <button class="icon-btn" id="soundBtn" aria-pressed="true">🔔 Son</button>
+            <button class="icon-btn" id="soundBtn" aria-pressed="true">🔔 Sound on</button>
         </div>
 
         <header class="hero">
@@ -345,80 +350,61 @@
             </div>
             <div class="hero-text">
                 <div class="badges">
-                    <span class="badge grade">🐣 Grade 1</span>
-                    <span class="badge subj">💬 FRE</span>
+                    <span class="badge grade">🚀 Grade 5</span>
+                    <span class="badge subj">🌍 HIST &amp; GEO</span>
                 </div>
-                <h1>Français</h1>
+                <h1>History &amp; Geography</h1>
                 <div class="bubble">
-                    <span>Choisis un jeu et amuse-toi !</span>
-                    <button class="read-btn" id="readBtn" aria-label="Écouter">🔊 Écouter</button>
+                    <span>Pick a topic, then choose a game!</span>
+                    <button class="read-btn" id="readBtn" aria-label="Read this page out loud">🔊 Listen</button>
                 </div>
             </div>
         </header>
 
-        <h2 class="section-title"><span>📚 Les thèmes</span></h2>
-        <nav class="themes" aria-label="Thèmes">
-            <a href="#alphabet" class="theme t1 jump"><span class="te">🔤</span><b>L'Alphabet</b><small id="cnt-alphabet">▶ Jouer</small></a>
-            <a href="#lettres" class="theme t2 jump"><span class="te">📝</span><b>Les Lettres</b><small id="cnt-lettres">▶ Jouer</small></a>
-            <div class="theme t3 locked"><span class="te">📖</span><b>Les Mots</b><small>🔒 Bientôt</small></div>
-            <div class="theme t4 locked"><span class="te">🎨</span><b>Les Couleurs</b><small>🔒 Bientôt</small></div>
-            <div class="theme t5 locked"><span class="te">🔢</span><b>Les Nombres</b><small>🔒 Bientôt</small></div>
-            <div class="theme t6 locked"><span class="te">👋</span><b>Salutations</b><small>🔒 Bientôt</small></div>
-        </nav>
+        <h2 class="section-title"><span>📘 Topics from your book</span></h2>
+        <nav class="themes" id="themes" aria-label="Topics"></nav>
 
-        <!-- ====== L'ALPHABET ====== -->
-        <section class="panel" id="alphabet">
-            <div class="panel-head">
-                <span class="pe">🔤</span>
-                <h2>L'Alphabet<small>Apprends les lettres de A à Z</small></h2>
-                <button class="say-btn" data-say="L'alphabet. Apprends les lettres de A à Z." aria-label="Écouter">🔊</button>
-            </div>
-            <div class="panel-body"><div class="games" id="alphabet-grid"></div></div>
-        </section>
-
-        <!-- ====== LES LETTRES ====== -->
-        <section class="panel p2" id="lettres">
-            <div class="panel-head">
-                <span class="pe">📝</span>
-                <h2>Les Lettres<small>Majuscules, minuscules, voyelles et consonnes</small></h2>
-                <button class="say-btn" data-say="Les lettres. Majuscules, minuscules, voyelles et consonnes." aria-label="Écouter">🔊</button>
-            </div>
-            <div class="panel-body"><div class="games" id="lettres-grid"></div></div>
-        </section>
+        <div id="panels"></div>
 
         <footer>
             <p><strong>© <span id="year">2026</span> Ramsamy Pierre Rudaryo</strong></p>
             <p>Interactive Learning Platform - Making Learning Fun for Every Child</p>
-            <button class="reset-btn" id="resetBtn">↺ Recommencer (effacer mes ✓)</button>
+            <button class="reset-btn" id="resetBtn">↺ Start again (clear my ✓ ticks)</button>
         </footer>
     </div>
 
     <script>
     // ================================================================
-    //  THE GAMES ON THIS PAGE
-    //  To add a game, add a line in the right list:
+    //  THE TOPICS AND GAMES ON THIS PAGE
+    //  To add a game, put a line in the "games" list of its topic:
     //    { file, icon, title, level, badge, say }
-    //  Each card shows a live mini picture of the game's first page.
-    //  Optional: add  thumb:"picture.png"  to show a picture instead.
+    //  A topic with games gets its own section with picture cards.
+    //  A topic with no games shows "Coming soon".
+    //  Optional: add  thumb:"picture.png"  to show a picture instead of the live preview.
     // ================================================================
-    const SECTIONS = {
-        "alphabet-grid": [
-            { file: "french-alphabet-game.html", icon: "🎓", title: "Apprendre l'Alphabet",
-              level: "3 jeux : Apprendre, Quiz, Mémoriser", badge: "NEW!",
-              say: "Apprendre l'alphabet. Trois jeux : apprendre, quiz et mémoriser." },
-            { file: "Alphabet_Lettres_Manquantes.html", icon: "🦉", title: "L'Alphabet en Ordre",
-              level: "Les lettres manquantes · 4 niveaux avec Lulu la chouette", badge: "NEW!",
-              say: "L'alphabet en ordre. Trouve les lettres manquantes avec Lulu la chouette." }
-        ],
-        "lettres-grid": [
-            { file: "Lettres_Majuscules_Minuscules.html", icon: "🔠", title: "Majuscules et Minuscules",
-              level: "Glisser-déposer · 3 niveaux avec Lulu la chouette", badge: "NEW!",
-              say: "Majuscules et minuscules. Glisse chaque lettre au bon endroit." },
-            { file: "Lettres_Voyelles_Consonnes.html", icon: "🧺", title: "Voyelles et Consonnes",
-              level: "Range les lettres dans 2 paniers · 3 niveaux", badge: "NEW!",
-              say: "Voyelles et consonnes. Range les lettres dans les deux paniers." }
-        ]
-    };
+    const FOLDER = "history and geography/";
+    const TOPICS = [
+        { id: "planet-earth",     icon: "🌍", title: "Planet Earth",             sub: "Explore our amazing planet",          games: [] },
+        { id: "volcanoes",        icon: "🌋", title: "Volcanoes",                sub: "Volcanoes in our region",             games: [
+            { file: "volcano_parts_activity.html", icon: "🌋", title: "Label the Volcano",
+              level: "Drag & Drop Labeling · 7 Parts", badge: "NEW!",
+              say: "Label the volcano. Drag each name to the right part of the volcano." }
+        ] },
+        { id: "mauritius-relief", icon: "⛰️", title: "Relief of Mauritius",      sub: "Main relief features of Mauritius",   games: [] },
+        { id: "rodrigues-relief", icon: "🏔️", title: "Relief of Rodrigues",      sub: "Main relief features of Rodrigues",   games: [] },
+        { id: "environment",      icon: "♻️", title: "Environment",              sub: "Environmental problems",              games: [] },
+        { id: "indian-ocean",     icon: "🌊", title: "Indian Ocean",             sub: "The Indian Ocean in the past",        games: [] },
+        { id: "centuries",        icon: "📅", title: "Understanding Centuries",  sub: "Learn about time periods",            games: [] },
+        { id: "mascarene",        icon: "🏝️", title: "Mascarene Islands",        sub: "Discover the Mascarene Islands",      games: [] },
+        { id: "rodrigues-island", icon: "🏖️", title: "Rodrigues Island",         sub: "Learn about Rodrigues",               games: [] },
+        { id: "dutch",            icon: "⛵", title: "Dutch Settlement",         sub: "The Dutch in Mauritius",              games: [] },
+        { id: "french",           icon: "🏰", title: "French Period",            sub: "The French in Ile de France",         games: [] },
+        { id: "conquest",         icon: "⚔️", title: "The Conquest",             sub: "The conquest of Ile de France",       games: [] },
+        { id: "british",          icon: "👑", title: "British Colony",           sub: "Mauritius as a British colony",       games: [] },
+        { id: "temperature",      icon: "🌡️", title: "Temperature",              sub: "Understanding temperature",           games: [] },
+        { id: "rainfall",         icon: "🌧️", title: "Rainfall",                 sub: "Learn about rainfall patterns",       games: [] },
+        { id: "port-louis",       icon: "🏙️", title: "Port Louis Today",         sub: "Explore our capital city",            games: [] }
+    ];
 
     (function () {
         function store(key, val) {
@@ -427,36 +413,54 @@
         }
         function esc(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
         document.getElementById('year').textContent = new Date().getFullYear();
-        store('ilp-last-grade', '1');
+        store('ilp-last-grade', '5');
 
         // ---------- Played games (✓ ticks on this device) ----------
-        var PLAYED_KEY = 'ilp-g1-fre-played';
+        var PLAYED_KEY = 'ilp-g5-hg-played';
         var played = {};
         try { played = JSON.parse(store(PLAYED_KEY) || '{}') || {}; } catch (e) { played = {}; }
 
-        // ---------- Build the cards ----------
-        Object.keys(SECTIONS).forEach(function (gridId) {
-            var grid = document.getElementById(gridId);
-            SECTIONS[gridId].forEach(function (g) {
+        // ---------- Build the topic cards and the game sections ----------
+        var themes = document.getElementById('themes'), panels = document.getElementById('panels');
+        TOPICS.forEach(function (t, i) {
+            var colour = 't' + ((i % 6) + 1), has = t.games.length > 0;
+            var chip = document.createElement(has ? 'a' : 'div');
+            chip.className = 'theme ' + colour + (has ? ' jump' : ' locked');
+            if (has) chip.href = '#' + t.id;
+            chip.innerHTML = '<span class="te">' + t.icon + '</span><b>' + esc(t.title) + '</b><small id="cnt-' + t.id + '">' + (has ? '' : '🔒 Coming soon') + '</small>';
+            themes.appendChild(chip);
+            if (!has) return;
+
+            var panel = document.createElement('section');
+            panel.className = 'panel ' + colour; panel.id = t.id;
+            panel.innerHTML =
+                '<div class="panel-head"><span class="pe">' + t.icon + '</span>' +
+                '<h2>' + esc(t.title) + '<small>' + esc(t.sub) + '</small></h2>' +
+                '<button class="say-btn" data-say="' + esc(t.title + '. ' + t.sub) + '" aria-label="Listen">🔊</button></div>' +
+                '<div class="panel-body"><div class="games"></div></div>';
+            var grid = panel.querySelector('.games');
+            t.games.forEach(function (g) {
+                var href = encodeURI(FOLDER + g.file);
                 var card = document.createElement('div');
                 card.className = 'game';
                 card.dataset.file = g.file;
                 card.dataset.badge = g.badge || '';
                 var pic = g.thumb
                     ? '<img class="thumb" src="' + esc(g.thumb) + '" alt="" loading="lazy">'
-                    : '<iframe data-src="' + esc(g.file) + '" tabindex="-1" aria-hidden="true" title="" scrolling="no"></iframe>';
+                    : '<iframe data-src="' + href + '" tabindex="-1" aria-hidden="true" title="" scrolling="no"></iframe>';
                 card.innerHTML =
-                    '<a class="card-link" href="' + esc(g.file) + '" aria-label="' + esc(g.title + '. ' + g.level) + '"></a>' +
+                    '<a class="card-link" href="' + href + '" aria-label="' + esc(g.title + '. ' + g.level) + '"></a>' +
                     '<span class="tag"></span>' +
                     '<div class="preview"><div class="ph">' + g.icon + '</div>' + pic + '<div class="play-dot">▶</div></div>' +
                     '<div class="g-body">' +
                         '<div class="g-title"><span class="gi">' + g.icon + '</span><span>' + esc(g.title) + '</span></div>' +
                         '<div class="g-level">' + esc(g.level) + '</div>' +
-                        '<div class="g-foot"><span class="g-play">Jouer ▶</span>' +
-                        '<button class="say-btn" data-say="' + esc(g.say || g.title) + '" aria-label="Écouter : ' + esc(g.title) + '">🔊</button></div>' +
+                        '<div class="g-foot"><span class="g-play">Play ▶</span>' +
+                        '<button class="say-btn" data-say="' + esc(g.say || g.title) + '" aria-label="Listen: ' + esc(g.title) + '">🔊</button></div>' +
                     '</div>';
                 grid.appendChild(card);
             });
+            panels.appendChild(panel);
         });
 
         // ---------- Live previews: load each game small, only when the card is on screen ----------
@@ -500,13 +504,14 @@
         function paint() {
             document.querySelectorAll('.game').forEach(function (c) {
                 var tag = c.querySelector('.tag');
-                if (played[c.dataset.file]) { tag.className = 'tag tag-done'; tag.textContent = '✓ Joué'; }
+                if (played[c.dataset.file]) { tag.className = 'tag tag-done'; tag.textContent = '✓ Played'; }
                 else if (c.dataset.badge) { tag.className = 'tag tag-new'; tag.textContent = c.dataset.badge; }
                 else { tag.className = 'tag'; tag.textContent = ''; }
             });
-            [['alphabet', 'alphabet-grid'], ['lettres', 'lettres-grid']].forEach(function (p) {
-                var list = SECTIONS[p[1]], done = list.filter(function (g) { return played[g.file]; }).length;
-                document.getElementById('cnt-' + p[0]).textContent = done ? '⭐ ' + done + ' / ' + list.length : '▶ ' + list.length + ' jeux';
+            TOPICS.forEach(function (t) {
+                if (!t.games.length) return;
+                var done = t.games.filter(function (g) { return played[g.file]; }).length, n = t.games.length;
+                document.getElementById('cnt-' + t.id).textContent = done ? '⭐ ' + done + ' / ' + n : '▶ ' + n + (n > 1 ? ' games' : ' game');
             });
         }
         paint();
@@ -519,7 +524,7 @@
         var soundBtn = document.getElementById('soundBtn');
         var audioCtx = null;
         function paintSound() {
-            soundBtn.textContent = soundOn ? '🔔 Son' : '🔕 Son';
+            soundBtn.textContent = soundOn ? '🔔 Sound on' : '🔕 Sound off';
             soundBtn.setAttribute('aria-pressed', soundOn ? 'true' : 'false');
         }
         paintSound();
@@ -566,25 +571,25 @@
             });
         });
 
-        // ---------- Read aloud (French voice) ----------
+        // ---------- Read aloud ----------
         var readBtn = document.getElementById('readBtn');
         var canSpeak = 'speechSynthesis' in window, active = null;
         if (!canSpeak) document.querySelectorAll('.read-btn, .say-btn').forEach(function (b) { b.style.display = 'none'; });
         function voice() {
             var v = speechSynthesis.getVoices();
-            return v.filter(function (x) { return /^fr-FR/i.test(x.lang); })[0] || v.filter(function (x) { return /^fr/i.test(x.lang); })[0] || null;
+            return v.filter(function (x) { return /^en-GB/i.test(x.lang); })[0] || v.filter(function (x) { return /^en/i.test(x.lang); })[0] || null;
         }
         function reset() {
             if (!active) return;
             active.classList.remove('speaking');
-            if (active === readBtn) readBtn.textContent = '🔊 Écouter';
+            if (active === readBtn) readBtn.textContent = '🔊 Listen';
             active = null;
         }
         function say(text, btn) {
             speechSynthesis.cancel(); reset();
             var u = new SpeechSynthesisUtterance(text), v = voice();
             if (v) u.voice = v;
-            u.lang = v ? v.lang : 'fr-FR'; u.rate = 0.9; u.pitch = 1.1;
+            u.lang = v ? v.lang : 'en-GB'; u.rate = 0.9; u.pitch = 1.1;
             u.onend = u.onerror = reset;
             active = btn; btn.classList.add('speaking');
             if (btn === readBtn) readBtn.textContent = '⏹ Stop';
@@ -592,7 +597,9 @@
         }
         readBtn.addEventListener('click', function () {
             if (readBtn.classList.contains('speaking')) { speechSynthesis.cancel(); reset(); return; }
-            say("Bonjour ! Choisis un jeu et amuse-toi ! Regarde les petites images : elles te montrent chaque jeu. Touche une carte pour jouer.", readBtn);
+            var ready = TOPICS.filter(function (t) { return t.games.length; }).map(function (t) { return t.title; });
+            say("Welcome to Grade 5 History and Geography! Pick a topic, then choose a game. The little pictures show you each game. " +
+                (ready.length ? "Games are ready for: " + ready.join(", ") + ". " : "") + "More topics are coming soon.", readBtn);
         });
         document.querySelectorAll('.say-btn').forEach(function (b) {
             b.addEventListener('click', function (e) {
