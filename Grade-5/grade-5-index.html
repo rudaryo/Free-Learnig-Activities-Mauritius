@@ -169,6 +169,29 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         .soon b { display: block; color: var(--ink); font-size: 1.1rem; }
         .soon small { font-size: .9rem; }
 
+        /* ---------- Live preview of the subject's first page ---------- */
+        .preview {
+            position: relative; width: 100%; aspect-ratio: 16 / 10; overflow: hidden;
+            background: var(--sc-light); border-bottom: 5px solid var(--sc);
+        }
+        .preview .ph { position: absolute; inset: 0; display: grid; place-items: center; font-size: 5rem; animation: bob 2.4s ease-in-out infinite; }
+        .preview iframe {
+            position: absolute; top: 0; left: 0; border: 0; background: #fff;
+            width: 1280px; height: 800px; transform-origin: 0 0; transform: scale(var(--s, .3));
+            pointer-events: none; opacity: 0; transition: opacity .5s;
+        }
+        .preview iframe.ready { opacity: 1; }
+        .preview::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(160deg, rgba(255,255,255,.25) 0%, rgba(255,255,255,0) 35%); }
+        .preview .tag { position: absolute; z-index: 1; left: 50%; bottom: 12px; transform: translateX(-50%); margin: 0; box-shadow: 0 3px 0 rgba(0,0,0,.15); border: 3px solid var(--sc); }
+        .play-dot {
+            position: absolute; z-index: 1; left: 50%; top: 45%; transform: translate(-50%, -50%) scale(.8);
+            width: 80px; height: 80px; border-radius: 50%; background: rgba(255,255,255,.92);
+            display: grid; place-items: center; font-size: 2.2rem; color: var(--sc);
+            box-shadow: 0 6px 18px rgba(0,0,0,.25); opacity: 0; transition: opacity .2s, transform .2s;
+        }
+        .subject:hover .play-dot, .subject:focus-within .play-dot { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        .subject-title .se { font-size: 1.8rem; vertical-align: -4px; }
+
         .subject-top {
             width: 100%; background: var(--sc); padding: 26px 20px 20px; position: relative;
         }
@@ -211,10 +234,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
 
         /* whole card is clickable through the main link */
-        .card-link { position: absolute; inset: 0; z-index: 1; border-radius: 30px; }
+        .card-link { position: absolute; inset: 0; z-index: 3; border-radius: 30px; }
         .card-link:focus-visible { outline: 5px solid var(--ink); outline-offset: 4px; }
         .say-btn {
-            position: relative; z-index: 2;
+            position: relative; z-index: 4;
             font-family: var(--font); font-size: 1.3rem; line-height: 1;
             width: 50px; height: 50px; border-radius: 50%; border: 3px solid var(--sc);
             background: #fff; cursor: pointer; box-shadow: 0 4px 0 var(--sc-dark);
@@ -339,12 +362,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <!-- History & Geography -->
             <div class="subject s-hg">
                 <a href="History-Geography/grade-5-his-geo-index.html" class="card-link" aria-label="History and Geography: Explore Mauritius and world history"></a>
-                <div class="subject-top">
-                    <div class="subject-emoji">🌍</div>
+                <!-- Live mini picture of the History & Geography page -->
+                <div class="preview">
+                    <div class="ph">🌍</div>
+                    <iframe data-src="History-Geography/grade-5-his-geo-index.html" tabindex="-1" aria-hidden="true" title="" scrolling="no"></iframe>
+                    <div class="play-dot">▶</div>
                     <span class="tag">HIST &amp; GEO</span>
                 </div>
                 <div class="subject-body">
-                    <div class="subject-title">History &amp; Geography</div>
+                    <div class="subject-title"><span class="se">🌍</span> History &amp; Geography</div>
                     <div class="subject-desc">Explore Mauritius and world history</div>
                     <div class="count">⭐ 15 Topics · 1 Activity</div>
                     <div class="go">
@@ -450,6 +476,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 say(b.getAttribute('data-say'), b.getAttribute('data-lang'), b);
             });
         });
+
+        // ---------- Live previews: show each subject page small, once it is on screen ----------
+        var previews = document.querySelectorAll('.preview');
+        function fit(p) { var f = p.querySelector('iframe'); if (f) f.style.setProperty('--s', p.clientWidth / 1280); }
+        if ('ResizeObserver' in window) {
+            var ro = new ResizeObserver(function (en) { en.forEach(function (e) { fit(e.target); }); });
+            previews.forEach(function (p) { ro.observe(p); });
+        } else { window.addEventListener('resize', function () { previews.forEach(fit); }); }
+        function loadPreview(p) {
+            fit(p);
+            var f = p.querySelector('iframe');
+            if (!f || f.src) return;
+            f.addEventListener('load', function () {
+                try { var w = f.contentWindow; if (w.speechSynthesis) { w.speechSynthesis.cancel(); w.speechSynthesis.speak = function () {}; } } catch (e) {}
+                f.classList.add('ready');
+            });
+            f.src = f.dataset.src;
+        }
+        if ('IntersectionObserver' in window) {
+            var io = new IntersectionObserver(function (en) {
+                en.forEach(function (e) { if (e.isIntersecting) { loadPreview(e.target); io.unobserve(e.target); } });
+            }, { rootMargin: '200px' });
+            previews.forEach(function (p) { io.observe(p); });
+        } else { previews.forEach(loadPreview); }
 
         // ---------- Card clicks: pop, then go ----------
         function go(e, href) {
