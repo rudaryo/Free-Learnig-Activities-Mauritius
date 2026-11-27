@@ -9,386 +9,230 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-TCBV2GCV');</script>
 <!-- End Google Tag Manager -->
 
-
-
-    
-    
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recognising Numerals 1 to 8</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        .home-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: white;
-            color: #667eea;
-            padding: 12px 24px;
-            border-radius: 50px;
-            border: none;
-            font-weight: 800;
-            font-size: 26px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', cursive, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .home-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-            background: #667eea;
-            color: white;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --ink: #1E2A4A;
+            --wood: #8B5A2B;          /* wooden buttons and tiles */
+            --wood-dark: #5E3A17;
+            --wood-light: #E0A85C;    /* light wooden edge */
+            --frame: #C98B4B;         /* board frame */
+            --board: #2F7D6D;         /* chalkboard green */
+            --board-dark: #23604F;
+            --chalk: #FFFDF2;
+            --font: 'Fredoka', 'Baloo 2', 'Arial Rounded MT Bold', 'Comic Sans MS', sans-serif;
+            /* a colour for each number, like the letters on the alphabet board */
+            --n1: #FF5A5F; --n2: #FF9F1C; --n3: #FFD23F; --n4: #5BD36B;
+            --n5: #3FA9F5; --n6: #B07CFF; --n7: #FF6FB5; --n8: #2FD9C4;
         }
 
         body {
-            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', cursive, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: var(--font);
+            color: var(--ink);
+            background: linear-gradient(160deg, #C7F0EA 0%, #A9E3E6 55%, #9ED3EC 100%);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
+            padding: 8px 14px 24px;
             overflow-x: hidden;
         }
 
+        /* ---------- Decoration row (fruit, flowers, hearts) ---------- */
+        .deco { max-width: 900px; margin: 0 auto 4px; display: flex; justify-content: space-around; font-size: 1.7rem; }
+        .deco span { animation: bob 3s ease-in-out infinite; }
+        .deco span:nth-child(2n) { animation-delay: -1.5s; }
+        @keyframes bob { 50% { transform: translateY(-4px); } }
+
+        /* ---------- Top bar ---------- */
+        .topbar { max-width: 900px; margin: 0 auto 10px; display: flex; align-items: center; }
+        .nav-btn, .big-btn, .speaker-button {
+            font-family: var(--font); font-weight: 600; color: var(--chalk);
+            background: linear-gradient(180deg, #A06A35 0%, var(--wood) 100%);
+            border: 3px solid var(--wood-light); cursor: pointer; text-decoration: none;
+            box-shadow: 0 5px 0 var(--wood-dark), 0 8px 14px rgba(0,0,0,.25);
+            text-shadow: 0 2px 0 rgba(0,0,0,.35); transition: transform .15s;
+        }
+        .nav-btn { display: inline-flex; align-items: center; gap: 8px; font-size: 1.15rem; padding: 7px 18px 7px 14px; border-radius: 14px; }
+        .nav-btn:hover, .big-btn:hover { transform: translateY(-2px); }
+        .nav-btn:active, .big-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--wood-dark); }
+
+        /* ---------- Wooden frame + chalkboard ---------- */
+        .frame {
+            max-width: 900px; margin: 0 auto; padding: 16px; border-radius: 22px;
+            background:
+                repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 3px, transparent 3px 11px),
+                linear-gradient(180deg, #DDA463 0%, var(--frame) 50%, #B97A3C 100%);
+            box-shadow: 0 10px 0 #8E5A27, 0 18px 34px rgba(30,42,74,.3), inset 0 2px 0 rgba(255,255,255,.35);
+            position: relative;
+        }
         .container {
-            background: white;
-            border-radius: 20px;
-            padding: 20px;
-            max-width: 900px;
-            width: 100%;
-            max-height: 95vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border-radius: 12px; padding: 18px 22px 20px; position: relative; overflow: hidden;
+            background:
+                radial-gradient(ellipse at 20% 15%, rgba(255,255,255,.10), transparent 55%),
+                radial-gradient(ellipse at 85% 90%, rgba(255,255,255,.06), transparent 50%),
+                linear-gradient(160deg, #3A8E7C 0%, var(--board) 45%, var(--board-dark) 100%);
+            box-shadow: inset 0 0 0 3px rgba(0,0,0,.18), inset 0 6px 18px rgba(0,0,0,.35);
+            color: var(--chalk);
         }
+        /* chalk tray under the board */
+        .tray {
+            max-width: 900px; height: 18px; margin: 0 auto; border-radius: 0 0 12px 12px;
+            background: linear-gradient(180deg, #B97A3C, #8E5A27);
+            box-shadow: 0 6px 12px rgba(0,0,0,.25); position: relative; top: -2px;
+        }
+        .tray::before { content: ''; position: absolute; left: 14%; top: 4px; width: 46px; height: 8px; border-radius: 4px; background: #FFFDF2; box-shadow: 70px 0 0 #FFD9E8, 130px 0 0 #D9F2FF; }
 
-        h1 {
-            text-align: center;
-            color: #667eea;
-            font-size: clamp(1.5em, 5vw, 2.5em);
-            margin-bottom: 8px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        /* ---------- Wooden name plaque with colourful letters ---------- */
+        .head { display: flex; justify-content: center; }
+        .plaque {
+            display: inline-block; padding: 6px 26px 8px; border-radius: 16px;
+            background: linear-gradient(180deg, #9A6233 0%, #7A4A22 100%);
+            border: 4px solid var(--wood-light);
+            box-shadow: 0 6px 0 var(--wood-dark), 0 10px 18px rgba(0,0,0,.3);
         }
+        h1 { font-size: clamp(1.5rem, 4.6vw, 2.3rem); line-height: 1.1; font-weight: 700; letter-spacing: 1px; }
+        h1 .ch { display: inline-block; -webkit-text-stroke: 1px rgba(0,0,0,.25); text-shadow: 0 3px 0 rgba(0,0,0,.35); }
+        .subtitle { color: #E6FFF6; font-size: clamp(1rem, 3vw, 1.2rem); margin-top: 8px; text-align: center; opacity: .9; }
 
-        .subtitle {
-            text-align: center;
-            color: #764ba2;
-            font-size: clamp(0.9em, 3vw, 1.2em);
-            margin-bottom: 20px;
+        /* ---------- Score plaques ---------- */
+        .status { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0 8px; }
+        .pill {
+            border-radius: 14px; padding: 5px 6px; text-align: center;
+            background: linear-gradient(180deg, #A06A35, var(--wood)); border: 3px solid var(--wood-light);
+            box-shadow: 0 4px 0 var(--wood-dark);
         }
+        .pill .label { font-size: .95rem; color: #FFE9C9; font-weight: 500; }
+        .pill .value { font-size: clamp(1.4rem, 4.2vw, 1.9rem); font-weight: 700; color: #FFD23F; line-height: 1.1; text-shadow: 0 2px 0 rgba(0,0,0,.35); }
 
-        .score-board {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 15px;
-            padding: 15px;
-            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
-            border-radius: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
+        /* ---------- Level progress, drawn in chalk ---------- */
+        .level-box {
+            display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+            border: 2px dashed rgba(255,255,255,.45); border-radius: 14px; padding: 8px 14px; margin-bottom: 10px;
+            background: rgba(255,255,255,.06);
         }
+        .level-name { font-weight: 600; font-size: 1.1rem; color: var(--chalk); }
+        .bar { flex: 1; min-width: 140px; height: 16px; background: rgba(0,0,0,.25); border-radius: 999px; overflow: hidden; border: 2px solid rgba(255,255,255,.5); }
+        .bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #FFE45C, #FFB627); border-radius: 999px; transition: width .5s; }
+        .level-count { font-weight: 600; color: #FFE45C; font-size: 1rem; }
 
-        .score-item {
-            text-align: center;
-            min-width: 80px;
-        }
-
-        .score-label {
-            font-size: clamp(0.8em, 2.5vw, 1em);
-            color: #2d3436;
-            margin-bottom: 5px;
-        }
-
-        .score-value {
-            font-size: clamp(1.3em, 4vw, 2em);
-            font-weight: bold;
-            color: #d63031;
-        }
-        
-        .level-info {
-            text-align: center;
-            font-size: clamp(1em, 3vw, 1.3em);
-            color: white;
-            margin-bottom: 15px;
-            padding: 12px;
-            background: #a29bfe;
-            border-radius: 10px;
-            font-weight: bold;
-        }
-
-        .game-area {
-            margin-bottom: 30px;
-        }
-
+        /* ---------- Question ---------- */
         .question {
-            text-align: center;
-            font-size: clamp(1.2em, 4vw, 2em);
-            color: #2d3436;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #dfe6e9;
-            border-radius: 15px;
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            font-size: clamp(1.3rem, 4vw, 1.8rem); font-weight: 600; color: var(--chalk);
         }
+        .speaker-button { width: 52px; height: 52px; border-radius: 14px; font-size: 1.5rem; flex: none; }
+        .speaker-button:hover { transform: scale(1.06); }
+        .speaker-button:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--wood-dark); }
+        .speaker-button.speaking { animation: ring 1s ease-in-out infinite; }
+        @keyframes ring { 50% { box-shadow: 0 0 0 9px rgba(255,228,92,.35), 0 5px 0 var(--wood-dark); } }
 
-        .speaker-button {
-            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 1.5em;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: all 0.3s;
-            margin-left: 10px;
-            vertical-align: middle;
-        }
-
-        .speaker-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-        }
-
-        .speaker-button:active {
-            transform: scale(0.95);
-        }
-
+        /* ---------- The big number: chalk box like on the alphabet board ---------- */
+        .number-wrap { display: flex; justify-content: center; margin: 10px 0 4px; }
         .number-display {
-            font-size: clamp(4em, 15vw, 8em);
-            font-weight: bold;
-            color: #00b894;
-            text-align: center;
-            margin: 20px 0;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
-            animation: pulse 1s ease-in-out;
+            --nc: var(--chalk);
+            width: clamp(130px, min(30vw, 24vh), 200px); height: clamp(130px, min(30vw, 24vh), 200px);
+            border-radius: 22px; display: grid; place-items: center;
+            font-size: clamp(4.5rem, min(16vw, 14vh), 7.5rem); font-weight: 700; line-height: 1;
+            color: var(--nc); background: rgba(255,255,255,.08);
+            border: 4px dashed rgba(255,255,255,.55);
+            -webkit-text-stroke: 3px rgba(0,0,0,.35); paint-order: stroke fill;
+            text-shadow: 0 5px 0 rgba(0,0,0,.35);
+            transition: border-color .3s, background .3s;
         }
+        .number-display.pop { animation: pop .6s ease-out; }
+        @keyframes pop { 0% { transform: scale(.6) rotate(-6deg); } 60% { transform: scale(1.12) rotate(3deg); } 100% { transform: scale(1); } }
+        .number-display.wrong { border-color: #FF8A8A; background: rgba(255,90,95,.18); }
+        [data-n="1"] { --nc: var(--n1); } [data-n="2"] { --nc: var(--n2); } [data-n="3"] { --nc: var(--n3); } [data-n="4"] { --nc: var(--n4); }
+        [data-n="5"] { --nc: var(--n5); } [data-n="6"] { --nc: var(--n6); } [data-n="7"] { --nc: var(--n7); } [data-n="8"] { --nc: var(--n8); }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
+        .feedback { text-align: center; font-size: clamp(1.4rem, 5vw, 2rem); font-weight: 700; min-height: 1.5em; margin: 8px 0 0; text-shadow: 0 2px 0 rgba(0,0,0,.3); }
+        .feedback.correct { color: #9BF5B0; }
+        .feedback.wrong { color: #FFB3B3; }
+        .feedback.info { color: #FFE45C; font-size: clamp(1.2rem, 4vw, 1.6rem); }
+        .stars { text-align: center; font-size: clamp(1.6rem, 5vw, 2.2rem); min-height: 1.2em; }
 
-        .options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-            justify-items: center;
-        }
-        
-        .options.level-1 {
-            grid-template-columns: repeat(3, 1fr);
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .options.level-2 {
-            grid-template-columns: repeat(5, 1fr);
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .options.level-3 {
-            grid-template-columns: repeat(4, 1fr);
-        }
-
+        /* ---------- Wooden number tiles ---------- */
+        .options { display: grid; gap: 14px; margin: 8px auto 4px; justify-content: center; }
+        .options.level-1 { grid-template-columns: repeat(3, minmax(90px, 130px)); }
+        .options.level-2 { grid-template-columns: repeat(5, minmax(80px, 120px)); }
+        .options.level-3 { grid-template-columns: repeat(4, minmax(80px, 130px)); }
         .option-btn {
-            padding: clamp(15px, 3vw, 30px);
-            font-size: clamp(2em, 6vw, 3em);
-            font-weight: bold;
-            border: 4px solid #dfe6e9;
-            border-radius: 15px;
-            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            min-width: 80px;
+            font-family: var(--font); font-size: clamp(2.4rem, 7vw, 3.4rem); font-weight: 700; line-height: 1;
+            aspect-ratio: 1 / 1; border-radius: 16px; cursor: pointer;
+            color: var(--nc, var(--chalk)); -webkit-text-stroke: 2px rgba(0,0,0,.35); paint-order: stroke fill;
+            text-shadow: 0 4px 0 rgba(0,0,0,.4);
+            background:
+                repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 2px, transparent 2px 9px),
+                linear-gradient(180deg, #9A6233 0%, #7A4A22 100%);
+            border: 4px solid var(--wood-light);
+            box-shadow: 0 7px 0 var(--wood-dark), 0 10px 16px rgba(0,0,0,.3), inset 0 2px 0 rgba(255,255,255,.2);
+            transition: transform .15s, box-shadow .15s;
         }
+        .option-btn:hover:not(:disabled) { transform: translateY(-4px); box-shadow: 0 11px 0 var(--wood-dark), 0 14px 20px rgba(0,0,0,.3); }
+        .option-btn:active:not(:disabled) { transform: translateY(5px); box-shadow: 0 2px 0 var(--wood-dark); }
+        .option-btn:disabled { cursor: default; }
+        .options.locked .option-btn:not(.correct):not(.wrong) { opacity: .5; }
+        .option-btn.correct { border-color: #FFE45C; box-shadow: 0 0 0 5px rgba(255,228,92,.6), 0 0 22px 6px rgba(255,228,92,.55), 0 7px 0 var(--wood-dark); animation: celebrate .6s ease; }
+        .option-btn.wrong { border-color: #FF5A5F; box-shadow: 0 0 0 5px rgba(255,90,95,.55), 0 7px 0 var(--wood-dark); animation: shake .5s ease; }
+        @keyframes celebrate { 25% { transform: scale(1.15) rotate(-8deg); } 75% { transform: scale(1.15) rotate(8deg); } }
+        @keyframes shake { 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+        .option-btn:focus-visible, .nav-btn:focus-visible, .speaker-button:focus-visible, .big-btn:focus-visible { outline: 4px solid #FFE45C; outline-offset: 3px; }
 
-        .option-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
+        /* ---------- Wooden buttons under the tiles ---------- */
+        .button-container { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
+        .big-btn { font-size: clamp(1.1rem, 3vw, 1.35rem); border-radius: 14px; padding: 10px 26px; }
+        .next-btn, .again-btn { color: #5E3A17; text-shadow: none; background: linear-gradient(180deg, #FFD54F, #FFB300); border-color: #FFF3C4; box-shadow: 0 5px 0 #C68400, 0 8px 14px rgba(0,0,0,.25); }
+        .hidden { display: none !important; }
 
-        .option-btn:active {
-            transform: translateY(0);
-        }
+        /* ---------- Dodo helper under the board (tall screens) ---------- */
+        .helper { max-width: 900px; margin: 16px auto 0; display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .helper svg { width: 70px; height: auto; flex: none; }
+        .bubble { position: relative; background: #fff; border-radius: 18px; padding: 10px 18px; font-size: 1.15rem; font-weight: 500; box-shadow: 0 4px 10px rgba(0,0,0,.12); }
+        .bubble::before { content: ''; position: absolute; left: -10px; top: 50%; margin-top: -10px; border: 10px solid transparent; border-right-color: #fff; border-left: 0; }
 
-        .option-btn.correct {
-            background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
-            animation: celebrate 0.5s ease;
-        }
-
-        .option-btn.wrong {
-            background: linear-gradient(135deg, #d63031 0%, #ff7675 100%);
-            animation: shake 0.5s ease;
-        }
-
-        @keyframes celebrate {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            25% { transform: scale(1.2) rotate(-10deg); }
-            75% { transform: scale(1.2) rotate(10deg); }
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-
-        .feedback {
-            text-align: center;
-            font-size: clamp(1.5em, 5vw, 2.5em);
-            font-weight: bold;
-            min-height: 50px;
-            margin: 15px 0;
-        }
-
-        .feedback.correct {
-            color: #00b894;
-        }
-
-        .feedback.wrong {
-            color: #d63031;
-        }
-
-        .next-btn {
-            display: block;
-            margin: 15px auto;
-            padding: clamp(12px, 2.5vw, 20px) clamp(30px, 6vw, 50px);
-            font-size: clamp(1.1em, 3vw, 1.5em);
-            font-weight: bold;
-            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .next-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .retry-btn {
-            display: block;
-            margin: 15px auto;
-            padding: clamp(12px, 2.5vw, 20px) clamp(30px, 6vw, 50px);
-            font-size: clamp(1.1em, 3vw, 1.5em);
-            font-weight: bold;
-            background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .retry-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .button-container {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .stars {
-            text-align: center;
-            font-size: clamp(2em, 6vw, 3em);
-            margin: 15px 0;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        /* Tablet optimization */
-        @media (max-width: 1024px) {
-            .container {
-                padding: 25px;
-            }
-            
-            .options.level-1 {
-                max-width: 450px;
-            }
-            
-            .options.level-2 {
-                max-width: 600px;
-            }
-        }
-
-        /* Mobile optimization */
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            
-            .container {
-                padding: 15px;
-                border-radius: 15px;
-            }
-            
-            .options {
-                gap: 10px;
-            }
-            
-            .options.level-1 {
-                grid-template-columns: repeat(3, 1fr);
-                max-width: 100%;
-            }
-            
-            .options.level-2 {
-                grid-template-columns: repeat(3, 1fr);
-                max-width: 100%;
-            }
-            
-            .options.level-3 {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            
-            .score-board {
-                padding: 10px;
-            }
-            
-            .button-container {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .next-btn, .retry-btn {
-                width: 100%;
-                max-width: 300px;
-            }
+            .options.level-1, .options.level-2, .options.level-3 { grid-template-columns: repeat(3, minmax(70px, 1fr)); }
+            .frame { padding: 10px; }
+            .container { padding: 14px 12px 16px; }
+            .plaque { padding: 5px 14px 7px; }
+            .deco { font-size: 1.3rem; }
+            .button-container { flex-direction: column; align-items: center; }
+            .big-btn { width: 100%; max-width: 320px; }
         }
-        
-        @media (max-width: 480px) {
-            .options.level-1,
-            .options.level-2,
-            .options.level-3 {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        @media (max-width: 420px) { .status .label { font-size: .8rem; } }
+        @media (max-height: 940px) and (min-width: 769px) { .helper { display: none; } }
+        @media (max-height: 820px) and (min-width: 769px) {
+            body { padding-top: 4px; }
+            .deco { font-size: 1.3rem; margin-bottom: 0; }
+            .topbar { margin-bottom: 6px; }
+            .nav-btn { font-size: 1rem; padding: 5px 14px 5px 10px; }
+            .frame { padding: 12px; }
+            .container { padding: 12px 22px 14px; }
+            h1 { font-size: 1.6rem; }
+            .plaque { padding: 4px 20px 6px; }
+            .subtitle { font-size: 1rem; margin-top: 4px; }
+            .status { margin: 8px 0 6px; }
+            .pill { padding: 2px 6px; display: flex; align-items: baseline; justify-content: center; gap: 8px; }
+            .pill .value { font-size: 1.4rem; }
+            .level-box { padding: 5px 14px; margin-bottom: 6px; }
+            .speaker-button { width: 44px; height: 44px; font-size: 1.25rem; }
+            .number-wrap { margin: 6px 0 2px; }
+            .feedback { margin: 4px 0 0; }
+            .options.level-1 { grid-template-columns: repeat(3, minmax(90px, 104px)); }
+            .options.level-2 { grid-template-columns: repeat(5, minmax(80px, 100px)); }
+            .options.level-3 { grid-template-columns: repeat(4, minmax(80px, 100px)); }
+            .button-container { margin-top: 8px; }
+            .big-btn { padding: 6px 22px; }
+            .stars { min-height: 1em; font-size: 1.5rem; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
         }
     </style>
 </head>
@@ -398,449 +242,332 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
+    <div class="deco" aria-hidden="true"><span>🍎</span><span>🌸</span><span>💗</span><span>⭐</span><span>🌼</span><span>❤️</span><span>🌸</span><span>💙</span><span>🍎</span></div>
 
+    <div class="topbar">
+        <a class="nav-btn" href="../grade-1-math-index.html" aria-label="Back to Maths"><span>◀</span><span>Maths</span></a>
+        <span class="spacer"></span>
+    </div>
 
-    
-    
-    
-    <button class="home-button" onclick="window.location.href='../grade-1-math-index.html'">
-        <span>🏠</span>
-        <span>Home</span>
-    </button>
-
+    <div class="frame">
     <div class="container">
-        <h1>🎯 Recognising Numerals</h1>
-        <div class="subtitle">Can you find the right number?</div>
+        <div class="head"><div class="plaque"><h1 id="title">Recognising Numerals</h1></div></div>
+        <div class="subtitle">Can you find the same number?</div>
 
-        <div class="score-board">
-            <div class="score-item">
-                <div class="score-label">Level</div>
-                <div class="score-value" id="level-display">1</div>
-            </div>
-            <div class="score-item">
-                <div class="score-label">Correct</div>
-                <div class="score-value" id="correct-score">0</div>
-            </div>
-            <div class="score-item">
-                <div class="score-label">Total</div>
-                <div class="score-value" id="total-score">0</div>
-            </div>
+        <div class="status">
+            <div class="pill"><div class="label">Level</div><div class="value" id="level-display">1</div></div>
+            <div class="pill"><div class="label">✅ Correct</div><div class="value" id="correct-score">0</div></div>
+            <div class="pill"><div class="label">Tries</div><div class="value" id="total-score">0</div></div>
         </div>
 
-        <div class="level-info" id="level-info">
-            <strong>Level 1:</strong> Numbers 1-3
+        <div class="level-box">
+            <span class="level-name" id="level-info">Level 1: Numbers 1-3</span>
+            <div class="bar" aria-hidden="true"><span id="level-bar"></span></div>
+            <span class="level-count" id="level-count">⭐ 0 / 5</span>
         </div>
 
         <div class="game-area">
             <div class="question">
-                Which number is this? 
-                <button class="speaker-button" onclick="speakNumber()">🔊</button>
+                <span>Which number is this?</span>
+                <button class="speaker-button" id="speaker" onclick="speakNumber()" aria-label="Listen to the number">🔊</button>
             </div>
 
-            <div class="number-display" id="number-display">1</div>
+            <div class="number-wrap"><div class="number-display" id="number-display">?</div></div>
 
-            <div class="feedback" id="feedback"></div>
+            <div class="feedback" id="feedback" aria-live="polite"></div>
             <div class="stars" id="stars"></div>
 
             <div class="options" id="options"></div>
 
             <div class="button-container">
-                <button class="retry-btn hidden" id="retry-btn">🔄 Try Again</button>
-                <button class="next-btn hidden" id="next-btn">Next Number →</button>
+                <button class="big-btn retry-btn hidden" id="retry-btn">🔄 Try Again</button>
+                <button class="big-btn next-btn hidden" id="next-btn">Next Number ➜</button>
+                <button class="big-btn again-btn hidden" id="again-btn">🎮 Play Again</button>
             </div>
         </div>
     </div>
+    </div>
+    <div class="tray" aria-hidden="true"></div>
+
+    <div class="helper" aria-hidden="true">
+        <svg viewBox="0 0 160 170" xmlns="http://www.w3.org/2000/svg">
+            <path d="M68 140 L64 160 M64 160 L54 164 M64 160 L72 165" stroke="#F2A93B" stroke-width="6" stroke-linecap="round"/>
+            <path d="M96 140 L100 160 M100 160 L90 165 M100 160 L110 164" stroke="#F2A93B" stroke-width="6" stroke-linecap="round"/>
+            <path d="M122 100 Q150 85 146 108 Q156 104 150 124 Q134 120 122 112 Z" fill="#fff" stroke="#D9DEE8" stroke-width="2"/>
+            <ellipse cx="84" cy="108" rx="46" ry="40" fill="#8FA4C2"/>
+            <ellipse cx="78" cy="118" rx="28" ry="24" fill="#B7C6DB"/>
+            <path d="M60 86 Q52 60 62 40 Q74 26 92 32 Q102 40 96 58 Q90 72 96 86 Z" fill="#8FA4C2"/>
+            <path d="M66 42 Q34 40 22 56 Q18 66 30 66 Q32 58 42 58 Q56 58 68 56 Z" fill="#F5C64A"/>
+            <circle cx="78" cy="44" r="9" fill="#fff"/><circle cx="80" cy="45" r="5" fill="#1E2A4A"/><circle cx="82" cy="43" r="1.8" fill="#fff"/>
+            <circle cx="86" cy="58" r="5" fill="#F7A1B0" opacity=".7"/>
+            <path d="M62 98 Q34 70 30 52 Q48 62 58 74 Q60 64 66 60 Q70 80 72 98 Z" fill="#6F86A8"/>
+        </svg>
+        <div class="bubble">Tap the wooden tile with the same number! 🔊 Tap the speaker to hear it.</div>
+    </div>
 
     <script>
-        // Levels configuration
+        // Colourful title letters, like the alphabet board
+        (function () {
+            const t = document.getElementById('title'), cols = ['#FF5A5F','#FF9F1C','#FFD23F','#5BD36B','#3FA9F5','#B07CFF','#FF6FB5','#2FD9C4'];
+            let k = 0;
+            t.innerHTML = t.textContent.split('').map(c => c === ' ' ? ' ' : `<span class="ch" style="color:${cols[k++ % cols.length]}">${c}</span>`).join('');
+        })();
+
+        // ================= Levels =================
         const levels = [
-            { level: 1, min: 1, max: 3, questionsNeeded: 5, description: "Numbers 1-3" },
-            { level: 2, min: 1, max: 5, questionsNeeded: 8, description: "Numbers 1-5" },
-            { level: 3, min: 1, max: 8, questionsNeeded: 12, description: "Numbers 1-8" }
-        ];
-        
-        let currentLevel = 0;
-        let currentNumber = 1;
-        let correctCount = 0;
-        let totalCount = 0;
-        let levelCorrectCount = 0;
-        let levelTotalCount = 0;
-        let levelHasWrongAnswer = false;
-        let answered = false;
-        let recentNumbers = [];
-        let testedNumbers = new Set();
-
-        const numberDisplay = document.getElementById('number-display');
-        const optionsContainer = document.getElementById('options');
-        const feedback = document.getElementById('feedback');
-        const stars = document.getElementById('stars');
-        const nextBtn = document.getElementById('next-btn');
-        const retryBtn = document.getElementById('retry-btn');
-        const correctScore = document.getElementById('correct-score');
-        const totalScore = document.getElementById('total-score');
-        const levelDisplay = document.getElementById('level-display');
-        const levelInfo = document.getElementById('level-info');
-
-        const encouragements = [
-            "Amazing! 🌟",
-            "Superstar! ⭐",
-            "Excellent! 🎉",
-            "You're brilliant! 🌈",
-            "Perfect! 🎊",
-            "Wonderful! 💫",
-            "Great job! 🎯",
-            "Fantastic! 🏆"
+            { level: 1, min: 1, max: 3, questionsNeeded: 5,  description: "Numbers 1-3", say: "numbers 1 to 3" },
+            { level: 2, min: 1, max: 5, questionsNeeded: 8,  description: "Numbers 1-5", say: "numbers 1 to 5" },
+            { level: 3, min: 1, max: 8, questionsNeeded: 12, description: "Numbers 1-8", say: "numbers 1 to 8" }
         ];
 
-        const tryAgain = [
-            "Try again! 💪",
-            "Not quite! Keep trying! 🔄",
-            "Oops! Look carefully! 👀",
-            "Almost! Try once more! 🎯"
-        ];
+        // ================= Timing (milliseconds) =================
+        // After the child answers, the game waits for the spoken words to FINISH,
+        // then pauses a little more before moving on.
+        const PAUSE_AFTER_PRAISE  = 900;   // after "Great job!" before the next number
+        const PAUSE_AFTER_MESSAGE = 1200;  // after level-up / practise-again messages
+        const MIN_AFTER_CORRECT   = 2200;  // never move on sooner than this after a correct answer
 
+        let currentLevel = 0, currentNumber = 1;
+        let correctCount = 0, totalCount = 0;
+        let levelCorrectCount = 0, levelTotalCount = 0, levelHasWrongAnswer = false;
+        let answered = false, recentNumbers = [], testedNumbers = new Set();
+        let waitTimer = null, speechToken = 0;
+
+        const $ = id => document.getElementById(id);
+        const numberDisplay = $('number-display'), optionsContainer = $('options');
+        const feedback = $('feedback'), stars = $('stars');
+        const nextBtn = $('next-btn'), retryBtn = $('retry-btn'), againBtn = $('again-btn');
+        const speakerBtn = $('speaker');
+
+        const encouragements = ["Amazing! 🌟", "Superstar! ⭐", "Excellent! 🎉", "You're brilliant! 🌈",
+                                "Perfect! 🎊", "Wonderful! 💫", "Great job! 🎯", "Fantastic! 🏆"];
+        const tryAgain = ["Try again! 💪", "Not quite! Keep trying! 🔄", "Oops! Look carefully! 👀", "Almost! Try once more! 🎯"];
+
+        // ================= Sounds =================
         let audioContext = null;
-
         function initAudio() {
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
+            try { if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                  if (audioContext.state === 'suspended') audioContext.resume(); } catch (e) {}
         }
+        function tone(notes, type, vol, len) {
+            initAudio(); if (!audioContext) return;
+            const now = audioContext.currentTime, o = audioContext.createOscillator(), g = audioContext.createGain();
+            o.connect(g); g.connect(audioContext.destination); o.type = type;
+            notes.forEach(([f, t]) => o.frequency.setValueAtTime(f, now + t));
+            g.gain.setValueAtTime(vol, now); g.gain.exponentialRampToValueAtTime(0.01, now + len);
+            o.start(now); o.stop(now + len);
+        }
+        const playSuccessSound = () => tone([[523.25, 0], [659.25, .1], [783.99, .2]], 'sine', .3, .4);
+        const playOopsSound    = () => tone([[392.00, 0], [349.23, .15]], 'sine', .2, .3);
 
-        // TEXT-TO-SPEECH FUNCTION FOR SPEAKER BUTTON
+        // ================= Speech =================
+        const canSpeak = 'speechSynthesis' in window;
+        function englishVoice() {
+            if (!canSpeak) return null;
+            const v = speechSynthesis.getVoices();
+            return v.find(x => /^en-GB/i.test(x.lang)) || v.find(x => /^en/i.test(x.lang)) || null;
+        }
+        if (canSpeak) speechSynthesis.onvoiceschanged = () => {};
+        function clean(text) { return text.replace(/[^\w\s!?.,'-]/g, '').replace(/\s+/g, ' ').trim(); }
+
+        // Speak, then call `done` once the words have finished (+ a pause).
+        // A back-up timer makes sure the game never gets stuck if the browser
+        // does not report the end of the speech.
+        function speak(text, done, pause = 0, rate = 0.9) {
+            const token = ++speechToken;
+            let finished = false;
+            const finish = () => {
+                if (finished || token !== speechToken) return;
+                finished = true; speakerBtn.classList.remove('speaking');
+                if (done) waitTimer = setTimeout(done, pause);
+            };
+            const words = clean(text).split(' ').length;
+            const backup = 1200 + words * 520 / rate;      // generous estimate of speaking time
+            if (!canSpeak) { if (done) waitTimer = setTimeout(done, backup + pause); return; }
+            speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(clean(text));
+            const v = englishVoice(); if (v) u.voice = v;
+            u.lang = v ? v.lang : 'en-GB'; u.rate = rate; u.pitch = 1.1; u.volume = 1;
+            u.onend = finish; u.onerror = finish;
+            speechSynthesis.speak(u);
+            waitTimer = setTimeout(finish, backup);         // back-up in case 'onend' never comes
+        }
+        function stopAll() { clearTimeout(waitTimer); speechToken++; if (canSpeak) speechSynthesis.cancel(); speakerBtn.classList.remove('speaking'); }
+
         function speakNumber() {
-            window.speechSynthesis.cancel();
-            const text = `The number is ${currentNumber}`;
-            const speech = new SpeechSynthesisUtterance(text);
-            speech.rate = 0.8;
-            speech.pitch = 1;
-            speech.volume = 1;
-            speech.lang = 'en-US';
-            window.speechSynthesis.speak(speech);
+            speakerBtn.classList.add('speaking');
+            speak(`The number is ${currentNumber}`, null, 0, 0.8);
         }
 
-        function playSuccessSound() {
-            initAudio();
-            
-            const now = audioContext.currentTime;
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(523.25, now);
-            oscillator.frequency.setValueAtTime(659.25, now + 0.1);
-            oscillator.frequency.setValueAtTime(783.99, now + 0.2);
-            
-            gainNode.gain.setValueAtTime(0.3, now);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
-            
-            oscillator.start(now);
-            oscillator.stop(now + 0.4);
-        }
-
-        function playOopsSound() {
-            initAudio();
-            
-            const now = audioContext.currentTime;
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(392.00, now);
-            oscillator.frequency.setValueAtTime(349.23, now + 0.15);
-            
-            gainNode.gain.setValueAtTime(0.2, now);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-            
-            oscillator.start(now);
-            oscillator.stop(now + 0.3);
-        }
-
-        function getCurrentLevelConfig() {
-            return levels[currentLevel];
-        }
-
-        function speakFeedback(message) {
-            window.speechSynthesis.cancel();
-            const cleanMessage = message.replace(/[^\w\s!?.,']/g, '');
-            const utterance = new SpeechSynthesisUtterance(cleanMessage);
-            utterance.rate = 0.9;
-            utterance.pitch = 1.1;
-            utterance.volume = 1;
-            window.speechSynthesis.speak(utterance);
-        }
+        // ================= Game =================
+        const cfg = () => levels[currentLevel];
 
         function getNextNumber() {
-            const config = getCurrentLevelConfig();
-            let availableNumbers = [];
-            
-            for (let i = config.min; i <= config.max; i++) {
-                availableNumbers.push(i);
-            }
-            
-            const untestedNumbers = availableNumbers.filter(num => !testedNumbers.has(num));
-            
-            if (untestedNumbers.length > 0) {
-                let candidates = untestedNumbers;
-                
-                if (recentNumbers.length >= 2 && 
-                    recentNumbers[recentNumbers.length - 1] === recentNumbers[recentNumbers.length - 2]) {
-                    candidates = untestedNumbers.filter(num => num !== recentNumbers[recentNumbers.length - 1]);
-                    if (candidates.length === 0) candidates = untestedNumbers;
-                }
-                
-                const selectedNumber = candidates[Math.floor(Math.random() * candidates.length)];
-                testedNumbers.add(selectedNumber);
-                recentNumbers.push(selectedNumber);
-                if (recentNumbers.length > 3) {
-                    recentNumbers.shift();
-                }
-                
-                return selectedNumber;
-            }
-            
-            if (recentNumbers.length >= 2) {
-                if (recentNumbers[recentNumbers.length - 1] === recentNumbers[recentNumbers.length - 2]) {
-                    availableNumbers = availableNumbers.filter(num => num !== recentNumbers[recentNumbers.length - 1]);
-                }
-            }
-            
-            if (availableNumbers.length === 0) {
-                for (let i = config.min; i <= config.max; i++) {
-                    availableNumbers.push(i);
-                }
-            }
-            
-            const selectedNumber = availableNumbers[Math.floor(Math.random() * availableNumbers.length)];
-            recentNumbers.push(selectedNumber);
-            if (recentNumbers.length > 3) {
-                recentNumbers.shift();
-            }
-            
-            return selectedNumber;
-        }
-
-        function getRandomNumbers(correct) {
-            const config = getCurrentLevelConfig();
-            const numbers = [];
-            numbers.push(correct);
-            
-            for (let i = config.min; i <= config.max; i++) {
-                if (!numbers.includes(i)) {
-                    numbers.push(i);
-                }
-            }
-            
-            return numbers.sort(() => Math.random() - 0.5);
+            const c = cfg();
+            let all = []; for (let i = c.min; i <= c.max; i++) all.push(i);
+            const last = recentNumbers[recentNumbers.length - 1];
+            const untested = all.filter(n => !testedNumbers.has(n));
+            let pool = untested.length ? untested : all;
+            if (pool.length > 1) pool = pool.filter(n => n !== last);     // never the same number twice in a row
+            const pick = pool[Math.floor(Math.random() * pool.length)];
+            testedNumbers.add(pick);
+            recentNumbers.push(pick); if (recentNumbers.length > 3) recentNumbers.shift();
+            return pick;
         }
 
         function updateLevelInfo() {
-            const config = getCurrentLevelConfig();
-            levelDisplay.textContent = config.level;
-            levelInfo.innerHTML = `<strong>Level ${config.level}:</strong> ${config.description}`;
-            optionsContainer.className = `options level-${config.level}`;
+            const c = cfg();
+            $('level-display').textContent = c.level;
+            $('level-info').textContent = `Level ${c.level}: ${c.description}`;
+            optionsContainer.className = `options level-${c.level}`;
+            updateProgress();
+        }
+        function updateProgress() {
+            const c = cfg(), done = Math.min(levelCorrectCount, c.questionsNeeded);
+            $('level-count').textContent = `⭐ ${done} / ${c.questionsNeeded}`;
+            $('level-bar').style.width = (done / c.questionsNeeded * 100) + '%';
         }
 
         function createOptions() {
             optionsContainer.innerHTML = '';
-            const numbers = getRandomNumbers(currentNumber);
-            
-            numbers.forEach(num => {
-                const button = document.createElement('button');
-                button.className = 'option-btn';
-                button.textContent = num;
-                button.addEventListener('click', () => {
-                    initAudio();
-                    checkAnswer(num, button);
-                });
-                optionsContainer.appendChild(button);
+            optionsContainer.classList.remove('locked');
+            const c = cfg(), nums = [];
+            for (let i = c.min; i <= c.max; i++) nums.push(i);
+            nums.sort(() => Math.random() - 0.5).forEach(num => {
+                const b = document.createElement('button');
+                b.className = 'option-btn'; b.textContent = num; b.dataset.n = num;
+                b.setAttribute('aria-label', 'Number ' + num);
+                b.addEventListener('click', () => { initAudio(); checkAnswer(num, b); });
+                optionsContainer.appendChild(b);
             });
+        }
+        function lockOptions() {
+            optionsContainer.classList.add('locked');
+            optionsContainer.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
         }
 
         function checkAnswer(selected, button) {
             if (answered) return;
-            
             answered = true;
-            totalCount++;
-            levelTotalCount++;
-            totalScore.textContent = totalCount;
+            totalCount++; levelTotalCount++;
+            $('total-score').textContent = totalCount;
+            lockOptions();
 
             if (selected === currentNumber) {
-                correctCount++;
-                levelCorrectCount++;
-                correctScore.textContent = correctCount;
+                correctCount++; levelCorrectCount++;
+                $('correct-score').textContent = correctCount;
+                updateProgress();
                 button.classList.add('correct');
-                feedback.textContent = encouragements[Math.floor(Math.random() * encouragements.length)];
-                speakFeedback(feedback.textContent);
-                feedback.className = 'feedback correct';
+                const msg = encouragements[Math.floor(Math.random() * encouragements.length)];
+                feedback.textContent = msg; feedback.className = 'feedback correct';
                 stars.textContent = '⭐⭐⭐';
-                numberDisplay.style.color = '#00b894';
                 playSuccessSound();
-                
-                setTimeout(() => {
-                    const levelComplete = checkLevelProgress();
-                    if (!levelComplete) {
-                        nextQuestion();
-                    }
-                }, 2500);
-                
+
+                // 1) ding  2) praise is spoken  3) short pause  4) next number
+                const started = Date.now();
+                setTimeout(() => speak(msg, () => {
+                    const wait = Math.max(0, MIN_AFTER_CORRECT - (Date.now() - started));
+                    waitTimer = setTimeout(() => { if (!checkLevelProgress()) nextQuestion(); }, wait);
+                }, PAUSE_AFTER_PRAISE), 450);   // wait for the ding to finish before speaking
             } else {
                 button.classList.add('wrong');
-                feedback.textContent = tryAgain[Math.floor(Math.random() * tryAgain.length)];
-                speakFeedback(feedback.textContent);
-                feedback.className = 'feedback wrong';
+                const msg = tryAgain[Math.floor(Math.random() * tryAgain.length)];
+                feedback.textContent = msg; feedback.className = 'feedback wrong';
                 levelHasWrongAnswer = true;
                 playOopsSound();
-                
-                const buttons = document.querySelectorAll('.option-btn');
-                buttons.forEach(btn => {
-                    if (parseInt(btn.textContent) === currentNumber) {
-                        setTimeout(() => {
-                            btn.classList.add('correct');
-                        }, 500);
-                    }
+                setTimeout(() => speak(msg, null), 350);
+                optionsContainer.querySelectorAll('.option-btn').forEach(b => {
+                    if (parseInt(b.textContent) === currentNumber) setTimeout(() => b.classList.add('correct'), 600);
                 });
-                
-                numberDisplay.style.color = '#d63031';
+                numberDisplay.classList.add('wrong');
                 retryBtn.classList.remove('hidden');
                 nextBtn.classList.remove('hidden');
             }
         }
 
         function checkLevelProgress() {
-            const config = getCurrentLevelConfig();
-            
-            const allNumbersTested = () => {
-                for (let i = config.min; i <= config.max; i++) {
-                    if (!testedNumbers.has(i)) {
-                        return false;
-                    }
-                }
-                return true;
-            };
-            
-            const allTested = allNumbersTested();
-            
-            if (levelTotalCount >= config.questionsNeeded && allTested) {
-                if (currentLevel < levels.length - 1) {
-                    if (!levelHasWrongAnswer) {
-                        setTimeout(() => {
-                            advanceLevel();
-                        }, 500);
-                        return true;
-                    } else {
-                        setTimeout(() => {
-                            restartLevel();
-                        }, 500);
-                        return true;
-                    }
-                } else {
-                    if (!levelHasWrongAnswer) {
-                        setTimeout(() => {
-                            showCompletion();
-                        }, 500);
-                        return true;
-                    } else {
-                        setTimeout(() => {
-                            restartLevel();
-                        }, 500);
-                        return true;
-                    }
-                }
-            }
-            return false;
+            const c = cfg();
+            let allTested = true;
+            for (let i = c.min; i <= c.max; i++) if (!testedNumbers.has(i)) allTested = false;
+            if (!(levelTotalCount >= c.questionsNeeded && allTested)) return false;
+            if (levelHasWrongAnswer) restartLevel();
+            else if (currentLevel < levels.length - 1) advanceLevel();
+            else showCompletion();
+            return true;
         }
-        
+
         function showCompletion() {
             feedback.textContent = '🎊 Congratulations! You completed all levels! 🎊';
-            speakFeedback(feedback.textContent);
             feedback.className = 'feedback correct';
             stars.textContent = '⭐🌟✨🎉✨🌟⭐';
+            speak(feedback.textContent, null);
+            againBtn.classList.remove('hidden');
         }
-        
+
         function restartLevel() {
-            feedback.textContent = '💪 Let\'s practice this level again to get them all right!';
-            feedback.className = 'feedback';
+            const msg = "Let's practise this level again, to get them all right!";
+            feedback.textContent = '💪 ' + msg; feedback.className = 'feedback info';
             stars.textContent = '🔄';
-            
-            levelCorrectCount = 0;
-            levelTotalCount = 0;
-            levelHasWrongAnswer = false;
-            recentNumbers = [];
-            testedNumbers.clear();
-            
-            setTimeout(() => {
-                nextQuestion();
-            }, 2500);
+            levelCorrectCount = 0; levelTotalCount = 0; levelHasWrongAnswer = false;
+            recentNumbers = []; testedNumbers.clear();
+            updateProgress();
+            speak(msg, nextQuestion, PAUSE_AFTER_MESSAGE);      // wait until the message is spoken
         }
 
         function advanceLevel() {
             currentLevel++;
-            levelCorrectCount = 0;
-            levelTotalCount = 0;
-            levelHasWrongAnswer = false;
-            recentNumbers = [];
-            testedNumbers.clear();
-            
-            feedback.textContent = `🎉 Level Up! Now trying ${levels[currentLevel].description}! 🎉`;
+            levelCorrectCount = 0; levelTotalCount = 0; levelHasWrongAnswer = false;
+            recentNumbers = []; testedNumbers.clear();
+            feedback.textContent = `🎉 Level Up! Now try ${levels[currentLevel].description}! 🎉`;
             feedback.className = 'feedback correct';
             stars.textContent = '🌟🌟🌟🌟🌟';
-            
             updateLevelInfo();
-            
-            setTimeout(() => {
-                nextQuestion();
-            }, 3000);
+            speak(`Level up! Now try ${levels[currentLevel].say}!`, nextQuestion, PAUSE_AFTER_MESSAGE);
+        }
+
+        function showNumber() {
+            numberDisplay.textContent = currentNumber;
+            numberDisplay.dataset.n = currentNumber;
+            numberDisplay.classList.remove('wrong', 'pop');
+            void numberDisplay.offsetWidth;          // restart the pop animation
+            numberDisplay.classList.add('pop');
         }
 
         function nextQuestion() {
+            stopAll();
             answered = false;
             currentNumber = getNextNumber();
-            
-            numberDisplay.textContent = currentNumber;
-            numberDisplay.style.color = '#00b894';
-            numberDisplay.style.animation = 'none';
-            setTimeout(() => {
-                numberDisplay.style.animation = 'pulse 1s ease-in-out';
-            }, 10);
-            
-            feedback.textContent = '';
-            feedback.className = 'feedback';
-            stars.textContent = '';
-            nextBtn.classList.add('hidden');
-            retryBtn.classList.add('hidden');
-            
+            showNumber();
+            feedback.textContent = ''; feedback.className = 'feedback'; stars.textContent = '';
+            nextBtn.classList.add('hidden'); retryBtn.classList.add('hidden'); againBtn.classList.add('hidden');
             createOptions();
         }
-        
+
         function retryQuestion() {
+            stopAll();
             answered = false;
-            numberDisplay.style.color = '#00b894';
-            numberDisplay.style.animation = 'none';
-            setTimeout(() => {
-                numberDisplay.style.animation = 'pulse 1s ease-in-out';
-            }, 10);
-            
-            feedback.textContent = 'Let\'s try this number again! 💪';
-            feedback.className = 'feedback';
+            showNumber();
+            feedback.textContent = "Let's try this number again! 💪"; feedback.className = 'feedback info';
             stars.textContent = '';
-            nextBtn.classList.add('hidden');
-            retryBtn.classList.add('hidden');
-            
+            nextBtn.classList.add('hidden'); retryBtn.classList.add('hidden');
             createOptions();
+        }
+
+        function playAgain() {
+            stopAll();
+            currentLevel = 0; correctCount = 0; totalCount = 0;
+            levelCorrectCount = 0; levelTotalCount = 0; levelHasWrongAnswer = false;
+            recentNumbers = []; testedNumbers.clear();
+            $('correct-score').textContent = 0; $('total-score').textContent = 0;
+            updateLevelInfo(); nextQuestion();
         }
 
         nextBtn.addEventListener('click', nextQuestion);
         retryBtn.addEventListener('click', retryQuestion);
+        againBtn.addEventListener('click', playAgain);
 
         updateLevelInfo();
-        createOptions();
+        nextQuestion();          // the first number is now random and counts towards the level
     </script>
 </body>
 </html>
