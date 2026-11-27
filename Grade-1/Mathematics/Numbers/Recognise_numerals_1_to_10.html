@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <!-- Google Tag Manager -->
@@ -10,351 +9,271 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-TCBV2GCV');</script>
 <!-- End Google Tag Manager -->
 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find the Number (1-10)</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-
-    
-    
-    
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Find the Number (1-10)</title>
-<style>
-        .home-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: white;
-            color: #667eea;
-            padding: 12px 24px;
-            border-radius: 50px;
-            border: none;
-            cursor: pointer;
-            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
-            font-weight: 800;
-            font-size: 26px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .home-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-            background: #667eea;
-            color: white;
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --ink: #1E2A4A;
+            --wood: #8B5A2B;          /* wooden buttons and tiles */
+            --wood-dark: #5E3A17;
+            --wood-light: #E0A85C;    /* light wooden edge */
+            --frame: #C98B4B;         /* board frame */
+            --board: #2F7D6D;         /* chalkboard green */
+            --board-dark: #23604F;
+            --chalk: #FFFDF2;
+            --font: 'Fredoka', 'Baloo 2', 'Arial Rounded MT Bold', 'Comic Sans MS', sans-serif;
+            /* a colour for each number, like the letters on the alphabet board */
+            --n1: #FF5A5F; --n2: #FF9F1C; --n3: #FFD23F; --n4: #5BD36B;
+            --n5: #3FA9F5; --n6: #B07CFF; --n7: #FF6FB5; --n8: #2FD9C4;
         }
 
         body {
-            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', cursive, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: var(--font);
+            color: var(--ink);
+            background: linear-gradient(160deg, #C7F0EA 0%, #A9E3E6 55%, #9ED3EC 100%);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
+            padding: 8px 14px 24px;
             overflow-x: hidden;
         }
 
+        /* ---------- Decoration row (fruit, flowers, hearts) ---------- */
+        .deco { max-width: 900px; margin: 0 auto 4px; display: flex; justify-content: space-around; font-size: 1.7rem; }
+        .deco span { animation: bob 3s ease-in-out infinite; }
+        .deco span:nth-child(2n) { animation-delay: -1.5s; }
+        @keyframes bob { 50% { transform: translateY(-4px); } }
+
+        /* ---------- Top bar ---------- */
+        .topbar { max-width: 900px; margin: 0 auto 10px; display: flex; align-items: center; }
+        .nav-btn, .big-btn, .speaker-button {
+            font-family: var(--font); font-weight: 600; color: var(--chalk);
+            background: linear-gradient(180deg, #A06A35 0%, var(--wood) 100%);
+            border: 3px solid var(--wood-light); cursor: pointer; text-decoration: none;
+            box-shadow: 0 5px 0 var(--wood-dark), 0 8px 14px rgba(0,0,0,.25);
+            text-shadow: 0 2px 0 rgba(0,0,0,.35); transition: transform .15s;
+        }
+        .nav-btn { display: inline-flex; align-items: center; gap: 8px; font-size: 1.15rem; padding: 7px 18px 7px 14px; border-radius: 14px; }
+        .nav-btn:hover, .big-btn:hover { transform: translateY(-2px); }
+        .nav-btn:active, .big-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--wood-dark); }
+
+        /* ---------- Wooden frame + chalkboard ---------- */
+        .frame {
+            max-width: 900px; margin: 0 auto; padding: 16px; border-radius: 22px;
+            background:
+                repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 3px, transparent 3px 11px),
+                linear-gradient(180deg, #DDA463 0%, var(--frame) 50%, #B97A3C 100%);
+            box-shadow: 0 10px 0 #8E5A27, 0 18px 34px rgba(30,42,74,.3), inset 0 2px 0 rgba(255,255,255,.35);
+            position: relative;
+        }
         .container {
-            background: white;
-            border-radius: 20px;
-            padding: 20px;
-            max-width: 900px;
-            width: 100%;
-            max-height: 95vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border-radius: 12px; padding: 18px 22px 20px; position: relative; overflow: hidden;
+            background:
+                radial-gradient(ellipse at 20% 15%, rgba(255,255,255,.10), transparent 55%),
+                radial-gradient(ellipse at 85% 90%, rgba(255,255,255,.06), transparent 50%),
+                linear-gradient(160deg, #3A8E7C 0%, var(--board) 45%, var(--board-dark) 100%);
+            box-shadow: inset 0 0 0 3px rgba(0,0,0,.18), inset 0 6px 18px rgba(0,0,0,.35);
+            color: var(--chalk);
         }
-
-        h1 {
-            text-align: center;
-            color: #667eea;
-            font-size: clamp(1.5em, 5vw, 2.5em);
-            margin-bottom: 8px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        /* chalk tray under the board */
+        .tray {
+            max-width: 900px; height: 18px; margin: 0 auto; border-radius: 0 0 12px 12px;
+            background: linear-gradient(180deg, #B97A3C, #8E5A27);
+            box-shadow: 0 6px 12px rgba(0,0,0,.25); position: relative; top: -2px;
         }
+        .tray::before { content: ''; position: absolute; left: 14%; top: 4px; width: 46px; height: 8px; border-radius: 4px; background: #FFFDF2; box-shadow: 70px 0 0 #FFD9E8, 130px 0 0 #D9F2FF; }
 
-        .home-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            padding: 12px 25px;
-            background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', 'Arial', sans-serif;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: clamp(0.9em, 2.5vw, 1.1em);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        /* ---------- Wooden name plaque with colourful letters ---------- */
+        .head { display: flex; justify-content: center; }
+        .plaque {
+            display: inline-block; padding: 6px 26px 8px; border-radius: 16px;
+            background: linear-gradient(180deg, #9A6233 0%, #7A4A22 100%);
+            border: 4px solid var(--wood-light);
+            box-shadow: 0 6px 0 var(--wood-dark), 0 10px 18px rgba(0,0,0,.3);
         }
+        h1 { font-size: clamp(1.5rem, 4.6vw, 2.3rem); line-height: 1.1; font-weight: 700; letter-spacing: 1px; }
+        h1 .ch { display: inline-block; -webkit-text-stroke: 1px rgba(0,0,0,.25); text-shadow: 0 3px 0 rgba(0,0,0,.35); }
+        .subtitle { color: #E6FFF6; font-size: clamp(1rem, 3vw, 1.2rem); margin-top: 8px; text-align: center; opacity: .9; }
 
-        .home-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        /* ---------- Score plaques ---------- */
+        .status { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0 8px; }
+        .pill {
+            border-radius: 14px; padding: 5px 6px; text-align: center;
+            background: linear-gradient(180deg, #A06A35, var(--wood)); border: 3px solid var(--wood-light);
+            box-shadow: 0 4px 0 var(--wood-dark);
         }
+        .pill .label { font-size: .95rem; color: #FFE9C9; font-weight: 500; }
+        .pill .value { font-size: clamp(1.4rem, 4.2vw, 1.9rem); font-weight: 700; color: #FFD23F; line-height: 1.1; text-shadow: 0 2px 0 rgba(0,0,0,.35); }
 
-        .subtitle {
-            text-align: center;
-            color: #764ba2;
-            font-size: clamp(0.9em, 3vw, 1.2em);
-            margin-bottom: 20px;
+        /* ---------- Level progress, drawn in chalk ---------- */
+        .level-box {
+            display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+            border: 2px dashed rgba(255,255,255,.45); border-radius: 14px; padding: 8px 14px; margin-bottom: 10px;
+            background: rgba(255,255,255,.06);
         }
+        .level-name { font-weight: 600; font-size: 1.1rem; color: var(--chalk); }
+        .bar { flex: 1; min-width: 140px; height: 16px; background: rgba(0,0,0,.25); border-radius: 999px; overflow: hidden; border: 2px solid rgba(255,255,255,.5); }
+        .bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #FFE45C, #FFB627); border-radius: 999px; transition: width .5s; }
+        .level-count { font-weight: 600; color: #FFE45C; font-size: 1rem; }
 
-        .score-board {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 15px;
-            padding: 15px;
-            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
-            border-radius: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .score-item {
-            text-align: center;
-            min-width: 100px;
-        }
-
-        .score-label {
-            font-size: clamp(0.8em, 2.5vw, 1em);
-            color: #2d3436;
-            margin-bottom: 5px;
-        }
-
-        .score-value {
-            font-size: clamp(1.3em, 4vw, 2em);
-            font-weight: bold;
-            color: #d63031;
-        }
-
-        .progress-info {
-            text-align: center;
-            font-size: clamp(0.9em, 2.5vw, 1.1em);
-            color: white;
-            margin-bottom: 15px;
-            padding: 10px;
-            background: #a29bfe;
-            border-radius: 10px;
-            font-weight: bold;
-        }
-
-        .game-area {
-            margin-bottom: 20px;
-        }
-
+        /* ---------- Question ---------- */
         .question {
-            text-align: center;
-            font-size: clamp(1.2em, 4vw, 2em);
-            color: #2d3436;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #dfe6e9;
-            border-radius: 15px;
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            font-size: clamp(1.3rem, 4vw, 1.8rem); font-weight: 600; color: var(--chalk);
         }
+        .speaker-button { width: 52px; height: 52px; border-radius: 14px; font-size: 1.5rem; flex: none; }
+        .speaker-button:hover { transform: scale(1.06); }
+        .speaker-button:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--wood-dark); }
+        .speaker-button.speaking { animation: ring 1s ease-in-out infinite; }
+        @keyframes ring { 50% { box-shadow: 0 0 0 9px rgba(255,228,92,.35), 0 5px 0 var(--wood-dark); } }
 
+        /* ---------- The big number: chalk box like on the alphabet board ---------- */
+        .number-wrap { display: flex; justify-content: center; margin: 10px 0 4px; }
         .number-display {
-            font-size: clamp(4em, 15vw, 8em);
-            font-weight: bold;
-            color: #00b894;
-            text-align: center;
-            margin: 20px 0;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
-            animation: pulse 1s ease-in-out;
+            --nc: var(--chalk);
+            width: clamp(130px, min(30vw, 24vh), 200px); height: clamp(130px, min(30vw, 24vh), 200px);
+            border-radius: 22px; display: grid; place-items: center;
+            font-size: clamp(4.5rem, min(16vw, 14vh), 7.5rem); font-weight: 700; line-height: 1;
+            color: var(--nc); background: rgba(255,255,255,.08);
+            border: 4px dashed rgba(255,255,255,.55);
+            -webkit-text-stroke: 3px rgba(0,0,0,.35); paint-order: stroke fill;
+            text-shadow: 0 5px 0 rgba(0,0,0,.35);
+            transition: border-color .3s, background .3s;
         }
+        .number-display.pop { animation: pop .6s ease-out; }
+        @keyframes pop { 0% { transform: scale(.6) rotate(-6deg); } 60% { transform: scale(1.12) rotate(3deg); } 100% { transform: scale(1); } }
+        .number-display.wrong { border-color: #FF8A8A; background: rgba(255,90,95,.18); }
+        [data-n="1"] { --nc: var(--n1); } [data-n="2"] { --nc: var(--n2); } [data-n="3"] { --nc: var(--n3); } [data-n="4"] { --nc: var(--n4); }
+        [data-n="5"] { --nc: var(--n5); } [data-n="6"] { --nc: var(--n6); } [data-n="7"] { --nc: var(--n7); } [data-n="8"] { --nc: var(--n8); }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
+        .feedback { text-align: center; font-size: clamp(1.4rem, 5vw, 2rem); font-weight: 700; min-height: 1.5em; margin: 8px 0 0; text-shadow: 0 2px 0 rgba(0,0,0,.3); }
+        .feedback.correct { color: #9BF5B0; }
+        .feedback.wrong { color: #FFB3B3; }
+        .feedback.info { color: #FFE45C; font-size: clamp(1.2rem, 4vw, 1.6rem); }
+        .stars { text-align: center; font-size: clamp(1.6rem, 5vw, 2.2rem); min-height: 1.2em; }
 
-        .options {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-            justify-items: center;
-        }
-
+        /* ---------- Wooden number tiles ---------- */
+        .options { display: grid; gap: 14px; margin: 8px auto 4px; justify-content: center; }
+        .options.level-1 { grid-template-columns: repeat(3, minmax(90px, 130px)); }
+        .options.level-2 { grid-template-columns: repeat(5, minmax(80px, 120px)); }
+        .options.level-3 { grid-template-columns: repeat(4, minmax(80px, 130px)); }
         .option-btn {
-            padding: clamp(15px, 3vw, 25px);
-            font-size: clamp(1.8em, 5vw, 2.5em);
-            font-weight: bold;
-            border: 4px solid #dfe6e9;
-            border-radius: 15px;
-            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            min-width: 70px;
-            width: 100%;
+            font-family: var(--font); font-size: clamp(2.4rem, 7vw, 3.4rem); font-weight: 700; line-height: 1;
+            aspect-ratio: 1 / 1; border-radius: 16px; cursor: pointer;
+            color: var(--nc, var(--chalk)); -webkit-text-stroke: 2px rgba(0,0,0,.35); paint-order: stroke fill;
+            text-shadow: 0 4px 0 rgba(0,0,0,.4);
+            background:
+                repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 2px, transparent 2px 9px),
+                linear-gradient(180deg, #9A6233 0%, #7A4A22 100%);
+            border: 4px solid var(--wood-light);
+            box-shadow: 0 7px 0 var(--wood-dark), 0 10px 16px rgba(0,0,0,.3), inset 0 2px 0 rgba(255,255,255,.2);
+            transition: transform .15s, box-shadow .15s;
         }
+        .option-btn:hover:not(:disabled) { transform: translateY(-4px); box-shadow: 0 11px 0 var(--wood-dark), 0 14px 20px rgba(0,0,0,.3); }
+        .option-btn:active:not(:disabled) { transform: translateY(5px); box-shadow: 0 2px 0 var(--wood-dark); }
+        .option-btn:disabled { cursor: default; }
+        .options.locked .option-btn:not(.correct):not(.wrong) { opacity: .5; }
+        .option-btn.correct { border-color: #FFE45C; box-shadow: 0 0 0 5px rgba(255,228,92,.6), 0 0 22px 6px rgba(255,228,92,.55), 0 7px 0 var(--wood-dark); animation: celebrate .6s ease; }
+        .option-btn.wrong { border-color: #FF5A5F; box-shadow: 0 0 0 5px rgba(255,90,95,.55), 0 7px 0 var(--wood-dark); animation: shake .5s ease; }
+        @keyframes celebrate { 25% { transform: scale(1.15) rotate(-8deg); } 75% { transform: scale(1.15) rotate(8deg); } }
+        @keyframes shake { 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+        .option-btn:focus-visible, .nav-btn:focus-visible, .speaker-button:focus-visible, .big-btn:focus-visible { outline: 4px solid #FFE45C; outline-offset: 3px; }
 
-        .option-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
+        /* ---------- Wooden buttons under the tiles ---------- */
+        .button-container { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
+        .big-btn { font-size: clamp(1.1rem, 3vw, 1.35rem); border-radius: 14px; padding: 10px 26px; }
+        .next-btn, .again-btn { color: #5E3A17; text-shadow: none; background: linear-gradient(180deg, #FFD54F, #FFB300); border-color: #FFF3C4; box-shadow: 0 5px 0 #C68400, 0 8px 14px rgba(0,0,0,.25); }
+        .hidden { display: none !important; }
 
-        .option-btn:active {
-            transform: translateY(0);
-        }
+        /* ---------- Dodo helper under the board (tall screens) ---------- */
+        .helper { max-width: 900px; margin: 16px auto 0; display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .helper svg { width: 70px; height: auto; flex: none; }
+        .bubble { position: relative; background: #fff; border-radius: 18px; padding: 10px 18px; font-size: 1.15rem; font-weight: 500; box-shadow: 0 4px 10px rgba(0,0,0,.12); }
+        .bubble::before { content: ''; position: absolute; left: -10px; top: 50%; margin-top: -10px; border: 10px solid transparent; border-right-color: #fff; border-left: 0; }
 
-        .option-btn.correct {
-            background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
-            animation: celebrate 0.5s ease;
-        }
-
-        .option-btn.wrong {
-            background: linear-gradient(135deg, #d63031 0%, #ff7675 100%);
-            animation: shake 0.5s ease;
-        }
-
-        @keyframes celebrate {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            25% { transform: scale(1.2) rotate(-10deg); }
-            75% { transform: scale(1.2) rotate(10deg); }
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-
-        .feedback {
-            text-align: center;
-            font-size: clamp(1.5em, 5vw, 2.5em);
-            font-weight: bold;
-            min-height: 50px;
-            margin: 15px 0;
-        }
-
-        .feedback.correct {
-            color: #00b894;
-        }
-
-        .feedback.wrong {
-            color: #d63031;
-        }
-
-        .next-btn {
-            display: block;
-            margin: 15px auto;
-            padding: clamp(12px, 2.5vw, 20px) clamp(30px, 6vw, 50px);
-            font-size: clamp(1.1em, 3vw, 1.5em);
-            font-weight: bold;
-            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .next-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .retry-btn {
-            display: block;
-            margin: 15px auto;
-            padding: clamp(12px, 2.5vw, 20px) clamp(30px, 6vw, 50px);
-            font-size: clamp(1.1em, 3vw, 1.5em);
-            font-weight: bold;
-            background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .retry-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .button-container {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .stars {
-            text-align: center;
-            font-size: clamp(2em, 6vw, 3em);
-            margin: 15px 0;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        /* Tablet optimization */
-        @media (max-width: 1024px) {
-            .container {
-                padding: 25px;
-            }
-            
-            .options {
-                grid-template-columns: repeat(5, 1fr);
-            }
-        }
-
-        /* Mobile optimization */
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            
-            .container {
-                padding: 15px;
-                border-radius: 15px;
-            }
-            
-            .options {
-                gap: 8px;
-                grid-template-columns: repeat(4, 1fr);
-            }
-            
-            .score-board {
-                padding: 10px;
-            }
-            
-            .button-container {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .next-btn, .retry-btn {
-                width: 100%;
-                max-width: 300px;
-            }
+            .options.level-1, .options.level-2, .options.level-3 { grid-template-columns: repeat(3, minmax(70px, 1fr)); }
+            .frame { padding: 10px; }
+            .container { padding: 14px 12px 16px; }
+            .plaque { padding: 5px 14px 7px; }
+            .deco { font-size: 1.3rem; }
+            .button-container { flex-direction: column; align-items: center; }
+            .big-btn { width: 100%; max-width: 320px; }
         }
-        
-        @media (max-width: 480px) {
-            .options {
-                grid-template-columns: repeat(3, 1fr);
-            }
+        @media (max-width: 420px) { .status .label { font-size: .8rem; } }
+        @media (max-height: 940px) and (min-width: 769px) { .helper { display: none; } }
+        @media (max-height: 820px) and (min-width: 769px) {
+            body { padding-top: 4px; }
+            .deco { font-size: 1.3rem; margin-bottom: 0; }
+            .topbar { margin-bottom: 6px; }
+            .nav-btn { font-size: 1rem; padding: 5px 14px 5px 10px; }
+            .frame { padding: 12px; }
+            .container { padding: 12px 22px 14px; }
+            h1 { font-size: 1.6rem; }
+            .plaque { padding: 4px 20px 6px; }
+            .subtitle { font-size: 1rem; margin-top: 4px; }
+            .status { margin: 8px 0 6px; }
+            .pill { padding: 2px 6px; display: flex; align-items: baseline; justify-content: center; gap: 8px; }
+            .pill .value { font-size: 1.4rem; }
+            .level-box { padding: 5px 14px; margin-bottom: 6px; }
+            .speaker-button { width: 44px; height: 44px; font-size: 1.25rem; }
+            .number-wrap { margin: 6px 0 2px; }
+            .feedback { margin: 4px 0 0; }
+            .options.level-1 { grid-template-columns: repeat(3, minmax(90px, 104px)); }
+            .options.level-2 { grid-template-columns: repeat(5, minmax(80px, 100px)); }
+            .options.level-3 { grid-template-columns: repeat(4, minmax(80px, 100px)); }
+            .button-container { margin-top: 8px; }
+            .big-btn { padding: 6px 22px; }
+            .stars { min-height: 1em; font-size: 1.5rem; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+        }
+
+        /* ---------- Find-every game additions ---------- */
+        .ask { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 4px; }
+        .ask .question { font-size: clamp(1.4rem, 4.4vw, 2rem); }
+        .number-display.small {
+            width: clamp(96px, min(22vw, 17vh), 140px); height: clamp(96px, min(22vw, 17vh), 140px);
+            font-size: clamp(3.6rem, min(12vw, 10vh), 5.6rem); border-radius: 18px;
+        }
+        /* tiles: every number in chalk-cream, so children read the numeral (no colour hint) */
+        .options.ten { grid-template-columns: repeat(5, minmax(70px, 108px)); gap: 12px; }
+        .options.ten .option-btn { font-size: clamp(2rem, 5.6vw, 2.8rem); color: var(--chalk); }
+        .option-btn.found { border-color: #FFE45C; box-shadow: 0 0 0 4px rgba(255,228,92,.6), 0 0 18px 4px rgba(255,228,92,.5), 0 7px 0 var(--wood-dark); color: #FFE45C; animation: celebrate .5s ease; }
+        .option-btn.found::after { content: '✔'; position: absolute; top: 2px; right: 6px; font-size: 1rem; color: #9BF5B0; -webkit-text-stroke: 0; text-shadow: none; }
+        .option-btn.reveal { border-color: #9BF5B0; box-shadow: 0 0 0 4px rgba(155,245,176,.55), 0 7px 0 var(--wood-dark); color: #9BF5B0; }
+        .option-btn { position: relative; }
+        .options.locked .option-btn.reveal, .options.locked .option-btn.found { opacity: 1 !important; filter: none !important; }
+        .left-count { text-align: center; color: #E6FFF6; font-size: 1.05rem; min-height: 1.4em; }
+        .left-count b { color: #FFE45C; }
+
+        /* tracker: each number 1-10 needs 2 stars */
+        .tracker { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; flex: 1; }
+        .chip { min-width: 40px; padding: 2px 6px; border-radius: 10px; text-align: center; border: 2px solid rgba(255,255,255,.4); background: rgba(0,0,0,.15); font-weight: 600; line-height: 1.1; }
+        .chip .d { display: block; font-size: .7rem; letter-spacing: 1px; color: rgba(255,255,255,.45); }
+        .chip.half .d { color: #FFE45C; }
+        .chip.done { border-color: #FFE45C; background: rgba(255,228,92,.18); }
+        .chip.done .d { color: #FFE45C; }
+        .chip.now { border-color: #9BF5B0; box-shadow: 0 0 0 3px rgba(155,245,176,.35); }
+
+        .summary { text-align: center; color: var(--chalk); font-size: clamp(1.1rem, 3.5vw, 1.4rem); line-height: 1.7; margin: 6px 0; }
+        .summary b { color: #FFE45C; }
+
+        @media (max-width: 768px) {
+            .options.ten { grid-template-columns: repeat(5, minmax(48px, 1fr)); gap: 8px; }
+            .options.ten .option-btn { font-size: 1.8rem; border-width: 3px; border-radius: 12px; }
+            .chip { min-width: 30px; font-size: .9rem; }
+        }
+        @media (max-height: 820px) and (min-width: 769px) {
+            .options.ten { grid-template-columns: repeat(5, minmax(70px, 88px)); gap: 10px; }
+            .number-display.small { width: 100px; height: 100px; font-size: 4rem; }
+            .chip { font-size: .9rem; min-width: 34px; }
         }
     </style>
 </head>
@@ -364,510 +283,312 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
+    <div class="deco" aria-hidden="true"><span>🍎</span><span>🌸</span><span>💗</span><span>⭐</span><span>🌼</span><span>❤️</span><span>🌸</span><span>💙</span><span>🍎</span></div>
 
+    <div class="topbar">
+        <a class="nav-btn" href="../grade-1-math-index.html" aria-label="Back to Maths"><span>◀</span><span>Maths</span></a>
+    </div>
 
-    
-    
-    
-<button class="home-button" onclick="window.location.href='../grade-1-math-index.html'">
-<span>🏠</span>
-<span>Home</span>
-</button>
-<div class="container">
-<h1>🎯 Find the Number! (1-10)</h1>
-<div class="subtitle">Can you find the right number?</div>
-<div class="score-board">
-<div class="score-item">
-<div class="score-label">Correct</div>
-<div class="score-value" id="correct-score">0</div>
-</div>
-<div class="score-item">
-<div class="score-label">Total</div>
-<div class="score-value" id="total-score">0</div>
-</div>
-</div>
-<div class="progress-info" id="progress-info">
-            Practice all numbers 1-10
+    <div class="frame">
+    <div class="container">
+        <div class="head"><div class="plaque"><h1 id="title">Find the Number</h1></div></div>
+        <div class="subtitle">Find every tile with the same number!</div>
+
+        <div class="status">
+            <div class="pill"><div class="label">⭐ Found</div><div class="value"><span id="correct-score">0</span> / 20</div></div>
+            <div class="pill"><div class="label">✅ Correct</div><div class="value" id="right-score">0</div></div>
+            <div class="pill"><div class="label">Tries</div><div class="value" id="total-score">0</div></div>
         </div>
-<div class="game-area">
-<div class="question">Pick every <span id="question-number" style="color: #00b894; font-weight: bold;">1</span></div>
-<div class="number-display" id="number-display">1</div>
-<div class="feedback" id="feedback"></div>
-<div class="stars" id="stars"></div>
-<div class="options" id="options"></div>
-<div class="button-container">
-<button class="retry-btn hidden" id="retry-btn">🔄 Try Again</button>
-<button class="next-btn hidden" id="next-btn">Next Number →</button>
-</div>
-</div>
-</div>
-<script>
-        const MIN_NUMBER = 1;
-        const MAX_NUMBER = 10;
-        const TOTAL_NUMBERS = MAX_NUMBER - MIN_NUMBER + 1;
-        const REQUIRED_CORRECT_PER_NUMBER = 2;
-        
-        let currentNumber = 1;
-        let correctCount = 0;
-        let totalCount = 0;
-        let answered = false;
-        let recentNumbers = [];
-        let numberCorrectCount = {}; // Track correct answers per number
-        let gameComplete = false;
 
-        // Initialize correct count for each number
-        for (let i = MIN_NUMBER; i <= MAX_NUMBER; i++) {
-            numberCorrectCount[i] = 0;
-        }
+        <div class="level-box">
+            <div class="tracker" id="tracker" aria-label="Find each number two times"></div>
+        </div>
 
-        const numberDisplay = document.getElementById('number-display');
-        const optionsContainer = document.getElementById('options');
-        const feedback = document.getElementById('feedback');
-        const stars = document.getElementById('stars');
-        const nextBtn = document.getElementById('next-btn');
-        const retryBtn = document.getElementById('retry-btn');
-        const correctScore = document.getElementById('correct-score');
-        const totalScore = document.getElementById('total-score');
-        const progressInfo = document.getElementById('progress-info');
-        const questionNumber = document.getElementById('question-number');
+        <div class="game-area" id="game-area">
+            <div class="ask" id="ask">
+                <div class="question"><span>Tap every</span></div>
+                <div class="number-display small" id="number-display">?</div>
+                <button class="speaker-button" id="speaker" onclick="sayTask()" aria-label="Listen">🔊</button>
+            </div>
+            <div class="feedback" id="feedback" aria-live="polite"></div>
+            <div class="left-count" id="left-count"></div>
 
-        const encouragements = [
-            "Amazing! 🌟",
-            "Superstar! ⭐",
-            "Excellent! 🎉",
-            "You're brilliant! 🌈",
-            "Perfect! 🎊",
-            "Wonderful! 💫",
-            "Great job! 🎯",
-            "Fantastic! 🏆"
-        ];
+            <div class="options ten" id="options"></div>
+            <div class="summary hidden" id="summary"></div>
 
-        const tryAgain = [
-            "Try again! 💪",
-            "Not quite! Keep trying! 🔄",
-            "Oops! Look carefully! 👀",
-            "Almost! Try once more! 🎯"
-        ];
+            <div class="button-container">
+                <button class="big-btn retry-btn hidden" id="retry-btn">🔄 Try Again</button>
+                <button class="big-btn next-btn hidden" id="next-btn">Next Number ➜</button>
+                <button class="big-btn again-btn hidden" id="again-btn">🎮 Play Again</button>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="tray" aria-hidden="true"></div>
 
-        // Audio Context for generating sounds
+    <div class="helper" aria-hidden="true">
+        <svg viewBox="0 0 160 170" xmlns="http://www.w3.org/2000/svg">
+            <path d="M68 140 L64 160 M64 160 L54 164 M64 160 L72 165" stroke="#F2A93B" stroke-width="6" stroke-linecap="round"/>
+            <path d="M96 140 L100 160 M100 160 L90 165 M100 160 L110 164" stroke="#F2A93B" stroke-width="6" stroke-linecap="round"/>
+            <path d="M122 100 Q150 85 146 108 Q156 104 150 124 Q134 120 122 112 Z" fill="#fff" stroke="#D9DEE8" stroke-width="2"/>
+            <ellipse cx="84" cy="108" rx="46" ry="40" fill="#8FA4C2"/>
+            <ellipse cx="78" cy="118" rx="28" ry="24" fill="#B7C6DB"/>
+            <path d="M60 86 Q52 60 62 40 Q74 26 92 32 Q102 40 96 58 Q90 72 96 86 Z" fill="#8FA4C2"/>
+            <path d="M66 42 Q34 40 22 56 Q18 66 30 66 Q32 58 42 58 Q56 58 68 56 Z" fill="#F5C64A"/>
+            <circle cx="78" cy="44" r="9" fill="#fff"/><circle cx="80" cy="45" r="5" fill="#1E2A4A"/><circle cx="82" cy="43" r="1.8" fill="#fff"/>
+            <circle cx="86" cy="58" r="5" fill="#F7A1B0" opacity=".7"/>
+            <path d="M62 98 Q34 70 30 52 Q48 62 58 74 Q60 64 66 60 Q70 80 72 98 Z" fill="#6F86A8"/>
+        </svg>
+        <div class="bubble">Find <b>all</b> the tiles with the same number as the box! 🔊 Tap the speaker to hear it.</div>
+    </div>
+
+    <script>
+        // Colourful title letters, like the alphabet board
+        (function () {
+            const t = document.getElementById('title'), cols = ['#FF5A5F','#FF9F1C','#FFD23F','#5BD36B','#3FA9F5','#B07CFF','#FF6FB5','#2FD9C4'];
+            let k = 0;
+            t.innerHTML = t.textContent.split('').map(c => c === ' ' ? ' ' : `<span class="ch" style="color:${cols[k++ % cols.length]}">${c}</span>`).join('');
+        })();
+
+        // ================= Settings =================
+        const MIN_NUMBER = 1, MAX_NUMBER = 10;
+        const REQUIRED_CORRECT_PER_NUMBER = 2;             // find each number 2 times
+        const TOTAL_REQUIRED = (MAX_NUMBER - MIN_NUMBER + 1) * REQUIRED_CORRECT_PER_NUMBER;   // 20
+        const TILES = 10;
+
+        // Timing (milliseconds): the game waits for the words to FINISH, then pauses
+        const PAUSE_AFTER_PRAISE = 900;
+        const MIN_AFTER_CORRECT  = 2200;
+        const NEW_NUMBER_DELAY   = 500;    // then "Find every number 7" is spoken
+
+        const NUMBER_WORDS = ['zero','one','two','three','four','five','six','seven','eight','nine','ten'];
+
+        let currentNumber = 1, correctCount = 0, rightCount = 0, totalCount = 0;
+        let recentNumbers = [], numberCorrectCount = {};
+        let correctButtonsTotal = 0, correctButtonsClicked = 0, roundOver = false;
+        let waitTimer = null, speechToken = 0;
+        for (let i = MIN_NUMBER; i <= MAX_NUMBER; i++) numberCorrectCount[i] = 0;
+
+        const $ = id => document.getElementById(id);
+        const numberDisplay = $('number-display'), optionsContainer = $('options');
+        const feedback = $('feedback'), leftCount = $('left-count');
+        const nextBtn = $('next-btn'), retryBtn = $('retry-btn'), againBtn = $('again-btn');
+        const speakerBtn = $('speaker');
+
+        const encouragements = ["Amazing! 🌟", "Superstar! ⭐", "Excellent! 🎉", "You're brilliant! 🌈",
+                                "Perfect! 🎊", "Wonderful! 💫", "Great job! 🎯", "Fantastic! 🏆"];
+        const tryAgain = ["Try again! 💪", "Not quite! Keep trying! 🔄", "Oops! Look carefully! 👀", "Almost! Try once more! 🎯"];
+
+        // ================= Sounds =================
         let audioContext = null;
-
         function initAudio() {
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
+            try { if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                  if (audioContext.state === 'suspended') audioContext.resume(); } catch (e) {}
+        }
+        function tone(notes, type, vol, len) {
+            initAudio(); if (!audioContext) return;
+            const now = audioContext.currentTime, o = audioContext.createOscillator(), g = audioContext.createGain();
+            o.connect(g); g.connect(audioContext.destination); o.type = type;
+            notes.forEach(([f, t]) => o.frequency.setValueAtTime(f, now + t));
+            g.gain.setValueAtTime(vol, now); g.gain.exponentialRampToValueAtTime(0.01, now + len);
+            o.start(now); o.stop(now + len);
+        }
+        const playFoundSound   = () => tone([[659.25, 0], [880, .08]], 'triangle', .22, .22);             // one tile found
+        const playSuccessSound = () => { tone([[523.25, 0], [659.25, .1], [783.99, .2]], 'sine', .3, .4);  // all found
+                                         tone([[659.25, 0], [783.99, .1], [1046.5, .2]], 'triangle', .15, .4); };
+        const playOopsSound    = () => tone([[392.00, 0], [349.23, .15]], 'sine', .2, .3);
+
+        // ================= Speech =================
+        const canSpeak = 'speechSynthesis' in window;
+        function englishVoice() {
+            if (!canSpeak) return null;
+            const v = speechSynthesis.getVoices();
+            return v.find(x => /^en-GB/i.test(x.lang)) || v.find(x => /^en/i.test(x.lang)) || null;
+        }
+        if (canSpeak) speechSynthesis.onvoiceschanged = () => {};
+        function clean(text) { return text.replace(/[^\w\s!?.,'-]/g, '').replace(/\s+/g, ' ').trim(); }
+
+        // Speak, then call `done` once the words have finished (+ a pause).
+        // A back-up timer makes sure the game never gets stuck.
+        function speak(text, done, pause = 0, rate = 0.9) {
+            const token = ++speechToken;
+            let finished = false;
+            const finish = () => {
+                if (finished || token !== speechToken) return;
+                finished = true; speakerBtn.classList.remove('speaking');
+                if (done) waitTimer = setTimeout(done, pause);
+            };
+            const words = clean(text).split(' ').length;
+            const backup = 1200 + words * 520 / rate;
+            if (!canSpeak) { if (done) waitTimer = setTimeout(done, backup + pause); return; }
+            speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(clean(text));
+            const v = englishVoice(); if (v) u.voice = v;
+            u.lang = v ? v.lang : 'en-GB'; u.rate = rate; u.pitch = 1.1; u.volume = 1;
+            u.onend = finish; u.onerror = finish;
+            waitTimer = setTimeout(finish, backup);   // set first, so the game can never get stuck
+            try { speechSynthesis.speak(u); } catch (e) { finish(); }
+        }
+        function stopAll() { clearTimeout(waitTimer); speechToken++; if (canSpeak) speechSynthesis.cancel(); speakerBtn.classList.remove('speaking'); }
+
+        function sayTask() {
+            speakerBtn.classList.add('speaking');
+            speak(`Find every number ${NUMBER_WORDS[currentNumber]}.`, null, 0, 0.85);
         }
 
-        // Function to speak feedback messages
-        function speakFeedback(message) {
-            // Cancel any ongoing speech
-            window.speechSynthesis.cancel();
-            
-            // Clean message by removing emojis for better speech
-            const cleanMessage = message.replace(/[^\w\s!?.,']/g, '');
-            
-            const utterance = new SpeechSynthesisUtterance(cleanMessage);
-            utterance.rate = 0.9;
-            utterance.pitch = 1.1;
-            utterance.volume = 1;
-            
-            window.speechSynthesis.speak(utterance);
+        // ================= Tracker (each number needs 2 stars) =================
+        function buildTracker() {
+            let h = '';
+            for (let i = MIN_NUMBER; i <= MAX_NUMBER; i++) h += `<div class="chip" id="chip${i}">${i}<span class="d" id="dots${i}">☆☆</span></div>`;
+            $('tracker').innerHTML = h;
         }
-
-        function playSuccessSound() {
-            initAudio();
-            
-            const now = audioContext.currentTime;
-            
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(523.25, now);
-            oscillator.frequency.setValueAtTime(659.25, now + 0.1);
-            oscillator.frequency.setValueAtTime(783.99, now + 0.2);
-            
-            gainNode.gain.setValueAtTime(0.3, now);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
-            
-            oscillator.start(now);
-            oscillator.stop(now + 0.4);
-            
-            const oscillator2 = audioContext.createOscillator();
-            const gainNode2 = audioContext.createGain();
-            
-            oscillator2.connect(gainNode2);
-            gainNode2.connect(audioContext.destination);
-            
-            oscillator2.type = 'triangle';
-            oscillator2.frequency.setValueAtTime(659.25, now);
-            oscillator2.frequency.setValueAtTime(783.99, now + 0.1);
-            oscillator2.frequency.setValueAtTime(1046.50, now + 0.2);
-            
-            gainNode2.gain.setValueAtTime(0.15, now);
-            gainNode2.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
-            
-            oscillator2.start(now);
-            oscillator2.stop(now + 0.4);
-        }
-
-        function playOopsSound() {
-            initAudio();
-            
-            const now = audioContext.currentTime;
-            
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(392.00, now);
-            oscillator.frequency.setValueAtTime(349.23, now + 0.15);
-            
-            gainNode.gain.setValueAtTime(0.2, now);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-            
-            oscillator.start(now);
-            oscillator.stop(now + 0.3);
-        }
-
-        function updateProgressInfo() {
-            let completedNumbers = 0;
+        function updateTracker() {
             for (let i = MIN_NUMBER; i <= MAX_NUMBER; i++) {
-                if (numberCorrectCount[i] >= REQUIRED_CORRECT_PER_NUMBER) {
-                    completedNumbers++;
-                }
+                const n = numberCorrectCount[i], chip = $('chip' + i);
+                $('dots' + i).textContent = '★'.repeat(n) + '☆'.repeat(Math.max(0, REQUIRED_CORRECT_PER_NUMBER - n));
+                chip.className = 'chip' + (n >= REQUIRED_CORRECT_PER_NUMBER ? ' done' : n > 0 ? ' half' : '') + (i === currentNumber && !roundOver ? ' now' : '');
             }
-            
-            const totalRequired = TOTAL_NUMBERS * REQUIRED_CORRECT_PER_NUMBER;
-            progressInfo.textContent = `Progress: ${correctCount}/${totalRequired} correct (Each number found 2 times = 20 total)`;
-            
-            if (completedNumbers === TOTAL_NUMBERS) {
-                progressInfo.textContent = `🎉 All 20 completed! You found each number twice! 🎉`;
-            }
+            $('correct-score').textContent = correctCount;
         }
 
+        // ================= Game =================
         function getNextNumber() {
-            let availableNumbers = [];
-            
-            for (let i = MIN_NUMBER; i <= MAX_NUMBER; i++) {
-                availableNumbers.push(i);
-            }
-            
-            // First priority: numbers that haven't reached 5 correct answers yet
-            const needsPractice = availableNumbers.filter(num => numberCorrectCount[num] < REQUIRED_CORRECT_PER_NUMBER);
-            
-            if (needsPractice.length > 0) {
-                let candidates = needsPractice;
-                
-                // Still avoid immediate repetition
-                if (recentNumbers.length >= 2 && 
-                    recentNumbers[recentNumbers.length - 1] === recentNumbers[recentNumbers.length - 2]) {
-                    candidates = needsPractice.filter(num => num !== recentNumbers[recentNumbers.length - 1]);
-                    if (candidates.length === 0) candidates = needsPractice;
-                }
-                
-                const selectedNumber = candidates[Math.floor(Math.random() * candidates.length)];
-                
-                recentNumbers.push(selectedNumber);
-                if (recentNumbers.length > 3) {
-                    recentNumbers.shift();
-                }
-                
-                return selectedNumber;
-            }
-            
-            // All numbers mastered - should trigger game completion
-            return MIN_NUMBER;
+            const last = recentNumbers[recentNumbers.length - 1];
+            let pool = [];
+            for (let i = MIN_NUMBER; i <= MAX_NUMBER; i++) if (numberCorrectCount[i] < REQUIRED_CORRECT_PER_NUMBER) pool.push(i);
+            if (pool.length > 1) pool = pool.filter(n => n !== last);   // never the same number twice in a row
+            const pick = pool[Math.floor(Math.random() * pool.length)];
+            recentNumbers.push(pick); if (recentNumbers.length > 3) recentNumbers.shift();
+            return pick;
         }
 
-        function getRandomNumbers(correct) {
-            // For "Pick every X" game, we need multiple instances of the correct number
-            // and other numbers as distractors
-            const numbers = [];
-            
-            // Add 2-3 instances of the correct number
-            const correctInstances = Math.floor(Math.random() * 2) + 2; // 2 or 3 instances
-            for (let i = 0; i < correctInstances; i++) {
-                numbers.push(correct);
-            }
-            
-            // Fill the rest with other numbers (distractors) to make 10 total
-            const distractors = [];
-            for (let i = MIN_NUMBER; i <= MAX_NUMBER; i++) {
-                if (i !== correct) {
-                    distractors.push(i);
-                }
-            }
-            
-            // Shuffle distractors and add enough to make 10 buttons total
-            distractors.sort(() => Math.random() - 0.5);
-            const neededDistractors = 10 - correctInstances;
-            for (let i = 0; i < neededDistractors; i++) {
-                numbers.push(distractors[i % distractors.length]);
-            }
-            
-            // Shuffle the array so correct numbers appear in random positions
+        function getTileNumbers(correct) {
+            const numbers = [], copies = Math.floor(Math.random() * 2) + 2;   // 2 or 3 tiles to find
+            for (let i = 0; i < copies; i++) numbers.push(correct);
+            const others = [];
+            for (let i = MIN_NUMBER; i <= MAX_NUMBER; i++) if (i !== correct) others.push(i);
+            others.sort(() => Math.random() - 0.5);
+            for (let i = 0; numbers.length < TILES; i++) numbers.push(others[i % others.length]);
             return numbers.sort(() => Math.random() - 0.5);
         }
 
-        let correctButtonsTotal = 0;
-        let correctButtonsClicked = 0;
-        let wrongButtonClicked = false;
+        function updateLeft() {
+            const left = correctButtonsTotal - correctButtonsClicked;
+            leftCount.innerHTML = left > 0 && !roundOver ? `<b>${left}</b> more to find` : '';
+        }
 
         function createOptions() {
             optionsContainer.innerHTML = '';
-            correctButtonsTotal = 0;
-            correctButtonsClicked = 0;
-            wrongButtonClicked = false;
-            
-            const numbers = getRandomNumbers(currentNumber);
-            
-            // Count how many correct buttons there are
-            numbers.forEach(num => {
-                if (num === currentNumber) {
-                    correctButtonsTotal++;
-                }
+            optionsContainer.classList.remove('locked');
+            correctButtonsTotal = 0; correctButtonsClicked = 0; roundOver = false;
+            getTileNumbers(currentNumber).forEach(num => {
+                if (num === currentNumber) correctButtonsTotal++;
+                const b = document.createElement('button');
+                b.className = 'option-btn'; b.textContent = num; b.dataset.clicked = 'false';
+                b.setAttribute('aria-label', 'Number ' + num);
+                b.addEventListener('click', () => { initAudio(); checkAnswer(num, b); });
+                optionsContainer.appendChild(b);
             });
-            
-            numbers.forEach(num => {
-                const button = document.createElement('button');
-                button.className = 'option-btn';
-                button.textContent = num;
-                button.dataset.clicked = 'false';
-                button.addEventListener('click', () => {
-                    initAudio();
-                    checkAnswer(num, button);
-                });
-                optionsContainer.appendChild(button);
-            });
+            updateLeft();
+        }
+        function lockOptions() {
+            optionsContainer.classList.add('locked');
+            optionsContainer.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
         }
 
         function checkAnswer(selected, button) {
-            // Prevent clicking the same button twice
-            if (button.dataset.clicked === 'true') return;
-            
+            if (roundOver || button.dataset.clicked === 'true') return;
             button.dataset.clicked = 'true';
 
             if (selected === currentNumber) {
-                // Correct button clicked
                 correctButtonsClicked++;
-                button.classList.add('correct');
-                
-                playSuccessSound();
-                
-                // Check if all correct buttons have been clicked
-                if (correctButtonsClicked === correctButtonsTotal && !wrongButtonClicked) {
-                    // All correct, none wrong - full success!
-                    answered = true;
-                    totalCount++;
-                    correctCount++;
-                    numberCorrectCount[currentNumber]++;
-                    
-                    totalScore.textContent = totalCount;
-                    correctScore.textContent = correctCount;
-                    
-                    feedback.textContent = encouragements[Math.floor(Math.random() * encouragements.length)];
-                speakFeedback(feedback.textContent);
-                    feedback.className = 'feedback correct';
-                    stars.textContent = '⭐⭐⭐';
-                    numberDisplay.style.color = '#00b894';
-                    
-                    updateProgressInfo();
-                    
-                    // Disable all buttons
-                    const buttons = document.querySelectorAll('.option-btn');
-                    buttons.forEach(btn => btn.style.pointerEvents = 'none');
-                    
-                    // Check if all numbers have been mastered
-                    let allMastered = true;
-                    for (let i = MIN_NUMBER; i <= MAX_NUMBER; i++) {
-                        if (numberCorrectCount[i] < REQUIRED_CORRECT_PER_NUMBER) {
-                            allMastered = false;
-                            break;
-                        }
-                    }
-                    
-                    if (allMastered) {
-                        setTimeout(() => {
-                            showGameComplete();
-                        }, 2500);
-                    } else {
-                        setTimeout(() => {
-                            nextQuestion();
-                        }, 2500);
-                    }
-                } else {
-                    // This should not happen since there's only 1 correct button
-                    feedback.textContent = `Great! 💪`;
-                speakFeedback(feedback.textContent);
-                    feedback.className = 'feedback correct';
+                button.classList.add('found');
+                updateLeft();
+
+                if (correctButtonsClicked < correctButtonsTotal) {
+                    playFoundSound();                         // found one - keep looking
+                    return;
                 }
-                
+                // all of them found
+                roundOver = true; lockOptions();
+                totalCount++; rightCount++; correctCount++;
+                numberCorrectCount[currentNumber]++;
+                $('total-score').textContent = totalCount; $('right-score').textContent = rightCount;
+                updateTracker(); updateLeft();
+                const msg = encouragements[Math.floor(Math.random() * encouragements.length)];
+                feedback.textContent = msg; feedback.className = 'feedback correct';
+                playSuccessSound();
+
+                // 1) ding  2) praise is spoken  3) short pause  4) next number (or the end)
+                const started = Date.now();
+                setTimeout(() => speak(msg, () => {
+                    const wait = Math.max(0, MIN_AFTER_CORRECT - (Date.now() - started));
+                    waitTimer = setTimeout(() => { correctCount >= TOTAL_REQUIRED ? showGameComplete() : nextQuestion(); }, wait);
+                }, PAUSE_AFTER_PRAISE), 450);
             } else {
-                // Wrong button clicked
-                wrongButtonClicked = true;
-                answered = true;
-                totalCount++;
-                totalScore.textContent = totalCount;
-                
+                roundOver = true; lockOptions();
+                totalCount++; $('total-score').textContent = totalCount;
                 button.classList.add('wrong');
-                feedback.textContent = tryAgain[Math.floor(Math.random() * tryAgain.length)];
-                speakFeedback(feedback.textContent);
-                feedback.className = 'feedback wrong';
-                
+                const msg = tryAgain[Math.floor(Math.random() * tryAgain.length)];
+                feedback.textContent = msg; feedback.className = 'feedback wrong';
                 playOopsSound();
-                
-                // Highlight all correct answers
-                const buttons = document.querySelectorAll('.option-btn');
-                buttons.forEach(btn => {
-                    if (parseInt(btn.textContent) === currentNumber) {
-                        setTimeout(() => {
-                            btn.classList.add('correct');
-                        }, 500);
-                    }
-                    btn.style.pointerEvents = 'none'; // Disable all buttons
+                setTimeout(() => speak(msg, null), 350);
+                optionsContainer.querySelectorAll('.option-btn').forEach(b => {
+                    if (parseInt(b.textContent) === currentNumber && b.dataset.clicked !== 'true') setTimeout(() => b.classList.add('reveal'), 600);
                 });
-                
-                numberDisplay.style.color = '#d63031';
-                
-                retryBtn.classList.remove('hidden');
-                nextBtn.classList.remove('hidden');
+                numberDisplay.classList.add('wrong');
+                updateLeft(); updateTracker();
+                retryBtn.classList.remove('hidden'); nextBtn.classList.remove('hidden');
             }
         }
 
-        function nextQuestion() {
-            answered = false;
-            currentNumber = getNextNumber();
-            
+        function showNumber() {
             numberDisplay.textContent = currentNumber;
-            questionNumber.textContent = currentNumber;
-            numberDisplay.style.color = '#00b894';
-            numberDisplay.style.animation = 'none';
-            setTimeout(() => {
-                numberDisplay.style.animation = 'pulse 1s ease-in-out';
-            }, 10);
-            
-            feedback.textContent = '';
-            feedback.className = 'feedback';
-            stars.textContent = '';
-            nextBtn.classList.add('hidden');
-            retryBtn.classList.add('hidden');
-            
-            createOptions();
+            numberDisplay.classList.remove('wrong', 'pop');
+            void numberDisplay.offsetWidth;
+            numberDisplay.classList.add('pop');
         }
-        
-        function retryQuestion() {
-            answered = false;
-            
-            questionNumber.textContent = currentNumber;
-            numberDisplay.style.color = '#00b894';
-            numberDisplay.style.animation = 'none';
-            setTimeout(() => {
-                numberDisplay.style.animation = 'pulse 1s ease-in-out';
-            }, 10);
-            
-            feedback.textContent = 'Let\'s try this number again! 💪';
-                speakFeedback(feedback.textContent);
-            feedback.className = 'feedback';
-            stars.textContent = '';
-            nextBtn.classList.add('hidden');
-            retryBtn.classList.add('hidden');
-            
-            createOptions();
+
+        function startRound(message, messageClass) {
+            stopAll();
+            showNumber();
+            feedback.textContent = message || ''; feedback.className = 'feedback' + (messageClass ? ' ' + messageClass : '');
+            nextBtn.classList.add('hidden'); retryBtn.classList.add('hidden'); againBtn.classList.add('hidden');
+            createOptions(); updateTracker();
+            waitTimer = setTimeout(sayTask, NEW_NUMBER_DELAY);   // tell the child what to find
         }
-        
+        function nextQuestion() { currentNumber = getNextNumber(); startRound(); }
+        function retryQuestion() { startRound("Let's try this number again! 💪", 'info'); }
+
         function showGameComplete() {
-            gameComplete = true;
-            
-            // Hide game elements
-            document.querySelector('.question').style.display = 'none';
-            numberDisplay.style.display = 'none';
-            optionsContainer.style.display = 'none';
-            nextBtn.style.display = 'none';
-            retryBtn.style.display = 'none';
-            
-            // Show completion message
-            feedback.textContent = '🎊 CONGRATULATIONS! 🎊';
-                speakFeedback(feedback.textContent);
-            feedback.className = 'feedback correct';
-            feedback.style.fontSize = 'clamp(2em, 7vw, 3.5em)';
-            
-            stars.textContent = '⭐🌟✨🎉✨🌟⭐';
-            
-            const completionMsg = document.createElement('div');
-            completionMsg.style.textAlign = 'center';
-            completionMsg.style.fontSize = 'clamp(1.2em, 4vw, 1.8em)';
-            completionMsg.style.color = '#2d3436';
-            completionMsg.style.margin = '20px 0';
-            completionMsg.innerHTML = `
-                <p style="margin: 15px 0;">🎉 You successfully identified all numbers 1-10 twice! 🎉</p>
-                <p style="margin: 15px 0;">You found all 10 numbers 2 times each = <strong>20 correct!</strong></p>
-                <p style="margin: 15px 0;">Total Questions: <strong>${totalCount}</strong></p>
-                <p style="margin: 15px 0;">Correct Answers: <strong>${correctCount}</strong></p>
-                <p style="margin: 15px 0;">Accuracy: <strong>${Math.round((correctCount/totalCount)*100)}%</strong></p>
-            `;
-            
-            document.querySelector('.game-area').appendChild(completionMsg);
-            
-            // Create restart button
-            const buttonContainer = document.querySelector('.button-container');
-            buttonContainer.innerHTML = '';
-            buttonContainer.classList.remove('hidden');
-            
-            const restartBtn = document.createElement('button');
-            restartBtn.className = 'retry-btn';
-            restartBtn.innerHTML = '🔄 Play Again';
-            restartBtn.style.display = 'block';
-            restartBtn.addEventListener('click', restartGame);
-            
-            buttonContainer.appendChild(restartBtn);
+            stopAll();
+            $('ask').classList.add('hidden'); optionsContainer.classList.add('hidden'); leftCount.textContent = '';
+            feedback.textContent = '🎊 CONGRATULATIONS! 🎊'; feedback.className = 'feedback correct';
+            const acc = totalCount ? Math.round(rightCount / totalCount * 100) : 0;
+            $('summary').innerHTML =
+                `🎉 You found every number from 1 to 10 <b>two times</b>! 🎉<br>` +
+                `Tries: <b>${totalCount}</b> &nbsp;·&nbsp; Correct: <b>${rightCount}</b> &nbsp;·&nbsp; Score: <b>${acc}%</b>`;
+            $('summary').classList.remove('hidden');
+            againBtn.classList.remove('hidden');
+            updateTracker();
+            speak('Congratulations! You found every number, two times!', null);
         }
-        
+
         function restartGame() {
-            // Reset all counters
-            correctCount = 0;
-            totalCount = 0;
-            gameComplete = false;
-            recentNumbers = [];
-            
-            for (let i = MIN_NUMBER; i <= MAX_NUMBER; i++) {
-                numberCorrectCount[i] = 0;
-            }
-            
-            correctScore.textContent = '0';
-            totalScore.textContent = '0';
-            
-            // Remove completion message
-            const completionMsg = document.querySelector('.game-area > div:last-child');
-            if (completionMsg && completionMsg.innerHTML.includes('successfully identified')) {
-                completionMsg.remove();
-            }
-            
-            // Show game elements
-            document.querySelector('.question').style.display = 'block';
-            numberDisplay.style.display = 'block';
-            optionsContainer.style.display = 'grid';
-            feedback.textContent = '';
-            feedback.style.fontSize = '';
-            stars.textContent = '';
-            
-            updateProgressInfo();
+            stopAll();
+            correctCount = 0; rightCount = 0; totalCount = 0; recentNumbers = [];
+            for (let i = MIN_NUMBER; i <= MAX_NUMBER; i++) numberCorrectCount[i] = 0;
+            $('right-score').textContent = 0; $('total-score').textContent = 0;
+            $('summary').classList.add('hidden'); $('ask').classList.remove('hidden'); optionsContainer.classList.remove('hidden');
             nextQuestion();
         }
-        
 
         nextBtn.addEventListener('click', nextQuestion);
         retryBtn.addEventListener('click', retryQuestion);
+        againBtn.addEventListener('click', restartGame);
 
-        // Initialize game
-        updateProgressInfo();
-        createOptions();
+        buildTracker();
+        nextQuestion();          // the first number is random
     </script>
 </body>
 </html>
