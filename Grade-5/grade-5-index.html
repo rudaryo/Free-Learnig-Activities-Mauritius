@@ -484,6 +484,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             var ro = new ResizeObserver(function (en) { en.forEach(function (e) { fit(e.target); }); });
             previews.forEach(function (p) { ro.observe(p); });
         } else { window.addEventListener('resize', function () { previews.forEach(fit); }); }
+        var FRESH = Date.now();   // makes the browser fetch a new copy instead of an old saved one
         function loadPreview(p) {
             fit(p);
             var f = p.querySelector('iframe');
@@ -492,7 +493,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 try { var w = f.contentWindow; if (w.speechSynthesis) { w.speechSynthesis.cancel(); w.speechSynthesis.speak = function () {}; } } catch (e) {}
                 f.classList.add('ready');
             });
-            f.src = f.dataset.src;
+            f.src = f.dataset.src + (f.dataset.src.indexOf('?') < 0 ? '?' : '&') + 'fresh=' + FRESH;   // always the latest version of the game
         }
         if ('IntersectionObserver' in window) {
             var io = new IntersectionObserver(function (en) {
